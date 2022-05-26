@@ -11,6 +11,8 @@ on:
       - 'CHANGELOG.md'
       - 'LICENSE'
       - 'renovate.json'
+      - '.github/workflows/build-and-deploy-latex.yml'
+      - 'tesi.drawio'
   pull_request:
   workflow_dispatch:
 
@@ -21,4 +23,3 @@ jobs:
       - uses: DanySK/compile-and-publish-all-latex@1.0.22
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          
