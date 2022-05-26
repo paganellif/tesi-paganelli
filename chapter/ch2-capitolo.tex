@@ -1,0 +1,42 @@
+% ! TeX root = ...
+\section{Analisi dei Requisiti}
+\begin{description}
+    \item[R1] - Visualizzare documenti.
+    \begin{description}
+        \item[\textit{R1.1}] - In modo fluido, mostrando il contenuto adattato al dispositivo in cui viene mostrato.
+        \item[\textit{R1.2}] - In modo statico, mostrando il contenuto con uno specifico layout indipendente dal dispositivo in cui viene mostrato.
+    \end{description}
+    \item[R2] - Modificare documenti in modo fluido (lato utente).
+    \begin{description}
+        \item[\textit{R2.1}] - Aggiungere commenti, sottolineature, evidenziazioni, al contenuto fluido.
+        \item[\textit{R2.2}] - Memorizzare commenti, sottolineature, evidenziazioni apportate al contenuto fluido.
+    \end{description}
+    \item[R3] - Gestione utente.
+    \begin{description}
+        \item[\textit{R3.1}] - Login (autenticazione) utente.
+        \item[\textit{R3.2}] - Visualizzare documenti a cui l'utente è abbonato.
+    \end{description}
+    \item[R4] - Ricerca documenti
+    \begin{description}
+        \item[\textit{R4.1}] - Ricerca documenti senza autenticazione. Qualsiasi utente può effettuare una ricerca dei documenti disponibili, senza ottenere il contenuto.
+        \item[\textit{R4.2}] - Ricerca avanzata in base a diversi campi. %TODO: da definire quali campi
+    \end{description}
+    \item[R5] - Convertire documenti da modo statico a modo fluido.
+    \item[R6] - Modificare documenti in modo fluido (lato azienda).
+    \begin{description}
+        \item[\textit{R6.1}] - Aggiungere elementi/contenuti al documento in modo fluido (hyperlink, quiz, video, immagini, ...). %TODO: definire quali cose sono da aggiungere al documento
+        \item[\textbf{R6.2}] - Memorizzare gli elementi/contenuti apportati al documento in modo fluido (hyperlink, quiz, video, immagini, ...).
+    \end{description}
+\end{description}
+
+
+\begin{description}
+    \item[T1] - Applicazione nativa Android e iOS, sfruttando Kotlin Multiplatform Mobile (KMM).
+    \item[T2] - Continuous Integration e Continuous Delivery
+    \begin{description}
+        \item[T2.1] - Analisi statica del codice (SAST).
+        \item[T2.2] - Unit testing, code coverage e E2E testing.
+        \item[T2.3] - Rilascio automatico nei relativi store delle piattaforme scelte (Google Play per Android e App Store per iOS).
+    \end{description}
+    \item[T3] - Monitoraggio applicazione (Analytics).
+\end{description}
