@@ -21,7 +21,23 @@
 \titlespacing{\chapter}{0pt}{50pt}{50pt}
 % \titlespacing{<command>}{<left>}{<before-sep>}{<after-sep>}[<right>]
 
+% configura i lettori pdf
+\hypersetup{%
+  pdfpagemode={UseNone},
+  hidelinks,                  % nasconde i collegamenti (non vengono quadrettati)
+  hypertexnames=false,
+  linktoc=all,                % inserisce i link nell'indice
+  unicode=true,               % usa solo caratteri Latini nei segnalibri di Acrobat
+  pdftoolbar=false,           % nasconde la toolbar di Acrobat
+  pdfmenubar=false,           % nasconde il menu di Acrobat
+  plainpages=false,
+  breaklinks,
+  pdfstartview={Fit},
+  pdflang={it}
+}
+
 \begin{document}
+  
 \lstset{language=C, numbers = left}
 \begin{titlepage}
 \begin{center}
