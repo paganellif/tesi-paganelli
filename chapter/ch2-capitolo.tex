@@ -2,44 +2,44 @@
 \section{Analisi dei Requisiti}
 \subsection{Requisiti Funzionali}
 \begin{itemize}
-    \item[\textbf{R1}] - Visualizzare documenti.
+    \item \textbf{R1} - Visualizzare documenti.
     \begin{itemize}
-        \item[\textbf{R1.1}] - In modo fluido, mostrando il contenuto adattato al dispositivo in cui viene mostrato.
-        \item[\textbf{R1.2}] - In modo statico, mostrando il contenuto con uno specifico layout indipendente dal dispositivo in cui viene mostrato.
+        \item \textbf{R1.1} - In modo fluido, mostrando il contenuto adattato al dispositivo in cui viene mostrato.
+        \item \textbf{R1.2} - In modo statico, mostrando il contenuto con uno specifico layout indipendente dal dispositivo in cui viene mostrato.
     \end{itemize}
-    \item[\textbf{R2}] - Modificare documenti in modo fluido (lato utente).
+    \item \textbf{R2} - Modificare documenti in modo fluido (lato utente).
     \begin{itemize}
-        \item[\textbf{R2.1}] - Aggiungere commenti, sottolineature, evidenziazioni, al contenuto fluido.
-        \item[\textbf{R2.2}] - Memorizzare commenti, sottolineature, evidenziazioni apportate al contenuto fluido.
+        \item \textbf{R2.1} - Aggiungere commenti, sottolineature, evidenziazioni, al contenuto fluido.
+        \item \textbf{R2.2} - Memorizzare commenti, sottolineature, evidenziazioni apportate al contenuto fluido.
     \end{itemize}
-    \item[\textbf{R3}] - Gestione utente.
+    \item \textbf{R3} - Gestione utente.
     \begin{itemize}
-        \item[\textbf{R3.1}] - Login (autenticazione) utente.
-        \item[\textbf{R3.2}] - Visualizzare documenti a cui l'utente è abbonato.
+        \item \textbf{R3.1} - Login (autenticazione) utente.
+        \item \textbf{R3.2} - Visualizzare documenti a cui l'utente è abbonato.
     \end{itemize}
-    \item[\textbf{R4}] - Ricerca documenti
+    \item \textbf{R4} - Ricerca documenti
     \begin{itemize}
-        \item[\textbf{R4.1}] - Ricerca documenti senza autenticazione. Qualsiasi utente può effettuare una ricerca dei documenti disponibili, senza ottenere il contenuto.
-        \item[\textbf{R4.2}] - Ricerca avanzata in base a diversi campi. %TODO: da definire quali campi
+        \item \textbf{R4.1} - Ricerca documenti senza autenticazione. Qualsiasi utente può effettuare una ricerca dei documenti disponibili, senza ottenere il contenuto.
+        \item \textbf{R4.2} - Ricerca avanzata in base a diversi campi. %TODO: da definire quali campi
     \end{itemize}
-    \item[\textbf{R5}] - Convertire documenti da modo statico a modo fluido.
-    \item[\textbf{R6}] - Modificare documenti in modo fluido (lato azienda).
+    \item \textbf{R5} - Convertire documenti da modo statico a modo fluido.
+    \item \textbf{R6} - Modificare documenti in modo fluido (lato azienda).
     \begin{itemize}
-        \item[\textbf{R6.1}] - Aggiungere elementi/contenuti al documento in modo fluido (hyperlink, quiz, video, immagini, ...). %TODO: definire quali cose sono da aggiungere al documento
-        \item[\textbf{R6.2}] - Memorizzare gli elementi/contenuti apportati al documento in modo fluido (hyperlink, quiz, video, immagini, ...).
+        \item \textbf{R6.1} - Aggiungere elementi/contenuti al documento in modo fluido (hyperlink, quiz, video, immagini, ...). %TODO: definire quali cose sono da aggiungere al documento
+        \item \textbf{R6.2} - Memorizzare gli elementi/contenuti apportati al documento in modo fluido (hyperlink, quiz, video, immagini, ...).
     \end{itemize}
 \end{itemize}
 
 \subsection{Requisiti Non Funzionali/Tecnologici}
 \begin{itemize}
-    \item[\textbf{T1}] - Applicazione nativa Android e iOS, sfruttando Kotlin Multiplatform Mobile (KMM).
-    \item[\textbf{T2}] - Continuous Integration e Continuous Delivery
+    \item \textbf{T1} - Applicazione nativa Android e iOS, sfruttando Kotlin Multiplatform Mobile (KMM).
+    \item \textbf{T2} - Continuous Integration e Continuous Delivery
     \begin{itemize}
-        \item[\textbf{T2.1}] - Analisi statica del codice (SAST).
-        \item[\textbf{T2.2}] - Unit testing, code coverage e E2E testing.
-        \item[\textbf{T2.3}] - Rilascio automatico nei relativi store delle piattaforme scelte (Google Play per Android e App Store per iOS).
+        \item \textbf{T2.1} - Analisi statica del codice (SAST).
+        \item \textbf{T2.2} - Unit testing, code coverage e E2E testing.
+        \item \textbf{T2.3} - Rilascio automatico nei relativi store delle piattaforme scelte (Google Play per Android e App Store per iOS).
     \end{itemize}
-    \item[\textbf{T3}] - Monitoraggio applicazione (Analytics).
+    \item \textbf{T3} - Monitoraggio applicazione (Analytics).
 \end{itemize}
 
 \section{Analisi Formati Digitali Fluidi}
@@ -54,5 +54,24 @@ Per soddisfare i requisiti \textit{R1.1}, \textit{R2.1}, \textit{R5} e \textit{R
     \item essere modificabile,
     \item poter essere ricavato convertendo un documento attualmente in formato "statico" (ovvero deve esistere un algoritmo/software per poter effettuare la conversione).
 \end{itemize}
-
-
+I formati attualmente disponibili che soddisfano i requisiti sopra indicati rappresentano implementazioni dello standard Open eBook (OeB), elaborato dall'Open E-book Forum. Tra questi i formati più diffusi sono:
+\begin{itemize}
+    \item \textbf{MOBI} (Mobipocket) - Standard proprietario (\textit{Amazon}) per la pubblicazione di libri digitali (eBook).\\
+    Principali caratteristiche:
+    \begin{itemize}
+        \item basato sulla Open eBook standard utilizzando XHTML,
+        \item annotazioni (highlights, segnalibri, correzioni, note e disegni) possono essere applicati, organizzati, e richiamati,
+        \item può includere anche JavaScript e cornici. Supporta anche SQL.
+    \end{itemize}
+    \item \textbf{EPUB} (Electronic Publication) - Standard aperto specifico per la pubblicazione di libri digitali (eBook).\\
+    Principali caratteristiche:
+    \begin{itemize}
+        \item basato sulla Open eBook standard utilizzando XML,
+        \item a partire da settembre 2007 è lo standard ufficiale dell'International Digital Publishing Forum (IDPF),
+        \item CSS per il layout e la formattazione,
+        \item Testo "re-flowable" con grafica raster e vettoriale,
+        \item disponibilità di diversi software, sia proprietari che open source, per la manipolazione del file (\textit{Adobe InDesign}, \textit{Sigil}, \textit{Calibre}, ...),
+        \item disponibilità di tante librerie in diversi linguaggi per la manipolazione del file.
+    \end{itemize}
+\end{itemize}
+Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB sono state (\textit{i}) lo standard aperto e (\textit{ii}) la disponibilità, sia di software che di librerie, per la manipolazione del file. 
