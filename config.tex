@@ -1,0 +1,69 @@
+% !TeX root = main.tex
+
+\textwidth=450pt
+\oddsidemargin=0pt
+
+\renewcommand{\cftpartleader}{\cftdotfill{\cftdotsep}} % for parts
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % for chapters
+
+\titleformat{\chapter}{\Huge\bfseries}{\chaptername\ \thechapter}{0pt}{\vskip 100pt\raggedright}%
+% Alter <after-sep> in the macro below to vary the separation after the \chapter title.
+\titlespacing{\chapter}{0pt}{50pt}{50pt}
+% \titlespacing{<command>}{<left>}{<before-sep>}{<after-sep>}[<right>]
+
+% configura i lettori pdf
+\hypersetup{%
+  pdfpagemode={UseNone},
+  hidelinks,                  % nasconde i collegamenti (non vengono quadrettati)
+  hypertexnames=false,
+  linktoc=all,                % inserisce i link nell'indice
+  unicode=true,               % usa solo caratteri Latini nei segnalibri di Acrobat
+  pdftoolbar=false,           % nasconde la toolbar di Acrobat
+  pdfmenubar=false,           % nasconde il menu di Acrobat
+  plainpages=false,
+  breaklinks,
+  pdfstartview={Fit},
+  pdflang={it}
+}
+
+\setminted[terraform]{
+  linenos=true,
+  breaklines=true,
+  encoding=utf8,
+  fontsize=\footnotesize,
+  frame=lines
+}
+
+\setminted[java]{
+  linenos=true,
+  breaklines=true,
+  encoding=utf8,
+  fontsize=\footnotesize,
+  frame=lines
+}
+
+\setminted[docker]{
+  linenos=true,
+  breaklines=true,
+  encoding=utf8,
+  fontsize=\footnotesize,
+  frame=lines
+}
+
+\setminted[yaml]{
+  linenos=true,
+  breaklines=true,
+  autogobble,
+  encoding=utf8,
+  fontsize=\footnotesize,
+  frame=lines
+}
+
+\setminted[bash]{
+  linenos=true,
+  breaklines=true,
+  autogobble,
+  encoding=utf8,
+  fontsize=\footnotesize,
+  frame=lines
+}

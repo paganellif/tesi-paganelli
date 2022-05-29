@@ -1,4 +1,5 @@
 % !TeX root = ../main.tex
+
 \section{Analisi dei Requisiti}
 \subsection{Requisiti Funzionali}
 \begin{itemize}
@@ -35,8 +36,8 @@
     \item \textbf{T1} - Applicazione nativa Android e iOS, sfruttando Kotlin Multiplatform Mobile (KMM).
     \item \textbf{T2} - Continuous Integration e Continuous Delivery
     \begin{itemize}
-        \item \textbf{T2.1} - Analisi statica del codice (SAST).
-        \item \textbf{T2.2} - Unit testing, code coverage e E2E testing.
+        \item \textbf{T2.1} - Analisi statica del codice (SAST\footnote{Static Application Security Testing}).
+        \item \textbf{T2.2} - Unit testing, code coverage e E2E\footnote{end-to-end} testing.
         \item \textbf{T2.3} - Rilascio automatico nei relativi store delle piattaforme scelte (Google Play per Android e App Store per iOS).
     \end{itemize}
     \item \textbf{T3} - Monitoraggio applicazione (Analytics).
@@ -61,17 +62,39 @@ I formati attualmente disponibili che soddisfano i requisiti sopra indicati rapp
     \begin{itemize}
         \item basato sulla Open eBook standard utilizzando XHTML,
         \item annotazioni (highlights, segnalibri, correzioni, note e disegni) possono essere applicati, organizzati, e richiamati,
-        \item può includere anche JavaScript e cornici. Supporta anche SQL.
+        \item può includere anche JavaScript e cornici.
     \end{itemize}
     \item \textbf{EPUB} (Electronic Publication) - Standard aperto specifico per la pubblicazione di libri digitali (eBook).\\
     Principali caratteristiche:
     \begin{itemize}
         \item basato sulla Open eBook standard utilizzando XML,
-        \item a partire da settembre 2007 è lo standard ufficiale dell'International Digital Publishing Forum (IDPF),
+        \item a partire da settembre 2007 è lo standard ufficiale dell'International Digital Publishing Forum (IDPF)\footnote{\url{https://web.archive.org/web/20080827131750/http://www.idpf.org/2007/ops/OPS_2.0_final_spec.html}},
         \item CSS per il layout e la formattazione,
-        \item Testo "re-flowable" con grafica raster e vettoriale,
+        \item testo "re-flowable" con grafica raster e vettoriale,
         \item disponibilità di diversi software, sia proprietari che open source, per la manipolazione del file (\textit{Adobe InDesign}, \textit{Sigil}, \textit{Calibre}, ...),
         \item disponibilità di tante librerie in diversi linguaggi per la manipolazione del file.
     \end{itemize}
 \end{itemize}
 Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB sono state (\textit{i}) lo standard aperto e (\textit{ii}) la disponibilità, sia di software che di librerie, per la manipolazione del file. 
+
+\subsection{Conversione PDF/HTML2EPUB}
+La grande quantità di documenti già archiviati in formato PDF (> 2000) rende impossibile l'adozione di una procedura manuale di conversione e pertanto deve essere progettata in modo tale che questa venga effettuata on-demand dagli utenti finali tramite un apposito servizio REST.\\
+Dati i formati in input (PDF o HTML) e stabilito il formato di output (EPUB) è necessario definire i tool e la procedura di conversione. Prima di analizzare eventuali librerie utili a implementare la procedura di conversione è stata effettuata una ricerca di tool già disponibili sul mercato in grado di svolgere il compito richiesto. I principali requisiti per la ricerca del tool sono:
+\begin{itemize}
+    \item possibilità di convertire da almeno uno dei due formati disponibili in input verso il formato di output,
+    \item eseguibile binario senza GUI.
+\end{itemize}
+
+\subsubsection{Calibre}
+Software libero, open source\footnote{\url{https://github.com/kovidgoyal/calibre}} e multipiattaforma, fornisce una suite di tool creare, conservare, catalogare e manipolare eBook. Tra i formati supportati, sia in input che output, è possibile trovare Epub, Fb2, Html, Lit, Mobi, Odt e Pdf.\\
+Tra i vari tool della suite è presente un convertitore, chiamato \textit{ebook-convert}\footnote{\url{https://manual.calibre-ebook.com/generated/en/ebook-convert.html}}, il quale soddisfa i requisiti sopra indicati.
+
+\begin{listing}[H]
+\begin{minted}{bash}
+brew install calibre
+ebook-convert test.pdf test.epub
+\end{minted}
+\caption{Esempio semplice di conversione PDF/EPUB tramite \textit{ebook-convert}}
+\end{listing}
+
+\section{Pdf2Epub}
