@@ -1,10 +1,9 @@
 \documentclass[12pt,a4paper]{report}
+
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
 \usepackage{bold-extra}
-\textwidth=450pt
-\oddsidemargin=0pt
 \usepackage{tocloft}
 \usepackage{titlesec}
 \usepackage{float}
@@ -12,33 +11,12 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{listings}
+\usepackage{minted}
 
-\renewcommand{\cftpartleader}{\cftdotfill{\cftdotsep}} % for parts
-\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % for chapters
-
-\titleformat{\chapter}{\Huge\bfseries}{\chaptername\ \thechapter}{0pt}{\vskip 100pt\raggedright}%
-% Alter <after-sep> in the macro below to vary the separation after the \chapter title.
-\titlespacing{\chapter}{0pt}{50pt}{50pt}
-% \titlespacing{<command>}{<left>}{<before-sep>}{<after-sep>}[<right>]
-
-% configura i lettori pdf
-\hypersetup{%
-  pdfpagemode={UseNone},
-  hidelinks,                  % nasconde i collegamenti (non vengono quadrettati)
-  hypertexnames=false,
-  linktoc=all,                % inserisce i link nell'indice
-  unicode=true,               % usa solo caratteri Latini nei segnalibri di Acrobat
-  pdftoolbar=false,           % nasconde la toolbar di Acrobat
-  pdfmenubar=false,           % nasconde il menu di Acrobat
-  plainpages=false,
-  breaklinks,
-  pdfstartview={Fit},
-  pdflang={it}
-}
+\input{config.tex}
 
 \begin{document}
   
-\lstset{language=C, numbers = left}
 \begin{titlepage}
 \begin{center}
 {{\Large{\textsc{Alma Mater Studiorum $\cdot$ Universit\`a di
