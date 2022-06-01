@@ -77,15 +77,15 @@ I formati attualmente disponibili che soddisfano i requisiti sopra indicati rapp
 \end{itemize}
 Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB sono state (\textit{i}) lo standard aperto e (\textit{ii}) la disponibilità, sia di software che di librerie, per la manipolazione del file. 
 
-\subsection{Conversione PDF/HTML2EPUB}
-La necessità di progettare e realizzare un servizio di conversione in modo tale che possa essere eseguito on-demand dagli utenti finali deriva sia dalla quantità di documenti già archiviati in formato PDF (circa 2200) sia dalla loro eterogeneità. Su 2200 documenti infatti, circa 200 sono libri e i restanti sono riviste. Le riviste, rispetto i libri, contengono tantissimi elementi all'interno di ogni pagina che rendono molto complicata la conversione.\\
+\section{Conversione PDF/HTML2EPUB}
+La necessità di progettare e realizzare un servizio di conversione in modo tale che possa essere eseguito on-demand (e in modo automatico) deriva sia dalla quantità di documenti già archiviati in formato PDF (circa 2200) sia dalla loro eterogeneità. Su 2200 documenti infatti, circa 200 sono libri e i restanti sono riviste. Le riviste, rispetto i libri, contengono elementi all'interno di ogni pagina che rendono molto complicata la loro conversione.\\
 Dati i formati in input (PDF o HTML) e stabilito il formato di output (EPUB) è necessario definire i tool e la procedura di conversione. Prima di analizzare eventuali librerie utili a implementare la procedura di conversione è stata effettuata una ricerca di tool già disponibili sul mercato in grado di svolgere il compito richiesto. I principali requisiti per la ricerca del tool sono:
 \begin{itemize}
     \item possibilità di convertire da almeno uno dei due formati disponibili in input verso il formato di output,
     \item eseguibile binario senza GUI.
 \end{itemize}
 
-\subsubsection{Calibre}
+\subsection{Calibre}
 Software libero, open source\footnote{\url{https://github.com/kovidgoyal/calibre}} e multipiattaforma, fornisce una suite di tool creare, conservare, catalogare e manipolare eBook. Tra i formati supportati, sia in input che output, è possibile trovare Epub, Fb2, Html, Lit, Mobi, Odt e Pdf.\\
 Tra i vari tool della suite è presente un convertitore, chiamato \textit{ebook-convert}\footnote{\url{https://manual.calibre-ebook.com/generated/en/ebook-convert.html}}, il quale soddisfa i requisiti sopra indicati.
 
@@ -128,13 +128,22 @@ L'unico endpoint fornito è chiamato \textit{convert} con metodo \textit{POST}: 
 \end{figure}
 
 \subsection{Delivery pdf2epub}
-% pdf2epub viene rilasciato come immagine docker nel registry azure di r&d (psacr) (2 pipeline separate e indipendenti: 1 per rilasciate l'immagine pdf2epub e una per deployare sisred)
 La modalità di delivery scelta per il servizio \textit{pdf2epub} è tramite immagine Docker rilasciata sul container registry aziendale \textit{psacr}, per il quale si fa uso dei servizi cloud forniti da Azure\footnote{\url{https://azure.microsoft.com/en-us/services/container-registry/\#overview}}.\\
 La regola che attiva la pipeline di rilascio è definita sul push di un tag sul branch principale (\textit{main}). In questo caso vengono caricate sul container registry due nuove immagini: ($i$) una con il tag esplicito che si aggiunge alle altre già caricate e ($ii$) un'altra con il tag \textit{latest}, la quale sovrascrive l'ultima immagine \textit{latest} mantenedola aggiornata all'ultima versione.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{img/tesi-6-pdf2html.drawio.png}
-\caption{Continuous Delivery pdf2epub}
+\caption{Continuous Integration/Delivery pdf2epub}
 \end{figure}
 \subsection{Deployment pdf2epub}
-% e deployato come nuovo microservizio del sisred (2 pipeline separate e indipendenti: 1 per rilasciate l'immagine pdf2epub e una per deployare sisred)
+Entrambe le tipologie di documenti da convertire vengono fornite dal \textit{Sistema Redazionale}, un applicativo mantenuto dal team Ricerca e Sviluppo del gruppo Maggioli S.p.A. il cui scopo è quello di semplificare le modalità di fruizione di tutti i contenuti editoriali (libri, riviste, contenuti web, eccetera) da parte di un insieme di servizi come motori di ricerca avanzati, applicazioni per professionisti, portali web specializzati ed applicazioni mobile. Il \textit{Sistema Redazionale} ha due obiettivi principali: ($i$) fornire supporto ai creatori di contenuto (redattori) e ($ii$) essere il mezzo che veicola questi contenuti verso l’utente finale\cite{amslaurea23043}.\\
+La scelta più adeguata per il deployment del servizio \textit{pdf2epub} è il suo inserimento tra i microservizi che compongono il \textit{Sistema Redazionale} (in modo analogo al microservizio \textit{pdf2html} già presente). I principali vantaggi di questa scelta sono:
+\begin{itemize}
+    \item Presenza di un \textit{Application Gateway} che si occupa di autenticare le richieste e reindirizzarle verso il microservizio corretto. Non è necessario quindi esporre direttamente \textit{pdf2epub} e non è necessario gestire l'autenticazione degli utenti.
+    \item Gestione/archiviazione delle conversioni rimandata al backend. Il backend si occupa di convertire in modo asincrono i documenti già memorizzati in formato pdf oppure quando ne vengono caricati di nuovi. In questo modo si ottimizza l'intero sistema effettuando tendenzialmente una unica conversione per documento piuttosto che ad ogni richiesta da parte degli utenti finali.
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-7-sisred.drawio.png}
+\caption{Architettura Aggiornata del Sistema Redazionale}
+\end{figure}
