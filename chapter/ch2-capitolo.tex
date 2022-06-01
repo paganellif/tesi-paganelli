@@ -78,7 +78,7 @@ I formati attualmente disponibili che soddisfano i requisiti sopra indicati rapp
 Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB sono state (\textit{i}) lo standard aperto e (\textit{ii}) la disponibilità, sia di software che di librerie, per la manipolazione del file. 
 
 \subsection{Conversione PDF/HTML2EPUB}
-La grande quantità di documenti già archiviati in formato PDF (> 2000) rende impossibile l'adozione di una procedura manuale di conversione e pertanto deve essere progettata in modo tale che questa venga effettuata on-demand dagli utenti finali tramite un apposito servizio REST.\\
+La necessità di progettare e realizzare un servizio di conversione in modo tale che possa essere eseguito on-demand dagli utenti finali deriva sia dalla quantità di documenti già archiviati in formato PDF (circa 2200) sia dalla loro eterogeneità. Su 2200 documenti infatti, circa 200 sono libri e i restanti sono riviste. Le riviste, rispetto i libri, contengono tantissimi elementi all'interno di ogni pagina che rendono molto complicata la conversione.\\
 Dati i formati in input (PDF o HTML) e stabilito il formato di output (EPUB) è necessario definire i tool e la procedura di conversione. Prima di analizzare eventuali librerie utili a implementare la procedura di conversione è stata effettuata una ricerca di tool già disponibili sul mercato in grado di svolgere il compito richiesto. I principali requisiti per la ricerca del tool sono:
 \begin{itemize}
     \item possibilità di convertire da almeno uno dei due formati disponibili in input verso il formato di output,
@@ -94,7 +94,35 @@ Tra i vari tool della suite è presente un convertitore, chiamato \textit{ebook-
 brew install calibre
 ebook-convert test.pdf test.epub
 \end{minted}
-\caption{Esempio semplice di conversione PDF/EPUB tramite \textit{ebook-convert}}
+\caption{Esempio: Installazione Calibre e conversione base PDF/EPUB tramite \textit{ebook-convert}}
 \end{listing}
 
+% descrivere i test di conversione fatti, perchè le conversioni html2epub fanno schifo (e quindi si fa pdf2epub)
+
 \section{Pdf2Epub}
+Si descrive in questa sezione come è stato progettato e sviluppato il servizio \textit{pdf2epub} dato il tool \textit{ebook-convert} (suite Calibre), scelto nella fase precedente di analisi come meccanismo core per la conversione da PDF a EPUB.\\
+L'approccio adottato consiste nello sviluppo di un "wrapper" del tool \textit{ebook-convert} in modo da fornire le sue funzionalità attraverso una REST API.\\
+L'unica funzione che deve essere svolta da \textit{pdf2epub} è: dato un documento in formato PDF in input, restituire in output quel documento convertito in formato EPUB. Per questo motivo si identifica un unico endpoint, il quale deve fornire la possibilità di passare tutti i parametri necessari alla configurazione della conversione. Tali parametri corrispondono agli argomenti\footnote{\url{https://manual.calibre-ebook.com/generated/en/ebook-convert.html}} accettati dall'eseguibile \textit{ebook-convert}:
+\begin{itemize}
+    \item \textbf{Global} - Opzioni comuni a qualsiasi tipo di conversione.
+    \item \textbf{Look and Feel} - Opzioni per controllare l'aspetto grafico dell'output.
+    \item \textbf{Heuristic Processing} - Opzioni per modificare il testo e la struttura del documento utilizzando pattern comuni.
+    \item \textbf{Search and Replace} - Opzioni per modificare il testo e la struttura del documento utilizzando i modelli definiti dall'utente.
+    \item \textbf{Structure Detection} - Opzioni per il controllo del rilevamento automatico della struttura del documento.
+    \item \textbf{Table of Contents} - Opzioni per il controllo della generazione dell'indice.
+    \item \textbf{Metadata} - Opzioni per impostare i metadati nell'output.
+    \item \textbf{Debug} - Opzioni di debug.
+    \item \textbf{Input PDF} - Opzioni specifiche per il documento di input in formato PDF.
+    \item \textbf{Output EPUB} - Opzioni specifiche per il documento di output in formato EPUB.
+\end{itemize}
+L'unico endpoint fornito è chiamato \textit{convert} con metodo \textit{POST}: esso richiede come unico parametro obbligatorio il file pdf da convertire oltre ai parametri opzionali sopra indicati. Ogni chiamata consiste nella esecuzione di un task tramite un \textit{ThreadPoolExecutor} il quale fa uso del componente \textit{EbookConverter}. Tale entità rappresenta il vero e proprio "wrapper" dell'eseguibile \textit{ebook-convert} fornito da Calibre.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.25\textwidth]{img/tesi-4-pdf2epub.drawio.png}
+\caption{Architettura Servizio pdf2epub}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{img/tesi-5-pdf2epub.drawio.png}
+\caption{Diagramma delle classi: pdf2epub}
+\end{figure}
