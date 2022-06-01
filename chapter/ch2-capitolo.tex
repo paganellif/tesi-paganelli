@@ -126,3 +126,15 @@ L'unico endpoint fornito è chiamato \textit{convert} con metodo \textit{POST}: 
 \includegraphics[width=0.6\textwidth]{img/tesi-5-pdf2epub.drawio.png}
 \caption{Diagramma delle classi: pdf2epub}
 \end{figure}
+
+\subsection{Delivery pdf2epub}
+% pdf2epub viene rilasciato come immagine docker nel registry azure di r&d (psacr) (2 pipeline separate e indipendenti: 1 per rilasciate l'immagine pdf2epub e una per deployare sisred)
+La modalità di delivery scelta per il servizio \textit{pdf2epub} è tramite immagine Docker rilasciata sul container registry aziendale \textit{psacr}, per il quale si fa uso dei servizi cloud forniti da Azure\footnote{\url{https://azure.microsoft.com/en-us/services/container-registry/\#overview}}.\\
+La regola che attiva la pipeline di rilascio è definita sul push di un tag sul branch principale (\textit{main}). In questo caso vengono caricate sul container registry due nuove immagini: ($i$) una con il tag esplicito che si aggiunge alle altre già caricate e ($ii$) un'altra con il tag \textit{latest}, la quale sovrascrive l'ultima immagine \textit{latest} mantenedola aggiornata all'ultima versione.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{img/tesi-6-pdf2html.drawio.png}
+\caption{Continuous Delivery pdf2epub}
+\end{figure}
+\subsection{Deployment pdf2epub}
+% e deployato come nuovo microservizio del sisred (2 pipeline separate e indipendenti: 1 per rilasciate l'immagine pdf2epub e una per deployare sisred)
