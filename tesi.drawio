@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-06-05T06:11:24.023Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="5eVIBgwVRL-volXeNlDD" version="19.0.0" type="github" pages="8">
+<mxfile host="app.diagrams.net" modified="2022-06-05T06:17:27.526Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="vU8pVZ9nLRsiq_NVT9f1" version="19.0.0" type="github" pages="8">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1186" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -579,7 +579,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tcbIh1rCfoUuNltyw87W" name="6-pdf2html">
-    <mxGraphModel dx="1186" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1186" dy="618" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -682,8 +682,8 @@
         <mxCell id="ENeXu_JvE8sbJUKTAztp-21" value="" style="points=[[0.35,0,0],[0.98,0.51,0],[1,0.71,0],[0.67,1,0],[0,0.795,0],[0,0.65,0]];verticalLabelPosition=bottom;sketch=0;html=1;verticalAlign=top;aspect=fixed;align=center;pointerEvents=1;shape=mxgraph.cisco19.user;fillColor=#005073;strokeColor=none;dashed=1;" parent="1" vertex="1">
           <mxGeometry x="60" y="200" width="50" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ENeXu_JvE8sbJUKTAztp-23" value="push &lt;br&gt;tag x.x.x" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="50" y="410" width="60" height="30" as="geometry" />
+        <mxCell id="ENeXu_JvE8sbJUKTAztp-23" value="git&lt;br&gt;push &lt;br&gt;tag x.x.x" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="55" y="400" width="60" height="50" as="geometry" />
         </mxCell>
         <mxCell id="ENeXu_JvE8sbJUKTAztp-26" value="" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/containers/Container_Registries.svg;dashed=1;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="440" y="150" width="66.88" height="60" as="geometry" />
@@ -694,17 +694,17 @@
         <mxCell id="ENeXu_JvE8sbJUKTAztp-28" value="&lt;b&gt;&lt;i&gt;Azure Container &lt;br&gt;Registry&lt;br&gt;(psacr)&lt;br&gt;&lt;/i&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="420" y="210" width="110" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ENeXu_JvE8sbJUKTAztp-29" value="docker push pdf2epub:x.x.x&lt;br&gt;docker push pdf2epub:latest" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="240" y="220" width="170" height="30" as="geometry" />
+        <mxCell id="ENeXu_JvE8sbJUKTAztp-29" value="docker push &lt;br&gt;pdf2epub:x.x.x&lt;br&gt;&lt;br&gt;docker push &lt;br&gt;pdf2epub:latest" style="text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="290" y="200" width="100" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="ENeXu_JvE8sbJUKTAztp-32" value="&amp;nbsp; docker pull pdf2epub:x.x.x" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="535.45" y="225" width="160" height="20" as="geometry" />
+        <mxCell id="ENeXu_JvE8sbJUKTAztp-32" value="docker pull &lt;br&gt;pdf2epub:x.x.x" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="550.9000000000001" y="220" width="90" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="0NysuZ1wag71AY3VkieZ" name="7-sisred">
-    <mxGraphModel dx="1186" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1186" dy="618" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -723,14 +723,14 @@
             <mxPoint x="726" y="183" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="qtDwlcgX7M-Nm4drZjrJ-4" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=http://assets.stickpng.com/images/5848152fcef1014c0b5e4967.png;" vertex="1" parent="1">
+        <mxCell id="qtDwlcgX7M-Nm4drZjrJ-4" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=http://assets.stickpng.com/images/5848152fcef1014c0b5e4967.png;" parent="1" vertex="1">
           <mxGeometry x="695" y="120" width="62.24" height="62" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="hdZx6P8LRJRJxtUfOlNM" name="8-kmm">
-    <mxGraphModel dx="1186" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1186" dy="618" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
