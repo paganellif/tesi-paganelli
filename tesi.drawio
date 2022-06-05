@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-06-05T21:08:45.723Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="sh9luDkjzlpZ9nUu0sAr" version="19.0.0" type="github" pages="8">
+<mxfile host="app.diagrams.net" modified="2022-06-05T21:10:37.886Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="2i_O1Thul-rtHnk9hr6a" version="19.0.0" type="github" pages="8">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1186" dy="683" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -125,10 +125,10 @@
         <mxCell id="7OE0ms06HwQbtnijEo_u-48" value="&amp;lt;&amp;lt; include &amp;gt;&amp;gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="440" y="435" width="90" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="7OE0ms06HwQbtnijEo_u-49" value="Document &lt;br&gt;Converter (Sisred)&lt;br&gt;&amp;lt;&amp;lt;service&amp;gt;&amp;gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=none;" parent="1" vertex="1">
+        <mxCell id="7OE0ms06HwQbtnijEo_u-49" value="Document Converter&lt;br&gt;&amp;lt;&amp;lt;service&amp;gt;&amp;gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="670" y="560" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="7OE0ms06HwQbtnijEo_u-52" value="Document Management &lt;br&gt;System (Sisred)&lt;br&gt;&amp;lt;&amp;lt;service&amp;gt;&amp;gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=none;" parent="1" vertex="1">
+        <mxCell id="7OE0ms06HwQbtnijEo_u-52" value="Document &lt;br&gt;Management System&lt;br&gt;&amp;lt;&amp;lt;service&amp;gt;&amp;gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="670" y="180" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="7doHqzztuBdldI2ucD-e-1" value="Local Storage" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=none;" parent="1" vertex="1">
@@ -141,7 +141,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="N_QB2z3_9BETL4bLQdhx" name="2-Use-case2">
-    <mxGraphModel dx="1186" dy="619" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1186" dy="683" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -159,10 +159,10 @@
         <mxCell id="SGanRm2m6Ny-fl0QdsI--1" value="&lt;span style=&quot;&quot;&gt;Local Storage&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="680" y="60" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="SGanRm2m6Ny-fl0QdsI--2" value="&lt;span style=&quot;&quot;&gt;Document&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt;Converter (Sisred)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="SGanRm2m6Ny-fl0QdsI--2" value="&lt;span style=&quot;&quot;&gt;Document&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;Converter&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="530" y="60" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="SGanRm2m6Ny-fl0QdsI--3" value="Document Management&lt;br&gt;System (Sisred)" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="SGanRm2m6Ny-fl0QdsI--3" value="Document Management&lt;br&gt;System" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="380" y="60" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="bzol6T_jn6gaYL33oy43-3" value="" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;dashed=1;strokeWidth=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=none;" parent="1" source="bzol6T_jn6gaYL33oy43-7" edge="1">
