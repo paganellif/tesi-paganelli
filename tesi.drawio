@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-06-06T08:28:49.988Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="fsxCfwcoxypt8KnyvgW8" version="19.0.0" type="github" pages="9">
+<mxfile host="app.diagrams.net" modified="2022-06-06T09:08:01.260Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="DC-MQdd0s2yFHj2-dPPY" version="19.0.0" type="github" pages="10">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1186" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -814,7 +814,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="OGHBcAO3wHCkT7rNGL64" name="9-kotlinjvm">
-    <mxGraphModel dx="1186" dy="618" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1186" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -866,6 +866,43 @@
         </mxCell>
         <mxCell id="kBd8abnIa8mi6s1mMVFv-14" value="Java Virtual Machine (JVM)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="360" y="430" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="bowt3mHvkk4pS6lp2vXT" name="10-kotlinnative">
+    <mxGraphModel dx="1186" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="LCJSMj7NL03ff58PyMSC-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="LCJSMj7NL03ff58PyMSC-2" target="LCJSMj7NL03ff58PyMSC-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LCJSMj7NL03ff58PyMSC-2" value="Codice Kotlin&lt;br&gt;(&lt;i&gt;.kt&lt;/i&gt;)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="100" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LCJSMj7NL03ff58PyMSC-3" value="Rappresentazione Intermedia (&lt;i&gt;IR&lt;/i&gt;)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LCJSMj7NL03ff58PyMSC-4" value="Compilatore Kotlin&lt;br&gt;(&lt;i&gt;kotlinc&lt;/i&gt;)" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="230" y="170" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="LCJSMj7NL03ff58PyMSC-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="LCJSMj7NL03ff58PyMSC-3" target="LCJSMj7NL03ff58PyMSC-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="220" y="280" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LCJSMj7NL03ff58PyMSC-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="LCJSMj7NL03ff58PyMSC-7" target="LCJSMj7NL03ff58PyMSC-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LCJSMj7NL03ff58PyMSC-7" value="Binario Nativo Eseguibile" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LCJSMj7NL03ff58PyMSC-8" value="Compilatore LLVM" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="230" y="295" width="110" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="LCJSMj7NL03ff58PyMSC-9" value="iOS Runtime" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="430" width="120" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
