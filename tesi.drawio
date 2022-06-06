@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-06-06T08:17:40.110Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="1bnXjHko_ofcVWmFS5-L" version="19.0.0" type="github" pages="9">
+<mxfile host="app.diagrams.net" modified="2022-06-06T08:28:49.988Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="fsxCfwcoxypt8KnyvgW8" version="19.0.0" type="github" pages="9">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1186" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -814,7 +814,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="OGHBcAO3wHCkT7rNGL64" name="9-kotlinjvm">
-    <mxGraphModel dx="1186" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1186" dy="618" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -830,16 +830,42 @@
         <mxCell id="kBd8abnIa8mi6s1mMVFv-4" value="Compilatore Kotlin&lt;br&gt;(&lt;i&gt;kotlinc&lt;/i&gt;)" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="230" y="170" width="110" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="kBd8abnIa8mi6s1mMVFv-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="kBd8abnIa8mi6s1mMVFv-6">
+        <mxCell id="kBd8abnIa8mi6s1mMVFv-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="kBd8abnIa8mi6s1mMVFv-6" source="kBd8abnIa8mi6s1mMVFv-2">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="220" y="280" as="sourcePoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="kBd8abnIa8mi6s1mMVFv-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="kBd8abnIa8mi6s1mMVFv-6" target="kBd8abnIa8mi6s1mMVFv-8">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="kBd8abnIa8mi6s1mMVFv-6" value="Bytecode Dalvik&lt;br&gt;(&lt;i&gt;.dex&lt;/i&gt;)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="160" y="340" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="kBd8abnIa8mi6s1mMVFv-7" value="Compilatore Dex&lt;br&gt;(&lt;i&gt;d8&lt;/i&gt;)" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="230" y="290" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kBd8abnIa8mi6s1mMVFv-8" value="Android Runtime (ART)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="430" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="kBd8abnIa8mi6s1mMVFv-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="kBd8abnIa8mi6s1mMVFv-11" target="kBd8abnIa8mi6s1mMVFv-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kBd8abnIa8mi6s1mMVFv-11" value="Codice Kotlin&lt;br&gt;(&lt;i&gt;.kt&lt;/i&gt;)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="100" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kBd8abnIa8mi6s1mMVFv-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="kBd8abnIa8mi6s1mMVFv-12" target="kBd8abnIa8mi6s1mMVFv-14">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kBd8abnIa8mi6s1mMVFv-12" value="Bytecode Java&lt;br&gt;(&lt;i&gt;.class&lt;/i&gt;)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kBd8abnIa8mi6s1mMVFv-13" value="Compilatore Kotlin&lt;br&gt;(&lt;i&gt;kotlinc&lt;/i&gt;)" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="430" y="170" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kBd8abnIa8mi6s1mMVFv-14" value="Java Virtual Machine (JVM)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="430" width="120" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
