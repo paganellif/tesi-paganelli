@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-06-08T14:31:06.115Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="KxK2dDZQBzdLEQ3Gh44Q" version="19.0.0" type="github" pages="10">
+<mxfile host="app.diagrams.net" modified="2022-06-08T14:44:24.153Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="43Tiw12bA-ZN7AruxNra" version="19.0.0" type="github" pages="10">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1187" dy="1055" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -392,8 +392,8 @@
         <mxCell id="thh802RaBrMDVBIdTAjy-41" value="Nexus Sonatype&lt;br&gt;Package Manager" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="275.5300000000001" y="273.25" width="110" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="thh802RaBrMDVBIdTAjy-43" value="&lt;b&gt;&lt;i&gt;R&amp;amp;D Services&lt;/i&gt;&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="462.7" y="97" width="90" height="20" as="geometry" />
+        <mxCell id="thh802RaBrMDVBIdTAjy-43" value="&lt;b&gt;&lt;i&gt;Maggioli R&amp;amp;D Services&lt;/i&gt;&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="462.7" y="97" width="150" height="20" as="geometry" />
         </mxCell>
         <mxCell id="thh802RaBrMDVBIdTAjy-51" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://swimburger.net/media/ppnn3pcl/azure.png;" parent="1" vertex="1">
           <mxGeometry x="657.91" y="80" width="47" height="47" as="geometry" />
