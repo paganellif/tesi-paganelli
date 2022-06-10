@@ -1,4 +1,5 @@
 % !TeX root = ../main.tex
+In questo capitolo viene descritto un caso d'uso aziendale di sviluppo di applicazione mobile adottando i metodi, gli automatismi e gli strumenti descritti nel capitolo \ref{ch:ch4}. L'obiettivo è quello di dimostrare l'efficacia del modello progettato tramite lo sviluppo di una applicazione mobile per la gestione e la visualizzazione dei contenuti digitali pubblicati da Maggioli SpA in formato ebook e rilasciata per le piattaforme Android e iOS.
 
 \section{Analisi dei Requisiti}
 \subsection{Requisiti Funzionali}
@@ -144,9 +145,37 @@ La modalità di delivery scelta per il servizio \textit{pdf2epub} è tramite imm
 La regola che attiva la pipeline di rilascio è definita sul push di un tag sul branch principale (\textit{main}). In questo caso vengono caricate sul container registry due nuove immagini: ($i$) una con il tag esplicito che si aggiunge alle altre già caricate e ($ii$) un'altra con il tag \textit{latest}, la quale sovrascrive l'ultima immagine \textit{latest} mantenedola aggiornata all'ultima versione.
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{img/tesi-6-pdf2html.drawio.png}
+\includegraphics[width=0.9\textwidth]{img/tesi-6-pdf2epub.drawio.png}
 \caption{Continuous Integration/Delivery pdf2epub}
 \end{figure}
+L'immagine Docker del servizio è costruita utilizzando come base di partenza l'immagine \textit{linuxserver/calibre}\footnote{\url{https://hub.docker.com/r/linuxserver/calibre}}. Questa scelta è data dalle seguenti motivazioni/vantaggi:
+\begin{itemize}
+    \item \textit{LinuxServer.io}\footnote{\url{https://www.linuxserver.io/}} è una community grande e attiva che distribuisce e mantiene tantissime immagini largamente diffuse,
+    \item l'installazione e la manutenzione all'interno di un container di Calibre, ebook-convert e di tutte le dipendenze è rimandata alla community che gestisce l'immagine Docker,
+    \item tramite l'utilizzo di un tool per l'aggiornamento automatico delle dipendenze, in questo caso specifico Renovate\footnote{\url{hhttps://github.com/renovatebot/renovate}}, l'aggiornamento di Calibre, di ebook-convert e delle dipendenze è semplificato e automatizzato.
+\end{itemize}
+\begin{listing}[H]
+\begin{minted}{docker}
+FROM --platform=linux/amd64 linuxserver/calibre:5.43.0
+
+WORKDIR /home/pdf2epub
+
+ENV FLASK_DEBUG=1
+ENV FLASK_APP=app.py
+ENV FLASK_ENV=production
+
+COPY . /home/pdf2epub
+
+RUN apt update && apt install pip -y
+
+RUN pip install -r requirements.txt
+
+ENTRYPOINT waitress-serve --listen=0.0.0.0:5050 --call 'app:create_app'
+
+EXPOSE 5050
+\end{minted}
+\caption{Dockerfile \textit{pdf2epub} (v1.0.0)}
+\end{listing}
 \subsection{Deployment pdf2epub}
 Entrambe le tipologie di documenti da convertire vengono fornite dal \textit{Sistema Redazionale}\footnote{\url{https://sisred.maggiolicloud.it}}, un applicativo mantenuto dal team Ricerca e Sviluppo del gruppo Maggioli S.p.A. il cui scopo è quello di semplificare le modalità di fruizione di tutti i contenuti editoriali (libri, riviste, contenuti web, eccetera) da parte di un insieme di servizi come motori di ricerca avanzati, applicazioni per professionisti, portali web specializzati ed applicazioni mobile. Il \textit{Sistema Redazionale} ha due obiettivi principali: ($i$) fornire supporto ai creatori di contenuto (redattori) e ($ii$) essere il mezzo che veicola questi contenuti verso l’utente finale\cite{amslaurea23043}.\\
 La scelta più adeguata per il deployment del servizio \textit{pdf2epub} è il suo inserimento tra i microservizi che compongono il \textit{Sistema Redazionale} (in modo analogo al microservizio \textit{pdf2html} già presente). I principali vantaggi di questa scelta sono:
