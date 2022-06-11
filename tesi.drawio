@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-06-11T14:04:41.775Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="7w6GP--o2af0GavivlgG" version="19.0.3" type="github" pages="11">
+<mxfile host="app.diagrams.net" modified="2022-06-11T17:59:08.293Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="8QObOS5GN4XMQJ3PnVcd" version="19.0.3" type="github" pages="11">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1186" dy="675" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -414,7 +414,7 @@
           <mxGeometry x="571.7" y="177" width="110" height="30" as="geometry" />
         </mxCell>
         <mxCell id="thh802RaBrMDVBIdTAjy-58" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://cdn-icons-png.flaticon.com/512/831/831276.png;" parent="1" vertex="1">
-          <mxGeometry x="602" y="547" width="47" height="47" as="geometry" />
+          <mxGeometry x="605.96" y="547" width="47" height="47" as="geometry" />
         </mxCell>
         <mxCell id="thh802RaBrMDVBIdTAjy-59" value="App Store&lt;br&gt;Marketplace" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="588" y="594" width="80" height="30" as="geometry" />
