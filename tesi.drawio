@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-06-11T17:59:46.634Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="Yho7l1sWpOurC6uFGBDX" version="19.0.3" type="github" pages="11">
+<mxfile host="app.diagrams.net" modified="2022-06-12T09:29:18.879Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="kSjVZZn666MYIFI8p1_t" version="19.0.3" type="github" pages="11">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
-    <mxGraphModel dx="1186" dy="675" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1476" dy="913" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1027,7 +1027,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="-KRhnopRJ0bwVoLISsUi" name="11-cicd">
-    <mxGraphModel dx="1186" dy="675" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1476" dy="913" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1085,8 +1085,8 @@
         <mxCell id="x-TBb6uTDjNG0q6MgV5P-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="x-TBb6uTDjNG0q6MgV5P-17" target="x-TBb6uTDjNG0q6MgV5P-59" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="x-TBb6uTDjNG0q6MgV5P-17" value="sonar scan" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="380" y="255" width="120" height="30" as="geometry" />
+        <mxCell id="x-TBb6uTDjNG0q6MgV5P-17" value="detekt scan" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="315" y="255" width="120" height="30" as="geometry" />
         </mxCell>
         <mxCell id="x-TBb6uTDjNG0q6MgV5P-20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="x-TBb6uTDjNG0q6MgV5P-21" target="x-TBb6uTDjNG0q6MgV5P-38" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -1106,7 +1106,7 @@
         <mxCell id="x-TBb6uTDjNG0q6MgV5P-25" value="android" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="315" y="175" width="120" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x-TBb6uTDjNG0q6MgV5P-26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="x-TBb6uTDjNG0q6MgV5P-27" target="x-TBb6uTDjNG0q6MgV5P-17" edge="1">
+        <mxCell id="x-TBb6uTDjNG0q6MgV5P-26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="x-TBb6uTDjNG0q6MgV5P-27" target="4X6WbUKX19gJs84GqvUG-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="505" y="255" as="targetPoint" />
           </mxGeometry>
@@ -1231,6 +1231,12 @@
             <mxPoint x="155" y="640" as="sourcePoint" />
             <mxPoint x="155" y="700" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="4X6WbUKX19gJs84GqvUG-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4X6WbUKX19gJs84GqvUG-1" target="x-TBb6uTDjNG0q6MgV5P-59">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4X6WbUKX19gJs84GqvUG-1" value="sonar scan" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="445" y="255" width="120" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
