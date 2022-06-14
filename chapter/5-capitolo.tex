@@ -188,3 +188,5 @@ La scelta più adeguata per il deployment del servizio \textit{pdf2epub} è il s
 \includegraphics[width=1\textwidth]{img/tesi-7-sisred.drawio.png}
 \caption{Architettura aggiornata del Sistema Redazionale}
 \end{figure}
+Attualmente il \textit{Sistema Redazionale} è installato su un cluster Kubernetes fornito \textit{as a Service} dal cloud provider Azure\footnote{\url{https://azure.microsoft.com/en-us/services/kubernetes-service/}}. Per effettuare il deploy dei vari componenti installati sul cluster è utilizzato \textit{Helm}\footnote{\url{https://helm.sh/}}, un tool open-source per effettuare templating di manifest Kubernetes e distribuire "pacchetti", chiamati \textit{chart}, nel mondo Kubernetes. Anche per il servizio \textit{pdf2epub} è adottato lo stesso meccanismo di deploy tramite l'installazione di un chart all'interno del cluster:
+% TODO: descrivere helm chart utilizzato per deployare pdf2epub
