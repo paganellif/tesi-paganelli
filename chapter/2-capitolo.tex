@@ -53,9 +53,9 @@ Il plugin Gradle KMP è uno strumento utile per realizzare progetti multiplatfor
 \begin{listing}[H]
 \begin{minted}{kotlin}
 plugins {
-    kotlin("multiplatform")
+    kotlin("multiplatform") // org.jetbrains.kotlin.multiplatform
     id("com.android.library")
-    kotlin("native.cocoapods")
+    kotlin("native.cocoapods") // org.jetbrains.kotlin.native.cocoapods
 }
 
 kotlin {
@@ -63,6 +63,10 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
+    
+    cocoapods {
+        // Configurazione Cocoapods
+    }
     
     sourceSets {
         val commonMain by getting {
@@ -91,9 +95,39 @@ kotlin {
         }
     }
 }
+
+android {
+    // Configurazione android 
+}
 \end{minted}
 \caption{Definizione utilizzo Plugin Gradle KMP nel file \textit{build.gradle.kts} del modulo condiviso (Kotlin)}
 \end{listing}
+
+\begin{listing}[H]
+\begin{minted}{kotlin}
+pluginManagement {
+    repositories {
+        google() // https://dl.google.com/dl/android/maven2/
+        gradlePluginPortal() // https://plugins.gradle.org/m2/
+        mavenCentral() // https://repo.maven.apache.org/maven2/".
+    }
+}
+
+rootProject.name = "My_Application" // Nome della app
+include(":androidApp") // Nome del modulo android
+include(":shared") // Nome del modulo KMM condiviso
+\end{minted}
+\caption{Struttura iniziale del file \textit{settings.gradle.kts} nella root di progetto (Kotlin)}
+\end{listing}
+
+\subsection{Plugin Tasks}
+Il plugin gradle KMM e le relative dipendenze rendono disponibile una vasta serie di task per eseguire differenti elaborazioni sia sul codice della specifica piattaforma target che sul codice condiviso. Alcuni dei principali task sono:
+\begin{itemize}
+    \item Build - tasks per build, compile, link
+    \item CocoaPods - tasks per la gestione delle dipendenze Swift/Objective-C
+    \item Interop - tasks relativi all'utilizzo del \textit{commonizer}\footnote{\url{https://github.com/JetBrains/kotlin/tree/master/native/commonizer}}
+    \item Verification tasks - tasks per l'esecuzione dei test
+\end{itemize}
 
 \subsection{KMM Android Studio IDE Plugin}
 L'IDE\footnote{Integrated Development Environment} Android Studio è costruito su IntelliJ, il quale è uno tra gli IDE più diffusi ed è sviluppato da JetBrains. Tramite il plugin KMM, installabile direttamente dal marketplace integrato in Android Studio o dal sito ufficiale JetBrains\footnote{\url{https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile/versions/stable}}, si abilita un insieme di funzionalità a supporto dello sviluppo di codice multiplatform, in particolare:
