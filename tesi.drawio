@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-06-14T09:30:14.269Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="ac9WcPERpXNf7eG3Nki1" version="20.0.0" type="github" pages="11">
+<mxfile host="app.diagrams.net" modified="2022-06-14T09:38:10.797Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="icYjB1zK5Lc9eNi3JPde" version="20.0.0" type="github" pages="11">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1186" dy="675" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -1116,7 +1116,7 @@
           <mxGeometry x="556" y="420" width="45" height="30" as="geometry" />
         </mxCell>
         <mxCell id="x-TBb6uTDjNG0q6MgV5P-33" value="ipa" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="611" y="420" width="40" height="30" as="geometry" />
+          <mxGeometry x="607" y="420" width="44" height="30" as="geometry" />
         </mxCell>
         <mxCell id="x-TBb6uTDjNG0q6MgV5P-34" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="x-TBb6uTDjNG0q6MgV5P-35" target="z6Ftp4m0k9Fus10d7kCu-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -1358,10 +1358,7 @@
         <mxCell id="pDvYE4yawzYYHQmSsREs-7" value="defectdojo" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="286" y="70" width="75" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="pDvYE4yawzYYHQmSsREs-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="pDvYE4yawzYYHQmSsREs-17" target="z6Ftp4m0k9Fus10d7kCu-33">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="pDvYE4yawzYYHQmSsREs-17" value="base-ios" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="pDvYE4yawzYYHQmSsREs-17" value="base-android" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="461" y="70" width="75" height="30" as="geometry" />
         </mxCell>
       </root>
