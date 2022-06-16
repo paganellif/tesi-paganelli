@@ -5,19 +5,31 @@ Dato il processo di sviluppo delle applicazioni mobile individuato nel capitolo 
 \section{Continuous Integration}
 
 \subsection{Build}
+% cache android sdk, gradle e kotlin (https://kotlinlang.org/docs/native-improving-compilation-time.html#general-recommendations)
+Tipicamente la fase iniziale della integrazione continua consiste nella verifica della corretta compilazione del codice sorgente. La compilazione rappresenta un vincolo essenziale per tutte le successive fasi e per questo è definita come fase bloccante: in caso di compilazione fallita la pipeline termina senza procedere con le fasi successive.\\
+La fase di build definita svolge quindi il compito di validare la compilazione del codice condiviso (Kotlin) e del codice specifico Android (Kotlin) e iOS (Swift). 
 
 \subsection{Testing}
+Dopo aver verificato la corretta compilazione del codice la fase successiva è quella di test. In questa fase vengono eseguiti tutti gli unit test definiti, anche in questo caso sia per il codice condiviso che per il codice specifico Android e iOS.
 
 \subsection{Analysis}
-In questa sezione si descrivono le tecniche di analisi statica del codice adottate e come queste sono state integrate nel processo di sviluppo per controllare qualità del codice, code smell, bug e vulnerabilità.
+In questa sezione si descrivono le tecniche di analisi adottate e come queste sono state integrate nel processo di sviluppo sia per il codice sviluppato che per le dipendenze del sistema. Queste tecniche di analisi si distinguono rispettivamente in:
+\begin{itemize}
+    \item \textit{Static Application Security Testing} (SAST) - Analisi white-box della applicazione al fine di individuare vulnerabilità, code smell e bug.
+    \item \textit{Software Composition Analysis} (SCA) - Analisi delle dipendenze di progetto con lo scopo di individuare vulnerabilità pubbliche (CVE)\footnote{Common Vulnerability and Exposure} associate ad esse.
+\end{itemize}
+In entrambe le tipologie di analisi è fondamentale ottenere come risultato uno o più report della scansione, in grado di descrivere in modo dettagliato eventuali "findings" trovati, ovvero l'insieme delle entità restituite dalla analisi/ricerca. I report vengono prodotti tipicamente sia in formati human-readable (es. pagina HTML) che machine-readable (es. JSON, XML, ...) per poter essere utilizzati da applicazioni terze come ad esempio servizi di raccolta per centralizzare la consultazione di report eterogenei (\textit{Vulnerability Management Tools}).
+
 % sonarqube (android,shared,ios), detekt (android,shared), dependency-check (android,shared,ios)
-% defectdojo per raccogliere in un unico punto centralizzato tutti i report prodotti
+% defectdojo per raccogliere in un unico punto centralizzato tutti i report prodotti -> forse
 
 \subsection{Package}
+Definiti i passi di compilazione, testing e analisi del codice la parte di integrazione continua termina con la pacchettizzazione dell'applicazione. In questa fase del processo il codice sorgente viene impacchettato in modo automatico nei formati richiesti dalle piattaforme target, ovvero \textit{apk}\footnote{Android Package} per Android e \textit{ipa}\footnote{iOS App Store Package} per iOS.
 
 \section{Continuous Delivery}
 
 \subsection{Alpha Release}
+% rilascio sul package registry gitlab
 
 \subsection{Beta Release}
 
