@@ -1,0 +1,17 @@
+plugins {
+    id("com.android.application")
+    kotlin("android")
+    // Definizione plugin per il modulo android
+    id("org.owasp.dependencycheck")
+}
+
+...
+...
+
+dependencyCheck {
+    // Configurazione formati dei report prodotti
+    formats = listOf(
+        org.owasp.dependencycheck.reporting.ReportGenerator.Format.XML,
+        org.owasp.dependencycheck.reporting.ReportGenerator.Format.HTML
+    )
+}

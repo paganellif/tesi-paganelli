@@ -1,0 +1,14 @@
+android:depcheck:
+  stage: analysis:sca
+  extends: .base-android
+  dependencies: [android:unit:test]
+  script:
+    - gradle :androidApp:dependencyCheckAnalyze
+  artifacts:
+    name: android-depcheck
+    expire_in: 1 day
+    paths:
+      - androidApp/build/reports/dependency-check-report.*
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+      changes: ["build.gradle.kts", "androidApp/build.gradle.kts"]
