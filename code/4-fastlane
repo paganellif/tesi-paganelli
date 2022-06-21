@@ -1,0 +1,6 @@
+lane :beta do # lane
+  sync_code_signing(type: "appstore") # action
+  build_app(scheme: "MyApp") # action
+  upload_to_testflight # action
+  slack(message: "Successfully distributed a new beta build") # action
+end
