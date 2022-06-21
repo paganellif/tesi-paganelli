@@ -1,12 +1,8 @@
-sonarqube {
-  properties {
-    property("sonar.sourceEncoding", "UTF-8")
-    property("sonar.sources", "src/androidMain,src/commonMain,src/iosMain")
-    property("sonar.tests", "src/androidTest,src/commonTest,src/iosTest")
-    property("sonar.junit.reportPaths", "build/reports/tests/testReleaseUnitTest,build/test-results/testReleaseUnitTest")
-    property("sonar.dependencyCheck.htmlReportPath", "build/reports/dependency-check-report.html")
-    property("sonar.dependencyCheck.xmlReportPath", "build/reports/dependency-check-report.xml")
-    property("sonar.androidLint.reportPaths", "build/reports/lint-results-debug.xml")
-    property("sonar.kotlin.detekt.reportPaths", "build/reports/detekt/detekt.xml")
-  }
-}
+sonar.sourceEncoding="UTF-8"
+sonar.sources="src/androidMain,src/commonMain,src/iosMain"
+sonar.tests="src/androidTest,src/commonTest,src/iosTest"
+sonar.junit.reportPaths="build/reports/tests/testReleaseUnitTest,
+    build/test-results/testReleaseUnitTest"
+sonar.dependencyCheck.xmlReportPath="build/reports/dependency-check-report.xml"
+sonar.androidLint.reportPaths="build/reports/lint-results-debug.xml"
+sonar.kotlin.detekt.reportPaths="build/reports/detekt/detekt.xml"

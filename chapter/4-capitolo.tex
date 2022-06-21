@@ -61,10 +61,11 @@ La fase di analisi statica viene eseguita per il codice condiviso e per il codic
 \end{listing}
 
 Data la funzionalità di gestione delle vulnerabilità fornita dallo stesso SonarQube e la possibilità di integrare tutte le tipologie di report prodotte sia nella fase di analisi delle dipendenze che nella fase di analisi statica del codice, si è deciso di non introdurre nel sistema l'utilizzo dei servizi forniti dalla installazione aziendale di DefectDojo.\\
-Il plugin Gradle SonarQube utilizzato è stato dunque configurato, per poter considerare i report prodotti nelle altre fasi di analisi, agendo sui file \textit{build.gradle.kts} degli specifici moduli:
+Per le fasi di analisi, sia statica che dinamica, i tool hanno bisogno solo dei sorgenti e dei file di configurazione. Questo comporta il vantaggio di non dover compilare nessun file, scaricare nessun sdk, ... . Per questo motivo, dove possibile, è stata utilizzata l'immagine Docker del relativo tool come immagine per il job della pipeline.\\
+Il client SonarQube utilizzato è stato dunque configurato, per poter considerare i report prodotti nelle altre fasi di analisi, agendo sui file \textit{build.gradle.kts} degli specifici moduli:
 \begin{listing}[H]
 \inputminted{kotlin}{code/4-sonarplugin}
-\caption{Configurazione plugin Gradle SonarQube per il modulo condiviso (Shared)}
+\caption{Configurazione client SonarQube per il modulo condiviso (Shared)}
 \end{listing}
 \begin{figure}[H]
 \centering
@@ -80,6 +81,19 @@ Il plugin Gradle SonarQube utilizzato è stato dunque configurato, per poter con
 Definiti i passi di compilazione, testing e analisi del codice la parte di integrazione continua termina con la pacchettizzazione dell'applicazione. In questa fase del processo il codice sorgente viene impacchettato in modo automatico nei formati richiesti dalle piattaforme target, ovvero \textit{.apk}\footnote{Android Package} per Android e \textit{.ipa}\footnote{iOS App Store Package} per iOS.
 
 \section{Continuous Delivery}
+
+\subsection{Fastlane}
+Uno fra i tool open-source più diffusi a supporto della automazione dello sviluppo di applicazioni mobile, sia Android che iOS, è Fastlane\footnote{\url{https://github.com/fastlane/fastlane}}. L'impiego principale di questo tool è nella automazione della fase di rilascio della applicazione, sia in beta che in produzione, grazie alla gestione di tutti quei task necessari ma dispendiosi in termini di tempo come: generazione degli screenshot, firma digitale del codice (\textit{Code Signing}), ... .\\
+Si fa uso dei seguenti concetti per configurare fastlane nell'apposito file di configurazione (\textit{Fastfile}) e con sintassi Ruby:
+\begin{itemize}
+    \item \textit{Action} - Elaborazioni pre-definite e configurabili tramite passaggio di parametri.
+    \item \textit{Lane} - Insieme di action definito dall'utente per descrivere elaborazioni più complesse.
+\end{itemize}
+
+\begin{listing}[H]
+\inputminted{ruby}{code/4-fastlane}
+\caption{Esempio Fastlane: lane per il rilascio in versione beta di applicazioni iOS}
+\end{listing}
 
 \subsection{Alpha Release}
 % rilascio sul package registry gitlab, versionamento con l hash della commit ad ogni modifica sul branch dev. ogni versione che dal branch dev viene portata sul branch test diventa una beta release (pubblicata su testflight e google play console) e ogni versione che da test viene portata su main diventa una prod release (pubblicata su app store e google play).
