@@ -1,9 +1,16 @@
 android:depcheck:
   stage: analysis:sca
-  extends: .base-android
-  dependencies: [android:unit:test]
+  image:
+    name: owasp/dependency-check:7.1.1
+    entrypoint: [""]
+  dependencies: []
+  allow_failure: true
+  variables:
+    REPORT_FORMAT: XML
+    SCAN_DIR: ${CI_PROJECT_DIR}/androidApp
+    REPORT_PATH: ${SCAN_DIR}/build/reports
   script:
-    - gradle :androidApp:dependencyCheckAnalyze
+    - /usr/share/dependency-check/bin/dependency-check.sh --format="${REPORT_FORMAT}" --scan="${SCAN_DIR}" -o="${REPORT_PATH}"
   artifacts:
     name: android-depcheck
     expire_in: 1 day
@@ -11,4 +18,4 @@ android:depcheck:
       - androidApp/build/reports/dependency-check-report.*
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
-      changes: ["build.gradle.kts", "androidApp/build.gradle.kts"]
+      changes: ["androidApp/build.gradle.kts"]

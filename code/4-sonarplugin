@@ -1,8 +1,12 @@
 sonar.sourceEncoding="UTF-8"
 sonar.sources="src/androidMain,src/commonMain,src/iosMain"
-sonar.tests="src/androidTest,src/commonTest,src/iosTest"
+
+sonar.test.inclusions="src/androidTest/**/*.*,src/commonTest/**/*.*,
+    src/iosTest/**/*.*"
 sonar.junit.reportPaths="build/reports/tests/testReleaseUnitTest,
     build/test-results/testReleaseUnitTest"
-sonar.dependencyCheck.xmlReportPath="build/reports/dependency-check-report.xml"
+
+sonar.dependencyCheck.xmlReportPath="build/reports/
+    dependency-check-report.xml"
 sonar.androidLint.reportPaths="build/reports/lint-results-debug.xml"
 sonar.kotlin.detekt.reportPaths="build/reports/detekt/detekt.xml"
