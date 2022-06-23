@@ -3,12 +3,30 @@
 Dato il processo di sviluppo delle applicazioni mobile individuato nel capitolo \ref{ch:ch3} e definiti gli strumenti e task necessari, si descrive in questo capitolo come è stato automatizzato il processo adottando le moderne tecniche di integrazione continua e rilascio continuo al fine di fornire un modello di processo di sviluppo ai vari reparti aziendali che si occupano di applicazioni mobile.\\
 Per la progettazione della pipeline è stato utilizzato il progetto base generato tramite il plugin Gradle KMM con lo scopo di mantenere il focus solamente sul processo e non sul prodotto. Tale progetto fornisce una applicazione essenziale sviluppata tramite KMM, comprensiva di modulo condiviso e moduli specifici sia Android che iOS.
 
+\section{Modello di Branching}
+% descrivere struttura repo e le scelte (dev,beta,main + feature branch) si beta e main vengono modificati solo tramite merge (no push diretto), dev può essere modificato tramite push diretta per hotfix oppure tramite merge di merge request dai feature branch.
+L'utilizzo di un adeguato flusso di lavoro è fondamentale per definire una efficiente automazione CI/CD. Con branching si intende che da uno o più flussi principali divergono altri flussi per svolgere determinati lavori per poi convergere al loro termine: in base alle modalità di apertura e chiusura di questi flussi si definiscono diversi modelli di branching.\\
+Nel modello che si intende utilizzare sono presenti tre branch principali:
+\begin{itemize}
+    \item \textit{dev} - Flusso principale di sviluppo. Ogni modifica apportata a questo branch corrisponde al rilascio di una nuova versione \textit{alpha}. E' da questo branch che vengono aperti e chiusi nuovi branch, sia per lo sviluppo di nuove funzionalità (\textit{feature}) che per la risoluzione di bug/patch (\textit{fix}).
+    \item \textit{test} - Branch modificato solamente tramite merge di modifiche provenienti dal branch \textit{dev} con lo scopo di rilasciare una nuova versione \textit{beta}.
+    \item \textit{main} - Branch modificato solamente tramite merge di modifiche provenienti dal branch \textit{test} con lo scopo di rilasciare una nuova versione in produzione (\textit{prod}).
+\end{itemize}
+
+Grazie ai meccanismi di automazione a supporto della CI/CD si definiscono specifiche regole di attivazione basate sulle modifiche apportate al codice come ad esempio la modifica di un certo file su un determinato branch.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{img/tesi-13-branching.drawio.png}
+\caption{Esempio di flusso di sviluppo adottando il modello di branching indicato}
+\end{figure}
+
 \section{Continuous Integration}
 
 \subsection{Build}
 % cache android sdk, gradle e kotlin (https://kotlinlang.org/docs/native-improving-compilation-time.html#general-recommendations)
 Tipicamente la fase iniziale della integrazione continua consiste nella verifica della corretta compilazione del codice sorgente. La compilazione rappresenta un vincolo essenziale per tutte le successive fasi e per questo è definita come fase bloccante: in caso di compilazione fallita la pipeline termina senza procedere con le fasi successive.\\
-La fase di build definita svolge quindi il compito di validare la compilazione del codice condiviso (Kotlin) e del codice specifico Android (Kotlin) e iOS (Swift). 
+Nel caso della automazione dello sviluppo di applicazioni mobile per la fase iniziale di build la pratica più diffusa è quella di validare sia la compilazione del codice, ovvero il codice condiviso (Kotlin) e il codice specifico Android (Kotlin)/iOS (Swift), che la pacchettizzazione della applicazione nei formati richiesti dalle piattaforme target (\textit{.apk}\footnote{Android Package} per Android e \textit{.ipa}\footnote{iOS App Store Package} per iOS).
 
 \subsection{Testing}
 Dopo aver verificato la corretta compilazione del codice la fase successiva è quella di test. In questa fase vengono eseguiti tutti gli unit test definiti, anche in questo caso sia per il codice condiviso che per il codice specifico Android e iOS.
@@ -38,13 +56,8 @@ Con composizione software si intende l'insieme di codice sviluppato da terze par
 Per questo motivo è necessario analizzare le dipendenze al fine di individuare le vulnerabilità che esse introducono per essere tempestivi nel loro aggiornamento non appena vengono rilasciate delle patch di sicurezza. Il tool adottato per effettuare questa tipologia di analisi è \textit{Dependency Check}\footnote{\url{https://github.com/jeremylong/DependencyCheck}}, un tool open-source rilasciato e mantenuto da OWASP sia nella forma di plugin Gradle che come eseguibile e immagine Docker.
 
 \begin{listing}[H]
-\inputminted{kotlin}{code/4-depcheckplugin}
-\caption{Configurazione plugin Gradle DependencyCheck per il modulo Android}
-\end{listing}
-
-\begin{listing}[H]
 \inputminted{yaml}{code/4-depcheckjob}
-\caption{Pipeline job dedicato alla analisi delle dipendenze della applicazione Android tramite l'utilizzo del plugin Gradle DependencyCheck}
+\caption{Pipeline job dedicato alla analisi delle dipendenze della applicazione Android tramite l'utilizzo del tool OWASP DependencyCheck}
 \end{listing}
 
 \subsubsection{Analisi Statica}
@@ -52,6 +65,7 @@ La fase di analisi statica viene eseguita per il codice condiviso e per il codic
 \begin{itemize}
     \item \textit{Android Lint} (android, condiviso) - Tool per l'analisi statica di applicazioni Android, disponibile via CLI e via plugin Gradle (a partire dalla versione 16 ADT\footnote{Android Development Tools}).
     \item \textit{Detekt} (android, condiviso) - Tool per l' analisi statica del codice, specifico per il linguaggio di programmazione Kotlin, disponibile via CLI e via plugin Gradle.
+    \item \textit{SwiftLint} (ios) - Tool per l'analisi statica del codice, specifico per il linguaggio di programmazione Swift, disponibile via CLI, e via CocoaPods.
     \item \textit{SonarQube} (android, condiviso, ios) - Client tool per l'interazione con il server SonarQube, disponibile via CLI e via plugin Gradle.
 \end{itemize}
 
@@ -62,7 +76,7 @@ La fase di analisi statica viene eseguita per il codice condiviso e per il codic
 
 Data la funzionalità di gestione delle vulnerabilità fornita dallo stesso SonarQube e la possibilità di integrare tutte le tipologie di report prodotte sia nella fase di analisi delle dipendenze che nella fase di analisi statica del codice, si è deciso di non introdurre nel sistema l'utilizzo dei servizi forniti dalla installazione aziendale di DefectDojo.\\
 Per le fasi di analisi, sia statica che dinamica, i tool hanno bisogno solo dei sorgenti e dei file di configurazione. Questo comporta il vantaggio di non dover compilare nessun file, scaricare nessun sdk, ... . Per questo motivo, dove possibile, è stata utilizzata l'immagine Docker del relativo tool come immagine per il job della pipeline.\\
-Il client SonarQube utilizzato è stato dunque configurato, per poter considerare i report prodotti nelle altre fasi di analisi, agendo sui file \textit{build.gradle.kts} degli specifici moduli:
+Il client SonarQube utilizzato è stato dunque configurato, per poter considerare i report prodotti nelle altre fasi di analisi, agendo sui file \textit{sonar-project.properties} degli specifici moduli:
 \begin{listing}[H]
 \inputminted{kotlin}{code/4-sonarplugin}
 \caption{Configurazione client SonarQube per il modulo condiviso (Shared)}
@@ -77,28 +91,29 @@ Il client SonarQube utilizzato è stato dunque configurato, per poter considerar
 \includegraphics[width=1\textwidth]{img/Screenshot 2022-06-21 at 09.58.58.png}
 \caption{Screenshot SonarQube Web UI - Esempio analisi modulo android}
 \end{figure}
-\subsection{Package}
-Definiti i passi di compilazione, testing e analisi del codice la parte di integrazione continua termina con la pacchettizzazione dell'applicazione. In questa fase del processo il codice sorgente viene impacchettato in modo automatico nei formati richiesti dalle piattaforme target, ovvero \textit{.apk}\footnote{Android Package} per Android e \textit{.ipa}\footnote{iOS App Store Package} per iOS.
+
+%TODO: indicare come le fasi di analisi sono state schedulate in un momento asincrono (notturno) rispetto il normale flusso di lavoro per accelerare le tempistiche, più tutto configurato per eseguire tramite docker su runner kubernetes non macos = ogni mattina all'inizio della giornata lavorativa è possibile accedere a sonarqube, controllare se nella giornata precedente sono stati introdotte vulnerabilità, code smell ecc, e nel caso pianificare il lavoro per risolverli (TRANNE I TEST, QUELLI VENGONO SEMPRE ESEGUITI)
 
 \section{Continuous Delivery}
-
-\subsection{Fastlane}
-Uno fra i tool open-source più diffusi a supporto della automazione dello sviluppo di applicazioni mobile, sia Android che iOS, è Fastlane\footnote{\url{https://github.com/fastlane/fastlane}}. L'impiego principale di questo tool è nella automazione della fase di rilascio della applicazione, sia in beta che in produzione, grazie alla gestione di tutti quei task necessari ma dispendiosi in termini di tempo come: generazione degli screenshot, firma digitale del codice (\textit{Code Signing}), ... .\\
-Si fa uso dei seguenti concetti per configurare fastlane nell'apposito file di configurazione (\textit{Fastfile}) e con sintassi Ruby:
-\begin{itemize}
-    \item \textit{Action} - Elaborazioni pre-definite e configurabili tramite passaggio di parametri.
-    \item \textit{Lane} - Insieme di action definito dall'utente per descrivere elaborazioni più complesse.
-\end{itemize}
-
-\begin{listing}[H]
-\inputminted{ruby}{code/4-fastlane}
-\caption{Esempio Fastlane: lane per il rilascio in versione beta di applicazioni iOS}
-\end{listing}
 
 \subsection{Alpha Release}
 % rilascio sul package registry gitlab, versionamento con l hash della commit ad ogni modifica sul branch dev. ogni versione che dal branch dev viene portata sul branch test diventa una beta release (pubblicata su testflight e google play console) e ogni versione che da test viene portata su main diventa una prod release (pubblicata su app store e google play).
 
 \subsection{Beta Release}
+
+\subsubsection{Google Play Console}
+\begin{itemize}
+    \item Creazione account Google Developer
+    \item Creazione app da UI web google play console
+    \item Creazione Service Account (redirect a Google Cloud platform)
+    \item Test connessione Fastlane-Play Store (fastlane run validate\_play\_store\_json\_key json\_key:/path/to/sa\_key.json)
+    \item Setup sa\_key.json nei segreti GitLab per essere inserita nella pipeline
+    \item Configurazione iniziale app (questionario per classificazione PEGI, mailing list dei beta tester, annunci/ads, ...)
+    \item creazioni chiavi per firmare apk/aab (keytool -genkey -v -keystore my-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-alias). la chiave per ora è versionata ma gitlba ha in programma di inserire nelle prossime release la possibilità di inserire anche file binari tra i segreti (ora solo variabili e file testuali)
+    \item upload manuale della prima build, screenshot (smartphone, table 7' e tablet 10'), icona . DA AGOSTO 2021 SI CARICANO I BUNDLE, .aab (android app bundle), google play poi genera l'apk
+\end{itemize}
+
+\subsubsection{TestFlight}
 
 \subsection{Production Release}
 
@@ -107,7 +122,20 @@ Si fa uso dei seguenti concetti per configurare fastlane nell'apposito file di c
 \subsection{Analytics}
 
 \section{Infrastruttura}
-% descrivere l'infrastruttura necessaria a supporto della cicd: runners, nexus, sonarqube, defectdojo, cluster, ecc
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/tesi-3-infra.drawio.png}
+\caption{Componenti della infrastruttura necessaria a supporto del processo di sviluppo progettato}
+\end{figure}
+
+\subsection{MacOS GitLab Runner (Self-Hosted)}
+\subsubsection{Architettura Runner}
+
+\subsubsection{Shell Executor}
+
+\subsubsection{Configurazione}
+% installazione gitlab-runner, setup config.toml, avvio servizio
+% config. ambiente: sdkman (+ java), sdkmanager, ruby, curl, fastlane, XCODE, ...
 
 \section{Templating}
 % definire la cicd in template in un progetto a parte in modo che possano essere importati nel PoC (ed essere usati da altri in futuro)

@@ -1,15 +1,11 @@
 android:sast:
   stage: analysis:sast
   extends: .base-android
-  dependencies: [android:unit:test, android:depcheck]
+  dependencies: []
   allow_failure: true
-  variables:
-    #SONAR_USER_HOME: ${CI_PROJECT_DIR}/androidApp/.sonar
-    GIT_DEPTH: "0"
   script:
     - gradle :androidApp:lint
     - gradle :androidApp:detekt
-    - gradle :androidApp:sonarqube -Dsonar.login=$CI_SONAR_LOGIN -Dsonar.host.url=$CI_SONAR_HOST -Dsonar.projectKey=$SONAR_ANDROID_PROJECT_KEY
   artifacts:
     name: android-sast
     when: always
@@ -18,5 +14,5 @@ android:sast:
       - androidApp/build/reports/lint-results-debug.*
       - androidApp/build/reports/detekt/*
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "dev"
+    - if: $CI_COMMIT_BRANCH == "dev"
       changes: ["androidApp/**/*"]
