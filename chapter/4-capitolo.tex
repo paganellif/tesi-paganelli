@@ -4,7 +4,6 @@ Dato il processo di sviluppo delle applicazioni mobile individuato nel capitolo 
 Per la progettazione della pipeline è stato utilizzato il progetto base generato tramite il plugin Gradle KMM con lo scopo di mantenere il focus solamente sul processo e non sul prodotto. Tale progetto fornisce una applicazione essenziale sviluppata tramite KMM, comprensiva di modulo condiviso e moduli specifici sia Android che iOS.
 
 \section{Modello di Branching}
-% descrivere struttura repo e le scelte (dev,beta,main + feature branch) si beta e main vengono modificati solo tramite merge (no push diretto), dev può essere modificato tramite push diretta per hotfix oppure tramite merge di merge request dai feature branch.
 L'utilizzo di un adeguato flusso di lavoro è fondamentale per definire una efficiente automazione CI/CD. Con branching si intende che da uno o più flussi principali divergono altri flussi per svolgere determinati lavori per poi convergere al loro termine: in base alle modalità di apertura e chiusura di questi flussi si definiscono diversi modelli di branching.\\
 Nel modello che si intende utilizzare sono presenti tre branch principali:
 \begin{itemize}
@@ -17,7 +16,7 @@ Grazie ai meccanismi di automazione a supporto della CI/CD si definiscono specif
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.55\textwidth]{img/tesi-13-branching.drawio.png}
+\includegraphics[width=0.6\textwidth]{img/tesi-13-branching.drawio.png}
 \caption{Esempio di flusso di sviluppo adottando il modello di branching indicato}
 \end{figure}
 
@@ -28,8 +27,18 @@ Grazie ai meccanismi di automazione a supporto della CI/CD si definiscono specif
 Tipicamente la fase iniziale della integrazione continua consiste nella verifica della corretta compilazione del codice sorgente. La compilazione rappresenta un vincolo essenziale per tutte le successive fasi e per questo è definita come fase bloccante: in caso di compilazione fallita la pipeline termina senza procedere con le fasi successive.\\
 Nel caso della automazione dello sviluppo di applicazioni mobile per la fase iniziale di build la pratica più diffusa è quella di validare sia la compilazione del codice, ovvero il codice condiviso (Kotlin) e il codice specifico Android (Kotlin)/iOS (Swift), che la pacchettizzazione della applicazione nei formati richiesti dalle piattaforme target (\textit{.apk}\footnote{Android Package} per Android e \textit{.ipa}\footnote{iOS App Store Package} per iOS).
 
+\begin{listing}[H]
+\inputminted{yaml}{code/4-buildjob}
+\caption{Pipeline job dedicato compilazione e pacchettizzazione della applicazione Android}
+\end{listing}
+
+\begin{listing}[H]
+\inputminted{ruby}{code/4-buildft}
+\caption{Lane Fastlane dedicata alla fase di build tramite l'utilizzo della action Gradle}
+\end{listing}
+
 \subsection{Testing}
-Dopo aver verificato la corretta compilazione del codice la fase successiva è quella di test. In questa fase vengono eseguiti tutti gli unit test definiti, anche in questo caso sia per il codice condiviso che per il codice specifico Android e iOS.
+Dopo aver verificato la corretta compilazione e pacchettizzazione del codice la fase successiva è quella di test. In questa fase vengono eseguiti tutti gli unit test definiti, anche in questo caso sia per il codice condiviso che per il codice specifico Android e iOS.
 
 \subsection{Analysis}
 In questa sezione si descrivono le tecniche di analisi adottate e come queste sono state integrate nel processo di sviluppo sia per il codice sviluppato che per le dipendenze del sistema. Queste tecniche di analisi si distinguono rispettivamente in:

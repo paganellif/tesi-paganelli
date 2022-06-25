@@ -1,0 +1,4 @@
+desc "build"
+lane :build do
+  gradle(task: "assembleDebug")
+end
