@@ -1,0 +1,18 @@
+android:build:
+  stage: build
+  needs: [pre:android, shared:build]
+  dependencies: [shared:build]
+  extends: .base-android
+  variables:
+    PROJECT_DIR: androidApp
+  script:
+    - cd $PROJECT_DIR
+    - bundle exec fastlane build
+  artifacts:
+    name: android-build
+    expire_in: 1 day
+    paths:
+      - androidApp/build/outputs
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "dev"
+      changes: ["*", "androidApp/**/*", "shared/**/*"]
