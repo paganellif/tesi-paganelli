@@ -49,6 +49,19 @@ Kotlin/Native è il secondo compilatore su cui è basato KMM e viene utilizzato 
 \end{figure}
 Anche in questo caso sono necessarie due fasi di compilazione: ($i$) il codice Kotlin viene compilato nella \textit{Rappresentazione Intermedia} (IR) LLVM e ($ii$) successivamente compilato nel binario nativo.
 
+\subsection{Expect/Actual}
+% TODO
+Quando si sviluppa codice condiviso è spesso necessario definire come determinate funzionalità debbano essere implementate sulla specifica piattaforma nativa. Il framework KMP fornisce il meccanismo \textit{expect/actual} per assolvere questo compito:
+\begin{itemize}
+    \item \textit{Expect} - Astrazione della funzionalità, simile al design pattern \textit{Template Method}. Tramite la keywork \textit{expect} si definisce lo scheletro astraendo dalla specifica implementazione.
+    \item \textit{Actual} - Implementazione specifica per una determinata piattaforma. Tramite la keywork \textit{actual} si definisce l'implementazione, reificando l'altrazione definita tramite il concetto di \textit{expect}.
+\end{itemize}
+
+\begin{listing}[H]
+\inputminted{kotlin}{code/3-expectactual}
+\caption{Esempio di applicazione expect/actual per ottenere informazioni sulla piattaforma}
+\end{listing}
+
 \subsection{Plugin Gradle KMP}
 Il plugin Gradle KMP è uno strumento utile per realizzare progetti multiplatform. Fornisce uno specifico DSL\footnote{Domain Specific Language} per definire e configurare i task necessari a compilare il codice condiviso per le relative piattaforme target\footnote{\url{https://kotlinlang.org/docs/multiplatform-dsl-reference.html}}. Al momento la versione latest (stable) del plugin è la \textit{1.6.21}, rilasciata il 19/04/2022\footnote{\url{https://plugins.gradle.org/plugin/org.jetbrains.kotlin.multiplatform/1.6.21}} ma è presente una versione candidata per il rilascio con tag \textit{1.7.0-RC2}.
 

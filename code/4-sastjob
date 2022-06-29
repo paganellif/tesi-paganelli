@@ -1,11 +1,14 @@
 android:sast:
-  stage: analysis:sast
+  stage: analysis
   extends: .base-android
-  dependencies: []
+  needs: [pre:android]
   allow_failure: true
+  variables:
+    PROJECT_DIR: androidApp
   script:
-    - gradle :androidApp:lint
-    - gradle :androidApp:detekt
+    - cd $PROJECT_DIR
+    - bundle install
+    - bundle exec fastlane sast
   artifacts:
     name: android-sast
     when: always
@@ -14,5 +17,4 @@ android:sast:
       - androidApp/build/reports/lint-results-debug.*
       - androidApp/build/reports/detekt/*
   rules:
-    - if: $CI_COMMIT_BRANCH == "dev"
-      changes: ["androidApp/**/*"]
+    - if: $CI_PIPELINE_SOURCE == "schedule"

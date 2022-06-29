@@ -1,0 +1,5 @@
+desc "sast"
+lane :sast do
+  gradle(task: "lint")
+  gradle(task: "detekt")
+end

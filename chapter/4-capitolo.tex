@@ -38,7 +38,11 @@ Nel caso della automazione dello sviluppo di applicazioni mobile per la fase ini
 \end{listing}
 
 \subsection{Testing}
-Dopo aver verificato la corretta compilazione e pacchettizzazione del codice la fase successiva è quella di test. In questa fase vengono eseguiti tutti gli unit test definiti, anche in questo caso sia per il codice condiviso che per il codice specifico Android e iOS.
+Dopo aver verificato la corretta compilazione e pacchettizzazione del codice segue la fase di test. Si distinguono due tipologie di testing con lo scopo di validare sia la logica applicativa (\textit{unit testing}) che l'interfaccia grafica (\textit{ui testing}).
+\subsubsection{Unit Testing}
+
+\subsubsection{UI Testing}
+%espresso (android) + questione screenshot
 
 \subsection{Analysis}
 In questa sezione si descrivono le tecniche di analisi adottate e come queste sono state integrate nel processo di sviluppo sia per il codice sviluppato che per le dipendenze del sistema. Queste tecniche di analisi si distinguono rispettivamente in:
@@ -83,6 +87,11 @@ La fase di analisi statica viene eseguita per il codice condiviso e per il codic
 \caption{Pipeline job dedicato alla analisi statica del codice specifico Android}
 \end{listing}
 
+\begin{listing}[H]
+\inputminted{ruby}{code/4-sastfastlane}
+\caption{Lane Fastlane dedicata alla analisi statica del codice specifico Android}
+\end{listing}
+
 Data la funzionalità di gestione delle vulnerabilità fornita dallo stesso SonarQube e la possibilità di integrare tutte le tipologie di report prodotte sia nella fase di analisi delle dipendenze che nella fase di analisi statica del codice, si è deciso di non introdurre nel sistema l'utilizzo dei servizi forniti dalla installazione aziendale di DefectDojo.\\
 Per le fasi di analisi, sia statica che dinamica, i tool hanno bisogno solo dei sorgenti e dei file di configurazione. Questo comporta il vantaggio di non dover compilare nessun file, scaricare nessun sdk, ... . Per questo motivo, dove possibile, è stata utilizzata l'immagine Docker del relativo tool come immagine per il job della pipeline.\\
 Il client SonarQube utilizzato è stato dunque configurato, per poter considerare i report prodotti nelle altre fasi di analisi, agendo sui file \textit{sonar-project.properties} degli specifici moduli:
@@ -105,24 +114,51 @@ Il client SonarQube utilizzato è stato dunque configurato, per poter considerar
 
 \section{Continuous Delivery}
 
+\subsection{Google Play Console}
+A differenza delle applicazioni iOS, le quali richiedono due strumenti separati per la pubblicazione e per il testing, le applicazioni Android vengono gestite interamente da una unica piattaforma chiamata Google Play Console. Tramite il concetto di \textit{promozione} una specifica versione di applicazione viene infatti promossa da \textit{alpha} a \textit{beta} o da \textit{beta} a \textit{produzione}.
+
+\begin{listing}[H]
+\inputminted{ruby}{code/4-gpc-promote}
+\caption{Esempio di Lane Fastlane per la promozione di un rilascio da \textit{alpha} a \textit{beta}}
+\end{listing}
+
+Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pubblicazione e testing da parte degli utenti della versione Android della applicazione è necessario svolgere le seguenti azioni:
+\begin{itemize}
+    \item Creazione account Google Developer
+    \item Creazione scheletro iniziale della app dalla piattaforma Google Play Console
+    \begin{itemize}
+        \item Classificazione PEGI\footnote{\url{https://pegi.info/it}}
+        \item Creazione mailing-list alpha e beta tester
+        \item Configurazione monetizzazione, pubblicità/annunci, ...
+    \end{itemize}
+    \item Creazione Service Account, utile a identificare/autenticare/autorizzare la applicazione creata sui servizi Google (in questa fase è necessario intervenire anche sulla piattaforma Google Cloud Platform)
+    \begin{itemize}
+        \item Test Connessione Fastlane-Play Store
+        \begin{listing}[H]
+        \inputminted{bash}{code/4-testconnessionegpc}
+        \caption{Comando Fastlane per la verifica del service account creato}
+        \end{listing}
+        \item Setup service\_account\_key.json nei segreti GitLab per essere utilizzata dinamicamente nella pipeline senza essere versionata nei sorgenti.
+    \end{itemize}
+    \item Creazione chiavi, in formato \textit{Java KeyStore} per firmare l'applicazione da pubblicare
+    \begin{itemize}
+        \item Setup chiave jks nei segreti GitLab per essere utilizzata dinamicamente nella pipeline senza essere versionata nei sorgenti. Dato che al momento della scrittura di questa tesi GitLab non fornisce la possibilità di inserire file binari tra i segreti è stato necessario codificare in formato esadecimale la chiave generata in modo da poterla salvare come variabile testuale e decodificarla durante l'esecuzione della pipeline\footnote{\url{https://about.gitlab.com/blog/2019/01/28/android-publishing-with-gitlab-and-fastlane/}}
+        \begin{listing}[H]
+        \inputminted{bash}{code/4-jks}
+        \caption{Creazione, codifica e decodifica della chiave JKS}
+        \end{listing}
+    \end{itemize}
+    \item upload manuale della prima build, screenshot (smartphone, table 7' e tablet 10'), icona . DA AGOSTO 2021 SI CARICANO I BUNDLE, .aab (android app bundle), google play poi genera apk per i specifici dispositivi compatibili
+    \item i tester inseriti nella mailing list devono abilitare l'opzione "Internal App Sharing" per poter scaricare l'app tramite il link condiviso (https://stackoverflow.com/questions/57478894/how-to-enable-internal-app-sharing-for-android)
+\end{itemize}
+
+
+\subsection{TestFlight}
+
 \subsection{Alpha Release}
 % rilascio sul package registry gitlab, versionamento con l hash della commit ad ogni modifica sul branch dev. ogni versione che dal branch dev viene portata sul branch test diventa una beta release (pubblicata su testflight e google play console) e ogni versione che da test viene portata su main diventa una prod release (pubblicata su app store e google play).
 
 \subsection{Beta Release}
-
-\subsubsection{Google Play Console}
-\begin{itemize}
-    \item Creazione account Google Developer
-    \item Creazione app da UI web google play console
-    \item Creazione Service Account (redirect a Google Cloud platform)
-    \item Test connessione Fastlane-Play Store (fastlane run validate\_play\_store\_json\_key json\_key:/path/to/sa\_key.json)
-    \item Setup sa\_key.json nei segreti GitLab per essere inserita nella pipeline
-    \item Configurazione iniziale app (questionario per classificazione PEGI, mailing list dei beta tester, annunci/ads, ...)
-    \item creazioni chiavi per firmare apk/aab (keytool -genkey -v -keystore my-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-alias). la chiave per ora è versionata ma gitlba ha in programma di inserire nelle prossime release la possibilità di inserire anche file binari tra i segreti (ora solo variabili e file testuali)
-    \item upload manuale della prima build, screenshot (smartphone, table 7' e tablet 10'), icona . DA AGOSTO 2021 SI CARICANO I BUNDLE, .aab (android app bundle), google play poi genera l'apk
-\end{itemize}
-
-\subsubsection{TestFlight}
 
 \subsection{Production Release}
 
@@ -131,6 +167,7 @@ Il client SonarQube utilizzato è stato dunque configurato, per poter considerar
 \subsection{Analytics}
 
 \section{Infrastruttura}
+% soluzione cloud ibrida: r&d su azure, i servizi condivisi sono su gcp, i servizi gitlab sono su un qualsiasi cloud provider, il runner macos è una macchina interna, ...
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{img/tesi-3-infra.drawio.png}
@@ -144,7 +181,7 @@ Il client SonarQube utilizzato è stato dunque configurato, per poter considerar
 
 \subsubsection{Configurazione}
 % installazione gitlab-runner, setup config.toml, avvio servizio
-% config. ambiente: sdkman (+ java), sdkmanager, ruby, curl, fastlane, XCODE, ...
+% config. ambiente: sdkman (+ java), sdkmanager, ruby, curl, fastlane, bundler, XCODE, ...
 
 \section{Templating}
 % definire la cicd in template in un progetto a parte in modo che possano essere importati nel PoC (ed essere usati da altri in futuro)

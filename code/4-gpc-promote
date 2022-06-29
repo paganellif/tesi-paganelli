@@ -1,0 +1,8 @@
+desc "beta"
+lane :beta do
+  upload_to_play_store(
+    track: 'alpha',
+    track_promote_to: 'beta',
+    aab: lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]
+  )
+end
