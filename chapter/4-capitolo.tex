@@ -110,7 +110,24 @@ Il client SonarQube utilizzato è stato dunque configurato, per poter considerar
 \caption{Screenshot SonarQube Web UI - Esempio analisi modulo android}
 \end{figure}
 
-%TODO: indicare come le fasi di analisi sono state schedulate in un momento asincrono (notturno) rispetto il normale flusso di lavoro per accelerare le tempistiche, più tutto configurato per eseguire tramite docker su runner kubernetes non macos = ogni mattina all'inizio della giornata lavorativa è possibile accedere a sonarqube, controllare se nella giornata precedente sono stati introdotte vulnerabilità, code smell ecc, e nel caso pianificare il lavoro per risolverli (TRANNE I TEST, QUELLI VENGONO SEMPRE ESEGUITI)
+\subsubsection{Schedulazione Job}
+Le fasi di analisi del codice possono essere introdotte nel processo di sviluppo distinguendo due modalità di esecuzione:
+\begin{itemize}
+    \item \textit{Sincrona} - L'analisi del codice viene eseguita ad ogni commit su uno specifico branch (in questo caso \textit{dev}). Il vantaggio consiste nella ricezione di un feedback più rapido sulla modifica apportata al codice. Lo svantaggio è dato da un incremento considerevole nel tempo di esecuzione di ogni pipeline.
+    \item \textit{Asincrona} - Tramite la schedulazione delle fasi di analisi in un momento diverso da quello in cui viene apportata la modifica al codice è possibile sia ridurre i tempi di esecuzione delle pipeline che ottenere un feedback cumulativo sull'insieme delle modifiche apportate tra due esecuzioni delle pipeline di analisi del codice. Ad esempio, schedulando alla mezzanotte di ogni giorno l'esecuzione delle fasi di analisi, è possibile accedere al portale SonarQube all'inizio della giornata lavorativa successiva e pianificare gli interventi di risoluzione degli eventuali bug introdotti nella giornata precedente.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{img/tesi-16-cicd-scheduled.drawio.png}
+\caption{Struttura della pipeline schedulata per l'analisi statica del codice}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/Screenshot 2022-07-02 at 19.34.42.png}
+\caption{Schedulazione pipeline GitLab: attivazione alla mezzanotte di ogni giorno sul branch \textit{dev}}
+\end{figure}
 
 \section{Continuous Delivery}
 
@@ -128,7 +145,7 @@ Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pu
     \item Creazione scheletro iniziale della app dalla piattaforma Google Play Console
     \begin{itemize}
         \item Classificazione PEGI\footnote{\url{https://pegi.info/it}}
-        \item Creazione mailing-list alpha e beta tester
+        \item Creazione mailing-list alpha e beta tester. Tali tester per poter scaricare la applicazione tramite il link condiviso, il quale reindirizza alla pagina corretta di download sul Play Store, devono aver abilitato l'opzione "Internal App Sharing" dalle impostazioni del Play Store.
         \item Configurazione monetizzazione, pubblicità/annunci, ...
     \end{itemize}
     \item Creazione Service Account, utile a identificare/autenticare/autorizzare la applicazione creata sui servizi Google (in questa fase è necessario intervenire anche sulla piattaforma Google Cloud Platform)
@@ -140,7 +157,7 @@ Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pu
         \end{listing}
         \item Setup service\_account\_key.json nei segreti GitLab per essere utilizzata dinamicamente nella pipeline senza essere versionata nei sorgenti.
     \end{itemize}
-    \item Creazione chiavi, in formato \textit{Java KeyStore} per firmare l'applicazione da pubblicare
+    \item Creazione chiavi, in formato \textit{Java KeyStore} (jks) per firmare l'applicazione da pubblicare
     \begin{itemize}
         \item Setup chiave jks nei segreti GitLab per essere utilizzata dinamicamente nella pipeline senza essere versionata nei sorgenti. Dato che al momento della scrittura di questa tesi GitLab non fornisce la possibilità di inserire file binari tra i segreti è stato necessario codificare in formato esadecimale la chiave generata in modo da poterla salvare come variabile testuale e decodificarla durante l'esecuzione della pipeline\footnote{\url{https://about.gitlab.com/blog/2019/01/28/android-publishing-with-gitlab-and-fastlane/}}
         \begin{listing}[H]
@@ -148,10 +165,8 @@ Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pu
         \caption{Creazione, codifica e decodifica della chiave JKS}
         \end{listing}
     \end{itemize}
-    \item upload manuale della prima build, screenshot (smartphone, table 7' e tablet 10'), icona . DA AGOSTO 2021 SI CARICANO I BUNDLE, .aab (android app bundle), google play poi genera apk per i specifici dispositivi compatibili
-    \item i tester inseriti nella mailing list devono abilitare l'opzione "Internal App Sharing" per poter scaricare l'app tramite il link condiviso (https://stackoverflow.com/questions/57478894/how-to-enable-internal-app-sharing-for-android)
+    \item Upload manuale della prima release della applicazione. Da Agosto 2021\footnote{\url{https://developer.android.com/guide/app-bundle}} il formato di pubblicazione delle applicazioni Android \textit{aab} (Android Application Bundle) ha sostituito il formato \textit{apk}. Gli apk scaricabili e installabili sui dispositivi vengono creati automaticamente dal Play Store a partire dal aab caricato.
 \end{itemize}
-
 
 \subsection{TestFlight}
 
@@ -175,7 +190,16 @@ Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pu
 \end{figure}
 
 \subsection{MacOS GitLab Runner (Self-Hosted)}
+La toolchain di base per lo sviluppo di applicazioni iOS è interamente di proprietà Apple e necessita di una macchina MacOS per poter essere utilizzata definendo una serie di vincoli sia per quanto riguarda lo sviluppo locale che l'automazione del processo.
+% TODO: finire l'intro di questa sezione all'utilizzo di macchina macos 
 \subsubsection{Architettura Runner}
+Ogni job di ogni stage definito in una pipeline viene eseguito da un componente software chiamato \textit{runner}. Tramite il modello client-server il runner interroga continuamente il server (ovvero GitLab) per ottenere le informazioni necessarie all'esecuzione dei job. La politica di scheduling dei job fra i vari runner è definita lato server ma può essere pilotata tramite il concetto di \textit{tag}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-17-runner.drawio.png}
+\caption{Diagramma di sequenza GitLab Runner (Docker Executor)}
+\end{figure}
 
 \subsubsection{Shell Executor}
 
