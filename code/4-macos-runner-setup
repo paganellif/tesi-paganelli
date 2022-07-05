@@ -1,0 +1,20 @@
+# 1: Download binario  ufficiale. Altri metodi di installazione, ad esempio tramite Homebrew non sono mantenuti da GitLab
+sudo curl --output /usr/local/bin/gitlab-runner \
+    "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/
+    gitlab-runner-darwin-arm64"
+
+# 2: Cambio permessi per l'esecuzione del binario scaricato
+sudo chmod +x /usr/local/bin/gitlab-runner
+
+# 3: Installazione runner
+gitlab-runner install
+
+# 4: Registrazione runner
+sudo gitlab-runner register --non-interactive \
+  --url "https://gitlab.com/" --registration-token "MY-SECRET-TOKEN" \
+  --executor "shell" --description "macos-runner" \
+  --tag-list "macos-m1" --run-untagged="false" \
+  --locked="true" --access-level="not_protected"
+
+# 5: Fix/Workaround file di configurazione
+sudo cp /etc/gitlab-runner/config.toml .gitlab-runner/config.toml && gitlab-runner restart

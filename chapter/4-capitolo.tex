@@ -42,7 +42,22 @@ Dopo aver verificato la corretta compilazione e pacchettizzazione del codice seg
 \subsubsection{Unit Testing}
 
 \subsubsection{UI Testing}
-%espresso (android) + questione screenshot
+%espresso (android) + questione screenshot (screengrab android e snapshot ios)
+Analogamente agli unit test, dove si verifica l'integrità della business logic a fronte di una modifica al codice sorgente, negli UI test si verifica l'integrità dell'interfaccia grafica. I moduli per il quale deve essere testata l'interfaccia grafica corrispondono ai moduli delle applicazioni Android e iOS. I tool utilizzati per il testing dell'interfaccia grafica delle relative applicazioni sono:
+\begin{itemize}
+    \item \textit{Espresso}\footnote{\url{https://developer.android.com/training/testing/espresso}} (Android) -
+    \item \textit{XCTest}\footnote{\url{https://developer.apple.com/documentation/xctest}} (iOS) - 
+\end{itemize}
+In questa specifica fase del processo tipicamente si realizzano anche degli screenshot delle applicazioni in esecuzione per essere utilizzati nelle successive fasi di pubblicazione delle applicazioni. Anche in questo caso sono necessari tool differenti per le due piattaforme, i quali sono compresi nella installazione di Fastlane:
+\begin{itemize}
+    \item \textit{Screengrab}\footnote{\url{https://docs.fastlane.tools/actions/screengrab/}} (Android) -
+    \item \textit{Snapshot}\footnote{\url{https://docs.fastlane.tools/actions/snapshot/}} (iOS) -
+\end{itemize}
+
+\begin{listing}[H]
+\inputminted{yaml}{code/4-screenshot-ui-android}
+\caption{Pipeline job dedicato al testing della interfaccia grafica e alla cattura delle schermate (Android)}
+\end{listing}
 
 \subsection{Analysis}
 In questa sezione si descrivono le tecniche di analisi adottate e come queste sono state integrate nel processo di sviluppo sia per il codice sviluppato che per le dipendenze del sistema. Queste tecniche di analisi si distinguono rispettivamente in:
@@ -201,11 +216,38 @@ Ogni job di ogni stage definito in una pipeline viene eseguito da un componente 
 \caption{Diagramma di sequenza GitLab Runner (Docker Executor)}
 \end{figure}
 
+In base a chi lo gestisce, il runner può essere:
+\begin{itemize}
+    \item \textit{Managed} - Runner gestito da GitLab e fornito in modalità as a service. E' soggetto ad alcune restrizioni di utilizzo che dipendono dal piano di licenza sottoscritto: tipicamente questi limiti coinvolgono il tempo di esecuzione e lo spazio di archiviazione.
+    \item \textit{Self-Hosted} - Runner gestito interamente dall'utente (installazione, configurazione, registrazione, manutenzione, aggiornamento, ...). A differenza dei runner managed, questa modalità non prevede alcun vincolo di utilizzo.
+\end{itemize}
+
+Essendo il runner ad iniziare la comunicazione verso il server, uno dei principali vantaggi è quello di poterlo installare anche all'interno di una rete privata senza esporlo pubblicamente. La modalità self-hosted è stata scelta per l'installazione del runner MacOS sia per l'assenza di vincoli di utilizzo che per l'esecuzione nella rete privata aziendale Maggioli.
+
 \subsubsection{Shell Executor}
+L'esecuzione dei job avviene in modo asincrono tramite l'esecuzione di task sottoposti ad un executor. Il grado di concorrenza dell'executor, ovvero il numero di job/task che possono essere eseguiti in parallelo, è configurabile.\\
+Le principali tipologie di executor sono\footnote{\url{https://docs.gitlab.com/runner/executors/}}:
+\begin{itemize}
+    \item \textit{Shell} - Per ogni job viene aperta una shell sulla macchina host in cui è in esecuzione il runner. Tutte le dipendenze necessarie alla esecuzione dei job devono essere installate sulla macchina.
+    \item \textit{Container} - L'ambiente di esecuzione dei job è circoscritto all'interno di un container, sia nel caso dell'executor Docker che dell'executor Kubernetes. Tutte le dipendenze necessarie alla esecuzione dei job devono essere installate all'interno del container utilizzato.
+    \item \textit{Virtual Machine} - I job vengono eseguiti all'interno di virtual machine, VirtualBox o Parallels, già preconfigurate.
+\end{itemize}
+
+Data la assenza di container basati su sistema operativo MacOS, l'unica opzione accettabile è quella dell'executor shell attraverso l'installazione di un runner su una macchina fisica Apple all'interno della rete privata aziendale Maggioli.
 
 \subsubsection{Configurazione}
 % installazione gitlab-runner, setup config.toml, avvio servizio
 % config. ambiente: sdkman (+ java), sdkmanager, ruby, curl, fastlane, bundler, XCODE, ...
+
+\begin{listing}[H]
+\inputminted{bash}{code/4-macos-runner-setup}
+\caption{Comandi bash utilizzati per l'installazione e la configurazione di un runner MacOS}
+\end{listing}
+
+\begin{listing}[H]
+\inputminted{toml}{code/4-macos-runner-config}
+\caption{File di configurazione (\textit{config.toml}) generato al momento della registrazione del runner}
+\end{listing}
 
 \section{Templating}
 % definire la cicd in template in un progetto a parte in modo che possano essere importati nel PoC (ed essere usati da altri in futuro)
