@@ -1,0 +1,11 @@
+concurrent = 1
+check_interval = 0
+
+[session_server]
+  session_timeout = 1800
+
+[[runners]]
+  name = "macos-runner"
+  url = "https://gitlab.com/"
+  token = "MY-SECRET-TOKEN"
+  executor = "shell"

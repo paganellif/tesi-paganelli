@@ -1,0 +1,26 @@
+android:ui:test:phone:
+  stage: test:ui
+  needs: [pre:android, android:build, shared:build, android:unit:test]
+  dependencies: [android:build, shared:build, android:unit:test]
+  variables:
+    BUILD_DIR: ${CI_PROJECT_DIR}/androidApp/build/outputs/apk
+    SCREENGRAB_APP_APK_PATH: ${BUILD_DIR}/debug/androidApp-debug.apk
+    SCREENGRAB_TESTS_APK_PATH: ${BUILD_DIR}/androidTest/debug/androidApp-debug-androidTest.apk
+    ADV: "Pixel_3a_API_31_arm64-v8a"
+    SCREENGRAB_DEVICE_TYPE: "phone"
+  script:
+    - cd androidApp
+    - nohup emulator -avd $ADV -no-window > nohup-$ADV.out 2>&1 &
+    - echo $! > pid-$ADV.txt
+    - bundle exec fastlane testui
+    - kill -9 `cat pid-$ADV.txt`
+  artifacts:
+    name: android-ui-test-phone
+    expire_in: 1 day
+    paths:
+      - androidApp/nohup*.out
+      - androidApp/fastlane/metadata/android
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "dev"
+      changes: ["androidApp/**/*", "shared/**/*"]
+    - if: $CI_PIPELINE_SOURCE == "schedule"
