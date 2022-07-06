@@ -3,6 +3,13 @@
 Dato il processo di sviluppo delle applicazioni mobile individuato nel capitolo \ref{ch:ch3} e definiti gli strumenti e task necessari, si descrive in questo capitolo come è stato automatizzato il processo adottando le moderne tecniche di integrazione continua e rilascio continuo al fine di fornire un modello di processo di sviluppo ai vari reparti aziendali che si occupano di applicazioni mobile.\\
 Per la progettazione della pipeline è stato utilizzato il progetto base generato tramite il plugin Gradle KMM con lo scopo di mantenere il focus solamente sul processo e non sul prodotto. Tale progetto fornisce una applicazione essenziale sviluppata tramite KMM, comprensiva di modulo condiviso e moduli specifici sia Android che iOS.
 
+%TODO: descrivere in breve la pipeline complessiva che si vuole sviluppare per raggiungere quali obiettivi
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-11-cicd.drawio.png}
+\caption{Pipeline obiettivo per la pubblicazione automatica di una applicazione Android e iOS con modulo condiviso}
+\end{figure}
+
 \section{Modello di Branching}
 L'utilizzo di un adeguato flusso di lavoro è fondamentale per definire una efficiente automazione CI/CD. Con branching si intende che da uno o più flussi principali divergono altri flussi per svolgere determinati lavori per poi convergere al loro termine: in base alle modalità di apertura e chiusura di questi flussi si definiscono diversi modelli di branching.\\
 Nel modello che si intende utilizzare sono presenti tre branch principali:
@@ -42,7 +49,6 @@ Dopo aver verificato la corretta compilazione e pacchettizzazione del codice seg
 \subsubsection{Unit Testing}
 
 \subsubsection{UI Testing}
-%espresso (android) + questione screenshot (screengrab android e snapshot ios)
 Analogamente agli unit test, dove si verifica l'integrità della business logic a fronte di una modifica al codice sorgente, negli UI test si verifica l'integrità dell'interfaccia grafica. I moduli per il quale deve essere testata l'interfaccia grafica corrispondono ai moduli delle applicazioni Android e iOS. I tool utilizzati per il testing dell'interfaccia grafica delle relative applicazioni sono:
 \begin{itemize}
     \item \textit{Espresso}\footnote{\url{https://developer.android.com/training/testing/espresso}} (Android) -
@@ -51,7 +57,7 @@ Analogamente agli unit test, dove si verifica l'integrità della business logic 
 In questa specifica fase del processo tipicamente si realizzano anche degli screenshot delle applicazioni in esecuzione per essere utilizzati nelle successive fasi di pubblicazione delle applicazioni. Anche in questo caso sono necessari tool differenti per le due piattaforme, i quali sono compresi nella installazione di Fastlane:
 \begin{itemize}
     \item \textit{Screengrab}\footnote{\url{https://docs.fastlane.tools/actions/screengrab/}} (Android) -
-    \item \textit{Snapshot}\footnote{\url{https://docs.fastlane.tools/actions/snapshot/}} (iOS) -
+    \item \textit{Snapshot}\footnote{\url{https://docs.fastlane.tools/actions/snapshot/}} (iOS) - generato in automatico con "fastlane snapshot init" il file di supporto (SnapshotHelper.swift) e copiato il contenuto nel file autogenerato di test con xcode, poi modificato per generare gli screenshot come da documentazione fastlane
 \end{itemize}
 
 \begin{listing}[H]
@@ -184,6 +190,14 @@ Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pu
 \end{itemize}
 
 \subsection{TestFlight}
+\begin{itemize}
+    \item creazione account apple developer
+    \item creare certificato per "iOS Distribution" (Certificate Signing Request \footnote{\url{https://help.apple.com/developer-account/\#/devbfa00fef7}})
+    \item creazione provisioning profile. Deve essere di tipo "App Store" con il certificato appena creato, poi installazione provisioning profile (da xcode)
+    \item eseguire la prima build della app in locale: dare i permessi a codesign ("always Allow" nel prompt della pwd) per accedere a "Keychain Access" in modo da poter leggere i certificati e firmare le applicazioni
+    \item creazione api key per autenticarsi ai servizi "App Store connect". creo api key da "app store connect", la scarico, poi creo un file json nel formato richiesto da fastlane\footnote{\url{https://docs.fastlane.tools/app-store-connect-api/\#using-fastlane-api-key-json-file}}
+    \item configurazione informazioni prima release app (come su google play console)
+\end{itemize}
 
 \subsection{Alpha Release}
 % rilascio sul package registry gitlab, versionamento con l hash della commit ad ogni modifica sul branch dev. ogni versione che dal branch dev viene portata sul branch test diventa una beta release (pubblicata su testflight e google play console) e ogni versione che da test viene portata su main diventa una prod release (pubblicata su app store e google play).
@@ -253,3 +267,10 @@ Data la assenza di container basati su sistema operativo MacOS, l'unica opzione 
 % definire la cicd in template in un progetto a parte in modo che possano essere importati nel PoC (ed essere usati da altri in futuro)
 % dire come gitlab permette di farlo, quali sono i meccanismi ecc ecc
 % lo stesso risultato dei gitlab template può essere ottenuto distribuendo delle github action
+L'obiettivo di questo progetto di tesi non consiste solamente nella realizzazione di una pipeline di CI/CD ma consiste soprattutto nella sua progettazione in modo tale da poter essere utilizzata dai vari team in azienda che sviluppano applicazioni mobile.\\
+I principali strumenti forniti dalla piattaforma GitLab a supporto del riuso delle pipeline sono:
+\begin{itemize}
+    \item \textit{Template} -
+    \item \textit{Include} - 
+    \item \textit{Extend} - Definendo lo script del job padre in modo parametrico è possibile pilotarne il comportamento tramite la definizione di variabili d'ambiente nel job figlio.
+\end{itemize}
