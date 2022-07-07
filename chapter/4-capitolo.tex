@@ -201,10 +201,24 @@ Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pu
 
 \subsection{Alpha Release}
 % rilascio sul package registry gitlab, versionamento con l hash della commit ad ogni modifica sul branch dev. ogni versione che dal branch dev viene portata sul branch test diventa una beta release (pubblicata su testflight e google play console) e ogni versione che da test viene portata su main diventa una prod release (pubblicata su app store e google play).
+Per le versioni rilasciate a scopo di testing interno è utilizzato un versionamento basato sulla hash della commit che identifica lo stato del sorgente in quel preciso momento storico. Ad ogni modifica apportata al branch \textit{dev} è possibile, tramite intervento umano, rilasciare un pacchetto sul package registry fornito da GitLab. In questo modo gli sviluppatori possono scaricare i file \textit{apk}, in caso di Android, o \textit{ipa}, in caso di iOS ed effettuarne l'installazione su un emulatore o un dispositivo fisico.
+
+\begin{listing}[H]
+\inputminted{yaml}{code/4-ios-alpha}
+\caption{Pipeline job dedicato al rilascio in versione alpha della applicazione iOS}
+\end{listing}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{img/tesi-18-release-flow.drawio.png}
+\caption{Esempio di workflow con focus sulle fasi di release}
+\end{figure}
 
 \subsection{Beta Release}
+%rilascio diretto in beta su google play console e testflight
 
 \subsection{Production Release}
+% promozione da beta a prod in google play console, pubblicazione su app store diversa da testflight
 
 \section{Continuous Monitoring}
 \subsection{Monitoring}
@@ -226,7 +240,7 @@ Ogni job di ogni stage definito in una pipeline viene eseguito da un componente 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{img/tesi-17-runner.drawio.png}
+\includegraphics[width=0.9\textwidth]{img/tesi-17-runner.drawio.png}
 \caption{Diagramma di sequenza GitLab Runner (Docker Executor)}
 \end{figure}
 
@@ -263,6 +277,12 @@ Data la assenza di container basati su sistema operativo MacOS, l'unica opzione 
 \caption{File di configurazione (\textit{config.toml}) generato al momento della registrazione del runner}
 \end{listing}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{img/Screenshot 2022-07-07 at 11.40.13.png}
+\caption{Screenshot GitLab: Runner MacOS Self-Hosted correttamente registrato e attivo}
+\end{figure}
+
 \section{Templating}
 % definire la cicd in template in un progetto a parte in modo che possano essere importati nel PoC (ed essere usati da altri in futuro)
 % dire come gitlab permette di farlo, quali sono i meccanismi ecc ecc
@@ -270,7 +290,12 @@ Data la assenza di container basati su sistema operativo MacOS, l'unica opzione 
 L'obiettivo di questo progetto di tesi non consiste solamente nella realizzazione di una pipeline di CI/CD ma consiste soprattutto nella sua progettazione in modo tale da poter essere utilizzata dai vari team in azienda che sviluppano applicazioni mobile.\\
 I principali strumenti forniti dalla piattaforma GitLab a supporto del riuso delle pipeline sono:
 \begin{itemize}
-    \item \textit{Template} -
-    \item \textit{Include} - 
+    \item \textit{Template} - I file YAML che definiscono una pipeline o sottoparte di essa, possono risiedere in un repository diverso da quello in cui si trova il progetto che la utilizza. In questo modo si definisce una sola volta il flusso base per poterlo successivamente includere e/o estendere negli specifici progetti che necessitano il suo utilizzo.
+    \item \textit{Include} - Definiti i template è necessario includerli all'interno del file \textit{.gitlab-ci.yml} nella root dello specifico progetto.
     \item \textit{Extend} - Definendo lo script del job padre in modo parametrico è possibile pilotarne il comportamento tramite la definizione di variabili d'ambiente nel job figlio.
 \end{itemize}
+
+\begin{listing}[H]
+\inputminted{yaml}{code/4-templating}
+\caption{Esempio d'uso dei template in GitLab}
+\end{listing}

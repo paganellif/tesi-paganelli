@@ -1,0 +1,6 @@
+include:
+  - project: maggiolispa/devops/templates
+      file:
+        - '/cicd/container-build-push.yml'
+        - '/security/sonar-npm-analysis.yml'
+        - '/security/trivy.yml'
