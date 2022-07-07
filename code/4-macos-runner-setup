@@ -18,3 +18,9 @@ sudo gitlab-runner register --non-interactive \
 
 # 5: Fix/Workaround file di configurazione
 sudo cp /etc/gitlab-runner/config.toml .gitlab-runner/config.toml && gitlab-runner restart
+
+# 6: Fix Service. Eseguito come utente non root, non può scrivere i log nei percorsi in cui non ha i permessi FATAL: Failed to restart gitlab-runner: "launchctl" failed with stderr: Unload failed: 5: Input/output error
+nano /Users/filippopaganelli/Library/LaunchAgents/gitlab-runner.plist
+
+# 7: Start Runner
+gitlab-runner start
