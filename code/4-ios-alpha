@@ -8,14 +8,13 @@ ios:release:alpha:
     ALPHA_RELEASE_NAME: alpha-release
     ALPHA_RELEASE_VERSION: ${CI_COMMIT_SHORT_SHA}
     ALPHA_FILE_NAME: alpha-release-ios-${CI_COMMIT_SHORT_SHA}.tar.gz
+    APP_PATH: "./*.ipa"
     BASE_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}
     URL: ${BASE_URL}/packages/generic/${PACKAGE_NAME}/${PACKAGE_VERSION}/${FILE_NAME}
-    FL_SLACK_MESSAGE: "Released new iOS alpha version!\nPipeline Url: ${CI_PIPELINE_URL}"
+    FL_SLACK_MESSAGE: "_*NEW IOS ALPHA RELEASE*_\n\n*Version* ${CI_COMMIT_SHORT_SHA}\n*Pipeline Url*\n${CI_PIPELINE_URL}\n*Release Url*\n${PACKAGE_URL}\n"
   script:
-    - tar -czvf $FILE_NAME **/*.ipa
-    - ls -alh $FILE_NAME
-    - curl --header "JOB-TOKEN:${CI_JOB_TOKEN}" --upload-file $FILE_NAME $URL
+    - tar -czvf $ALPHA_FILE_NAME $APP_PATH
+    - curl --header "JOB-TOKEN:${CI_JOB_TOKEN}" --upload-file $ALPHA_FILE_NAME $URL
     - bundle exec fastlane run slack
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
-      when: manual

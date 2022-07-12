@@ -191,12 +191,24 @@ Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pu
 
 \subsection{TestFlight}
 \begin{itemize}
-    \item creazione account apple developer
-    \item creare certificato per "iOS Distribution" (Certificate Signing Request \footnote{\url{https://help.apple.com/developer-account/\#/devbfa00fef7}})
-    \item creazione provisioning profile. Deve essere di tipo "App Store" con il certificato appena creato, poi installazione provisioning profile (da xcode)
-    \item eseguire la prima build della app in locale: dare i permessi a codesign ("always Allow" nel prompt della pwd) per accedere a "Keychain Access" in modo da poter leggere i certificati e firmare le applicazioni
-    \item creazione api key per autenticarsi ai servizi "App Store connect". creo api key da "app store connect", la scarico, poi creo un file json nel formato richiesto da fastlane\footnote{\url{https://docs.fastlane.tools/app-store-connect-api/\#using-fastlane-api-key-json-file}}
-    \item configurazione informazioni prima release app (come su google play console)
+    \item Creazione account Apple Developer
+    \item Creazione certificato del tipo \textit{iOS Distribution} (Certificate Signing Request \footnote{\url{https://help.apple.com/developer-account/\#/devbfa00fef7}}) tramite portale App Store Connect
+    \item Creazione provisioning profile del tipo \textit{App Store} collegato al certificato appena creato e successiva installazione tramite Xcode
+    \item Assegnamento dei permessi a \textit{codesign} (il tool Apple utilizzato per firmare l'applicazione) in modo che possa accedere ai certificati autenticandosi al gestore \textit{Keychain Access}
+    \item Creazione api key per autenticazione ai servizi App Store Connect. 
+    \begin{itemize}
+        \item Creazione api key in formato json, come richiesto da Fastlane\footnote{\url{https://docs.fastlane.tools/app-store-connect-api/\#using-fastlane-api-key-json-file}}
+    \end{itemize}
+    \item Creazione App-Specific Password dal proprio profilo Apple ID per autenticazione tramite \textit{transporter}\footnote{\url{https://help.apple.com/itc/transporteruserguide/en.lproj/static.html\#itc16ef2f321}}, ovvero il tool utilizzato da Fastlane per effettuare l'upload della applicazione. 
+    \begin{itemize}
+        \item La password generata può essere passata a Fastlane solamente tramite variabile d'ambiente, appositamente settata nei segreti GitLab
+    \end{itemize}
+    \item Creazione scheletro iniziale della app dalla piattaforma App Store Connect (in modo del tutto analogo per la applicazione Android ramite Google Play Console)
+    \begin{itemize}
+        \item Creazione mailing-list alpha e beta tester. Per poter scaricare la applicazione tramite link condiviso i tester devono aver accettato l'invito di partecipazione e installato l'applicazione Testflight
+        \item Configurazione monetizzazione, pubblicità/annunci, ...
+    \end{itemize}
+    \item Configurazione compliance encryption nel file \textit{Info.plist}\footnote{\url{https://help.apple.com/app-store-connect/\#/dev88f5c7bf9}}, necessario per le policy Apple di pubblicazione app e quindi non doverlo configurare manualmente tramite App Store Connect ad ogni release
 \end{itemize}
 
 \subsection{Alpha Release}
@@ -211,7 +223,13 @@ Per le versioni rilasciate a scopo di testing interno è utilizzato un versionam
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{img/tesi-18-release-flow.drawio.png}
-\caption{Esempio di workflow con focus sulle fasi di release}
+\caption{Esempio di workflow: fasi di release alpha-beta-production}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/Screenshot 2022-07-08 at 17.48.40.png}
+\caption{Screenshot canale Slack: notifica di rilascio applicazione iOS alpha}
 \end{figure}
 
 \subsection{Beta Release}
