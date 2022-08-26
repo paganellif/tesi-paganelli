@@ -1,6 +1,8 @@
+# Import dei template da repository remoto
 include:
-  - project: maggiolispa/devops/templates
-      file:
-        - '/cicd/container-build-push.yml'
-        - '/security/sonar-npm-analysis.yml'
-        - '/security/trivy.yml'
+  - project: maggiolispa/ricerca-sviluppo/ebook-app-poc/kmm-cicd-template
+    file:
+      - '/kmm-templates/kmm-base.yml'
+      - '/kmm-templates/kmm-build.yml'
+      - '/kmm-templates/kmm-test.yml'
+      - '/kmm-templates/kmm-release.yml'

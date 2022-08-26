@@ -4,6 +4,7 @@ Dato il processo di sviluppo delle applicazioni mobile individuato nel capitolo 
 Per la progettazione della pipeline è stato utilizzato il progetto base generato tramite il plugin Gradle KMM con lo scopo di mantenere il focus solamente sul processo e non sul prodotto. Tale progetto fornisce una applicazione essenziale sviluppata tramite KMM, comprensiva di modulo condiviso e moduli specifici sia Android che iOS.
 
 %TODO: descrivere in breve la pipeline complessiva che si vuole sviluppare per raggiungere quali obiettivi
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{img/tesi-11-cicd.drawio.png}
@@ -47,6 +48,7 @@ Nel caso della automazione dello sviluppo di applicazioni mobile per la fase ini
 \subsection{Testing}
 Dopo aver verificato la corretta compilazione e pacchettizzazione del codice segue la fase di test. Si distinguono due tipologie di testing con lo scopo di validare sia la logica applicativa (\textit{unit testing}) che l'interfaccia grafica (\textit{ui testing}).
 \subsubsection{Unit Testing}
+% dire che alcuni test possono essere eseguiti direttamente senza dispositivo, sfruttando la jvm kotlin, altri invece hanno bisogno del dispositivo (che può essere fisico o emulato) in modo da sfruttare l sdk android: questi test sono chiamati Instrumented Test. 
 
 \subsubsection{UI Testing}
 Analogamente agli unit test, dove si verifica l'integrità della business logic a fronte di una modifica al codice sorgente, negli UI test si verifica l'integrità dell'interfaccia grafica. I moduli per il quale deve essere testata l'interfaccia grafica corrispondono ai moduli delle applicazioni Android e iOS. I tool utilizzati per il testing dell'interfaccia grafica delle relative applicazioni sono:
@@ -57,13 +59,21 @@ Analogamente agli unit test, dove si verifica l'integrità della business logic 
 In questa specifica fase del processo tipicamente si realizzano anche degli screenshot delle applicazioni in esecuzione per essere utilizzati nelle successive fasi di pubblicazione delle applicazioni. Anche in questo caso sono necessari tool differenti per le due piattaforme, i quali sono compresi nella installazione di Fastlane:
 \begin{itemize}
     \item \textit{Screengrab}\footnote{\url{https://docs.fastlane.tools/actions/screengrab/}} (Android) -
-    \item \textit{Snapshot}\footnote{\url{https://docs.fastlane.tools/actions/snapshot/}} (iOS) - generato in automatico con "fastlane snapshot init" il file di supporto (SnapshotHelper.swift) e copiato il contenuto nel file autogenerato di test con xcode, poi modificato per generare gli screenshot come da documentazione fastlane
+    \item \textit{Snapshot}\footnote{\url{https://docs.fastlane.tools/actions/snapshot/}} (iOS) - Tramite il comando di inizializzazione fornito dal tool viene generato il codice Swift (\textit{SnapshotHelper.swift}) di supporto alla cattura degli screenshot per la applicazione iOS.
 \end{itemize}
+
+\begin{listing}[H]
+\inputminted{swift}{code/4-ios-screenshot}
+\caption{Codice Swift d'esempio per la cattura degli screenshot della applicazione iOS}
+\end{listing}
+
+Per entrambe le piattaforme sia i test che la cattura degli screenshot necessitano l'emulazione headless, ovvero con l'interfaccia utente disattivata, dei dispositivi target. Ogni dispositivo emulato richiede un insieme di risorse che non permettono l'esecuzione dei test sull'interfaccia in modo parallelo. Per gestire queste situazioni GitLab fornisce un apposito costrutto, chiamato \textit{resource\_group}: ogni job in cui è dichiarato lo stesso resource\_group viene eseguito in modo mutualmente esclusivo.
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-screenshot-ui-android}
 \caption{Pipeline job dedicato al testing della interfaccia grafica e alla cattura delle schermate (Android)}
 \end{listing}
+
 
 \subsection{Analysis}
 In questa sezione si descrivono le tecniche di analisi adottate e come queste sono state integrate nel processo di sviluppo sia per il codice sviluppato che per le dipendenze del sistema. Queste tecniche di analisi si distinguono rispettivamente in:
@@ -212,8 +222,7 @@ Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pu
 \end{itemize}
 
 \subsection{Alpha Release}
-% rilascio sul package registry gitlab, versionamento con l hash della commit ad ogni modifica sul branch dev. ogni versione che dal branch dev viene portata sul branch test diventa una beta release (pubblicata su testflight e google play console) e ogni versione che da test viene portata su main diventa una prod release (pubblicata su app store e google play).
-Per le versioni rilasciate a scopo di testing interno è utilizzato un versionamento basato sulla hash della commit che identifica lo stato del sorgente in quel preciso momento storico. Ad ogni modifica apportata al branch \textit{dev} è possibile, tramite intervento umano, rilasciare un pacchetto sul package registry fornito da GitLab. In questo modo gli sviluppatori possono scaricare i file \textit{apk}, in caso di Android, o \textit{ipa}, in caso di iOS ed effettuarne l'installazione su un emulatore o un dispositivo fisico.
+Sia per il rilascio sul Play Store che per quello su Testflight sono stati definiti, tramite gli appositi portali, dei gruppi che identificano l'insieme di tester interni. Nel caso di Android è possibile pubblicare una release in versione alpha indicando la tipologia di rilascio, chiamata \textit{track}, con il valore "alpha". Successivamente la applicazione verrà distribuita tra i tester del gruppo associato alla track beta. Nel caso iOS, invece, non è presente il concetto di track: la distinzione tra le tipologie di rilascio viene fatta direttamente tramite i gruppi di tester definiti in Testflight, nello specifico il gruppo "\textit{Internal Tester}" e il gruppo "\textit{External Tester}".
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-ios-alpha}
@@ -223,7 +232,7 @@ Per le versioni rilasciate a scopo di testing interno è utilizzato un versionam
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{img/tesi-18-release-flow.drawio.png}
-\caption{Esempio di workflow: fasi di release alpha-beta-production}
+\caption{Esempio di workflow: fasi di release alpha-beta-prod}
 \end{figure}
 
 \begin{figure}[H]
@@ -310,10 +319,26 @@ I principali strumenti forniti dalla piattaforma GitLab a supporto del riuso del
 \begin{itemize}
     \item \textit{Template} - I file YAML che definiscono una pipeline o sottoparte di essa, possono risiedere in un repository diverso da quello in cui si trova il progetto che la utilizza. In questo modo si definisce una sola volta il flusso base per poterlo successivamente includere e/o estendere negli specifici progetti che necessitano il suo utilizzo.
     \item \textit{Include} - Definiti i template è necessario includerli all'interno del file \textit{.gitlab-ci.yml} nella root dello specifico progetto.
-    \item \textit{Extend} - Definendo lo script del job padre in modo parametrico è possibile pilotarne il comportamento tramite la definizione di variabili d'ambiente nel job figlio.
+    \item \textit{Extend} - Definendo lo script del job padre in modo parametrico è possibile pilotarne il comportamento tramite la definizione di variabili d'ambiente nel job figlio. Questa funzionalità è una alternativa alle \textit{anchors} fornite nativamente da YAML ma più flessibile e leggibile. 
 \end{itemize}
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-templating}
 \caption{Esempio d'uso dei template in GitLab}
+\end{listing}
+
+I seguenti template realizzati sono organizzati in un repository separato, raggruppati logicamente secondo gli stage che compongono l'intera pipeline oltre ad un template base, utilizzato da tutti gli altri template:
+\begin{itemize}
+    \item \textit{kmm-base} - Definisce tutte le configurazioni di base della pipeline come ad esempio gli stage, variabili d'ambiente globali, job di pre-configurazione, ... .
+    \item \textit{kmm-build} - Definisce i job relativi alla fase di compilazione e packaging.
+    \item \textit{kmm-test} - Definisce i job per le fasi di unit testing e ui testing.
+    \item \textit{kmm-analysis} - Definisce i job per le fasi di analisi statica del codice, analisi delle dipendenze e integrazione con SonarQube.
+    \item \textit{kmm-release} - Definisce i job utili al rilascio delle applicazioni sia alpha che beta.
+\end{itemize}
+
+I template progettati rimandano all'utilizzatore la definizione delle politiche di attivazione e delle dipendenze in modo da consentirne l'utilizzo in un flusso di lavoro diverso da quello progettato e permetterne l'adozione anche in casi di sviluppo con tecnologie differenti da Kotlin Multiplatform.
+
+\begin{listing}[H]
+\inputminted{yaml}{code/4-templating2}
+\caption{Esempi di template utilizzati per i job riguardanti iOS}
 \end{listing}
