@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-08-26T10:07:01.579Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="baMP78daHZkZjcVAkuwy" version="20.2.6" type="github" pages="21">
+<mxfile host="app.diagrams.net" modified="2022-08-26T10:14:36.745Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="6sdQgEpCTh6Rj8a9quGH" version="20.2.6" type="github" pages="21">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1307" dy="993" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -2892,11 +2892,14 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="OSm8Mt4CGJM6ceVig3Sr-30" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="420" y="650" width="380" height="360" as="geometry" />
+        </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-29" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="420" y="280" width="380" height="370" as="geometry" />
+          <mxGeometry x="420" y="300" width="380" height="350" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-28" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="50" y="280" width="370" height="740" as="geometry" />
+          <mxGeometry x="50" y="300" width="370" height="710" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-4" value="Scope" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="80" y="340" width="320" height="90" as="geometry" />
@@ -2958,7 +2961,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-18" value="Scope" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="460" y="910" width="320" height="90" as="geometry" />
+          <mxGeometry x="460" y="900" width="320" height="90" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-19" value="+ actual getKVaultProvider(): KVaultProvider&#xa;+ actual getDispatcherProvider(): DispatcherProvider&#xa;+ actual createDriver(dbName: String): SqlDriver" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="OSm8Mt4CGJM6ceVig3Sr-18">
           <mxGeometry y="26" width="320" height="64" as="geometry" />
@@ -3010,14 +3013,11 @@
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-8" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;DispatcherProvider&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ main: CoroutineDispatcher&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ io: CoroutineDispatcher&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ unconfined: CoroutineDispatcher&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="60" y="615" width="200" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="OSm8Mt4CGJM6ceVig3Sr-30" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="420" y="650" width="380" height="370" as="geometry" />
-        </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-31" value="&lt;b&gt;&lt;i&gt;commonMain Module&lt;/i&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="70" y="280" width="150" height="30" as="geometry" />
+          <mxGeometry x="70" y="300" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-32" value="&lt;b&gt;&lt;i&gt;androidMain Module&lt;/i&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="440" y="280" width="140" height="30" as="geometry" />
+          <mxGeometry x="440" y="300" width="140" height="30" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-33" value="&lt;b&gt;&lt;i&gt;iosMain Module&lt;/i&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="440" y="650" width="110" height="30" as="geometry" />
