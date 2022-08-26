@@ -9,6 +9,10 @@
 \renewcommand{\cftpartleader}{\cftdotfill{\cftdotsep}} % for parts
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % for chapters
 
+\renewcommand{\appendixname}{Appendice}
+\renewcommand{\appendixtocname}{Appendice}
+\renewcommand{\appendixpagename}{Appendice}
+
 \titleformat{\chapter}{\Huge\bfseries}{\chaptername\ \thechapter}{0pt}{\vskip 100pt\raggedright}%
 % Alter <after-sep> in the macro below to vary the separation after the \chapter title.
 \titlespacing{\chapter}{0pt}{50pt}{50pt}
@@ -71,6 +75,15 @@
 }
 
 \setminted[yaml]{
+  linenos=true,
+  breaklines=true,
+  autogobble,
+  encoding=utf8,
+  fontsize=\footnotesize,
+  frame=lines
+}
+
+\setminted[swift]{
   linenos=true,
   breaklines=true,
   autogobble,

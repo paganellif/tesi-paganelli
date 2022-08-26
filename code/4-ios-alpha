@@ -1,20 +1,19 @@
 ios:release:alpha:
   stage: release
   extends: .base-ios
-  needs: [pre:android, ios:build, shared:build, ios:ui:test]
-  dependencies: [ios:build]
   variables:
-    PROJECT_DIR: iosApp
-    ALPHA_RELEASE_NAME: alpha-release
-    ALPHA_RELEASE_VERSION: ${CI_COMMIT_SHORT_SHA}
-    ALPHA_FILE_NAME: alpha-release-ios-${CI_COMMIT_SHORT_SHA}.tar.gz
-    APP_PATH: "./*.ipa"
-    BASE_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}
-    URL: ${BASE_URL}/packages/generic/${PACKAGE_NAME}/${PACKAGE_VERSION}/${FILE_NAME}
-    FL_SLACK_MESSAGE: "_*NEW IOS ALPHA RELEASE*_\n\n*Version* ${CI_COMMIT_SHORT_SHA}\n*Pipeline Url*\n${CI_PIPELINE_URL}\n*Release Url*\n${PACKAGE_URL}\n"
+    PILOT_NOTIFY_EXTERNAL_TESTERS: "true"
+    PILOT_DISTRIBUTE_EXTERNAL: "true"
+    FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${APP_SPECIFIC_PWD_FASTLANE}
+    FL_SLACK_MESSAGE: "_*NEW IOS ALPHA RELEASE*_\n\n*Pipeline Url*\n${CI_PIPELINE_URL}\n"
+    PILOT_GROUPS: "Maggioli-Internals"
+    PILOT_IPA: iosApp/iosApp.ipa
+    PILOT_CHANGELOG: ""
   script:
-    - tar -czvf $ALPHA_FILE_NAME $APP_PATH
-    - curl --header "JOB-TOKEN:${CI_JOB_TOKEN}" --upload-file $ALPHA_FILE_NAME $URL
+    - pod install
+    - bundle exec fastlane build_app
+    - bundle exec fastlane run upload_to_testflight
     - bundle exec fastlane run slack
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
+      when: manual

@@ -1,4 +1,4 @@
-concurrent = 1
+concurrent = 2
 check_interval = 0
 
 [session_server]
@@ -9,3 +9,12 @@ check_interval = 0
   url = "https://gitlab.com/"
   token = "MY-SECRET-TOKEN"
   executor = "shell"
+[runners.custom_build_dir]
+  [runners.cache]
+    Type = "gcs"
+    Shared = true
+    [runners.cache.gcs]
+      BucketName = "gitlabcom-xxxxxx-shared-cache"
+      AccessID = "xxxx@xxxx.iam.gserviceaccount.com"
+      PrivateKey = "-----BEGIN PRIVATE KEY-----\nXXXX\n-----END PRIVATE KEY-----\n"
+

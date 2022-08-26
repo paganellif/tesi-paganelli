@@ -14,6 +14,7 @@
 \usepackage{minted}
 \usepackage{verbatim}
 \usepackage[dvipsnames]{xcolor}
+\usepackage[toc,page]{appendix}
 \input{config.tex}
 
 \begin{document}
@@ -93,9 +94,18 @@ Sommario
 
 \chapter{Conclusioni}
 \label{ch:ch6}
-\input{chapter/6-conclusioni}
+\input{chapter/6-conclusioni.tex}
 
 \addcontentsline{toc}{chapter}{Bibliografia}
 \bibliographystyle{plain}
 \bibliography{main}
+
+\setcounter{section}{0}% Reset numbering for sections
+
+\begin{appendices}
+\chapter{Pdf2Epub}
+\label{appendix:ch7}
+\input{chapter/7-backend-pdf2epub.tex}
+\end{appendices}
+
 \end{document}

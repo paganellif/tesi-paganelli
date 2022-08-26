@@ -11,10 +11,13 @@ gitlab-runner install
 
 # 4: Registrazione runner
 sudo gitlab-runner register --non-interactive \
-  --url "https://gitlab.com/" --registration-token "MY-SECRET-TOKEN" \
+  --url "https://gitlab.com/" --registration-token "MY-TOKEN" \
   --executor "shell" --description "macos-runner" \
-  --tag-list "macos-m1" --run-untagged="false" \
-  --locked="true" --access-level="not_protected"
+  --tag-list "macos-m1" --run-untagged="false" --locked="true" \
+  --access-level="not_protected" --cache-shared --cache-type="gcs" \
+  --cache-gcs-access-id="${CACHE_GCS_ACCESS_ID}" \
+  --cache-gcs-private-key="${CACHE_GCS_PRIVATE_KEY}" \
+  --cache-gcs-bucket-name="${CACHE_GCS_PRIVATE_NAME}"
 
 # 5: Fix/Workaround file di configurazione
 sudo cp /etc/gitlab-runner/config.toml .gitlab-runner/config.toml && gitlab-runner restart
