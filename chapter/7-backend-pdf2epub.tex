@@ -40,7 +40,7 @@ L'unica funzione che deve essere svolta da \textit{pdf2epub} è: dato un documen
 L'unico endpoint implementato è chiamato \textit{convert} con metodo \textit{POST}: esso richiede come unico parametro obbligatorio il file pdf da convertire oltre ai parametri opzionali sopra indicati. Ogni chiamata consiste nella esecuzione di un task tramite un \textit{ThreadPoolExecutor} il quale fa uso del componente \textit{EbookConverter}. Tale entità rappresenta il vero e proprio "wrapper" dell'eseguibile \textit{ebook-convert} fornito da Calibre.
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.25\textwidth]{img/tesi-4-pdf2epub.drawio.png}
+\includegraphics[width=0.4\textwidth]{img/tesi-4-pdf2epub.drawio.png}
 \caption{Architettura servizio pdf2epub}
 \end{figure}
 \begin{figure}[H]

@@ -117,8 +117,21 @@ librerie ios:
     \item \textit{KMPNativeCoroutines}\footnote{\url{https://github.com/rickclephas/KMP-NativeCoroutines}} -
 \end{itemize}
 
-\subsubsection{Readium}
+\subsection{Readium}
 %descrivere l architettura readium a grandi linee
+La necessità di un tool open-source, robusto e performante per la manipolazione e la lettura di formati editoriali digitali è alla base del progetto Readium. Esso infatti consiste in un insieme di toolkit per diversi formati (come epub, audiolibri e libri image-based) e diverse piattaforme (Android, iOS, Desktop e Web).
+Readium è composto da quattro moduli principali:
+\begin{itemize}
+    \item \textit{Publication Server} -
+    \item \textit{Streamer} -
+    \item \textit{Navigator} -
+    \item \textit{Shared} -
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-22-readiumarch.drawio.png}
+\caption{Architettura libreria Readium}
+\end{figure}
 
 \subsection{Architettura}
 repository, dati remoti dal reda e dati locali per i preferiti, highlights ecc.
