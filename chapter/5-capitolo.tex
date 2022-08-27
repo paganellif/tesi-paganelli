@@ -122,10 +122,13 @@ librerie ios:
 La necessità di un tool open-source, robusto e performante per la manipolazione e la lettura di formati editoriali digitali è alla base del progetto Readium. Esso infatti consiste in un insieme di toolkit per diversi formati (come epub, audiolibri e libri image-based) e diverse piattaforme (Android, iOS, Desktop e Web).
 Readium è composto da quattro moduli principali:
 \begin{itemize}
-    \item \textit{Publication Server} -
-    \item \textit{Streamer} -
-    \item \textit{Navigator} -
-    \item \textit{Shared} -
+    \item \textit{Publication Server} - Fornisce le pubblicazioni tramite un server locale HTTPS.
+    \item \textit{Streamer} - Modulo composto dai seguenti due sottomoduli:
+    \begin{itemize}
+        \item \textit{Parser} - Responsabile del parsing delle pubblicazioni e della loro esposizione utilizzando un modello in-memory.
+        \item \textit{Fetcher} - Si occupa di ottenere i contenuti delle pubblicazioni e della loro manipolazione (in particolare injection di CSS e Javascript nelle risorse HTML).
+    \end{itemize}
+    \item \textit{Navigator} - Utile alla navigazione delle risorse di una pubblicazione secondo diverse strategie basate sulla natura della pubblicazione (ebook, audiolibri, ...). Interagisce con il modulo \textit{Streamer} per utilizzare il modello in-memory o per ottenere manifesto JSON attraverso il modello condiviso (\textit{Shared}).
 \end{itemize}
 \begin{figure}[H]
 \centering
