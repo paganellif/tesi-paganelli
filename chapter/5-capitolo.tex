@@ -92,34 +92,35 @@ I formati attualmente disponibili che soddisfano i requisiti sopra indicati rapp
 Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB sono state (\textit{i}) lo standard aperto e (\textit{ii}) la disponibilità, sia di software che di librerie, per la manipolazione del file. 
 
 \section{Progettazione}
-% Descrivere qua progettazione domini, boundaries, ecc secondo il DDD o più avanti?
+% Descrivere qua progettazione domini, boundaries, ecc secondo il DDD 
 Nel redazionale non esistono i concetti di progresso di lettura, highlight, bookmark, appunto, ... -> modellato dominio in modo da gestire queste informazioni localmente senza modificare il dominio redazionale
 
 \subsection{Ricerca Librerie}
-librerie del modulo shared utilizzate
+Definiti i requisiti e modellato il dominio sono state individuate le seguenti librerie, suddivise per modulo, a supporto dello sviluppo della applicazione:
 \begin{itemize}
-    \item \textit{Ktor} - networking
-    \item \textit{Kotlinx-Serialization} - serializzazione
-    \item \textit{Kotlinx-Datetime} - gestione date (per i dati serializzati dal sisred)
-    \item \textit{Kvault}\footnote{\url{https://github.com/Liftric/KVault}} - Persistenza dati (chiave-valore)  
-    \item \textit{Koin}\footnote{\url{https://github.com/InsertKoinIO/koin}} - Dependency Injection
-    \item \textit{Napier}\footnote{\url{https://github.com/AAkira/Napier}} - Logging
-\end{itemize}
-
-librerie android:
-\begin{itemize}
-    \item \textit{Readium} (Kotlin-toolkit)\footnote{\url{https://github.com/readium/kotlin-toolkit}} -
-\end{itemize}
-
-librerie ios:
-\begin{itemize}
-    \item \textit{Readium} (Swift-toolkit)\footnote{\url{https://github.com/readium/swift-toolkit}} -
-    \item \textit{KMPNativeCoroutines}\footnote{\url{https://github.com/rickclephas/KMP-NativeCoroutines}} -
+    \item \textit{Shared}
+    \begin{itemize}
+        \item \textit{Ktor} - Framework asincrono per lo sviluppo di microservizi e applicazioni web. Nel progetto Ktor è utilizzato per la parte di networking come client HTTP.
+        \item \textit{Kotlinx-Serialization} - Libreria multiplatform per la serializzazione dei dati.
+        \item \textit{Kotlinx-Datetime} - Libreria multiplatform per la gestione delle date e del tempo.
+        \item \textit{Kvault}\footnote{\url{https://github.com/Liftric/KVault}} - Libreria multiplatform per la persistenza dei dati sicura in formato chiave-valore. Tramite una unica API si comporta come wrapper di Keychain, nel caso iOS, e SharedPreferences nel caso Android.
+        \item \textit{Koin}\footnote{\url{https://github.com/InsertKoinIO/koin}} - Dependency Injection framework multiplatform.
+        \item \textit{Napier}\footnote{\url{https://github.com/AAkira/Napier}} - Logging framework multiplatform.
+    \end{itemize}
+    \item \textit{Android}
+    \begin{itemize}
+    \item \textit{Readium} (Kotlin-toolkit)\footnote{\url{https://github.com/readium/kotlin-toolkit}} - Libreria per la manipolazione e visualizzazione di contenuti editoriali digitali. Implementazione specifica per la piattaforma Android. 
+    \end{itemize}
+    \item \textit{iOS}
+    \begin{itemize}
+    \item \textit{Readium} (Swift-toolkit)\footnote{\url{https://github.com/readium/swift-toolkit}} - Libreria per la manipolazione e visualizzazione di contenuti editoriali digitali. Implementazione specifica per la piattaforma iOS. 
+    \item \textit{KMPNativeCoroutines}\footnote{\url{https://github.com/rickclephas/KMP-NativeCoroutines}} - Libreria che permette l'utilizzo delle coroutine Kotlin in Swift in applicazioni Kotlin Multiplatform.
+    \end{itemize}
 \end{itemize}
 
 \subsection{Readium}
-%descrivere l architettura readium a grandi linee
-La necessità di un tool open-source, robusto e performante per la manipolazione e la lettura di formati editoriali digitali è alla base del progetto Readium. Esso infatti consiste in un insieme di toolkit per diversi formati (come epub, audiolibri e libri image-based) e diverse piattaforme (Android, iOS, Desktop e Web).
+Tra le librerie individuate quella fondamentale per il dominio applicativo è \textit{Readium}.
+La necessità di un tool open-source, robusto e performante per la manipolazione e la lettura di formati editoriali digitali è alla base del progetto Readium. Essa infatti consiste in un insieme di toolkit per diversi formati (come epub, audiolibri e libri image-based) e diverse piattaforme (Android, iOS, Desktop e Web).\\
 Readium è composto da quattro moduli principali:
 \begin{itemize}
     \item \textit{Publication Server} - Fornisce le pubblicazioni tramite un server locale HTTPS.
