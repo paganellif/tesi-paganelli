@@ -1,4 +1,4 @@
-concurrent = 2
+concurrent = 3
 check_interval = 0
 
 [session_server]
@@ -9,7 +9,6 @@ check_interval = 0
   url = "https://gitlab.com/"
   token = "MY-SECRET-TOKEN"
   executor = "shell"
-[runners.custom_build_dir]
   [runners.cache]
     Type = "gcs"
     Shared = true

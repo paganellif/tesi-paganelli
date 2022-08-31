@@ -92,8 +92,44 @@ I formati attualmente disponibili che soddisfano i requisiti sopra indicati rapp
 Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB sono state (\textit{i}) lo standard aperto e (\textit{ii}) la disponibilità, sia di software che di librerie, per la manipolazione del file. 
 
 \section{Progettazione}
+In questa sezione viene descritta la fase di progettazione del sistema, le cui attività principali consistono in  ($i$) modellazione del dominio, ($ii$) progettazione architettura e ($iii$) progettazione interfaccia grafica tramite mockup. 
+
+\subsection{Modellazione Dominio}
 % Descrivere qua progettazione domini, boundaries, ecc secondo il DDD 
-Nel redazionale non esistono i concetti di progresso di lettura, highlight, bookmark, appunto, ... -> modellato dominio in modo da gestire queste informazioni localmente senza modificare il dominio redazionale
+%Nel redazionale non esistono i concetti di progresso di lettura, highlight, bookmark, appunto, ... -> %modellato dominio in modo da gestire queste informazioni localmente senza modificare il dominio redazionale
+
+Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domain-driven_2004}:
+\begin{itemize}
+    \item \textit{Entity} - Oggetto definito dalla sua identità e non dai suoi attributi. Ogni libro è univoco, identificato da uno specifico codice, chiamato ISBN\footnote{International Standard Book Number}.
+    \item \textit{Value Object} - Al contrario delle entità, questi oggetti sono definiti dai loro attributi e non hanno una identità concettuale. Un esempio è il segnalibro: ciò che è rilevante è la pagina che esso referenzia e non la sua identità.
+    \item \textit{Aggregate} - Insieme di oggetti legati da una entità padre chiamata \textit{Root} (radice di aggregazione). L'aggregato composto da \textit{Bookmark}, \textit{Highlight}, \textit{Progression}, \textit{Favorite} ha come radice l'entità \textit{Libro}.
+    \item \textit{Service} - Operazione che non appartiene logicamente a nessun oggetto. In questo caso la conversione di formato non appartiene logicamente alla sola entità libro ma appartiene invece a qualsiasi documento che è possibile convertire.
+    \item \textit{Repository} - Oggetto per il recupero di altri oggetti di dominio. Le entità \textit{User} e \textit{Libro} sono esempi di oggetti di dominio che necessitano di un repository.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-20-app-domain.drawio.png}
+\caption{Dominio applicativo modellato}
+\end{figure}
+
+\subsection{Architettura}
+repository, dati remoti dal reda e dati locali per i preferiti, highlights ecc.
+
+\subsection{Progettazione UI}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-14-mockup1.drawio.png}
+\caption{Alcuni dei mockup realizzati per la progettazione e la validazione della UI (v1)}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-23-mockupv2.drawio.png}
+\caption{Modifiche apportate ai mockup per ottenere la validazione della UI (v2)}
+\end{figure}
+
+\section{Implementazione}
 
 \subsection{Ricerca Librerie}
 Definiti i requisiti e modellato il dominio sono state individuate le seguenti librerie, suddivise per modulo, a supporto dello sviluppo della applicazione:
@@ -136,18 +172,6 @@ Readium è composto da quattro moduli principali:
 \includegraphics[width=1\textwidth]{img/tesi-22-readiumarch.drawio.png}
 \caption{Architettura libreria Readium}
 \end{figure}
-
-\subsection{Architettura}
-repository, dati remoti dal reda e dati locali per i preferiti, highlights ecc.
-
-\subsection{Progettazione UI}
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{img/tesi-14-mockup1.drawio.png}
-\caption{Alcuni dei mockup realizzati per la progettazione e la validazione della UI (v1)}
-\end{figure}
-
-\section{Implementazione}
 
 NavigationController e navigation graph per gestire il flusso tra i vari fragment della app. La fragment home è quella principale e prima di essere creata, se l'utente non ha fatto login, viene rediretto\footnote{\url{https://developer.android.com/guide/navigation/navigation-conditional}} al fragment di login per farlo autenticare e poi riportato indietro alla schermata di home (popStackBack)
 \footnote{\url{https://medium.com/swlh/android-navigation-component-part-1-6191323eaf39}}.
