@@ -101,10 +101,10 @@ In questa sezione viene descritta la fase di progettazione del sistema, le cui a
 Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domain-driven_2004}:
 \begin{itemize}
     \item \textit{Entity} - Oggetto definito dalla sua identità e non dai suoi attributi. Ogni libro è univoco, identificato da uno specifico codice, chiamato ISBN\footnote{International Standard Book Number}.
-    \item \textit{Value Object} - Al contrario delle entità, questi oggetti sono definiti dai loro attributi e non hanno una identità concettuale. Un esempio è il segnalibro: ciò che è rilevante è la pagina che esso referenzia e non la sua identità.
+    \item \textit{Value Object} - Al contrario delle entità, questi oggetti sono definiti dai loro attributi e non hanno una identità concettuale ma servono a descrivere alcune caratteristiche di un oggetto. Un esempio è il segnalibro: ciò che è rilevante è la pagina del libro che esso referenzia e non la sua identità.
     \item \textit{Aggregate} - Insieme di oggetti legati da una entità padre chiamata \textit{Root} (radice di aggregazione). L'aggregato composto da \textit{Bookmark}, \textit{Highlight}, \textit{Progression}, \textit{Favorite} ha come radice l'entità \textit{Libro}.
-    \item \textit{Service} - Operazione che non appartiene logicamente a nessun oggetto. In questo caso la conversione di formato non appartiene logicamente alla sola entità libro ma appartiene invece a qualsiasi documento che è possibile convertire.
-    \item \textit{Repository} - Oggetto per il recupero di altri oggetti di dominio. Le entità \textit{User} e \textit{Libro} sono esempi di oggetti di dominio che necessitano di un repository.
+    \item \textit{Service} - Operazione che non appartiene logicamente a nessun oggetto. In questo caso la conversione di formato non appartiene alla sola entità libro ma appartiene invece a qualsiasi documento che è possibile convertire.
+    \item \textit{Repository} - Oggetto per il recupero di altri oggetti di dominio e per la gestione del loro ciclo di vita. Le entità \textit{User} e \textit{Libro} sono esempi di oggetti di dominio che necessitano di un repository. Permette di disaccoppiare applicazione e domain design dalle specifiche tecnologie/strategie di persistenza come multipli database e datasource (locali e/o remoti).
 \end{itemize}
 
 \begin{figure}[H]
@@ -173,7 +173,22 @@ Readium è composto da quattro moduli principali:
 \caption{Architettura libreria Readium}
 \end{figure}
 
+% parlare della implementazione del modulo shared e della strategia expect/actual adottata
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-24-ddduml.drawio.png}
+\caption{UML - Diagramma delle classi: modulo condiviso (\textit{Shared})}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-21-expectactual.drawio.png}
+\caption{Strategia \textit{Expect/Actual} adottata per l'implementazione dei servizi infrastrutturali specifici delle piattaforme, persistenza e concorrenza, sfruttando la tecnica \textit{dependency injection}}
+\end{figure}
+
 NavigationController e navigation graph per gestire il flusso tra i vari fragment della app. La fragment home è quella principale e prima di essere creata, se l'utente non ha fatto login, viene rediretto\footnote{\url{https://developer.android.com/guide/navigation/navigation-conditional}} al fragment di login per farlo autenticare e poi riportato indietro alla schermata di home (popStackBack)
 \footnote{\url{https://medium.com/swlh/android-navigation-component-part-1-6191323eaf39}}.
 
 Utilizzo di PagingData (Paging 3) per scaricare on demand il contenuto e mostrarlo nel recycler view con lo scroll.
+
+Per poter gestire la persistenza nel shared è necessario gestire tipi di dato primitivi (e.g. String): per questo nel db vengono salvati solo string e sulle due piattaforme sono stati aggiunti metodi per fare il toString degli oggetti di readium (esempio locator: ogni volta che lo devo memorizzare faccio json.toString e ogni volta che cerco i dati faccio Locator.fromJson(Json.fromString(risultatoQuery)))
