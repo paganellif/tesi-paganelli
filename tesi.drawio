@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-09-02T12:18:10.412Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="GzoRE9ThVt_odzFDK8TP" version="20.2.8" type="github" pages="25">
+<mxfile host="app.diagrams.net" modified="2022-09-02T12:51:41.851Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="8Q2G3jmFWlfqHtqrdEnt" version="20.2.8" type="github" pages="25">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1598" dy="1026" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -2438,7 +2438,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="wBUyeGhzsJfOXD7Qtu8J" name="17-runner">
-    <mxGraphModel dx="1598" dy="963" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1598" dy="1026" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -2954,16 +2954,16 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="ZYhpFNhaRoXy9mk7c5hK-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;fontSize=13;" parent="1" vertex="1">
-          <mxGeometry x="50" y="370" width="370" height="600" as="geometry" />
+          <mxGeometry x="50" y="430" width="370" height="500" as="geometry" />
         </mxCell>
         <mxCell id="ZYhpFNhaRoXy9mk7c5hK-2" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#dae8fc;fontSize=13;" parent="1" vertex="1">
-          <mxGeometry x="430" y="370" width="340" height="300" as="geometry" />
+          <mxGeometry x="430" y="430" width="340" height="240" as="geometry" />
         </mxCell>
         <mxCell id="ZYhpFNhaRoXy9mk7c5hK-1" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#fff2cc;fontSize=13;" parent="1" vertex="1">
-          <mxGeometry x="430" y="680" width="340" height="290" as="geometry" />
+          <mxGeometry x="430" y="680" width="340" height="250" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-4" value="Scope" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#82B366;strokeColor=#000000;fontSize=13;" parent="1" vertex="1">
-          <mxGeometry x="80" y="410" width="320" height="90" as="geometry" />
+          <mxGeometry x="80" y="440" width="320" height="90" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-7" value="+ expect getKVaultProvider(): KVaultProvider&#xa;+ expect getDispatcherProvider(): DispatcherProvider&#xa;+ expect createDriver(dbName: String): SqlDriver" style="text;strokeColor=none;fillColor=#82B366;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" parent="OSm8Mt4CGJM6ceVig3Sr-4" vertex="1">
           <mxGeometry y="26" width="320" height="64" as="geometry" />
@@ -2972,21 +2972,21 @@
           <mxGeometry x="270" y="640" width="140" height="70" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-10" value="Scope" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#6C8EBF;strokeColor=#000000;fontSize=13;" parent="1" vertex="1">
-          <mxGeometry x="440" y="410" width="320" height="90" as="geometry" />
+          <mxGeometry x="440" y="440" width="320" height="90" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-11" value="+ actual getKVaultProvider(): KVaultProvider&#xa;+ actual getDispatcherProvider(): DispatcherProvider&#xa;+ actual createDriver(dbName: String): SqlDriver" style="text;strokeColor=#000000;fillColor=#6C8EBF;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" parent="OSm8Mt4CGJM6ceVig3Sr-10" vertex="1">
           <mxGeometry y="26" width="320" height="64" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-12" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;AndroidDispatcherProvider&lt;/b&gt;" style="html=1;fillColor=#6C8EBF;strokeColor=#000000;fontSize=13;" parent="1" vertex="1">
-          <mxGeometry x="440" y="540" width="170" height="40" as="geometry" />
+          <mxGeometry x="440" y="560" width="170" height="40" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-13" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=13;" parent="1" source="OSm8Mt4CGJM6ceVig3Sr-10" target="OSm8Mt4CGJM6ceVig3Sr-12" edge="1">
-          <mxGeometry x="0.0435" y="10" width="160" relative="1" as="geometry">
+          <mxGeometry x="0.1429" y="10" width="160" relative="1" as="geometry">
             <mxPoint x="340" y="550" as="sourcePoint" />
             <mxPoint x="500" y="550" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="600" y="520" />
-              <mxPoint x="525" y="520" />
+              <mxPoint x="600" y="540" />
+              <mxPoint x="525" y="540" />
             </Array>
             <mxPoint as="offset" />
           </mxGeometry>
@@ -2996,63 +2996,64 @@
             <mxPoint x="340" y="510" as="sourcePoint" />
             <mxPoint x="500" y="510" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="160" y="560" />
+              <mxPoint x="160" y="580" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-15" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;AndroidKVaultProvider&lt;/b&gt;" style="html=1;fillColor=#6C8EBF;strokeColor=#000000;fontSize=13;" parent="1" vertex="1">
-          <mxGeometry x="590" y="585" width="170" height="40" as="geometry" />
+          <mxGeometry x="590" y="620" width="170" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="OSm8Mt4CGJM6ceVig3Sr-16" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;startArrow=none;fontSize=13;" parent="1" source="OSm8Mt4CGJM6ceVig3Sr-15" target="OSm8Mt4CGJM6ceVig3Sr-9" edge="1">
+        <mxCell id="OSm8Mt4CGJM6ceVig3Sr-16" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;startArrow=none;fontSize=13;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" parent="1" source="OSm8Mt4CGJM6ceVig3Sr-15" target="OSm8Mt4CGJM6ceVig3Sr-9" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="600" y="515" as="sourcePoint" />
             <mxPoint x="330" y="591.6216216216217" as="targetPoint" />
             <Array as="points">
+              <mxPoint x="633" y="605" />
               <mxPoint x="340" y="605" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-17" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;labelBackgroundColor=none;fontSize=13;" parent="1" source="OSm8Mt4CGJM6ceVig3Sr-10" target="OSm8Mt4CGJM6ceVig3Sr-15" edge="1">
-          <mxGeometry x="-0.125" y="-10" width="160" relative="1" as="geometry">
+          <mxGeometry x="-0.3939" y="-10" width="160" relative="1" as="geometry">
             <mxPoint x="651.5217391304348" y="460" as="sourcePoint" />
             <mxPoint x="685" y="530" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="600" y="520" />
-              <mxPoint x="675" y="520" />
+              <mxPoint x="600" y="540" />
+              <mxPoint x="675" y="540" />
             </Array>
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-18" value="Scope" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#D6B656;strokeColor=#000000;fontSize=13;" parent="1" vertex="1">
-          <mxGeometry x="440" y="870" width="320" height="90" as="geometry" />
+          <mxGeometry x="440" y="830" width="320" height="90" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-19" value="+ actual getKVaultProvider(): KVaultProvider&#xa;+ actual getDispatcherProvider(): DispatcherProvider&#xa;+ actual createDriver(dbName: String): SqlDriver" style="text;strokeColor=#000000;fillColor=#D6B656;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;" parent="OSm8Mt4CGJM6ceVig3Sr-18" vertex="1">
           <mxGeometry y="26" width="320" height="64" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-20" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;IosDispatcherProvider&lt;/b&gt;" style="html=1;fillColor=#D6B656;strokeColor=#000000;fontSize=13;" parent="1" vertex="1">
-          <mxGeometry x="440" y="770" width="170" height="40" as="geometry" />
+          <mxGeometry x="440" y="760" width="170" height="40" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-21" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;labelBackgroundColor=none;fontSize=13;" parent="1" source="OSm8Mt4CGJM6ceVig3Sr-18" target="OSm8Mt4CGJM6ceVig3Sr-20" edge="1">
-          <mxGeometry x="0.1852" y="-10" width="160" relative="1" as="geometry">
+          <mxGeometry x="-0.0476" y="-10" width="160" relative="1" as="geometry">
             <mxPoint x="340" y="870" as="sourcePoint" />
             <mxPoint x="500" y="870" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="600" y="850" />
-              <mxPoint x="525" y="850" />
+              <mxPoint x="600" y="820" />
+              <mxPoint x="525" y="820" />
             </Array>
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-22" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;IosKVaultProvider&lt;/b&gt;" style="html=1;fillColor=#D6B656;strokeColor=#000000;fontSize=13;" parent="1" vertex="1">
-          <mxGeometry x="590" y="720" width="170" height="40" as="geometry" />
+          <mxGeometry x="590" y="690" width="170" height="40" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-23" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;labelBackgroundColor=none;fontSize=13;" parent="1" source="OSm8Mt4CGJM6ceVig3Sr-18" target="OSm8Mt4CGJM6ceVig3Sr-22" edge="1">
-          <mxGeometry x="-0.1351" y="10" width="160" relative="1" as="geometry">
+          <mxGeometry x="-0.3143" y="10" width="160" relative="1" as="geometry">
             <mxPoint x="630" y="910" as="sourcePoint" />
             <mxPoint x="685" y="850" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="600" y="850" />
-              <mxPoint x="675" y="850" />
+              <mxPoint x="600" y="820" />
+              <mxPoint x="675" y="820" />
             </Array>
             <mxPoint as="offset" />
           </mxGeometry>
@@ -3062,16 +3063,17 @@
             <mxPoint x="600" y="620" as="sourcePoint" />
             <mxPoint x="330" y="620" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="160" y="790" />
+              <mxPoint x="160" y="780" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="OSm8Mt4CGJM6ceVig3Sr-25" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;fontSize=13;" parent="1" source="OSm8Mt4CGJM6ceVig3Sr-22" target="OSm8Mt4CGJM6ceVig3Sr-9" edge="1">
+        <mxCell id="OSm8Mt4CGJM6ceVig3Sr-25" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;fontSize=13;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" parent="1" source="OSm8Mt4CGJM6ceVig3Sr-22" target="OSm8Mt4CGJM6ceVig3Sr-9" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="610" y="630" as="sourcePoint" />
             <mxPoint x="340" y="630" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="340" y="740" />
+              <mxPoint x="633" y="750" />
+              <mxPoint x="340" y="750" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -3079,10 +3081,10 @@
           <mxGeometry x="60" y="625" width="200" height="100" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-31" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;&lt;i style=&quot;font-size: 13px;&quot;&gt;commonMain Module&lt;/i&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=13;" parent="1" vertex="1">
-          <mxGeometry x="45" y="370" width="160" height="30" as="geometry" />
+          <mxGeometry x="50" y="900" width="160" height="30" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-32" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;&lt;i style=&quot;font-size: 13px;&quot;&gt;androidMain Module&lt;/i&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=13;" parent="1" vertex="1">
-          <mxGeometry x="425" y="370" width="150" height="30" as="geometry" />
+          <mxGeometry x="425" y="640" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="OSm8Mt4CGJM6ceVig3Sr-33" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;&lt;i style=&quot;font-size: 13px;&quot;&gt;iosMain Module&lt;/i&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=13;" parent="1" vertex="1">
           <mxGeometry x="425" y="680" width="120" height="30" as="geometry" />
