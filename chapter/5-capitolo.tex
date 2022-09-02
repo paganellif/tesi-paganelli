@@ -92,11 +92,25 @@ I formati attualmente disponibili che soddisfano i requisiti sopra indicati rapp
 Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB sono state (\textit{i}) lo standard aperto e (\textit{ii}) la disponibilità, sia di software che di librerie, per la manipolazione del file. 
 
 \section{Progettazione}
-In questa sezione viene descritta la fase di progettazione del sistema, le cui attività principali consistono in  ($i$) modellazione del dominio, ($ii$) progettazione architettura e ($iii$) progettazione interfaccia grafica tramite mockup. 
+In questa sezione viene descritta la fase di progettazione del sistema, le cui attività principali consistono nella ($i$) modellazione del dominio e ($ii$) nella progettazione dell'interfaccia grafica tramite mockup.
 
 \subsection{Modellazione Dominio}
-% Descrivere qua progettazione domini, boundaries, ecc secondo il DDD 
-%Nel redazionale non esistono i concetti di progresso di lettura, highlight, bookmark, appunto, ... -> %modellato dominio in modo da gestire queste informazioni localmente senza modificare il dominio redazionale
+
+L'obiettivo principale della applicazione è quello di permettere all'utente di "sfogliare" i contenuti digitali offerti da Maggioli sul proprio dispositivo. In questo caso si identificano quindi tre contesti:
+
+\begin{itemize}
+    \item \textit{Reader} (Core) - Contesto principale del progetto. Racchiude tutti gli aspetti con maggiore valore per l'utente riguardanti la lettura e personalizzazione dei contenuti digitali. 
+    \item \textit{Sisred} - Rappresenta il contesto della sorgente dei contenuti digitali Maggioli (Sistema Redazionale\cite{amslaurea23043}). In questo contesto non esistono i concetti di \textit{favorite}, \textit{highlight}, \textit{bookmark} e \textit{progression} mentre è condiviso il concetto di libro e utente.
+    \item \textit{User} - Contesto che definisce tutti gli aspetti a riguardo degli utenti. In questo contesto esiste il solo concetto di utente, il quale è condiviso con gli altri contesti.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/tesi-20-app-domain.drawio.png}
+\caption{Context Map: panoramica globale dei contesti del progetto e delle relazioni che intercorrono tra di essi}
+\end{figure}
+
+Tra i contesti definiti esistono delle relazioni di tipo \textit{Shared Kernel}\cite{evans_domain-driven_2004} (SK) con l'obiettivo di evitare duplicazioni e semplificare l'integrazione. Relazioni di questo tipo consistono nella condivisione di un sottoinsieme del dominio modellato, che corrisponde tipicamente al dominio core. Un esempio di relazione SK è l'utilizzo di codice o schemi DB condivisi\footnote{\url{https://github.com/ddd-crew/context-mapping}}.\\
 
 Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domain-driven_2004}:
 \begin{itemize}
@@ -109,25 +123,39 @@ Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domai
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{img/tesi-20-app-domain.drawio.png}
-\caption{Dominio applicativo modellato}
+\includegraphics[width=0.92\textwidth]{img/tesi-25-ddd.drawio.png}
+\caption{UML - Diagramma delle classi: Reader Core Domain e User Subdomain}
 \end{figure}
 
-\subsection{Architettura}
-repository, dati remoti dal reda e dati locali per i preferiti, highlights ecc.
-
 \subsection{Progettazione UI}
+
+L'interfaccia grafica della applicazione è stata progettata tramite l'utilizzo di mockup digitali realizzati con il tool grafico open source Drawio\footnote{\url{https://github.com/jgraph/drawio}}. 
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{img/tesi-14-mockup1.drawio.png}
+\includegraphics[width=0.8\textwidth]{img/tesi-14-mockup1.drawio.png}
 \caption{Alcuni dei mockup realizzati per la progettazione e la validazione della UI (v1)}
 \end{figure}
 
+Considerando l'utilizzo tipico di una applicazione della stessa tipologia di quella che deve essere realizzata, sono stati utilizzati alcuni standard de-facto come ad esempio il menu laterale a scomparsa (mockup 4), icona "hamburger" per l'apertura del menu (mockup 3), elenco di elementi con scroll infinito verticale (schermata 5-6), barra di ricerca nella parte alta con icona "lente di ingrandimento" (schermata 2-5-6), ... .
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{img/tesi-23-mockupv2.drawio.png}
+\includegraphics[width=0.8\textwidth]{img/tesi-23-mockupv2.drawio.png}
 \caption{Modifiche apportate ai mockup per ottenere la validazione della UI (v2)}
 \end{figure}
+
+Sono state necessarie due iterazioni di validazione dei mockup da parte degli interessati per definire l'interfaccia utente desiderata con alcuni vincoli caratteristici del brand Maggioli, come ad esempio l' utilizzo del colore blu \#00379E come colore primario, l'utilizzo del font Karla\footnote{\url{https://github.com/googlefonts/karla}} e la presenza del logo Maggioli, almeno nella schermata di login. \\
+Le schermate necessarie sono quindi:
+\begin{itemize}
+    \item \textit{Reader} - Schermata responsabile della visualizzazione del contenuto digitale in formato EPUB.
+    \item \textit{Login} - Schermata iniziale responsabile alla autenticazione dell'utente.
+    \item \textit{Home} - Schermata principale responsabile alla visualizzazione dei contenuti digitali a cui l'utente è autorizzato ad accedere.
+    \item \textit{Preferiti} - Schermata responsabile alla visualizzazione dei contenuti digitali preferiti dall'utente.
+    \item \textit{Impostazioni} - Schermata responsabile alla visualizzazione e modifica delle impostazioni.
+    \item \textit{About} - Schermata responsabile alla visualizzazione di informazioni generali come versione della applicazione, autore, copyright, ... .
+    
+\end{itemize}
 
 \section{Implementazione}
 
@@ -157,6 +185,11 @@ Definiti i requisiti e modellato il dominio sono state individuate le seguenti l
 \subsection{Readium}
 Tra le librerie individuate quella fondamentale per il dominio applicativo è \textit{Readium}.
 La necessità di un tool open-source, robusto e performante per la manipolazione e la lettura di formati editoriali digitali è alla base del progetto Readium. Essa infatti consiste in un insieme di toolkit per diversi formati (come epub, audiolibri e libri image-based) e diverse piattaforme (Android, iOS, Desktop e Web).\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-22-readiumarch.drawio.png}
+\caption{Architettura libreria Readium}
+\end{figure}
 Readium è composto da quattro moduli principali:
 \begin{itemize}
     \item \textit{Publication Server} - Fornisce le pubblicazioni tramite un server locale HTTPS.
@@ -167,19 +200,8 @@ Readium è composto da quattro moduli principali:
     \end{itemize}
     \item \textit{Navigator} - Utile alla navigazione delle risorse di una pubblicazione secondo diverse strategie basate sulla natura della pubblicazione (ebook, audiolibri, ...). Interagisce con il modulo \textit{Streamer} per utilizzare il modello in-memory o per ottenere manifesto JSON attraverso il modello condiviso (\textit{Shared}).
 \end{itemize}
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{img/tesi-22-readiumarch.drawio.png}
-\caption{Architettura libreria Readium}
-\end{figure}
 
 % parlare della implementazione del modulo shared e della strategia expect/actual adottata
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{img/tesi-24-ddduml.drawio.png}
-\caption{UML - Diagramma delle classi: modulo condiviso (\textit{Shared})}
-\end{figure}
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{img/tesi-21-expectactual.drawio.png}
