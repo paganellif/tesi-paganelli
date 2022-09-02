@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-09-02T10:03:12.683Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="9daD2JH84AGU_V8F0P2v" version="20.2.8" type="github" pages="25">
+<mxfile host="app.diagrams.net" modified="2022-09-02T12:18:10.412Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="GzoRE9ThVt_odzFDK8TP" version="20.2.8" type="github" pages="25">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1598" dy="1026" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -2933,6 +2933,18 @@
             <mxPoint x="1205" y="490" as="targetPoint" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="rNsVethtQJ7_yliVdnc3-1" value="SK" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="480" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rNsVethtQJ7_yliVdnc3-2" value="SK" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1330" y="535" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rNsVethtQJ7_yliVdnc3-3" value="SK" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1255" y="420" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rNsVethtQJ7_yliVdnc3-4" value="SK" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1255" y="360" width="40" height="30" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
@@ -3921,7 +3933,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="25-ddd" id="E1WP1r1S9d4VPVcnAyLr">
-    <mxGraphModel dx="1598" dy="2063" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1598" dy="2126" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="AyU5Mh_nT2HryfGQjvj_-0" />
         <mxCell id="AyU5Mh_nT2HryfGQjvj_-1" parent="AyU5Mh_nT2HryfGQjvj_-0" />
