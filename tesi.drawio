@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-09-05T19:51:04.178Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="kVu2OTMlQ8BmL8QcSNZg" version="20.2.8" type="github" pages="23">
+<mxfile host="app.diagrams.net" modified="2022-09-05T20:00:09.540Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="BjlXXcr43F6jMVh8UqiK" version="20.2.8" type="github" pages="23">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="700" dy="663" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -3721,7 +3721,7 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="m4m8-THbt-DoahwwbbYI-16" value="&lt;b&gt;PagingDataAdapter&amp;lt;D,H&amp;gt;&lt;/b&gt;" style="html=1;rounded=0;fontSize=13;fontColor=default;strokeColor=default;fillColor=#FFF2CC;" parent="1" vertex="1">
+        <mxCell id="m4m8-THbt-DoahwwbbYI-16" value="&lt;b&gt;PagingDataAdapter&amp;lt;D,V&amp;gt;&lt;/b&gt;" style="html=1;rounded=0;fontSize=13;fontColor=default;strokeColor=default;fillColor=#FFF2CC;" parent="1" vertex="1">
           <mxGeometry x="547.75" y="660" width="187.75" height="50" as="geometry" />
         </mxCell>
         <mxCell id="m4m8-THbt-DoahwwbbYI-17" value="Libro, HomeViewHolder" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fontSize=13;" parent="1" vertex="1">
