@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-09-06T13:34:50.919Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="V5DSz1aKEM7G_rPEpJ9B" version="20.2.8" type="github" pages="17">
+<mxfile host="app.diagrams.net" modified="2022-09-06T14:17:01.845Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="cgd5iJipPM2A3N_EtPtG" version="20.2.8" type="github" pages="17">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1625" dy="698" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -3198,7 +3198,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="fD7mR1TdDJlvqlGi7CS7" name="26-shareduml">
-    <mxGraphModel dx="1625" dy="698" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="1" shadow="0">
+    <mxGraphModel dx="1625" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="1" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -3490,8 +3490,8 @@
         <mxCell id="Numujmw0qwxsSF-EGtP5-6" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#D5E8D4;" vertex="1" parent="1">
           <mxGeometry x="268" y="292.5" width="18" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="Numujmw0qwxsSF-EGtP5-7" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;SharedPreferences&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="288" y="290" width="150" height="30" as="geometry" />
+        <mxCell id="Numujmw0qwxsSF-EGtP5-7" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;DB key-value&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="288" y="290" width="110" height="30" as="geometry" />
         </mxCell>
         <mxCell id="Numujmw0qwxsSF-EGtP5-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;" vertex="1" parent="1">
           <mxGeometry x="268" y="267.5" width="18" height="20" as="geometry" />
