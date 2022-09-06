@@ -240,6 +240,17 @@ Tale meccanismo è stato utilizzato nello sviluppo della applicazione per poter 
 \caption{Strategia \textit{Expect/Actual} adottata per l'implementazione dei servizi infrastrutturali specifici delle piattaforme, persistenza e concorrenza, sfruttando la tecnica \textit{dependency injection}}
 \end{figure}
 
+Ogni dipendenza che deve essere iniettata viene inserita all'interno di uno o più moduli, i quali vengono utilizzati da Koin per inizializzare tutto il contesto applicativo. Le dipendenze possono essere principalmente di due tipi:
+\begin{itemize}
+    \item \textit{Factory} - Ogni volta che la dipendenza viene iniettata ne viene creata una nuova istanza, paragonabile al design pattern Factory Method\footnote{\url{https://en.wikipedia.org/wiki/Factory_method_pattern}}.
+    \item \textit{Single} - In tutto il contesto applicativo esiste una sola istanza della dipendenza iniettata, paragonabile al deisgn pattern Singleton\footnote{\url{https://en.wikipedia.org/wiki/Singleton_pattern}}.
+\end{itemize}
+
+\begin{listing}[H]
+\inputminted{kotlin}{code/5-koin}
+\caption{Configurazione Dependency Injection: definizione dei moduli Koin e inizializzazione del contesto applicativo}
+\end{listing}
+
 \subsection{androidMaggioliEbookApp}
 NavigationController e navigation graph per gestire il flusso tra i vari fragment della app. La fragment home è quella principale e prima di essere creata, se l'utente non ha fatto login, viene rediretto\footnote{\url{https://developer.android.com/guide/navigation/navigation-conditional}} al fragment di login per farlo autenticare e poi riportato indietro alla schermata di home (popStackBack)
 \footnote{\url{https://medium.com/swlh/android-navigation-component-part-1-6191323eaf39}}.
