@@ -153,13 +153,13 @@ Sono state necessarie due iterazioni di validazione dei mockup da parte degli in
     \item \textit{Preferiti} - Schermata responsabile alla visualizzazione dei contenuti digitali preferiti dall'utente.
     \item \textit{Impostazioni} - Schermata responsabile alla visualizzazione e modifica delle impostazioni.
     \item \textit{About} - Schermata responsabile alla visualizzazione di informazioni generali come versione della applicazione, autore, copyright, ... .
-    
 \end{itemize}
 
 \section{Implementazione}
+La fase di implementazione consiste nello sviluppo della applicazione secondo il paradigma Kotlin Multiplatform: sono presenti infatti un unico core, chiamato \textit{shared} ($i$), che definisce la logica condivisa della applicazione e due differenti implementazioni per l'interfaccia utente, chiamate rispettivamente \textit{androidMaggioliEbookApp} ($ii$) e \textit{iosMaggioliEbookApp} ($iii$).
 
 \subsection{Ricerca Librerie}
-Definiti i requisiti e modellato il dominio sono state individuate le seguenti librerie, suddivise per modulo, a supporto dello sviluppo della applicazione:
+La prima attività svolta nella fase di implementazione è stata la ricerca delle librerie, la quale ha permesso di individuare le seguenti librerie, suddivise per modulo di appartenenza:
 \begin{itemize}
     \item \textit{Shared}
     \begin{itemize}
@@ -169,6 +169,7 @@ Definiti i requisiti e modellato il dominio sono state individuate le seguenti l
         \item \textit{Kvault}\footnote{\url{https://github.com/Liftric/KVault}} - Libreria multiplatform per la persistenza dei dati sicura in formato chiave-valore. Tramite una unica API si comporta come wrapper di Keychain, nel caso iOS, e SharedPreferences nel caso Android.
         \item \textit{Koin}\footnote{\url{https://github.com/InsertKoinIO/koin}} - Dependency Injection framework multiplatform.
         \item \textit{Napier}\footnote{\url{https://github.com/AAkira/Napier}} - Logging framework multiplatform.
+        \item \textit{SqlDelight}\footnote{\url{https://github.com/cashapp/sqldelight}} - Libreria multiplatform per la persistenza dei dati tramite database relazionale locale.
     \end{itemize}
     \item \textit{Android}
     \begin{itemize}
@@ -180,13 +181,20 @@ Definiti i requisiti e modellato il dominio sono state individuate le seguenti l
     \item \textit{KMPNativeCoroutines}\footnote{\url{https://github.com/rickclephas/KMP-NativeCoroutines}} - Libreria che permette l'utilizzo delle coroutine Kotlin in Swift in applicazioni Kotlin Multiplatform.
     \end{itemize}
 \end{itemize}
+Per ognuna delle librerie del modulo \textit{Shared} esistono valide alternative, dimostrando che l'ecosistema Kotlin Multiplatform è in continua espansione\footnote{\url{https://github.com/terrakok/kmm-awesome}}.
 
 \subsection{Readium}
-Tra le librerie individuate quella fondamentale per il dominio applicativo è \textit{Readium}.
+Le uniche due librerie individuate che da documentazione sono in grado di rispettare i requisiti di gestione, manipolazione e visualizzazione dei contenuti digitali in formato EPUB sono \textit{Readium}\footnote{\url{https://github.com/readium}} e \textit{FolioReader}\footnote{\url{https://github.com/FolioReader}}.\\
+Entrambe le librerie forniscono le stesse identiche funzionalità ma è stata scelta \textit{Readium} come libreria per la applicazione per le seguenti motivazioni:
+\begin{itemize}
+    \item Non è stato possibile testare la libreria \textit{FolioReader} a causa di errori al suo interno in fase di compilazione della applicazione di test realizzata.
+    \item Per la libreria \textit{Readium} l'ultima commit per la versione Android risale al 05/09/2022 e l'ultimo rilascio risale al 22/04/2022, mentre per la libreria \textit{FolioReader} l'ultima commit per la versione Android risale al 09/01/2020 e l'ultimo rilascio risale al 11/01/2019. Lo stesso confronto è valido per la versione iOS.\footnote{Dati al 06/09/2022 provenienti dai relativi repository GitHub}
+    \item La libreria \textit{Readium} è scritta con il linguaggio Kotlin mentre \textit{FolioReader} è scritta con Java.
+\end{itemize}
 La necessità di un tool open-source, robusto e performante per la manipolazione e la lettura di formati editoriali digitali è alla base del progetto Readium. Essa infatti consiste in un insieme di toolkit per diversi formati (come epub, audiolibri e libri image-based) e diverse piattaforme (Android, iOS, Desktop e Web).\\
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{img/tesi-22-readiumarch.drawio.png}
+\includegraphics[width=0.9\textwidth]{img/tesi-22-readiumarch.drawio.png}
 \caption{Architettura libreria Readium}
 \end{figure}
 Readium è composto da quattro moduli principali:
@@ -200,16 +208,27 @@ Readium è composto da quattro moduli principali:
     \item \textit{Navigator} - Utile alla navigazione delle risorse di una pubblicazione secondo diverse strategie basate sulla natura della pubblicazione (ebook, audiolibri, ...). Interagisce con il modulo \textit{Streamer} per utilizzare il modello in-memory o per ottenere manifesto JSON attraverso il modello condiviso (\textit{Shared}).
 \end{itemize}
 
+\subsection{Shared}
 % parlare della implementazione del modulo shared e della strategia expect/actual adottata
+Come anticipato nel capitolo \ref{ch:ch3} la parte condivisa della applicazione racchiude tutta o una sottoparte della business logic, compresi quindi aspetti specifici della piattaforma target come logging, persistenza dei dati e networking.
+Tipicamente le librerie per applicazioni sviluppate con Kotlin Multiplatform possono essere utilizzate direttamente dal codice condiviso, come ad esempio KVault, lasciando al compilatore Kotlin il compito di scegliere la giusta implementazione per la piattaforma target durante la fase di compilazione.In altri casi è necessario invece utilizzare il meccanismo \textit{expect/actual} (discusso nel capitolo \ref{ch:ch3}) per definire il comportamento atteso e fornire una implementazione specifica per la piattaforma target.\\
+Tale meccanismo è stato utilizzato nello sviluppo della applicazione per poter effettuare dependency injection tramite la libreria Koin dei componenti riguardanti la persistenza dei dati (Kvault e SqlDelight) e l'esecuzione asincrona (CoroutineDispatcher). 
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{img/tesi-21-expectactual.drawio.png}
+\includegraphics[width=0.85\textwidth]{img/tesi-21-expectactual.drawio.png}
 \caption{Strategia \textit{Expect/Actual} adottata per l'implementazione dei servizi infrastrutturali specifici delle piattaforme, persistenza e concorrenza, sfruttando la tecnica \textit{dependency injection}}
 \end{figure}
 
+
+
+
+\subsection{androidMaggioliEbookApp}
 NavigationController e navigation graph per gestire il flusso tra i vari fragment della app. La fragment home è quella principale e prima di essere creata, se l'utente non ha fatto login, viene rediretto\footnote{\url{https://developer.android.com/guide/navigation/navigation-conditional}} al fragment di login per farlo autenticare e poi riportato indietro alla schermata di home (popStackBack)
 \footnote{\url{https://medium.com/swlh/android-navigation-component-part-1-6191323eaf39}}.
 
 Utilizzo di PagingData (Paging 3) per scaricare on demand il contenuto e mostrarlo nel recycler view con lo scroll.
 
 Per poter gestire la persistenza nel shared è necessario gestire tipi di dato primitivi (e.g. String): per questo nel db vengono salvati solo string e sulle due piattaforme sono stati aggiunti metodi per fare il toString degli oggetti di readium (esempio locator: ogni volta che lo devo memorizzare faccio json.toString e ogni volta che cerco i dati faccio Locator.fromJson(Json.fromString(risultatoQuery)))
+
+\subsection{iosMaggioliEbookApp}
