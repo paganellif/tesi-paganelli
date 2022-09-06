@@ -125,6 +125,7 @@ Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domai
 \centering
 \includegraphics[width=0.92\textwidth]{img/tesi-25-ddd.drawio.png}
 \caption{UML - Diagramma delle classi: Reader Core Domain e User Subdomain}
+\label{fig:5.4}
 \end{figure}
 
 \subsection{Progettazione UI}
@@ -133,7 +134,7 @@ L'interfaccia grafica della applicazione è stata progettata tramite l'utilizzo 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{img/tesi-14-mockup1.drawio.png}
+\includegraphics[width=0.85\textwidth]{img/tesi-14-mockup1.drawio.png}
 \caption{Alcuni dei mockup realizzati per la progettazione e la validazione della UI (v1)}
 \end{figure}
 
@@ -141,7 +142,7 @@ Considerando l'utilizzo tipico di una applicazione della stessa tipologia di que
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{img/tesi-23-mockupv2.drawio.png}
+\includegraphics[width=0.85\textwidth]{img/tesi-23-mockupv2.drawio.png}
 \caption{Modifiche apportate ai mockup per ottenere la validazione della UI (v2)}
 \end{figure}
 
@@ -192,12 +193,7 @@ Entrambe le librerie forniscono le stesse identiche funzionalità ma è stata sc
     \item La libreria \textit{Readium} è scritta con il linguaggio Kotlin mentre \textit{FolioReader} è scritta con Java.
 \end{itemize}
 La necessità di un tool open-source, robusto e performante per la manipolazione e la lettura di formati editoriali digitali è alla base del progetto Readium. Essa infatti consiste in un insieme di toolkit per diversi formati (come epub, audiolibri e libri image-based) e diverse piattaforme (Android, iOS, Desktop e Web).\\
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{img/tesi-22-readiumarch.drawio.png}
-\caption{Architettura libreria Readium}
-\end{figure}
-Readium è composto da quattro moduli principali:
+L'architettura della libreria \textit{Readium} è cosi composta da quattro moduli principali:
 \begin{itemize}
     \item \textit{Publication Server} - Fornisce le pubblicazioni tramite un server locale HTTPS.
     \item \textit{Streamer} - Modulo composto dai seguenti due sottomoduli:
@@ -207,21 +203,42 @@ Readium è composto da quattro moduli principali:
     \end{itemize}
     \item \textit{Navigator} - Utile alla navigazione delle risorse di una pubblicazione secondo diverse strategie basate sulla natura della pubblicazione (ebook, audiolibri, ...). Interagisce con il modulo \textit{Streamer} per utilizzare il modello in-memory o per ottenere manifesto JSON attraverso il modello condiviso (\textit{Shared}).
 \end{itemize}
-
-\subsection{Shared}
-% parlare della implementazione del modulo shared e della strategia expect/actual adottata
-Come anticipato nel capitolo \ref{ch:ch3} la parte condivisa della applicazione racchiude tutta o una sottoparte della business logic, compresi quindi aspetti specifici della piattaforma target come logging, persistenza dei dati e networking.
-Tipicamente le librerie per applicazioni sviluppate con Kotlin Multiplatform possono essere utilizzate direttamente dal codice condiviso, come ad esempio KVault, lasciando al compilatore Kotlin il compito di scegliere la giusta implementazione per la piattaforma target durante la fase di compilazione.In altri casi è necessario invece utilizzare il meccanismo \textit{expect/actual} (discusso nel capitolo \ref{ch:ch3}) per definire il comportamento atteso e fornire una implementazione specifica per la piattaforma target.\\
-Tale meccanismo è stato utilizzato nello sviluppo della applicazione per poter effettuare dependency injection tramite la libreria Koin dei componenti riguardanti la persistenza dei dati (Kvault e SqlDelight) e l'esecuzione asincrona (CoroutineDispatcher). 
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{img/tesi-21-expectactual.drawio.png}
-\caption{Strategia \textit{Expect/Actual} adottata per l'implementazione dei servizi infrastrutturali specifici delle piattaforme, persistenza e concorrenza, sfruttando la tecnica \textit{dependency injection}}
+\includegraphics[width=1\textwidth]{img/tesi-22-readiumarch.drawio.png}
+\caption{Architettura libreria Readium}
 \end{figure}
 
 
+\subsection{Shared}
+Come anticipato nel capitolo \ref{ch:ch3} la parte condivisa della applicazione racchiude tutta o una sottoparte della business logic, compresi quindi aspetti "infrastrutturali" specifici della piattaforma target come ad esempio logging, persistenza dei dati e networking. E' infatti in questo modulo che si trova l'implementazione della logica applicativa seguendo le specifiche definite in fase di progettazione (figura \ref{fig:5.4}). 
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-26-shareduml.drawio.png}
+\caption{Diagramma delle classi: Implementazioni data source (persistenza dati e networking)}
+\end{figure}
+
+Lo schema del database locale è definito utilizzando appositi file, in formato \textit{.sq}, uno per ognuna delle entità che necessita di persistenza: \textit{Highlight}, \textit{Favorite}, \textit{Progression} e \textit{Bookmark}. Tramite il task \textit{generateSqlDelightInterface} fornito dal plugin gradle SqlDelight è possibile generare le relative implementazioni dell'interfaccia \textit{MaggioliEbookDB}, anch'essa autogenerata dal plugin. 
+
+\begin{listing}[H]
+\inputminted{sql}{code/5-sqldelight}
+\caption{Esempio di definizione schema \textit{Bookmark} tramite sintassi SqlDelight}
+\end{listing}
+
+\begin{listing}[H]
+\inputminted{kotlin}{code/5-sqldelight1}
+\caption{Implementazione autogenerata tramite il plugin gradle SqlDelight della precedente definizione dello schema per l'entità \textit{Bookmark}}
+\end{listing}
+
+Tipicamente le librerie per applicazioni sviluppate con Kotlin Multiplatform possono essere utilizzate direttamente dal codice condiviso, come ad esempio KVault, lasciando al compilatore Kotlin il compito di scegliere la giusta implementazione per la piattaforma target durante la fase di compilazione.In altri casi è necessario invece utilizzare il meccanismo \textit{expect/actual} (discusso nel capitolo \ref{ch:ch3}) per definire il comportamento atteso e fornire una implementazione specifica per la piattaforma target.\\
+Tale meccanismo è stato utilizzato nello sviluppo della applicazione per poter effettuare dependency injection tramite la libreria Koin dei componenti riguardanti la persistenza dei dati (Kvault e SqlDelight) e l'esecuzione asincrona (CoroutineDispatcher).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-21-expectactual.drawio.png}
+\caption{Strategia \textit{Expect/Actual} adottata per l'implementazione dei servizi infrastrutturali specifici delle piattaforme, persistenza e concorrenza, sfruttando la tecnica \textit{dependency injection}}
+\end{figure}
 
 \subsection{androidMaggioliEbookApp}
 NavigationController e navigation graph per gestire il flusso tra i vari fragment della app. La fragment home è quella principale e prima di essere creata, se l'utente non ha fatto login, viene rediretto\footnote{\url{https://developer.android.com/guide/navigation/navigation-conditional}} al fragment di login per farlo autenticare e poi riportato indietro alla schermata di home (popStackBack)
