@@ -242,8 +242,8 @@ Tale meccanismo è stato utilizzato nello sviluppo della applicazione per poter 
 
 Ogni dipendenza che deve essere iniettata viene inserita all'interno di uno o più moduli, i quali vengono utilizzati da Koin per inizializzare tutto il contesto applicativo. Le dipendenze possono essere principalmente di due tipi:
 \begin{itemize}
-    \item \textit{Factory} - Ogni volta che la dipendenza viene iniettata ne viene creata una nuova istanza, paragonabile al design pattern Factory Method\footnote{\url{https://en.wikipedia.org/wiki/Factory_method_pattern}}.
-    \item \textit{Single} - In tutto il contesto applicativo esiste una sola istanza della dipendenza iniettata, paragonabile al deisgn pattern Singleton\footnote{\url{https://en.wikipedia.org/wiki/Singleton_pattern}}.
+    \item \textit{Factory} - Ogni volta che la dipendenza viene iniettata ne viene creata una nuova istanza (paragonabile al design pattern Factory Method\footnote{\url{https://en.wikipedia.org/wiki/Factory_method_pattern}}).
+    \item \textit{Single} - In tutto il contesto applicativo esiste una sola istanza della dipendenza iniettata (paragonabile al design pattern Singleton\footnote{\url{https://en.wikipedia.org/wiki/Singleton_pattern}}).
 \end{itemize}
 
 \begin{listing}[H]
@@ -252,8 +252,23 @@ Ogni dipendenza che deve essere iniettata viene inserita all'interno di uno o pi
 \end{listing}
 
 \subsection{androidMaggioliEbookApp}
-NavigationController e navigation graph per gestire il flusso tra i vari fragment della app. La fragment home è quella principale e prima di essere creata, se l'utente non ha fatto login, viene rediretto\footnote{\url{https://developer.android.com/guide/navigation/navigation-conditional}} al fragment di login per farlo autenticare e poi riportato indietro alla schermata di home (popStackBack)
-\footnote{\url{https://medium.com/swlh/android-navigation-component-part-1-6191323eaf39}}.
+L'applicazione sviluppata per la piattaforma Android implementa sia lo strato di presentazione dei dati utilizzando la business logic fornita dal modulo \textit{Shared} che la logica del visualizzatore dei contenuti digitali tramite il toolkit Kotlin della libreria \textit{Readium}.\\
+La navigazione all'interno della applicazione è gestita tramite la combinazione dei seguenti componenti:
+\begin{itemize}
+    \item \textit{NavController} - Componente necessario per la gestione delle transizioni da un un fragment all'altro. Quando inizializzato richiede la presenza di un grafo di navigazione tra le risorse XML: tale grafo contiene tutti i fragment che possono essere visualizzati e le possibili transizioni tra di essi.
+    \item \textit{NavHostFragment} - Rappresenta il contenitore del fragment in cui ci si trova. Ogni transizione nel grafo corrisponde alla sostituzione del fragment visualizzato con quello di destinazione (sempre che la transizione sia ammessa dal grafo).
+    \item \textit{NavigationView} - Permette la visualizzazione del menu dove si trovano i possibili fragment raggiungibili da quello in cui l'utente si trova attualmente. Nel caso della applicazione sviluppata in questo componente si trova il menu laterale con tutte le schermate indicate in fase di progettazione (\textit{Home}, \textit{Settings}, \textit{About} e \textit{Preferiti}).
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/Screenshot 2022-09-07 at 17.12.56.png}
+\caption{Screenshot di una sottoparte del navigation graph renderizzato automaticamente da Android Studio}
+\label{fig:5.10}
+\end{figure}
+
+Come indicato nella figura \ref{fig:5.10} la schermata principale (\textit{Home}) rappresenta la destinazione iniziale del grafo, ovvero la prima schermata che viene visualizzata dalla applicazione. L'autenticazione dell'utente è gestita tramite la navigazione condizionale\footnote{\url{https://developer.android.com/guide/navigation/navigation-conditional}}. Prima di creare la vista del fragment viene effettuato un controllo sulla autenticazione dell'utente: se l'utente non è autenticato viene effettuata una transizione al fragment \textit{Login} per permettere all'utente di autenticarsi e procedere all'utilizzo della applicazione. E' fondamentale in questo scenario ripulire lo stack di navigazione per evitare che l'utente possa tornare indietro alla schermata precedente senza effettuare l'autenticazione.
+
 
 Utilizzo di PagingData (Paging 3) per scaricare on demand il contenuto e mostrarlo nel recycler view con lo scroll.
 
