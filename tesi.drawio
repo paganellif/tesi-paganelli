@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-09-08T07:41:38.673Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="Kf6HOWEUKWgiIdyB5OK2" version="20.2.8" type="github" pages="18">
+<mxfile host="app.diagrams.net" modified="2022-09-08T07:42:57.076Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="NcP7OWDBmDv1LbqtBfsY" version="20.2.8" type="github" pages="18">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1309" dy="792" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -3594,7 +3594,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="-qO34cWIzsmEy0-KaWQS-6" value="&lt;b&gt;ActivityResultContract&lt;/b&gt;" style="html=1;rounded=0;fontSize=13;strokeColor=#000000;fillColor=#d5e8d4;" vertex="1" parent="1">
-          <mxGeometry x="293.38" y="400" width="142.75" height="50" as="geometry" />
+          <mxGeometry x="293.38" y="400" width="156.62" height="50" as="geometry" />
         </mxCell>
         <mxCell id="-qO34cWIzsmEy0-KaWQS-11" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;labelBackgroundColor=none;fontSize=13;fontColor=default;strokeWidth=2;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" edge="1" parent="1" source="bVHrjSatCeHCVrB4wLEX-9" target="-qO34cWIzsmEy0-KaWQS-6">
           <mxGeometry x="0.6558" y="15" width="160" relative="1" as="geometry">
