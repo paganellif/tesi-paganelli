@@ -106,7 +106,7 @@ L'obiettivo principale della applicazione è quello di permettere all'utente di 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{img/tesi-20-app-domain.drawio.png}
+\includegraphics[width=0.7\textwidth]{img/tesi-20-app-domain.drawio.png}
 \caption{Context Map: panoramica globale dei contesti del progetto e delle relazioni che intercorrono tra di essi}
 \end{figure}
 
@@ -123,7 +123,7 @@ Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domai
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.92\textwidth]{img/tesi-25-ddd.drawio.png}
+\includegraphics[width=0.9\textwidth]{img/tesi-25-ddd.drawio.png}
 \caption{UML - Diagramma delle classi: Reader Core Domain e User Subdomain}
 \label{fig:5.4}
 \end{figure}
@@ -134,7 +134,7 @@ L'interfaccia grafica della applicazione è stata progettata tramite l'utilizzo 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{img/tesi-14-mockup1.drawio.png}
+\includegraphics[width=0.8\textwidth]{img/tesi-14-mockup1.drawio.png}
 \caption{Alcuni dei mockup realizzati per la progettazione e la validazione della UI (v1)}
 \end{figure}
 
@@ -142,7 +142,7 @@ Considerando l'utilizzo tipico di una applicazione della stessa tipologia di que
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{img/tesi-23-mockupv2.drawio.png}
+\includegraphics[width=0.8\textwidth]{img/tesi-23-mockupv2.drawio.png}
 \caption{Modifiche apportate ai mockup per ottenere la validazione della UI (v2)}
 \end{figure}
 
@@ -205,21 +205,20 @@ L'architettura della libreria \textit{Readium} è cosi composta da quattro modul
 \end{itemize}
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{img/tesi-22-readiumarch.drawio.png}
+\includegraphics[width=0.7\textwidth]{img/tesi-22-readiumarch.drawio.png}
 \caption{Architettura libreria Readium}
 \end{figure}
 
 
 \subsection{Shared}
-Come anticipato nel capitolo \ref{ch:ch3} la parte condivisa della applicazione racchiude tutta o una sottoparte della business logic, compresi quindi aspetti "infrastrutturali" specifici della piattaforma target come ad esempio logging, persistenza dei dati e networking. E' infatti in questo modulo che si trova l'implementazione della logica applicativa seguendo le specifiche definite in fase di progettazione (figura \ref{fig:5.4}). 
+Come anticipato nel capitolo \ref{ch:ch3} la parte condivisa della applicazione racchiude tutta o una sottoparte della business logic, compresi quindi aspetti "infrastrutturali" specifici della piattaforma target come ad esempio logging, persistenza dei dati e networking. E' infatti in questo modulo che si trova l'implementazione della logica applicativa seguendo le specifiche definite in fase di progettazione (figura \ref{fig:5.4}).\\
+Lo schema del database locale è definito utilizzando appositi file, in formato \textit{.sq}, uno per ognuna delle entità che necessita di persistenza: \textit{Highlight}, \textit{Favorite}, \textit{Progression} e \textit{Bookmark}. Tramite il task \textit{generateSqlDelightInterface} fornito dal plugin gradle SqlDelight è possibile generare le relative implementazioni dell'interfaccia \textit{MaggioliEbookDB}, anch'essa autogenerata dal plugin. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{img/tesi-26-shareduml.drawio.png}
-\caption{Diagramma delle classi: Implementazioni data source (persistenza dati e networking)}
+\includegraphics[width=0.9\textwidth]{img/tesi-26-shareduml.drawio.png}
+\caption{UML - Diagramma delle classi: Implementazioni data source (persistenza dati e networking)}
 \end{figure}
-
-Lo schema del database locale è definito utilizzando appositi file, in formato \textit{.sq}, uno per ognuna delle entità che necessita di persistenza: \textit{Highlight}, \textit{Favorite}, \textit{Progression} e \textit{Bookmark}. Tramite il task \textit{generateSqlDelightInterface} fornito dal plugin gradle SqlDelight è possibile generare le relative implementazioni dell'interfaccia \textit{MaggioliEbookDB}, anch'essa autogenerata dal plugin. 
 
 \begin{listing}[H]
 \inputminted{sql}{code/5-sqldelight}
@@ -236,7 +235,7 @@ Tale meccanismo è stato utilizzato nello sviluppo della applicazione per poter 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{img/tesi-21-expectactual.drawio.png}
+\includegraphics[width=0.9\textwidth]{img/tesi-21-expectactual.drawio.png}
 \caption{Strategia \textit{Expect/Actual} adottata per l'implementazione dei servizi infrastrutturali specifici delle piattaforme, persistenza e concorrenza, sfruttando la tecnica \textit{dependency injection}}
 \end{figure}
 
@@ -252,7 +251,22 @@ Ogni dipendenza che deve essere iniettata viene inserita all'interno di uno o pi
 \end{listing}
 
 \subsection{androidMaggioliEbookApp}
-L'applicazione sviluppata per la piattaforma Android implementa sia lo strato di presentazione dei dati utilizzando la business logic fornita dal modulo \textit{Shared} che la logica del visualizzatore dei contenuti digitali tramite il toolkit Kotlin della libreria \textit{Readium}.\\
+L'applicazione sviluppata per la piattaforma Android implementa sia lo strato della visualizzazione dei dati utilizzando la business logic fornita dal modulo \textit{Shared} che la logica del \textit{Reader}, visualizzatore dei contenuti digitali tramite il toolkit Kotlin della libreria \textit{Readium}.
+\subsubsection{Single-Activity Architecture}
+L'architettura scelta per l'implementazione della applicazione Android è basata su sole due activity:
+\begin{itemize}
+    \item \textit{MainActivity} - Unica activity principale della applicazione.
+    \item \textit{ReaderActivity} - Activity secondaria, utilizzata sia per l'interazione che la gestione del lettore di contenuti digitali.
+\end{itemize}
+Questa tipologia di architettura permette di avere una singola activity che svolge la funzione di "big container" per tutti i fragment che rappresentano le varie schermate della applicazione.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{img/tesi-27-singleactivity.drawio.png}
+\caption{UML - Diagramma delle classi: architettura Single-Activity}
+\label{fig:5.10}
+\end{figure}
+
 La navigazione all'interno della applicazione è gestita tramite la combinazione dei seguenti componenti:
 \begin{itemize}
     \item \textit{NavController} - Componente necessario per la gestione delle transizioni da un un fragment all'altro. Quando inizializzato richiede la presenza di un grafo di navigazione tra le risorse XML: tale grafo contiene tutti i fragment che possono essere visualizzati e le possibili transizioni tra di essi.
@@ -262,16 +276,29 @@ La navigazione all'interno della applicazione è gestita tramite la combinazione
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{img/Screenshot 2022-09-07 at 17.12.56.png}
-\caption{Screenshot di una sottoparte del navigation graph renderizzato automaticamente da Android Studio}
-\label{fig:5.10}
+\includegraphics[width=0.7\textwidth]{img/Screenshot 2022-09-07 at 17.12.56.png}
+\caption{Screenshot di una sottoparte del navigation graph (renderizzato automaticamente tramite l'IDE Android Studio)}
+\label{fig:5.11}
 \end{figure}
 
-Come indicato nella figura \ref{fig:5.10} la schermata principale (\textit{Home}) rappresenta la destinazione iniziale del grafo, ovvero la prima schermata che viene visualizzata dalla applicazione. L'autenticazione dell'utente è gestita tramite la navigazione condizionale\footnote{\url{https://developer.android.com/guide/navigation/navigation-conditional}}. Prima di creare la vista del fragment viene effettuato un controllo sulla autenticazione dell'utente: se l'utente non è autenticato viene effettuata una transizione al fragment \textit{Login} per permettere all'utente di autenticarsi e procedere all'utilizzo della applicazione. E' fondamentale in questo scenario ripulire lo stack di navigazione per evitare che l'utente possa tornare indietro alla schermata precedente senza effettuare l'autenticazione.
+Come indicato nella figura \ref{fig:5.11} la schermata principale (\textit{Home}) rappresenta la destinazione iniziale del grafo, ovvero la prima schermata che viene visualizzata dalla applicazione. L'autenticazione dell'utente è gestita tramite la navigazione condizionale\footnote{\url{https://developer.android.com/guide/navigation/navigation-conditional}}. Prima di creare la vista del fragment viene effettuato un controllo sulla autenticazione dell'utente: se l'utente non è autenticato viene effettuata una transizione al fragment \textit{Login} per permettere all'utente di autenticarsi e procedere all'utilizzo della applicazione. E' fondamentale in questo scenario ripulire lo stack di navigazione per evitare che l'utente possa tornare indietro alla schermata precedente, ovvero la schermata principale, senza effettuare l'autenticazione.\\
 
+\subsection{Paging}
+Un altro aspetto importante della architettura è il meccanismo utilizzato sia dalla schermata principale che da quella dei preferiti per mostrare i dati all'utente. Il backend utilizzato fornisce i dati tramite paginazione: in questo modo è possibile indicare in una richiesta la dimensione delle pagine, ovvero quanti elementi devono essere restituiti al massimo in una pagina, e la pagina desiderata. Per poter caricare tali dati dinamicamente in una \textit{RecyclerView}\footnote{\url{https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/RecyclerView}} in modo che l'utente possa effettuare lo scroll illimitato nella schermata si utilizza la libreria \textit{Paging}\footnote{\url{https://developer.android.com/topic/libraries/architecture/paging/v3-overview}} fornita da Android.
 
-Utilizzo di PagingData (Paging 3) per scaricare on demand il contenuto e mostrarlo nel recycler view con lo scroll.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{img/tesi-24-androidviewuml.drawio.png}
+\caption{UML - Diagramma delle classi: Paginazione dati nella schermata principale}
+\label{paging}
+\end{figure}
 
-Per poter gestire la persistenza nel shared è necessario gestire tipi di dato primitivi (e.g. String): per questo nel db vengono salvati solo string e sulle due piattaforme sono stati aggiunti metodi per fare il toString degli oggetti di readium (esempio locator: ogni volta che lo devo memorizzare faccio json.toString e ogni volta che cerco i dati faccio Locator.fromJson(Json.fromString(risultatoQuery)))
+I componenti fondamentali della libreria \textit{Paging} sono:
+\begin{itemize}
+    \item \textit{Pager} - Punto di ingresso principale della libreria con il compito di ottenere nuovi dati quando necessario, ovvero quando l'utente ha scrollato nella schermata fino ad uno specifico punto. Richiede la configurazione di alcuni parametri come la dimensione della pagina, la pagina iniziale e la direzione della paginazione. 
+    \item \textit{PagingSource} - Sorgente dei dati paginati. Componente interrogato dal \textit{Pager} ogni volta che sono necessari nuovi dati.
+    \item \textit{PagingDataAdapter} - Componente fondamentale per la rappresentazione di dati paginati in una \textit{RecyclerView}.
+\end{itemize}
+
 
 \subsection{iosMaggioliEbookApp}
