@@ -1,19 +1,41 @@
 % !TeX root = ../main.tex
 
-Dato il processo di sviluppo delle applicazioni mobile individuato nel capitolo \ref{ch:ch3} e definiti gli strumenti e task necessari, si descrive in questo capitolo come è stato automatizzato il processo adottando le moderne tecniche di integrazione continua e rilascio continuo al fine di fornire un modello di processo di sviluppo ai vari reparti aziendali che si occupano di applicazioni mobile.\\
-Per la progettazione della pipeline è stato utilizzato il progetto base generato tramite il plugin Gradle KMM con lo scopo di mantenere il focus solamente sul processo e non sul prodotto. Tale progetto fornisce una applicazione essenziale sviluppata tramite KMM, comprensiva di modulo condiviso e moduli specifici sia Android che iOS.
-
-%TODO: descrivere in breve la pipeline complessiva che si vuole sviluppare per raggiungere quali obiettivi
+Dato il processo di sviluppo delle applicazioni mobile individuato nel capitolo \ref{ch:kmm} e definiti i principali strumenti che si intende utilizzare nel capitolo \ref{ch:ch3}, si descrive in questo capitolo come è stato automatizzato il processo di sviluppo adottando le moderne tecniche di integrazione continua e rilascio continuo al fine di fornire un modello riutilizzabile ai vari reparti aziendali che si occupano dello sviluppo di applicazioni mobile.\\
+Per la progettazione della pipeline è stato utilizzato il progetto base generato tramite il plugin Gradle KMM con lo scopo di mantenere il focus solamente sul processo e non sullo sviluppo del prodotto. Tale progetto fornisce una applicazione essenziale realizzata tramite KMM, comprensiva di modulo condiviso per la logica applicativa e moduli specifici Android e iOS per l'interfaccia utente.\\
+Il workflow ideale, e quindi anche la pipeline obiettivo, è composta dai seguenti passi nello stesso ordine in cui sono indicati:
+\begin{itemize}
+    \item \textit{Pre} - Fase iniziale di preparazione dell'ambiente. In questa fase è necessario configurare tutti gli strumenti necessari alla esecuzione dei passi che seguono fino al termine della pipeline.
+    \item \textit{Build} - Compilazione del codice. In questa fase sia il modulo condiviso che le due applicazioni vengono compilate e impacchettate: non è possibile procedere con la fase di testing se anche solo un modulo non compila correttamente.
+    \item \textit{Test} - Testing del codice e della interfaccia. Anche in questo caso non è possibile procedere alle fasi successive se i test non passano tutti correttamente.
+    \begin{itemize}
+        \item \textit{Unit} - Fase di testing della logica applicativa.
+        \item \textit{UI} - Fase di testing dell'interfaccia grafica.
+    \end{itemize}
+    \item \textit{Release} - Fase finale di rilascio delle due applicazioni.
+    \begin{itemize}
+        \item \textit{Alpha} - Primo rilascio a scopo di testing interno.
+        \item \textit{Beta} - Secondo rilascio a scopo di testing esterno, effettuato dopo la validazione interna.
+        \item \textit{Prod} - Rilascio finale in produzione, ovvero sui relativi store, che avviene dopo la validazione esterna.
+    \end{itemize}
+\end{itemize}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{img/tesi-11-cicd.drawio.png}
+\includegraphics[width=0.8\textwidth]{img/tesi-11-cicd.drawio.png}
 \caption{Pipeline obiettivo per la pubblicazione automatica di una applicazione Android e iOS con modulo condiviso}
 \end{figure}
 
 \section{Modello di Branching}
-L'utilizzo di un adeguato flusso di lavoro è fondamentale per definire una efficiente automazione CI/CD. Con branching si intende che da uno o più flussi principali divergono altri flussi per svolgere determinati lavori per poi convergere al loro termine: in base alle modalità di apertura e chiusura di questi flussi si definiscono diversi modelli di branching.\\
-Nel modello che si intende utilizzare sono presenti tre branch principali:
+L'utilizzo di un adeguato flusso di lavoro è fondamentale per definire una efficiente automazione CI/CD. Con branching si intende l'utilizzo di uno o più flussi principali dai quali divergono altri flussi per svolgere determinati lavori per poi convergere al loro termine: in base alle modalità di apertura e chiusura di questi flussi si definiscono diversi modelli di branching.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{img/tesi-13-branching.drawio.png}
+\caption{Esempio di flusso di sviluppo adottando il modello di branching indicato}
+\label{branching}
+\end{figure}
+
+Il modello che si intende utilizzare (figura \ref{branching}) è basato sul modello di branching GitFlow\footnote{\url{https://www.atlassian.com/it/git/tutorials/comparing-workflows/gitflow-workflow}} il quale prevede tre branch principali:
 \begin{itemize}
     \item \textit{dev} - Flusso principale di sviluppo. Ogni modifica apportata a questo branch corrisponde al rilascio di una nuova versione \textit{alpha}. E' da questo branch che vengono aperti e chiusi nuovi branch, sia per lo sviluppo di nuove funzionalità (\textit{feature}) che per la risoluzione di bug/patch (\textit{fix}).
     \item \textit{test} - Branch modificato solamente tramite merge di modifiche provenienti dal branch \textit{dev} con lo scopo di rilasciare una nuova versione \textit{beta}.
@@ -22,23 +44,35 @@ Nel modello che si intende utilizzare sono presenti tre branch principali:
 
 Grazie ai meccanismi di automazione a supporto della CI/CD si definiscono specifiche regole di attivazione basate sulle modifiche apportate al codice come ad esempio la modifica di un certo file su un determinato branch.
 
+\section{Continuous Integration}
+La pratica di integrare molto frequentemente piccole modifiche al flusso di sviluppo principale è alla base della Continous Integration e permette di diminuire la presenza di problemi rispetto alla integrazione meno frequente di grandi modifiche. Ogni modifica effettuata al codice viene validata automaticamente attraverso l'esecuzione di tutti i passi della pipeline che compongono la fase di integrazione, ovvero compilazione e testing.
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{img/tesi-13-branching.drawio.png}
-\caption{Esempio di flusso di sviluppo adottando il modello di branching indicato}
+\includegraphics[width=0.7\textwidth]{img/tesi-29-cicd.drawio.png}
+\caption{Suddivisione delle fasi di un pipeline in base alle pratiche Continuous Integration/Delivery}
 \end{figure}
 
-\section{Continuous Integration}
+\subsection{Pre}
+Molti dei passi che compongono una pipeline utilizzano tipicamente gli stessi tools e le stesse configurazioni per svolgere task diversi. Un classico esempio è la compilazione del codice e l'esecuzione degli unit test per una applicazione Java: in entrambi i passi viene utilizzata la stessa JDK, lo stesso tool di build automation (Gradle per esempio) e devono essere scaricate le stesse dipendenze del progetto dal repository Maven Central.\\
+Utilizzando meccanismi di caching e passaggio di artefatti è possibile eseguire tutti quei task di configurazione una sola volta all'inizio della pipeline risparmiando tempo e risorse in tutte le successive fasi.\\
+Nel caso della pipeline progettata per lo sviluppo di applicazioni multiplatform con KMM in questa fase iniziale è necessario eseguire i seguenti task:
+\begin{itemize}
+    \item Configurazione dell'ambiente per lo sviluppo Android tramite l'installazione del SDK Android target e dei vari tools necessari utilizzando \textit{sdkmanager}\footnote{\url{https://developer.android.com/studio/command-line/sdkmanager}}.
+    \item Configurazione dell'ambiente per lo sviluppo iOS.
+    \item Installazione di tutte le dipendenze dei vari moduli con relative tecniche di caching. Tra queste si trova anche il compilatore \textit{Kotlin/Native}\footnote{\url{https://kotlinlang.org/docs/native-improving-compilation-time.html\#general-recommendations}}.
+    \item Configurazione delle chiavi per l'autenticazione ai vari servizi cloud forniti da Google e Apple.
+\end{itemize}
 
 \subsection{Build}
-% cache android sdk, gradle e kotlin (https://kotlinlang.org/docs/native-improving-compilation-time.html#general-recommendations)
-Tipicamente la fase iniziale della integrazione continua consiste nella verifica della corretta compilazione del codice sorgente. La compilazione rappresenta un vincolo essenziale per tutte le successive fasi e per questo è definita come fase bloccante: in caso di compilazione fallita la pipeline termina senza procedere con le fasi successive.\\
-Nel caso della automazione dello sviluppo di applicazioni mobile per la fase iniziale di build la pratica più diffusa è quella di validare sia la compilazione del codice, ovvero il codice condiviso (Kotlin) e il codice specifico Android (Kotlin)/iOS (Swift), che la pacchettizzazione della applicazione nei formati richiesti dalle piattaforme target (\textit{.apk}\footnote{Android Package} per Android e \textit{.ipa}\footnote{iOS App Store Package} per iOS).
+Tipicamente la fase iniziale della integrazione continua consiste nella verifica della corretta compilazione del codice sorgente. La compilazione rappresenta un vincolo essenziale per tutte le successive fasi e per questo è definita come fase bloccante: in caso di compilazione fallita la pipeline termina senza procedere con le fasi successive.
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-buildjob}
 \caption{Pipeline job dedicato compilazione e pacchettizzazione della applicazione Android}
 \end{listing}
+
+Nel caso della automazione dello sviluppo di applicazioni mobile per la fase iniziale di build la pratica più diffusa è quella di validare sia la compilazione del codice, ovvero il codice condiviso (Kotlin) e il codice specifico Android (Kotlin)/iOS (Swift), che la pacchettizzazione della applicazione nei formati richiesti dalle piattaforme target (\textit{.apk}\footnote{Android Package} per Android e \textit{.ipa}\footnote{iOS App Store Package} per iOS).
 
 \begin{listing}[H]
 \inputminted{ruby}{code/4-buildft}
@@ -56,10 +90,10 @@ Analogamente agli unit test, dove si verifica l'integrità della business logic 
     \item \textit{Espresso}\footnote{\url{https://developer.android.com/training/testing/espresso}} (Android) -
     \item \textit{XCTest}\footnote{\url{https://developer.apple.com/documentation/xctest}} (iOS) - 
 \end{itemize}
-In questa specifica fase del processo tipicamente si realizzano anche degli screenshot delle applicazioni in esecuzione per essere utilizzati nelle successive fasi di pubblicazione delle applicazioni. Anche in questo caso sono necessari tool differenti per le due piattaforme, i quali sono compresi nella installazione di Fastlane:
+In questa specifica fase del processo tipicamente si realizzano anche degli screenshot delle applicazioni in esecuzione in modo da poterli utilizzare nelle successive fasi di rilascio delle applicazioni. Anche in questo caso sono necessari tool differenti per le due piattaforme, i quali sono compresi nella installazione di Fastlane:
 \begin{itemize}
-    \item \textit{Screengrab}\footnote{\url{https://docs.fastlane.tools/actions/screengrab/}} (Android) -
-    \item \textit{Snapshot}\footnote{\url{https://docs.fastlane.tools/actions/snapshot/}} (iOS) - Tramite il comando di inizializzazione fornito dal tool viene generato il codice Swift (\textit{SnapshotHelper.swift}) di supporto alla cattura degli screenshot per la applicazione iOS.
+    \item \textit{Screengrab}\footnote{\url{https://docs.fastlane.tools/actions/screengrab/}} (Android) - Richiede la definizione di appositi test utilizzando \textit{Espresso} per navigare nella applicazione in esecuzione e della libreria \textit{tools.fastlane:screengrab} per la cattura delle schermate.
+    \item \textit{Snapshot}\footnote{\url{https://docs.fastlane.tools/actions/snapshot/}} (iOS) - Tramite il comando di inizializzazione fornito dal tool viene generato il codice Swift (\textit{SnapshotHelper.swift}) di supporto alla cattura degli screenshot per la applicazione iOS. Anche in questo caso è necessario utilizzare l'apposito framework di test per la navigazione della applicazione in esecuzione.
 \end{itemize}
 
 \begin{listing}[H]
@@ -67,14 +101,102 @@ In questa specifica fase del processo tipicamente si realizzano anche degli scre
 \caption{Codice Swift d'esempio per la cattura degli screenshot della applicazione iOS}
 \end{listing}
 
-Per entrambe le piattaforme sia i test che la cattura degli screenshot necessitano l'emulazione headless, ovvero con l'interfaccia utente disattivata, dei dispositivi target. Ogni dispositivo emulato richiede un insieme di risorse che non permettono l'esecuzione dei test sull'interfaccia in modo parallelo. Per gestire queste situazioni GitLab fornisce un apposito costrutto, chiamato \textit{resource\_group}: ogni job in cui è dichiarato lo stesso resource\_group viene eseguito in modo mutualmente esclusivo.
+Per entrambe le piattaforme sia i test che la cattura delle schermate necessitano l'emulazione headless, ovvero con l'interfaccia utente disattivata, dei dispositivi target. Ogni dispositivo emulato richiede un insieme di risorse tale da non permettere l'esecuzione dei test sull'interfaccia in modo parallelo. Per gestire queste situazioni GitLab fornisce un apposito costrutto, chiamato \textit{resource\_group}: ogni job in cui è dichiarato lo stesso resource\_group viene eseguito in modo mutualmente esclusivo.
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-screenshot-ui-android}
 \caption{Pipeline job dedicato al testing della interfaccia grafica e alla cattura delle schermate (Android)}
 \end{listing}
 
+\section{Continuous Delivery}
+La pratica Continuous Delivery applica gli stessi concetti della Continuous Integration alla fase di rilascio: prevede infatti che il rilascio di una nuova versione avvenga in modo automatico e molto frequente con piccole modifiche apportate al codice.\\
+Nel caso dello sviluppo di applicazioni multiplatform con Kotlin KMM bisogna considerare che le due applicazioni potrebbero essere rilasciate singolarmente, avere versioni differenti e che i possibili scenari in cui si effettua un rilascio sono:
+\begin{itemize}
+    \item Modifica al codice condiviso (rilascio di una nuova versione per entrambe le piattaforme).
+    \item Modifica alla interfaccia utente (rilascio di una nuova versione per soltanto una piattaforma oppure entrambe).
+\end{itemize}
 
+\subsection{Google Play Console}
+A differenza delle applicazioni iOS, le quali richiedono due strumenti separati per la pubblicazione e per il testing, le applicazioni Android vengono gestite interamente da una unica piattaforma chiamata Google Play Console. Tramite il concetto di \textit{promozione} una specifica versione di applicazione viene infatti promossa da \textit{alpha} a \textit{beta} o da \textit{beta} a \textit{produzione}.
+
+\begin{listing}[H]
+\inputminted{ruby}{code/4-gpc-promote}
+\caption{Esempio di Lane Fastlane per la promozione di un rilascio Android da \textit{alpha} a \textit{beta}}
+\end{listing}
+
+Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pubblicazione e testing da parte degli utenti è necessario svolgere le seguenti azioni:
+\begin{itemize}
+    \item Creazione account Google Developer.
+    \item Creazione scheletro iniziale della app dalla piattaforma Google Play Console.
+    \begin{itemize}
+        \item Classificazione PEGI\footnote{\url{https://pegi.info/it}}.
+        \item Creazione mailing-list alpha e beta tester. Tali tester per poter scaricare la applicazione tramite il link condiviso, il quale reindirizza alla pagina corretta di download sul Play Store, devono aver abilitato l'opzione "Internal App Sharing" dalle impostazioni della applicazione Play Store sul proprio dispositivo Android.
+        \item Configurazione monetizzazione, pubblicità/annunci, ... .
+    \end{itemize}
+    \item Creazione Service Account, utile a identificare/autenticare/autorizzare la applicazione creata sui servizi Google (in questa fase è necessario intervenire anche sulla piattaforma Google Cloud Platform).
+    \begin{itemize}
+        \item Test Connessione Fastlane-Play Store.
+        \item Setup service\_account\_key.json nei segreti GitLab per essere utilizzata dinamicamente nella pipeline senza essere versionata nei sorgenti.
+    \end{itemize}
+    \item Creazione chiavi, in formato \textit{Java KeyStore} (jks) per firmare l'applicazione da pubblicare.
+    \begin{itemize}
+        \item Setup chiave jks nei segreti GitLab per essere utilizzata dinamicamente nella pipeline senza essere versionata nei sorgenti. Dato che al momento della scrittura di questa tesi GitLab non fornisce la possibilità di inserire file binari tra i segreti è stato necessario codificare in formato esadecimale la chiave generata in modo da poterla salvare come variabile testuale e decodificarla durante l'esecuzione della pipeline\footnote{\url{https://about.gitlab.com/blog/2019/01/28/android-publishing-with-gitlab-and-fastlane/}}.
+        \begin{listing}[H]
+        \inputminted{bash}{code/4-jks}
+        \caption{Creazione, codifica e decodifica della chiave JKS}
+        \end{listing}
+    \end{itemize}
+    \item Upload manuale della prima release della applicazione. Da Agosto 2021\footnote{\url{https://developer.android.com/guide/app-bundle}} il formato di pubblicazione delle applicazioni Android \textit{aab} (Android Application Bundle) ha sostituito il formato \textit{apk}. Gli apk scaricabili e installabili sui dispositivi vengono creati automaticamente dal Play Store a partire dal aab caricato.
+\end{itemize}
+
+\subsection{TestFlight}
+La configurazione degli strumenti utili al rilascio automatizzato di applicazioni iOS è molto simile a quello sopra descritto per l'ecosistema Android: 
+\begin{itemize}
+    \item Creazione account Apple Developer.
+    \item Creazione certificato del tipo \textit{iOS Distribution} (Certificate Signing Request\footnote{\url{https://help.apple.com/developer-account/\#/devbfa00fef7}}) tramite il portale App Store Connect.
+    \item Creazione provisioning profile del tipo \textit{App Store} collegato al certificato appena creato e successiva installazione tramite Xcode.
+    \item Assegnamento dei permessi a \textit{codesign} (il tool Apple utilizzato per firmare l'applicazione) in modo che possa accedere ai certificati autenticandosi al gestore \textit{Keychain Access}.
+    \item Creazione api key per autenticazione ai servizi App Store Connect, come richiesto da Fastlane\footnote{\url{https://docs.fastlane.tools/app-store-connect-api/\#using-fastlane-api-key-json-file}}.
+    \item Creazione App-Specific Password dal proprio profilo Apple ID per autenticazione tramite \textit{transporter}\footnote{\url{https://help.apple.com/itc/transporteruserguide/en.lproj/static.html\#itc16ef2f321}}, ovvero il tool utilizzato da Fastlane per effettuare l'upload della applicazione. 
+    \begin{itemize}
+        \item La password generata può essere passata a Fastlane solamente tramite variabile d'ambiente, appositamente settata nei segreti GitLab.
+    \end{itemize}
+    \item Creazione scheletro iniziale della app dalla piattaforma App Store Connect.
+    \begin{itemize}
+        \item Creazione mailing-list alpha e beta tester. Per poter scaricare la applicazione tramite link condiviso i tester devono aver accettato l'invito di partecipazione e installato l'applicazione Testflight.
+        \item Configurazione monetizzazione, pubblicità/annunci, ... .
+    \end{itemize}
+    \item Configurazione compliance encryption nel file \textit{Info.plist}\footnote{\url{https://help.apple.com/app-store-connect/\#/dev88f5c7bf9}}, necessario per le policy Apple di pubblicazione app e quindi non doverlo configurare manualmente tramite App Store Connect ad ogni release.
+\end{itemize}
+
+\subsection{Alpha Release}
+Sia per il rilascio sul Play Store che per quello su Testflight sono stati definiti, tramite gli appositi portali, dei gruppi che identificano l'insieme dei tester interni. Nel caso di Android è possibile pubblicare una release in versione alpha indicando la tipologia di rilascio, chiamata \textit{track}, con il valore "alpha". Per poter successivamente rilasciare la stessa versione in beta è necessario effettuare una promozione sulla relativa track. Nel caso iOS, invece, non è presente il concetto di track: la distinzione tra le tipologie di rilascio viene fatta direttamente tramite i gruppi di tester definiti in Testflight, nello specifico il gruppo "\textit{Internal Tester}" e il gruppo "\textit{External Tester}".
+
+\begin{listing}[H]
+\inputminted{yaml}{code/4-ios-alpha}
+\caption{Pipeline job dedicato al rilascio in versione alpha della applicazione iOS}
+\end{listing}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/tesi-18-release-flow.drawio.png}
+\caption{Esempio di workflow: fasi di release alpha-beta-prod}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{img/Screenshot 2022-07-08 at 17.48.40.png}
+\caption{Screenshot canale Slack: notifica di rilascio applicazione iOS alpha}
+\end{figure}
+
+\subsection{Beta Release}
+%rilascio diretto in beta su google play console e testflight
+
+\subsection{Production Release}
+% promozione da beta a prod in google play console, pubblicazione su app store diversa da testflight
+
+\section{Continuous Inspection}
+% TODO: dire cos'è la continuous inspection
 \subsection{Analysis}
 In questa sezione si descrivono le tecniche di analisi adottate e come queste sono state integrate nel processo di sviluppo sia per il codice sviluppato che per le dipendenze del sistema. Queste tecniche di analisi si distinguono rispettivamente in:
 \begin{itemize}
@@ -159,93 +281,6 @@ Le fasi di analisi del codice possono essere introdotte nel processo di sviluppo
 \includegraphics[width=0.8\textwidth]{img/Screenshot 2022-07-02 at 19.34.42.png}
 \caption{Schedulazione pipeline GitLab: attivazione alla mezzanotte di ogni giorno sul branch \textit{dev}}
 \end{figure}
-
-\section{Continuous Delivery}
-
-\subsection{Google Play Console}
-A differenza delle applicazioni iOS, le quali richiedono due strumenti separati per la pubblicazione e per il testing, le applicazioni Android vengono gestite interamente da una unica piattaforma chiamata Google Play Console. Tramite il concetto di \textit{promozione} una specifica versione di applicazione viene infatti promossa da \textit{alpha} a \textit{beta} o da \textit{beta} a \textit{produzione}.
-
-\begin{listing}[H]
-\inputminted{ruby}{code/4-gpc-promote}
-\caption{Esempio di Lane Fastlane per la promozione di un rilascio da \textit{alpha} a \textit{beta}}
-\end{listing}
-
-Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pubblicazione e testing da parte degli utenti della versione Android della applicazione è necessario svolgere le seguenti azioni:
-\begin{itemize}
-    \item Creazione account Google Developer
-    \item Creazione scheletro iniziale della app dalla piattaforma Google Play Console
-    \begin{itemize}
-        \item Classificazione PEGI\footnote{\url{https://pegi.info/it}}
-        \item Creazione mailing-list alpha e beta tester. Tali tester per poter scaricare la applicazione tramite il link condiviso, il quale reindirizza alla pagina corretta di download sul Play Store, devono aver abilitato l'opzione "Internal App Sharing" dalle impostazioni del Play Store.
-        \item Configurazione monetizzazione, pubblicità/annunci, ...
-    \end{itemize}
-    \item Creazione Service Account, utile a identificare/autenticare/autorizzare la applicazione creata sui servizi Google (in questa fase è necessario intervenire anche sulla piattaforma Google Cloud Platform)
-    \begin{itemize}
-        \item Test Connessione Fastlane-Play Store
-        \begin{listing}[H]
-        \inputminted{bash}{code/4-testconnessionegpc}
-        \caption{Comando Fastlane per la verifica del service account creato}
-        \end{listing}
-        \item Setup service\_account\_key.json nei segreti GitLab per essere utilizzata dinamicamente nella pipeline senza essere versionata nei sorgenti.
-    \end{itemize}
-    \item Creazione chiavi, in formato \textit{Java KeyStore} (jks) per firmare l'applicazione da pubblicare
-    \begin{itemize}
-        \item Setup chiave jks nei segreti GitLab per essere utilizzata dinamicamente nella pipeline senza essere versionata nei sorgenti. Dato che al momento della scrittura di questa tesi GitLab non fornisce la possibilità di inserire file binari tra i segreti è stato necessario codificare in formato esadecimale la chiave generata in modo da poterla salvare come variabile testuale e decodificarla durante l'esecuzione della pipeline\footnote{\url{https://about.gitlab.com/blog/2019/01/28/android-publishing-with-gitlab-and-fastlane/}}
-        \begin{listing}[H]
-        \inputminted{bash}{code/4-jks}
-        \caption{Creazione, codifica e decodifica della chiave JKS}
-        \end{listing}
-    \end{itemize}
-    \item Upload manuale della prima release della applicazione. Da Agosto 2021\footnote{\url{https://developer.android.com/guide/app-bundle}} il formato di pubblicazione delle applicazioni Android \textit{aab} (Android Application Bundle) ha sostituito il formato \textit{apk}. Gli apk scaricabili e installabili sui dispositivi vengono creati automaticamente dal Play Store a partire dal aab caricato.
-\end{itemize}
-
-\subsection{TestFlight}
-\begin{itemize}
-    \item Creazione account Apple Developer
-    \item Creazione certificato del tipo \textit{iOS Distribution} (Certificate Signing Request \footnote{\url{https://help.apple.com/developer-account/\#/devbfa00fef7}}) tramite portale App Store Connect
-    \item Creazione provisioning profile del tipo \textit{App Store} collegato al certificato appena creato e successiva installazione tramite Xcode
-    \item Assegnamento dei permessi a \textit{codesign} (il tool Apple utilizzato per firmare l'applicazione) in modo che possa accedere ai certificati autenticandosi al gestore \textit{Keychain Access}
-    \item Creazione api key per autenticazione ai servizi App Store Connect. 
-    \begin{itemize}
-        \item Creazione api key in formato json, come richiesto da Fastlane\footnote{\url{https://docs.fastlane.tools/app-store-connect-api/\#using-fastlane-api-key-json-file}}
-    \end{itemize}
-    \item Creazione App-Specific Password dal proprio profilo Apple ID per autenticazione tramite \textit{transporter}\footnote{\url{https://help.apple.com/itc/transporteruserguide/en.lproj/static.html\#itc16ef2f321}}, ovvero il tool utilizzato da Fastlane per effettuare l'upload della applicazione. 
-    \begin{itemize}
-        \item La password generata può essere passata a Fastlane solamente tramite variabile d'ambiente, appositamente settata nei segreti GitLab
-    \end{itemize}
-    \item Creazione scheletro iniziale della app dalla piattaforma App Store Connect (in modo del tutto analogo per la applicazione Android ramite Google Play Console)
-    \begin{itemize}
-        \item Creazione mailing-list alpha e beta tester. Per poter scaricare la applicazione tramite link condiviso i tester devono aver accettato l'invito di partecipazione e installato l'applicazione Testflight
-        \item Configurazione monetizzazione, pubblicità/annunci, ...
-    \end{itemize}
-    \item Configurazione compliance encryption nel file \textit{Info.plist}\footnote{\url{https://help.apple.com/app-store-connect/\#/dev88f5c7bf9}}, necessario per le policy Apple di pubblicazione app e quindi non doverlo configurare manualmente tramite App Store Connect ad ogni release
-\end{itemize}
-
-\subsection{Alpha Release}
-Sia per il rilascio sul Play Store che per quello su Testflight sono stati definiti, tramite gli appositi portali, dei gruppi che identificano l'insieme di tester interni. Nel caso di Android è possibile pubblicare una release in versione alpha indicando la tipologia di rilascio, chiamata \textit{track}, con il valore "alpha". Successivamente la applicazione verrà distribuita tra i tester del gruppo associato alla track beta. Nel caso iOS, invece, non è presente il concetto di track: la distinzione tra le tipologie di rilascio viene fatta direttamente tramite i gruppi di tester definiti in Testflight, nello specifico il gruppo "\textit{Internal Tester}" e il gruppo "\textit{External Tester}".
-
-\begin{listing}[H]
-\inputminted{yaml}{code/4-ios-alpha}
-\caption{Pipeline job dedicato al rilascio in versione alpha della applicazione iOS}
-\end{listing}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{img/tesi-18-release-flow.drawio.png}
-\caption{Esempio di workflow: fasi di release alpha-beta-prod}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{img/Screenshot 2022-07-08 at 17.48.40.png}
-\caption{Screenshot canale Slack: notifica di rilascio applicazione iOS alpha}
-\end{figure}
-
-\subsection{Beta Release}
-%rilascio diretto in beta su google play console e testflight
-
-\subsection{Production Release}
-% promozione da beta a prod in google play console, pubblicazione su app store diversa da testflight
 
 \section{Continuous Monitoring}
 \subsection{Monitoring}
