@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-09-09T06:40:00.395Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="Dv_WBVO3ST6u585xYLAC" version="20.3.0" type="github" pages="5">
+<mxfile host="app.diagrams.net" modified="2022-09-09T08:49:58.494Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="5dl95xqS5zh1pRxMm1wv" version="20.3.0" type="github" pages="6">
   <diagram id="N_QB2z3_9BETL4bLQdhx" name="2-Use-case2">
     <mxGraphModel dx="1186" dy="611" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -291,7 +291,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="cv2jzuSEXyonYi7uuPne" name="12-sastsca">
-    <mxGraphModel dx="1186" dy="611" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1186" dy="674" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -432,7 +432,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tLPsu8TU15bJgmslR-97" name="13-branching">
-    <mxGraphModel dx="1186" dy="611" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1186" dy="674" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -827,6 +827,35 @@
         </mxCell>
         <mxCell id="7ptRlIAa4AjMo6yv-GjO-3" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;Container &lt;br&gt;Registry&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;fillColor=#FFF2CC;" parent="1" vertex="1">
           <mxGeometry x="480" y="520" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="Y00yAUuy7MvEM6d5ACC0" name="29-cicd">
+    <mxGraphModel dx="1186" dy="674" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="dcugRJNIbBdITiRA17w4-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="dcugRJNIbBdITiRA17w4-3" target="dcugRJNIbBdITiRA17w4-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dcugRJNIbBdITiRA17w4-2" value="Continuous Integration" style="swimlane;fillColor=#FFD966;fontSize=14;fontStyle=3" vertex="1" parent="1">
+          <mxGeometry x="100" y="160" width="310" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="dcugRJNIbBdITiRA17w4-3" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;&lt;i style=&quot;font-size: 14px;&quot;&gt;Test&lt;/i&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;fillColor=#FFF2CC;" vertex="1" parent="dcugRJNIbBdITiRA17w4-2">
+          <mxGeometry x="170" y="33.75" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dcugRJNIbBdITiRA17w4-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="dcugRJNIbBdITiRA17w4-2" source="dcugRJNIbBdITiRA17w4-1" target="dcugRJNIbBdITiRA17w4-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dcugRJNIbBdITiRA17w4-1" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;&lt;i style=&quot;font-size: 14px;&quot;&gt;Build&lt;/i&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;fillColor=#FFF2CC;" vertex="1" parent="dcugRJNIbBdITiRA17w4-2">
+          <mxGeometry x="20" y="33.75" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dcugRJNIbBdITiRA17w4-5" value="Continuous Delivery" style="swimlane;fillColor=#FFD966;fontSize=14;fontStyle=3" vertex="1" parent="1">
+          <mxGeometry x="420" y="160" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="dcugRJNIbBdITiRA17w4-4" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;&lt;i style=&quot;font-size: 14px;&quot;&gt;Release&lt;/i&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;fillColor=#FFF2CC;" vertex="1" parent="dcugRJNIbBdITiRA17w4-5">
+          <mxGeometry x="20" y="33.75" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
