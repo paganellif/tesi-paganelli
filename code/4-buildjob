@@ -1,4 +1,4 @@
-android:build:
+android-build:
   stage: build
   needs: [pre:android, shared:build]
   dependencies: [shared:build]
