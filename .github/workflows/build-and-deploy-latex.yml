@@ -12,7 +12,7 @@ on:
       - 'LICENSE'
       - 'renovate.json'
       - '.github/workflows/build-and-deploy-latex.yml'
-      - 'tesi.drawio'
+      - '**.drawio'
   pull_request:
   workflow_dispatch:
 
