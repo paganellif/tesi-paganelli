@@ -169,13 +169,8 @@ La configurazione degli strumenti utili al rilascio automatizzato di applicazion
     \item Configurazione compliance encryption nel file \textit{Info.plist}\footnote{\url{https://help.apple.com/app-store-connect/\#/dev88f5c7bf9}}, necessario per le policy Apple di pubblicazione app e quindi non doverlo configurare manualmente tramite App Store Connect ad ogni release.
 \end{itemize}
 
-\subsection{Alpha Release}
+\subsection{Alpha/Beta Release}
 Sia per il rilascio sul Play Store che per quello su Testflight sono stati definiti, tramite gli appositi portali, dei gruppi che identificano l'insieme dei tester interni. Nel caso di Android è possibile pubblicare una release in versione alpha indicando la tipologia di rilascio, chiamata \textit{track}, con il valore "alpha". Per poter successivamente rilasciare la stessa versione in beta è necessario effettuare una promozione sulla relativa track. Nel caso iOS, invece, non è presente il concetto di track: la distinzione tra le tipologie di rilascio viene fatta direttamente tramite i gruppi di tester definiti in Testflight, nello specifico il gruppo "\textit{Internal Tester}" e il gruppo "\textit{External Tester}".
-
-\begin{listing}[H]
-\inputminted{yaml}{code/4-ios-alpha}
-\caption{Pipeline job dedicato al rilascio in versione alpha della applicazione iOS}
-\end{listing}
 
 \begin{figure}[H]
 \centering
@@ -183,27 +178,28 @@ Sia per il rilascio sul Play Store che per quello su Testflight sono stati defin
 \caption{Esempio di workflow: fasi di release alpha-beta-prod}
 \end{figure}
 
+\begin{listing}[H]
+\inputminted{yaml}{code/4-ios-alpha}
+\caption{Pipeline job dedicato al rilascio in versione alpha della applicazione iOS}
+\end{listing}
+
+Per poter informare in modo automatico i tester dell'avvenuto rilascio di una nuova versione è stata scelta, tra le varie integrazioni possibili, la action \textit{slack} fornita da Fastlane perchè Slack\footnote{\url{https://slack.com/intl/it-it/}} viene già utilizzato in Maggioli come software di collaborazione aziendale per la messaggistica istantanea tra i membri dei team. E' necessario prima di tutto creare un canale con tutti i tester e aggiungere un webhook, il cui compito è quello di esporre un endpoint per l'invio di messaggi tramite chiamate HTTP.
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{img/Screenshot 2022-07-08 at 17.48.40.png}
 \caption{Screenshot canale Slack: notifica di rilascio applicazione iOS alpha}
 \end{figure}
 
-\subsection{Beta Release}
-%rilascio diretto in beta su google play console e testflight
-
-\subsection{Production Release}
-% promozione da beta a prod in google play console, pubblicazione su app store diversa da testflight
-
 \section{Continuous Inspection}
-% TODO: dire cos'è la continuous inspection
-\subsection{Analysis}
-In questa sezione si descrivono le tecniche di analisi adottate e come queste sono state integrate nel processo di sviluppo sia per il codice sviluppato che per le dipendenze del sistema. Queste tecniche di analisi si distinguono rispettivamente in:
+Tipicamente vengono definiti a livello aziendale degli standard di qualità e di sicurezza che devono essere rispettati da ogni team di sviluppo per qualsiasi prodotto software. La definizione di linee guida sullo stile di programmazione è un classico esempio di standard di qualità. La pratica di analizzare automaticamente e molto frequentemente il codice al fine di validare il rispetto degli standard di qualità e sicurezza è chiamata Continuous Inspection.
+L'obiettivo è quello di ottenere un feedback sia sullo stato del codice e del processo che sulla presenza di problemi di sicurezza al fine di pianificare interventi risolutivi. Per esempio la stima di un elevato debito tecnico accumulato segnala che gli sviluppatori non stanno producendo software di qualità.\\
+In questa sezione si descrivono le tecniche di analisi adottate e come queste sono state integrate nel processo di sviluppo sia per il codice sviluppato che per le dipendenze del sistema. Rispettivamente le due tecniche sono:
 \begin{itemize}
     \item \textit{Static Application Security Testing} (SAST) - Analisi white-box della applicazione al fine di individuare vulnerabilità, code smell e bug.
     \item \textit{Software Composition Analysis} (SCA) - Analisi delle dipendenze di progetto con lo scopo di individuare vulnerabilità pubbliche (CVE)\footnote{Common Vulnerability and Exposure} associate ad esse.
 \end{itemize}
-In entrambe le tipologie di analisi è fondamentale ottenere come risultato uno o più report della scansione, in grado di descrivere in modo dettagliato eventuali "findings" trovati, ovvero l'insieme delle entità restituite dalla analisi/ricerca. I report vengono prodotti tipicamente sia in formati human-readable (es. pagina HTML) che machine-readable (es. JSON, XML, ...) per poter essere utilizzati da applicazioni terze come ad esempio servizi per centralizzare la consultazione di report eterogenei (\textit{Vulnerability Management System}).
+In entrambe le tipologie di analisi è fondamentale ottenere come risultato un report della scansione, in grado di descrivere in modo dettagliato eventuali "findings" trovati, ovvero l'insieme delle entità individuate dalla analisi. I report vengono prodotti tipicamente sia in formati human-readable (es. pagina HTML) che machine-readable (es. JSON, XML, ...) per poter essere utilizzati da applicazioni terze come ad esempio sistemi per centralizzare la consultazione di report eterogenei (\textit{Vulnerability Management System}).
 
 \begin{figure}[H]
 \centering
@@ -214,19 +210,21 @@ In entrambe le tipologie di analisi è fondamentale ottenere come risultato uno 
 Nel contesto aziendale Maggioli questi servizi sono messi a disposizione di tutti i team di sviluppo e mantenuti dalle figure responsabili della sicurezza informatica. Nello specifico i servizi aziendali disponibili sono:
 \begin{itemize}
     \item \textit{SonarQube}\footnote{\url{https://github.com/SonarSource/sonarqube}} - Piattaforma open-source per effettuare analisi statica del codice.
-    \item \textit{DefectDojo}\footnote{\url{https://github.com/DefectDojo}} - Piattaforma open-source per la gestione centralizzata delle vulnerabilità.
+    \item \textit{Dependency Track}\footnote{\url{https://github.com/DependencyTrack}} - Piattaforma open-source per effettuare l'analisi delle dipendenze (SBOM)\footnote{Software Bill Of Material - \url{https://owasp.org/www-community/Component_Analysis\#software-bill-of-materials-sbom}}.
+    \item \textit{DefectDojo}\footnote{\url{https://github.com/DefectDojo}} - Piattaforma open-source per la gestione centralizzata delle vulnerabilità tramite l'aggregazione di report proveniente da sorgenti eterogenee.
 \end{itemize}
 
-\subsubsection{Composizione Software}
-Con composizione software si intende l'insieme di codice sviluppato da terze parti che viene incluso all'interno della applicazione, tipicamente sotto forma di import di librerie, dette dipendenze. Queste dipendenze includono a loro volta altre dipendenze e potrebbero introdurre vulnerabilità alla applicazione che le utilizza. \\
-Per questo motivo è necessario analizzare le dipendenze al fine di individuare le vulnerabilità che esse introducono per essere tempestivi nel loro aggiornamento non appena vengono rilasciate delle patch di sicurezza. Il tool adottato per effettuare questa tipologia di analisi è \textit{Dependency Check}\footnote{\url{https://github.com/jeremylong/DependencyCheck}}, un tool open-source rilasciato e mantenuto da OWASP sia nella forma di plugin Gradle che come eseguibile e immagine Docker.
+\subsection{Composizione Software}
+Con composizione software si intende l'insieme di codice sviluppato da terze parti che viene incluso all'interno della applicazione, tipicamente sotto forma di import di librerie, dette dipendenze. Queste dipendenze includono a loro volta altre dipendenze e potrebbero introdurre vulnerabilità alla applicazione che le utilizza.
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-depcheckjob}
 \caption{Pipeline job dedicato alla analisi delle dipendenze della applicazione Android tramite l'utilizzo del tool OWASP DependencyCheck}
 \end{listing}
 
-\subsubsection{Analisi Statica}
+Per questo motivo è necessario analizzare le dipendenze al fine di individuare le vulnerabilità che esse introducono per essere tempestivi nel loro aggiornamento non appena vengono rilasciate delle patch di sicurezza. Il tool adottato per effettuare questa tipologia di analisi è \textit{Dependency Check}\footnote{\url{https://github.com/jeremylong/DependencyCheck}}, un tool open-source rilasciato e mantenuto da OWASP sia nella forma di plugin Gradle che come eseguibile e immagine Docker.
+
+\subsection{Analisi Statica}
 La fase di analisi statica viene eseguita per il codice condiviso e per il codice specifico considerando i tre moduli separatamente. I tool individuati e integrati nella fase di analisi statica del codice sono i seguenti:
 \begin{itemize}
     \item \textit{Android Lint} (android, condiviso) - Tool per l'analisi statica di applicazioni Android, disponibile via CLI e via plugin Gradle (a partire dalla versione 16 ADT\footnote{Android Development Tools}).
@@ -263,7 +261,7 @@ Il client SonarQube utilizzato è stato dunque configurato, per poter considerar
 \caption{Screenshot SonarQube Web UI - Esempio analisi modulo android}
 \end{figure}
 
-\subsubsection{Schedulazione Job}
+\subsection{Schedulazione Job}
 Le fasi di analisi del codice possono essere introdotte nel processo di sviluppo distinguendo due modalità di esecuzione:
 \begin{itemize}
     \item \textit{Sincrona} - L'analisi del codice viene eseguita ad ogni commit su uno specifico branch (in questo caso \textit{dev}). Il vantaggio consiste nella ricezione di un feedback più rapido sulla modifica apportata al codice. Lo svantaggio è dato da un incremento considerevole nel tempo di esecuzione di ogni pipeline.
@@ -272,19 +270,11 @@ Le fasi di analisi del codice possono essere introdotte nel processo di sviluppo
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{img/tesi-16-cicd-scheduled.drawio.png}
+\includegraphics[width=0.8\textwidth]{img/tesi-16-cicd-scheduled.drawio.png}
 \caption{Struttura della pipeline schedulata per l'analisi statica del codice}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{img/Screenshot 2022-07-02 at 19.34.42.png}
-\caption{Schedulazione pipeline GitLab: attivazione alla mezzanotte di ogni giorno sul branch \textit{dev}}
-\end{figure}
-
-\section{Continuous Monitoring}
-\subsection{Monitoring}
-\subsection{Analytics}
+La modalità di esecuzione scelta per la fase di Continuous Inspection è quella asincrona per le motivazioni sopra indicate, le quali sono vantaggi preferiti dalla maggior parte dei team di sviluppo in Maggioli.
 
 \section{Infrastruttura}
 % soluzione cloud ibrida: r&d su azure, i servizi condivisi sono su gcp, i servizi gitlab sono su un qualsiasi cloud provider, il runner macos è una macchina interna, ...

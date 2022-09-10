@@ -46,9 +46,12 @@ In questo capitolo viene descritto un caso d'uso aziendale di sviluppo di applic
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{img/tesi-1-Use-case.drawio.png}
+\includegraphics[width=0.8\textwidth]{img/tesi-1-Use-case.drawio.png}
 \caption{Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC}
 \end{figure}
+
+% indicare tramite le personas e le user story quali sono gli scenari d'utilizzo voluti dal committente (mauro e flower)
+% io, come alala, vorrei, lalala
 
 \begin{figure}[H]
 \centering
@@ -283,7 +286,7 @@ La navigazione all'interno della applicazione è gestita tramite la combinazione
 
 Come indicato nella figura \ref{fig:5.11} la schermata principale (\textit{Home}) rappresenta la destinazione iniziale del grafo, ovvero la prima schermata che viene visualizzata dalla applicazione. L'autenticazione dell'utente è gestita tramite la navigazione condizionale\footnote{\url{https://developer.android.com/guide/navigation/navigation-conditional}}. Prima di creare la vista del fragment viene effettuato un controllo sulla autenticazione dell'utente: se l'utente non è autenticato viene effettuata una transizione al fragment \textit{Login} per permettere all'utente di autenticarsi e procedere all'utilizzo della applicazione. E' fondamentale in questo scenario ripulire lo stack di navigazione per evitare che l'utente possa tornare indietro alla schermata precedente, ovvero la schermata principale, senza effettuare l'autenticazione.\\
 
-\subsection{Paging}
+\subsubsection{Paging}
 Un altro aspetto importante della architettura è il meccanismo utilizzato sia dalla schermata principale che da quella dei preferiti per mostrare i dati all'utente. Il backend utilizzato fornisce i dati tramite paginazione: in questo modo è possibile indicare in una richiesta la dimensione delle pagine, ovvero quanti elementi devono essere restituiti al massimo in una pagina, e la pagina desiderata. Per poter caricare tali dati dinamicamente in una \textit{RecyclerView}\footnote{\url{https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/RecyclerView}} in modo che l'utente possa effettuare lo scroll illimitato nella schermata si utilizza la libreria \textit{Paging}\footnote{\url{https://developer.android.com/topic/libraries/architecture/paging/v3-overview}} fornita da Android.
 
 \begin{figure}[H]
