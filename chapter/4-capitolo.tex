@@ -25,6 +25,65 @@ Il workflow ideale, e quindi anche la pipeline obiettivo, è composta dai seguen
 \caption{Pipeline obiettivo per la pubblicazione automatica di una applicazione Android e iOS con modulo condiviso}
 \end{figure}
 
+\section{Infrastruttura}
+% soluzione cloud ibrida: r&d su azure, i servizi condivisi sono su gcp, i servizi gitlab sono su un qualsiasi cloud provider, il runner macos è una macchina interna, ...
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/tesi-3-infra.drawio.png}
+\caption{Componenti della infrastruttura necessaria a supporto del processo di sviluppo progettato}
+\end{figure}
+
+\subsection{MacOS GitLab Runner (Self-Hosted)}
+La toolchain di base per lo sviluppo di applicazioni iOS è interamente di proprietà Apple e necessita di una macchina MacOS per poter essere utilizzata definendo una serie di vincoli sia per quanto riguarda lo sviluppo locale che l'automazione del processo.
+% TODO: finire l'intro di questa sezione all'utilizzo di macchina macos 
+\subsubsection{Architettura Runner}
+Ogni job di ogni stage definito in una pipeline viene eseguito da un componente software chiamato \textit{runner}. Tramite il modello client-server il runner interroga continuamente il server (ovvero GitLab) per ottenere le informazioni necessarie all'esecuzione dei job. La politica di scheduling dei job fra i vari runner è definita lato server ma può essere pilotata tramite il concetto di \textit{tag}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/tesi-17-runner.drawio.png}
+\caption{Diagramma di sequenza GitLab Runner (Docker Executor)}
+\end{figure}
+
+In base a chi lo gestisce, il runner può essere:
+\begin{itemize}
+    \item \textit{Managed} - Runner gestito da GitLab e fornito in modalità as a service. E' soggetto ad alcune restrizioni di utilizzo che dipendono dal piano di licenza sottoscritto: tipicamente questi limiti coinvolgono il tempo di esecuzione e lo spazio di archiviazione.
+    \item \textit{Self-Hosted} - Runner gestito interamente dall'utente (installazione, configurazione, registrazione, manutenzione, aggiornamento, ...). A differenza dei runner managed, questa modalità non prevede alcun vincolo di utilizzo.
+\end{itemize}
+
+Essendo il runner ad iniziare la comunicazione verso il server, uno dei principali vantaggi è quello di poterlo installare anche all'interno di una rete privata senza esporlo pubblicamente. La modalità self-hosted è stata scelta per l'installazione del runner MacOS sia per l'assenza di vincoli di utilizzo che per l'esecuzione nella rete privata aziendale Maggioli.
+
+\subsubsection{Shell Executor}
+L'esecuzione dei job avviene in modo asincrono tramite l'esecuzione di task sottoposti ad un executor. Il grado di concorrenza dell'executor, ovvero il numero di job/task che possono essere eseguiti in parallelo, è configurabile.\\
+Le principali tipologie di executor sono\footnote{\url{https://docs.gitlab.com/runner/executors/}}:
+\begin{itemize}
+    \item \textit{Shell} - Per ogni job viene aperta una shell sulla macchina host in cui è in esecuzione il runner. Tutte le dipendenze necessarie alla esecuzione dei job devono essere installate sulla macchina.
+    \item \textit{Container} - L'ambiente di esecuzione dei job è circoscritto all'interno di un container, sia nel caso dell'executor Docker che dell'executor Kubernetes. Tutte le dipendenze necessarie alla esecuzione dei job devono essere installate all'interno del container utilizzato.
+    \item \textit{Virtual Machine} - I job vengono eseguiti all'interno di virtual machine, VirtualBox o Parallels, già preconfigurate.
+\end{itemize}
+
+Data la assenza di container basati su sistema operativo MacOS, l'unica opzione accettabile è quella dell'executor shell attraverso l'installazione di un runner su una macchina fisica Apple all'interno della rete privata aziendale Maggioli.
+
+\subsubsection{Configurazione}
+% installazione gitlab-runner, setup config.toml, avvio servizio
+% config. ambiente: sdkman (+ java), sdkmanager, ruby, curl, fastlane, bundler, XCODE, ...
+
+\begin{listing}[H]
+\inputminted{bash}{code/4-macos-runner-setup}
+\caption{Comandi bash utilizzati per l'installazione e la configurazione di un runner MacOS}
+\end{listing}
+
+\begin{listing}[H]
+\inputminted{toml}{code/4-macos-runner-config}
+\caption{File di configurazione (\textit{config.toml}) generato al momento della registrazione del runner}
+\end{listing}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{img/Screenshot 2022-07-07 at 11.40.13.png}
+\caption{Screenshot GitLab Web UI: Runner MacOS Self-Hosted correttamente registrato e attivo}
+\end{figure}
+
 \section{Modello di Branching}
 L'utilizzo di un adeguato flusso di lavoro è fondamentale per definire una efficiente automazione CI/CD. Con branching si intende l'utilizzo di uno o più flussi principali dai quali divergono altri flussi per svolgere determinati lavori per poi convergere al loro termine: in base alle modalità di apertura e chiusura di questi flussi si definiscono diversi modelli di branching.
 
@@ -199,7 +258,19 @@ In questa sezione si descrivono le tecniche di analisi adottate e come queste so
     \item \textit{Static Application Security Testing} (SAST) - Analisi white-box della applicazione al fine di individuare vulnerabilità, code smell e bug.
     \item \textit{Software Composition Analysis} (SCA) - Analisi delle dipendenze di progetto con lo scopo di individuare vulnerabilità pubbliche (CVE)\footnote{Common Vulnerability and Exposure} associate ad esse.
 \end{itemize}
-In entrambe le tipologie di analisi è fondamentale ottenere come risultato un report della scansione, in grado di descrivere in modo dettagliato eventuali "findings" trovati, ovvero l'insieme delle entità individuate dalla analisi. I report vengono prodotti tipicamente sia in formati human-readable (es. pagina HTML) che machine-readable (es. JSON, XML, ...) per poter essere utilizzati da applicazioni terze come ad esempio sistemi per centralizzare la consultazione di report eterogenei (\textit{Vulnerability Management System}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/tesi-16-cicd-scheduled.drawio.png}
+\caption{Struttura della pipeline schedulata per l'analisi statica del codice}
+\end{figure}
+
+In entrambe le tipologie di analisi è fondamentale ottenere come risultato un report della scansione, in grado di descrivere in modo dettagliato eventuali "findings" trovati, ovvero l'insieme delle entità individuate dalla analisi. I report vengono prodotti tipicamente sia in formati human-readable (es. pagina HTML) che machine-readable (es. JSON, XML, ...) per poter essere utilizzati da applicazioni terze come ad esempio sistemi per centralizzare la consultazione di report eterogenei (\textit{Vulnerability Management System}). Nel contesto aziendale Maggioli questi servizi sono messi a disposizione di tutti i team di sviluppo e mantenuti dalle figure responsabili della sicurezza informatica. Nello specifico i servizi aziendali disponibili sono:
+\begin{itemize}
+    \item \textit{SonarQube}\footnote{\url{https://github.com/SonarSource/sonarqube}} - Piattaforma open-source per effettuare analisi statica del codice.
+    \item \textit{Dependency Track}\footnote{\url{https://github.com/DependencyTrack}} - Piattaforma open-source per effettuare l'analisi delle dipendenze (SBOM\footnote{Software Bill Of Material - \url{https://owasp.org/www-community/Component_Analysis\#software-bill-of-materials-sbom}}).
+    \item \textit{DefectDojo}\footnote{\url{https://github.com/DefectDojo}} - Piattaforma open-source per la gestione centralizzata delle vulnerabilità tramite l'aggregazione di report proveniente da sorgenti eterogenee.
+\end{itemize}
 
 \begin{figure}[H]
 \centering
@@ -207,30 +278,21 @@ In entrambe le tipologie di analisi è fondamentale ottenere come risultato un r
 \caption{Esempio tipico di integrazione della analisi statica e delle dipendenze nel processo di sviluppo automatizzato}
 \end{figure}
 
-Nel contesto aziendale Maggioli questi servizi sono messi a disposizione di tutti i team di sviluppo e mantenuti dalle figure responsabili della sicurezza informatica. Nello specifico i servizi aziendali disponibili sono:
-\begin{itemize}
-    \item \textit{SonarQube}\footnote{\url{https://github.com/SonarSource/sonarqube}} - Piattaforma open-source per effettuare analisi statica del codice.
-    \item \textit{Dependency Track}\footnote{\url{https://github.com/DependencyTrack}} - Piattaforma open-source per effettuare l'analisi delle dipendenze (SBOM)\footnote{Software Bill Of Material - \url{https://owasp.org/www-community/Component_Analysis\#software-bill-of-materials-sbom}}.
-    \item \textit{DefectDojo}\footnote{\url{https://github.com/DefectDojo}} - Piattaforma open-source per la gestione centralizzata delle vulnerabilità tramite l'aggregazione di report proveniente da sorgenti eterogenee.
-\end{itemize}
-
 \subsection{Composizione Software}
-Con composizione software si intende l'insieme di codice sviluppato da terze parti che viene incluso all'interno della applicazione, tipicamente sotto forma di import di librerie, dette dipendenze. Queste dipendenze includono a loro volta altre dipendenze e potrebbero introdurre vulnerabilità alla applicazione che le utilizza.
+Con composizione software si intende l'insieme di codice sviluppato da terze parti che viene incluso all'interno della applicazione, tipicamente sotto forma di import di librerie, dette dipendenze. Queste dipendenze includono a loro volta altre dipendenze e potrebbero introdurre vulnerabilità nella applicazione che le utilizza. Per questo motivo è necessario analizzare le dipendenze al fine di individuare le vulnerabilità che esse introducono per essere tempestivi nel loro aggiornamento non appena vengono rilasciate delle patch di sicurezza. Il tool adottato per effettuare questa tipologia di analisi è \textit{DependencyCheck}\footnote{\url{https://github.com/jeremylong/DependencyCheck}}, un tool open-source rilasciato e mantenuto da OWASP disponbile come plugin Gradle, binario eseguibile e immagine Docker.
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-depcheckjob}
 \caption{Pipeline job dedicato alla analisi delle dipendenze della applicazione Android tramite l'utilizzo del tool OWASP DependencyCheck}
 \end{listing}
 
-Per questo motivo è necessario analizzare le dipendenze al fine di individuare le vulnerabilità che esse introducono per essere tempestivi nel loro aggiornamento non appena vengono rilasciate delle patch di sicurezza. Il tool adottato per effettuare questa tipologia di analisi è \textit{Dependency Check}\footnote{\url{https://github.com/jeremylong/DependencyCheck}}, un tool open-source rilasciato e mantenuto da OWASP sia nella forma di plugin Gradle che come eseguibile e immagine Docker.
-
 \subsection{Analisi Statica}
-La fase di analisi statica viene eseguita per il codice condiviso e per il codice specifico considerando i tre moduli separatamente. I tool individuati e integrati nella fase di analisi statica del codice sono i seguenti:
+La fase di analisi statica viene eseguita per il codice condiviso e per il codice specifico considerando i tre moduli separati come moduli indipendenti. I tool individuati e integrati nella fase di analisi statica del codice sono i seguenti:
 \begin{itemize}
-    \item \textit{Android Lint} (android, condiviso) - Tool per l'analisi statica di applicazioni Android, disponibile via CLI e via plugin Gradle (a partire dalla versione 16 ADT\footnote{Android Development Tools}).
-    \item \textit{Detekt} (android, condiviso) - Tool per l' analisi statica del codice, specifico per il linguaggio di programmazione Kotlin, disponibile via CLI e via plugin Gradle.
-    \item \textit{SwiftLint} (ios) - Tool per l'analisi statica del codice, specifico per il linguaggio di programmazione Swift, disponibile via CLI, e via CocoaPods.
-    \item \textit{SonarQube} (android, condiviso, ios) - Client tool per l'interazione con il server SonarQube, disponibile via CLI e via plugin Gradle.
+    \item \textit{Android Lint} (android, condiviso) - Tool per l'analisi statica di applicazioni Android, disponibile come binario eseguibile e plugin Gradle (a partire dalla versione 16 ADT\footnote{Android Development Tools}).
+    \item \textit{Detekt} (android, condiviso) - Tool per l' analisi statica del codice, specifico per il linguaggio di programmazione Kotlin, disponibile come binario eseguibile e plugin Gradle.
+    \item \textit{SwiftLint} (ios) - Tool per l'analisi statica del codice, specifico per il linguaggio di programmazione Swift, disponibile come binario eseguibile e CocoaPods.
+    \item \textit{SonarQube} (android, condiviso, ios) - Client tool per l'interazione con il server SonarQube, disponibile come binario eseguibile e plugin Gradle.
 \end{itemize}
 
 \begin{listing}[H]
@@ -244,8 +306,8 @@ La fase di analisi statica viene eseguita per il codice condiviso e per il codic
 \end{listing}
 
 Data la funzionalità di gestione delle vulnerabilità fornita dallo stesso SonarQube e la possibilità di integrare tutte le tipologie di report prodotte sia nella fase di analisi delle dipendenze che nella fase di analisi statica del codice, si è deciso di non introdurre nel sistema l'utilizzo dei servizi forniti dalla installazione aziendale di DefectDojo.\\
-Per le fasi di analisi, sia statica che dinamica, i tool hanno bisogno solo dei sorgenti e dei file di configurazione. Questo comporta il vantaggio di non dover compilare nessun file, scaricare nessun sdk, ... . Per questo motivo, dove possibile, è stata utilizzata l'immagine Docker del relativo tool come immagine per il job della pipeline.\\
-Il client SonarQube utilizzato è stato dunque configurato, per poter considerare i report prodotti nelle altre fasi di analisi, agendo sui file \textit{sonar-project.properties} degli specifici moduli:
+Per le fasi di analisi i tool utilizzati hanno bisogno soltanto dei sorgenti e dei file di configurazione comportando diversi vantaggi come il fatto di non dover compilare nessun file e di non dover scaricare nessun sdk. Per questi motivi, dove possibile, è stata utilizzata l'immagine Docker del relativo tool come immagine base per il job della pipeline.\\
+Il client SonarQube utilizzato è stato dunque configurato agendo sui file degli specifici moduli (\textit{sonar-project.properties}) per poter raccogliere i report prodotti nelle altre fasi di analisi :
 \begin{listing}[H]
 \inputminted{kotlin}{code/4-sonarplugin}
 \caption{Configurazione client SonarQube per il modulo condiviso (Shared)}
@@ -265,75 +327,19 @@ Il client SonarQube utilizzato è stato dunque configurato, per poter considerar
 Le fasi di analisi del codice possono essere introdotte nel processo di sviluppo distinguendo due modalità di esecuzione:
 \begin{itemize}
     \item \textit{Sincrona} - L'analisi del codice viene eseguita ad ogni commit su uno specifico branch (in questo caso \textit{dev}). Il vantaggio consiste nella ricezione di un feedback più rapido sulla modifica apportata al codice. Lo svantaggio è dato da un incremento considerevole nel tempo di esecuzione di ogni pipeline.
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/tesi-2-30.cicdci.drawio.png}
+    \caption{Approcio sincrono per l'esecuzione della fase di analisi}
+    \end{figure}
     \item \textit{Asincrona} - Tramite la schedulazione delle fasi di analisi in un momento diverso da quello in cui viene apportata la modifica al codice è possibile sia ridurre i tempi di esecuzione delle pipeline che ottenere un feedback cumulativo sull'insieme delle modifiche apportate tra due esecuzioni delle pipeline di analisi del codice. Ad esempio, schedulando alla mezzanotte di ogni giorno l'esecuzione delle fasi di analisi, è possibile accedere al portale SonarQube all'inizio della giornata lavorativa successiva e pianificare gli interventi di risoluzione degli eventuali bug introdotti nella giornata precedente.
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.66\textwidth]{img/tesi-2-31-cicdci2.drawio.png}
+    \caption{Approccio asincrono per l'esecuzione della fase di analisi}
+    \end{figure}
 \end{itemize}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{img/tesi-16-cicd-scheduled.drawio.png}
-\caption{Struttura della pipeline schedulata per l'analisi statica del codice}
-\end{figure}
-
 La modalità di esecuzione scelta per la fase di Continuous Inspection è quella asincrona per le motivazioni sopra indicate, le quali sono vantaggi preferiti dalla maggior parte dei team di sviluppo in Maggioli.
-
-\section{Infrastruttura}
-% soluzione cloud ibrida: r&d su azure, i servizi condivisi sono su gcp, i servizi gitlab sono su un qualsiasi cloud provider, il runner macos è una macchina interna, ...
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{img/tesi-3-infra.drawio.png}
-\caption{Componenti della infrastruttura necessaria a supporto del processo di sviluppo progettato}
-\end{figure}
-
-\subsection{MacOS GitLab Runner (Self-Hosted)}
-La toolchain di base per lo sviluppo di applicazioni iOS è interamente di proprietà Apple e necessita di una macchina MacOS per poter essere utilizzata definendo una serie di vincoli sia per quanto riguarda lo sviluppo locale che l'automazione del processo.
-% TODO: finire l'intro di questa sezione all'utilizzo di macchina macos 
-\subsubsection{Architettura Runner}
-Ogni job di ogni stage definito in una pipeline viene eseguito da un componente software chiamato \textit{runner}. Tramite il modello client-server il runner interroga continuamente il server (ovvero GitLab) per ottenere le informazioni necessarie all'esecuzione dei job. La politica di scheduling dei job fra i vari runner è definita lato server ma può essere pilotata tramite il concetto di \textit{tag}.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{img/tesi-17-runner.drawio.png}
-\caption{Diagramma di sequenza GitLab Runner (Docker Executor)}
-\end{figure}
-
-In base a chi lo gestisce, il runner può essere:
-\begin{itemize}
-    \item \textit{Managed} - Runner gestito da GitLab e fornito in modalità as a service. E' soggetto ad alcune restrizioni di utilizzo che dipendono dal piano di licenza sottoscritto: tipicamente questi limiti coinvolgono il tempo di esecuzione e lo spazio di archiviazione.
-    \item \textit{Self-Hosted} - Runner gestito interamente dall'utente (installazione, configurazione, registrazione, manutenzione, aggiornamento, ...). A differenza dei runner managed, questa modalità non prevede alcun vincolo di utilizzo.
-\end{itemize}
-
-Essendo il runner ad iniziare la comunicazione verso il server, uno dei principali vantaggi è quello di poterlo installare anche all'interno di una rete privata senza esporlo pubblicamente. La modalità self-hosted è stata scelta per l'installazione del runner MacOS sia per l'assenza di vincoli di utilizzo che per l'esecuzione nella rete privata aziendale Maggioli.
-
-\subsubsection{Shell Executor}
-L'esecuzione dei job avviene in modo asincrono tramite l'esecuzione di task sottoposti ad un executor. Il grado di concorrenza dell'executor, ovvero il numero di job/task che possono essere eseguiti in parallelo, è configurabile.\\
-Le principali tipologie di executor sono\footnote{\url{https://docs.gitlab.com/runner/executors/}}:
-\begin{itemize}
-    \item \textit{Shell} - Per ogni job viene aperta una shell sulla macchina host in cui è in esecuzione il runner. Tutte le dipendenze necessarie alla esecuzione dei job devono essere installate sulla macchina.
-    \item \textit{Container} - L'ambiente di esecuzione dei job è circoscritto all'interno di un container, sia nel caso dell'executor Docker che dell'executor Kubernetes. Tutte le dipendenze necessarie alla esecuzione dei job devono essere installate all'interno del container utilizzato.
-    \item \textit{Virtual Machine} - I job vengono eseguiti all'interno di virtual machine, VirtualBox o Parallels, già preconfigurate.
-\end{itemize}
-
-Data la assenza di container basati su sistema operativo MacOS, l'unica opzione accettabile è quella dell'executor shell attraverso l'installazione di un runner su una macchina fisica Apple all'interno della rete privata aziendale Maggioli.
-
-\subsubsection{Configurazione}
-% installazione gitlab-runner, setup config.toml, avvio servizio
-% config. ambiente: sdkman (+ java), sdkmanager, ruby, curl, fastlane, bundler, XCODE, ...
-
-\begin{listing}[H]
-\inputminted{bash}{code/4-macos-runner-setup}
-\caption{Comandi bash utilizzati per l'installazione e la configurazione di un runner MacOS}
-\end{listing}
-
-\begin{listing}[H]
-\inputminted{toml}{code/4-macos-runner-config}
-\caption{File di configurazione (\textit{config.toml}) generato al momento della registrazione del runner}
-\end{listing}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.6\textwidth]{img/Screenshot 2022-07-07 at 11.40.13.png}
-\caption{Screenshot GitLab Web UI: Runner MacOS Self-Hosted correttamente registrato e attivo}
-\end{figure}
 
 \section{Templating}
 % definire la cicd in template in un progetto a parte in modo che possano essere importati nel PoC (ed essere usati da altri in futuro)
