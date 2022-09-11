@@ -26,7 +26,15 @@ Il workflow ideale, e quindi anche la pipeline obiettivo, è composta dai seguen
 \end{figure}
 
 \section{Infrastruttura}
-% soluzione cloud ibrida: r&d su azure, i servizi condivisi sono su gcp, i servizi gitlab sono su un qualsiasi cloud provider, il runner macos è una macchina interna, ...
+L'infrastruttura aziendale a supporto di tutti i processi di sviluppo è di tipo multi-cloud ibrido. E' composta infatti da servizi completamente gestiti da diversi cloud provider, da servizi ospitati sul cloud ma auto-gestiti e da installazioni interne su hardware proprietario. I seguenti rappresentano tutti i componenti infrastrutturali necessari al processo di sviluppo automatizzato progettato per lo sviluppo di applicazioni mobile:
+\begin{itemize}
+    \item \textit{SonarQube, Nexus Sonatype, GitLab Runner (Linux)} - Servizi disponibili per tutti i team di sviluppo Maggioli e ospitati su Google Cloud.
+    \item \textit{GitLab Cloud} - Licenza aziendale per tutti gli sviluppatori Maggioli.
+    \item \textit{Cluster Kubernetes, Container Registry} - Servizi disponibili per il solo team di Ricerca e Sviluppo e ospitati su Microsoft Azure.
+    \item \textit{Google Play Console, Testflight} - Servizi specifici per lo sviluppo di applicazioni Android e iOS, per i quali sono stati sottoscritti account developer appositi per questo progetto di tesi.
+    \item \textit{GitLab Runner (MacOS)} - Servizio interno per l'esecuzione delle pipeline in ambiente Apple, specifico per questo progetto di tesi.
+\end{itemize}
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{img/tesi-3-infra.drawio.png}
@@ -326,37 +334,28 @@ Il client SonarQube utilizzato è stato dunque configurato agendo sui file degli
 \subsection{Schedulazione Job}
 Le fasi di analisi del codice possono essere introdotte nel processo di sviluppo distinguendo due modalità di esecuzione:
 \begin{itemize}
-    \item \textit{Sincrona} - L'analisi del codice viene eseguita ad ogni commit su uno specifico branch (in questo caso \textit{dev}). Il vantaggio consiste nella ricezione di un feedback più rapido sulla modifica apportata al codice. Lo svantaggio è dato da un incremento considerevole nel tempo di esecuzione di ogni pipeline.
+    \item \textit{Sincrona} - L'analisi del codice viene eseguita ad ogni commit su uno specifico branch (in questo caso \textit{dev}). Il vantaggio consiste nella ricezione di un feedback più rapido sulla modifica apportata al codice mentre lo svantaggio è dato da un incremento considerevole nel tempo di esecuzione di ogni pipeline.
     \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/tesi-2-30.cicdci.drawio.png}
+    \includegraphics[width=0.7\textwidth]{img/tesi-2-30.cicdci.drawio.png}
     \caption{Approcio sincrono per l'esecuzione della fase di analisi}
     \end{figure}
     \item \textit{Asincrona} - Tramite la schedulazione delle fasi di analisi in un momento diverso da quello in cui viene apportata la modifica al codice è possibile sia ridurre i tempi di esecuzione delle pipeline che ottenere un feedback cumulativo sull'insieme delle modifiche apportate tra due esecuzioni delle pipeline di analisi del codice. Ad esempio, schedulando alla mezzanotte di ogni giorno l'esecuzione delle fasi di analisi, è possibile accedere al portale SonarQube all'inizio della giornata lavorativa successiva e pianificare gli interventi di risoluzione degli eventuali bug introdotti nella giornata precedente.
     \begin{figure}[H]
     \centering
-    \includegraphics[width=0.66\textwidth]{img/tesi-2-31-cicdci2.drawio.png}
+    \includegraphics[width=0.59\textwidth]{img/tesi-2-31-cicdci2.drawio.png}
     \caption{Approccio asincrono per l'esecuzione della fase di analisi}
     \end{figure}
 \end{itemize}
 La modalità di esecuzione scelta per la fase di Continuous Inspection è quella asincrona per le motivazioni sopra indicate, le quali sono vantaggi preferiti dalla maggior parte dei team di sviluppo in Maggioli.
 
 \section{Templating}
-% definire la cicd in template in un progetto a parte in modo che possano essere importati nel PoC (ed essere usati da altri in futuro)
-% dire come gitlab permette di farlo, quali sono i meccanismi ecc ecc
-% lo stesso risultato dei gitlab template può essere ottenuto distribuendo delle github action
-L'obiettivo di questo progetto di tesi non consiste solamente nella realizzazione di una pipeline di CI/CD ma consiste soprattutto nella sua progettazione in modo tale da poter essere utilizzata dai vari team in azienda che sviluppano applicazioni mobile.\\
-I principali strumenti forniti dalla piattaforma GitLab a supporto del riuso delle pipeline sono:
+L'obiettivo di questo progetto di tesi consiste nella progettazione di una pipeline di CI/CD tale da poter essere riutilizzata dai vari team in azienda che si occupano dello sviluppo di applicazioni mobile. I principali strumenti forniti dalla piattaforma GitLab a supporto del riuso delle pipeline sono:
 \begin{itemize}
     \item \textit{Template} - I file YAML che definiscono una pipeline o sottoparte di essa, possono risiedere in un repository diverso da quello in cui si trova il progetto che la utilizza. In questo modo si definisce una sola volta il flusso base per poterlo successivamente includere e/o estendere negli specifici progetti che necessitano il suo utilizzo.
     \item \textit{Include} - Definiti i template è necessario includerli all'interno del file \textit{.gitlab-ci.yml} nella root dello specifico progetto.
     \item \textit{Extend} - Definendo lo script del job padre in modo parametrico è possibile pilotarne il comportamento tramite la definizione di variabili d'ambiente nel job figlio. Questa funzionalità è una alternativa alle \textit{anchors} fornite nativamente da YAML ma più flessibile e leggibile. 
 \end{itemize}
-
-\begin{listing}[H]
-\inputminted{yaml}{code/4-templating}
-\caption{Esempio d'uso dei template in GitLab}
-\end{listing}
 
 I seguenti template realizzati sono organizzati in un repository separato, raggruppati logicamente secondo gli stage che compongono l'intera pipeline oltre ad un template base, utilizzato da tutti gli altri template:
 \begin{itemize}
@@ -367,7 +366,12 @@ I seguenti template realizzati sono organizzati in un repository separato, raggr
     \item \textit{kmm-release} - Definisce i job utili al rilascio delle applicazioni sia alpha che beta.
 \end{itemize}
 
-I template progettati rimandano all'utilizzatore la definizione delle politiche di attivazione e delle dipendenze in modo da consentirne l'utilizzo in un flusso di lavoro diverso da quello progettato e permetterne l'adozione anche in casi di sviluppo con tecnologie differenti da Kotlin Multiplatform.
+\begin{listing}[H]
+\inputminted{yaml}{code/4-templating}
+\caption{Esempio d'uso dei template in GitLab}
+\end{listing}
+
+I template progettati rimandano all'utilizzatore la definizione delle politiche di attivazione e delle dipendenze in modo da consentirne l'utilizzo in un flusso di lavoro diverso da quello progettato e permetterne l'adozione anche in casi di sviluppo con tecnologie differenti.
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-templating2}

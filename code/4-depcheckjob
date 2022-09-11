@@ -1,4 +1,4 @@
-android:depcheck:
+android-depcheck:
   stage: analysis:sca
   image:
     name: owasp/dependency-check:7.1.1

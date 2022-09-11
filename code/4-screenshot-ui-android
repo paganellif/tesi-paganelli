@@ -1,4 +1,4 @@
-android:ui:test:phone:
+android-ui-test-phone:
   stage: test:ui
   needs: [pre:android, android:build, shared:build, android:unit:test]
   dependencies: [android:build, shared:build, android:unit:test]

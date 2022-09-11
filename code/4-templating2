@@ -13,7 +13,7 @@
 
 # /kmm-templates/kmm-build.yml
 # Definizione di un job hidden con estensione multipla di altri due job hidden
-.ios:build:
+.ios-build:
   stage: build
   extends: [.base-android, .base-ios]
   script:

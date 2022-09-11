@@ -1,4 +1,4 @@
-android:sast:
+android-sast:
   stage: analysis
   extends: .base-android
   needs: [pre:android]

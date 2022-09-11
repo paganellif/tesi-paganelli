@@ -1,4 +1,4 @@
-ios:release:alpha:
+ios-release-alpha:
   stage: release
   extends: .base-ios
   variables:
