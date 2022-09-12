@@ -1,4 +1,3 @@
-# Import dei template da repository remoto
 include:
   - project: maggiolispa/ricerca-sviluppo/ebook-app-poc/kmm-cicd-template
     file:
