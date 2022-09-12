@@ -1,5 +1,3 @@
-# /kmm-templates/kmm-base.yml
-# Definizione di job hidden
 .base-ios:
   variables:
     PROJECT_DIR: to_be_extended
@@ -10,18 +8,3 @@
     - cd $PROJECT_DIR
     - bundle install
     - echo $APP_STORE_CONNECT_API_KEY_BASE64 | base64 -d > $APP_STORE_CONNECT_API_KEY_PATH
-
-# /kmm-templates/kmm-build.yml
-# Definizione di un job hidden con estensione multipla di altri due job hidden
-.ios-build:
-  stage: build
-  extends: [.base-android, .base-ios]
-  script:
-    - pod install
-    - bundle exec fastlane build_app
-  artifacts:
-    name: ios-build
-    expire_in: 1 day
-    paths:
-      - ${PROJECT_DIR}/*.dSYM.zip
-      - ${PROJECT_DIR}/*.ipa

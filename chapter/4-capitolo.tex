@@ -42,8 +42,7 @@ L'infrastruttura aziendale a supporto di tutti i processi di sviluppo è di tipo
 \end{figure}
 
 \subsection{MacOS GitLab Runner (Self-Hosted)}
-La toolchain di base per lo sviluppo di applicazioni iOS è interamente di proprietà Apple e necessita di una macchina MacOS per poter essere utilizzata definendo una serie di vincoli sia per quanto riguarda lo sviluppo locale che l'automazione del processo.
-% TODO: finire l'intro di questa sezione all'utilizzo di macchina macos 
+La toolchain di base per lo sviluppo di applicazioni iOS è interamente di proprietà Apple e rende necessario l'utilizzo di una macchina MacOS definendo una serie di vincoli per quanto riguarda sia lo sviluppo locale che l'automazione del processo.
 \subsubsection{Architettura Runner}
 Ogni job di ogni stage definito in una pipeline viene eseguito da un componente software chiamato \textit{runner}. Tramite il modello client-server il runner interroga continuamente il server (ovvero GitLab) per ottenere le informazioni necessarie all'esecuzione dei job. La politica di scheduling dei job fra i vari runner è definita lato server ma può essere pilotata tramite il concetto di \textit{tag}.
 
@@ -51,35 +50,37 @@ Ogni job di ogni stage definito in una pipeline viene eseguito da un componente 
 \centering
 \includegraphics[width=0.8\textwidth]{img/tesi-17-runner.drawio.png}
 \caption{Diagramma di sequenza GitLab Runner (Docker Executor)}
+\label{fig:archrunner}
 \end{figure}
 
 In base a chi lo gestisce, il runner può essere:
 \begin{itemize}
-    \item \textit{Managed} - Runner gestito da GitLab e fornito in modalità as a service. E' soggetto ad alcune restrizioni di utilizzo che dipendono dal piano di licenza sottoscritto: tipicamente questi limiti coinvolgono il tempo di esecuzione e lo spazio di archiviazione.
+    \item \textit{Managed} - Runner gestito da GitLab e fornito in modalità as-a-Service. E' soggetto ad alcune restrizioni di utilizzo che dipendono dal piano di licenza sottoscritto: tipicamente questi limiti coinvolgono il tempo di esecuzione e lo spazio di archiviazione (utilizzo CPU e memoria).
     \item \textit{Self-Hosted} - Runner gestito interamente dall'utente (installazione, configurazione, registrazione, manutenzione, aggiornamento, ...). A differenza dei runner managed, questa modalità non prevede alcun vincolo di utilizzo.
 \end{itemize}
 
-Essendo il runner ad iniziare la comunicazione verso il server, uno dei principali vantaggi è quello di poterlo installare anche all'interno di una rete privata senza esporlo pubblicamente. La modalità self-hosted è stata scelta per l'installazione del runner MacOS sia per l'assenza di vincoli di utilizzo che per l'esecuzione nella rete privata aziendale Maggioli.
+Essendo il runner ad iniziare la comunicazione verso il server, uno dei principali vantaggi è quello di poterlo installare anche all'interno di una rete privata senza esporlo pubblicamente. La modalità self-hosted per l'installazione del runner MacOS è stata una scelta obbligata dai vincoli della toolchain Apple ma è comunque preferita sia per l'assenza di vincoli di utilizzo che per l'esecuzione nella rete privata aziendale Maggioli.
 
 \subsubsection{Shell Executor}
-L'esecuzione dei job avviene in modo asincrono tramite l'esecuzione di task sottoposti ad un executor. Il grado di concorrenza dell'executor, ovvero il numero di job/task che possono essere eseguiti in parallelo, è configurabile.\\
-Le principali tipologie di executor sono\footnote{\url{https://docs.gitlab.com/runner/executors/}}:
+L'esecuzione dei job avviene in modo asincrono tramite l'esecuzione di task sottoposti ad un executor. Una entità master si occupa quindi di ottenere i job da far eseguire all'executor, il quale restituisce il risultato una volta terminato. Il grado di concorrenza dell'executor, ovvero il numero di job che possono essere eseguiti in parallelo, è configurabile dalle impostazioni del runner. Le principali tipologie di executor sono\footnote{\url{https://docs.gitlab.com/runner/executors/}}:
 \begin{itemize}
     \item \textit{Shell} - Per ogni job viene aperta una shell sulla macchina host in cui è in esecuzione il runner. Tutte le dipendenze necessarie alla esecuzione dei job devono essere installate sulla macchina.
-    \item \textit{Container} - L'ambiente di esecuzione dei job è circoscritto all'interno di un container, sia nel caso dell'executor Docker che dell'executor Kubernetes. Tutte le dipendenze necessarie alla esecuzione dei job devono essere installate all'interno del container utilizzato.
+    \item \textit{Container} - L'ambiente di esecuzione dei job è circoscritto all'interno di un container, sia nel caso dell'executor Docker che dell'executor Kubernetes (Pods). Tutte le dipendenze necessarie alla esecuzione dei job devono essere installate all'interno del container utilizzato.
     \item \textit{Virtual Machine} - I job vengono eseguiti all'interno di virtual machine, VirtualBox o Parallels, già preconfigurate.
 \end{itemize}
 
-Data la assenza di container basati su sistema operativo MacOS, l'unica opzione accettabile è quella dell'executor shell attraverso l'installazione di un runner su una macchina fisica Apple all'interno della rete privata aziendale Maggioli.
+Data la assenza di container basati su sistema operativo MacOS, l'unica opzione accettabile è quella dell'executor di tipo shell attraverso l'installazione\footnote{\url{https://docs.gitlab.com/runner/install/osx.html}} di un runner su una macchina fisica Apple all'interno della rete privata aziendale Maggioli.
 
 \subsubsection{Configurazione}
-% installazione gitlab-runner, setup config.toml, avvio servizio
-% config. ambiente: sdkman (+ java), sdkmanager, ruby, curl, fastlane, bundler, XCODE, ...
-
-\begin{listing}[H]
-\inputminted{bash}{code/4-macos-runner-setup}
-\caption{Comandi bash utilizzati per l'installazione e la configurazione di un runner MacOS}
-\end{listing}
+A prescindere dalla tipologia di executor, per l'utilizzo di un runner GitLab self-hosted è necessario effettuarne installazione, configurazione e avvio. Nel caso di un executor shell è necessario installare il binario\footnote{\url{https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-darwin-arm64}} mentre nel caso di un executor Docker/Kubernetes è necessario effettuare il deploy del container\footnote{\url{https://hub.docker.com/r/gitlab/gitlab-runner}}. La fase di configurazione del runner varia a seconda del tipo di executor. Per la tipologia di runner scelta per questo progetto di tesi gli aspetti principali configurati sono:
+\begin{itemize}
+    \item \textit{Registrazione} - Come descritto nella architettura (figura \ref{fig:archrunner}) un runner GitLab interroga continuamente il server per ottenere job da eseguire. E' necessario specificare sia l'indirizzo URL del server GitLab che il gruppo o il progetto per il quale il runner deve eseguire i job. Altri parametri come \textit{locked}, \textit{tag-list} e \textit{run-untagged} sono stati utilizzati per limitare l'accesso del runner al solo repository utilizzato per questo progetto di tesi.
+    \begin{listing}[H]
+    \inputminted{bash}{code/4-macos-runner-setup}
+    \caption{Comandi bash utilizzati per l'installazione e la configurazione di un runner MacOS}
+    \end{listing}
+    \item \textit{Cache Condivisa} - Permette di condividere uno storage cloud (Google Cloud Storage Buckets in questo caso) per il caching di tutte le dipendenze comuni tra i vari job eseguiti concorrentemente dal runner. L'utilizzo di cache condivisa con un executor shell comporta un vantaggio nell'utilizzo dello spazio disco della macchina in cui è in esecuzione il runner ma non nel tempo di esecuzione delle pipeline, il quale sarebbe molto più ridotto nel caso di cache locale.
+\end{itemize}
 
 \begin{listing}[H]
 \inputminted{toml}{code/4-macos-runner-config}
@@ -125,6 +126,7 @@ Molti dei passi che compongono una pipeline utilizzano tipicamente gli stessi to
 Utilizzando meccanismi di caching e passaggio di artefatti è possibile eseguire tutti quei task di configurazione una sola volta all'inizio della pipeline risparmiando tempo e risorse in tutte le successive fasi.\\
 Nel caso della pipeline progettata per lo sviluppo di applicazioni multiplatform con KMM in questa fase iniziale è necessario eseguire i seguenti task:
 \begin{itemize}
+    \item Configurazione dell'ambiente per lo sviluppo Kotlin tramite l'installazione del SDK/JDK utilizzando \textit{sdkman}\footnote{\url{https://sdkman.io/}}.
     \item Configurazione dell'ambiente per lo sviluppo Android tramite l'installazione del SDK Android target e dei vari tools necessari utilizzando \textit{sdkmanager}\footnote{\url{https://developer.android.com/studio/command-line/sdkmanager}}.
     \item Configurazione dell'ambiente per lo sviluppo iOS.
     \item Installazione di tutte le dipendenze dei vari moduli con relative tecniche di caching. Tra queste si trova anche il compilatore \textit{Kotlin/Native}\footnote{\url{https://kotlinlang.org/docs/native-improving-compilation-time.html\#general-recommendations}}.
@@ -148,14 +150,20 @@ Nel caso della automazione dello sviluppo di applicazioni mobile per la fase ini
 
 \subsection{Testing}
 Dopo aver verificato la corretta compilazione e pacchettizzazione del codice segue la fase di test. Si distinguono due tipologie di testing con lo scopo di validare sia la logica applicativa (\textit{unit testing}) che l'interfaccia grafica (\textit{ui testing}).
+
 \subsubsection{Unit Testing}
-% dire che alcuni test possono essere eseguiti direttamente senza dispositivo, sfruttando la jvm kotlin, altri invece hanno bisogno del dispositivo (che può essere fisico o emulato) in modo da sfruttare l sdk android: questi test sono chiamati Instrumented Test. 
+Con unit testing si intende l'attività di verifica di certe porzioni (unità) del codice ed è implementato tipicamente utilizzando librerie predisposte per ciascun linguaggio di programmazione. Questa fase di test potrebbe coinvolgere tutti i moduli anche se la business logic è racchiusa solamente nel modulo condiviso perchè in alcune situazioni si fa uso di costrutti specifici della piattaforma target dove è necessario l'utilizzo dell'apposito SDK e runtime. La tipologia di test che necessita dell'esecuzione sul dispositivo, che esso sia fisico o emulato, per sfruttare il framework della piattaforma target è detta \textit{Instrumented Testing}. Una alternativa alla esecuzione dei test sul dispositivo è l'utilizzo di entità \textit{mock} per fornire le stesse funzionalità della piattaforma target.\\
+Le librerie utilizzate per la fase di unit testing sono:
+\begin{itemize}
+    \item \textit{JUnit}\footnote{\url{https://junit.org/junit5/}} (Java/Kotlin) - Framework di unit testing per il linguaggio di programmazione Java.
+    \item \textit{XCTest}\footnote{\url{https://developer.apple.com/documentation/xctest}} (Swift/Objective-C) - Framework standard di testing per progetti XCode, tra cui unit testing.
+\end{itemize}
 
 \subsubsection{UI Testing}
-Analogamente agli unit test, dove si verifica l'integrità della business logic a fronte di una modifica al codice sorgente, negli UI test si verifica l'integrità dell'interfaccia grafica. I moduli per il quale deve essere testata l'interfaccia grafica corrispondono ai moduli delle applicazioni Android e iOS. I tool utilizzati per il testing dell'interfaccia grafica delle relative applicazioni sono:
+Analogamente agli unit test, dove si verifica l'integrità della business logic a fronte di una modifica al codice sorgente, negli UI test si verifica l'integrità dell'interfaccia grafica. I moduli per il quale deve essere testata l'interfaccia grafica corrispondono ai moduli delle applicazioni Android e iOS. Le librerie utilizzate per il testing dell'interfaccia grafica delle relative applicazioni sono:
 \begin{itemize}
-    \item \textit{Espresso}\footnote{\url{https://developer.android.com/training/testing/espresso}} (Android) -
-    \item \textit{XCTest}\footnote{\url{https://developer.apple.com/documentation/xctest}} (iOS) - 
+    \item \textit{Espresso}\footnote{\url{https://developer.android.com/training/testing/espresso}} (Android) - Framework standard per ui testing di applicazioni Android.
+    \item \textit{XCTest} (iOS) - Framework standard di testing per progetti XCode, tra cui ui testing (XCUI\footnote{\url{https://developer.apple.com/documentation/xctest/user_interface_tests}}).
 \end{itemize}
 In questa specifica fase del processo tipicamente si realizzano anche degli screenshot delle applicazioni in esecuzione in modo da poterli utilizzare nelle successive fasi di rilascio delle applicazioni. Anche in questo caso sono necessari tool differenti per le due piattaforme, i quali sono compresi nella installazione di Fastlane:
 \begin{itemize}
@@ -354,8 +362,14 @@ L'obiettivo di questo progetto di tesi consiste nella progettazione di una pipel
 \begin{itemize}
     \item \textit{Template} - I file YAML che definiscono una pipeline o sottoparte di essa, possono risiedere in un repository diverso da quello in cui si trova il progetto che la utilizza. In questo modo si definisce una sola volta il flusso base per poterlo successivamente includere e/o estendere negli specifici progetti che necessitano il suo utilizzo.
     \item \textit{Include} - Definiti i template è necessario includerli all'interno del file \textit{.gitlab-ci.yml} nella root dello specifico progetto.
-    \item \textit{Extend} - Definendo lo script del job padre in modo parametrico è possibile pilotarne il comportamento tramite la definizione di variabili d'ambiente nel job figlio. Questa funzionalità è una alternativa alle \textit{anchors} fornite nativamente da YAML ma più flessibile e leggibile. 
+    \item \textit{Extend} - Definendo lo script del job padre in modo parametrico è possibile pilotarne il comportamento tramite la definizione di variabili d'ambiente nel job figlio. Questa funzionalità è una alternativa alle \textit{anchors} fornite nativamente da YAML ma più flessibile e leggibile.
+    \item \textit{Hidden Jobs} - I job definiti con un punto all'inizio del nome non vengono considerati dal linter GitLab e quindi esclusi dalla esecuzione tramite il runner. Definendo job "nascosti" è possibile definire tutti quegli aspetti comuni e parametrizzati da estendere con altri job.
 \end{itemize}
+
+\begin{listing}[H]
+\inputminted{yaml}{code/4-templating2}
+\caption{Hidden Job base parametrico per i job iOS (\textit{kmm-templates/kmm-base.yml})}
+\end{listing}
 
 I seguenti template realizzati sono organizzati in un repository separato, raggruppati logicamente secondo gli stage che compongono l'intera pipeline oltre ad un template base, utilizzato da tutti gli altri template:
 \begin{itemize}
@@ -368,12 +382,7 @@ I seguenti template realizzati sono organizzati in un repository separato, raggr
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-templating}
-\caption{Esempio d'uso dei template in GitLab}
+\caption{Esempio d'uso dei template GitLab: import da repository remoto}
 \end{listing}
 
-I template progettati rimandano all'utilizzatore la definizione delle politiche di attivazione e delle dipendenze in modo da consentirne l'utilizzo in un flusso di lavoro diverso da quello progettato e permetterne l'adozione anche in casi di sviluppo con tecnologie differenti.
-
-\begin{listing}[H]
-\inputminted{yaml}{code/4-templating2}
-\caption{Esempi di template utilizzati per i job riguardanti iOS}
-\end{listing}
+I template progettati rimandano all'utilizzatore la definizione delle politiche di attivazione e delle dipendenze in modo da consentirne l'utilizzo in un flusso di lavoro diverso da quello progettato anche in casi di sviluppo con tecnologie differenti.
