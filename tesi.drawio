@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-09-12T08:13:23.861Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="xQV6QU-MrvKfjpN09EBJ" version="20.3.0" type="github" pages="19">
+<mxfile host="app.diagrams.net" modified="2022-09-15T10:52:28.158Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="GkYHKFsirp3cNoZGQZMS" version="20.3.0" type="github" pages="19">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
-    <mxGraphModel dx="1445" dy="793" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1132" dy="906" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -141,7 +141,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="ryGLTYK69aE9vcTaG2I9" name="3-infra">
-    <mxGraphModel dx="1445" dy="793" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1132" dy="906" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -220,19 +220,19 @@
         <mxCell id="NIAOs3jaKzgNqoQ2O9ee-56" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://cdn-icons-png.flaticon.com/512/831/831276.png;fontSize=14;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="CZnzQujpDJXo68VYEJ1G-29" vertex="1">
           <mxGeometry x="252.77999999999992" y="35.50999999999999" width="30.96" height="30.96" as="geometry" />
         </mxCell>
-        <mxCell id="KqCiRccjftdeqNKpWLcS-1" value="Google Cloud Services" style="swimlane;strokeColor=#000000;fontSize=14;fillColor=#FFD966;fontStyle=3" vertex="1" parent="1">
+        <mxCell id="KqCiRccjftdeqNKpWLcS-1" value="Google Cloud Services" style="swimlane;strokeColor=#000000;fontSize=14;fillColor=#FFD966;fontStyle=3" parent="1" vertex="1">
           <mxGeometry x="120" y="470" width="280" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="KqCiRccjftdeqNKpWLcS-6" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;Google Play Console&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#FFF2CC;fontSize=15;" vertex="1" parent="KqCiRccjftdeqNKpWLcS-1">
+        <mxCell id="KqCiRccjftdeqNKpWLcS-6" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;Google Play Console&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#FFF2CC;fontSize=15;" parent="KqCiRccjftdeqNKpWLcS-1" vertex="1">
           <mxGeometry x="13.540000000000106" y="48.00999999999999" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="KqCiRccjftdeqNKpWLcS-7" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;Google Play&lt;/span&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;span style=&quot;font-size: 15px;&quot;&gt;Marketplace&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#FFF2CC;fontSize=15;" vertex="1" parent="KqCiRccjftdeqNKpWLcS-1">
+        <mxCell id="KqCiRccjftdeqNKpWLcS-7" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;Google Play&lt;/span&gt;&lt;br style=&quot;font-size: 15px;&quot;&gt;&lt;span style=&quot;font-size: 15px;&quot;&gt;Marketplace&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#FFF2CC;fontSize=15;" parent="KqCiRccjftdeqNKpWLcS-1" vertex="1">
           <mxGeometry x="145.56000000000006" y="48.00999999999999" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="KqCiRccjftdeqNKpWLcS-8" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://1.bp.blogspot.com/-t4wm9NkZT1w/XIvz5TIel5I/AAAAAAAAI_I/ux-34Cz6CIIKOQBpiFfHucy4v3moO4AYgCK4BGAYYCw/s1600/logo%2Bgoogle%2Bplay%2Bconsole%2Bvector.png;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="KqCiRccjftdeqNKpWLcS-1">
+        <mxCell id="KqCiRccjftdeqNKpWLcS-8" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://1.bp.blogspot.com/-t4wm9NkZT1w/XIvz5TIel5I/AAAAAAAAI_I/ux-34Cz6CIIKOQBpiFfHucy4v3moO4AYgCK4BGAYYCw/s1600/logo%2Bgoogle%2Bplay%2Bconsole%2Bvector.png;fillColor=#fad7ac;strokeColor=#b46504;" parent="KqCiRccjftdeqNKpWLcS-1" vertex="1">
           <mxGeometry x="112.22" y="31.019999999999982" width="33.34" height="35.45" as="geometry" />
         </mxCell>
-        <mxCell id="KqCiRccjftdeqNKpWLcS-9" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Google_Play_2012-2016_icon.svg/1921px-Google_Play_2012-2016_icon.svg.png;fontSize=15;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="KqCiRccjftdeqNKpWLcS-1">
+        <mxCell id="KqCiRccjftdeqNKpWLcS-9" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Google_Play_2012-2016_icon.svg/1921px-Google_Play_2012-2016_icon.svg.png;fontSize=15;fillColor=#fad7ac;strokeColor=#b46504;" parent="KqCiRccjftdeqNKpWLcS-1" vertex="1">
           <mxGeometry x="243.54999999999995" y="31.019999999999868" width="29.99" height="31.96" as="geometry" />
         </mxCell>
       </root>
