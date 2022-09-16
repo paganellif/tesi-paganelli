@@ -28,7 +28,7 @@ In questo capitolo viene descritto un caso d'uso aziendale di sviluppo di applic
     \item \textbf{R6} - Modificare documenti in modo fluido (lato azienda).
     \begin{itemize}
         \item \textbf{R6.1} - Aggiungere elementi/contenuti al documento in modo fluido (hyperlink, quiz, video, immagini, ...). %TODO: definire quali cose sono da aggiungere al documento
-        \item \textbf{R6.2} - Memorizzare gli elementi/contenuti apportati al documento in modo fluido (hyperlink, quiz, video, immagini, ...).
+        \item \textbf{R6.2} - Memorizzare gli elementi/contenuti aggiunti al documento in modo fluido (hyperlink, quiz, video, immagini, ...).
     \end{itemize}
 \end{itemize}
 
@@ -291,10 +291,12 @@ Un altro aspetto importante della architettura è il meccanismo utilizzato sia d
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{img/tesi-24-androidviewuml.drawio.png}
-\caption{UML - Diagramma delle classi: Paginazione dati nella schermata principale}
+\includegraphics[width=0.8\textwidth]{img/tesi-2-Page-11.drawio.png}
+\caption{Flusso generico dei dati dalla sorgente alla UI tramite l'utilizzo della libreria Paging}
 \label{paging}
 \end{figure}
+
+% aggiungere materiale su paging ecc
 
 I componenti fondamentali della libreria \textit{Paging} sono:
 \begin{itemize}
@@ -303,5 +305,11 @@ I componenti fondamentali della libreria \textit{Paging} sono:
     \item \textit{PagingDataAdapter} - Componente fondamentale per la rappresentazione di dati paginati in una \textit{RecyclerView}.
 \end{itemize}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{img/tesi-24-androidviewuml.drawio.png}
+\caption{UML - Diagramma delle classi: Paginazione dati nella schermata principale}
+\label{paging2}
+\end{figure}
 
 \subsection{iosMaggioliEbookApp}
