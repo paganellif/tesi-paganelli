@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-09-17T14:17:15.334Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="xrILYqTjV8O_ICpRgmHF" version="20.3.2" type="github" pages="15">
+<mxfile host="app.diagrams.net" modified="2022-09-17T14:23:08.547Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="IbJdiRjKF-tXVzHeD6sE" version="20.3.2" type="github" pages="15">
   <diagram id="N_QB2z3_9BETL4bLQdhx" name="2-Use-case2">
-    <mxGraphModel dx="1379" dy="919" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -172,7 +172,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="0NysuZ1wag71AY3VkieZ" name="7-sisred">
-    <mxGraphModel dx="1379" dy="919" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -291,7 +291,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="cv2jzuSEXyonYi7uuPne" name="12-sastsca">
-    <mxGraphModel dx="1379" dy="919" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -432,7 +432,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tLPsu8TU15bJgmslR-97" name="13-branching">
-    <mxGraphModel dx="1379" dy="919" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -716,7 +716,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="wBUyeGhzsJfOXD7Qtu8J" name="17-runner">
-    <mxGraphModel dx="1379" dy="919" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -832,7 +832,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="Y00yAUuy7MvEM6d5ACC0" name="29-cicd">
-    <mxGraphModel dx="1379" dy="919" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -861,7 +861,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="30.cicdci" id="GeLMISnVP_K1v73nUOKS">
-    <mxGraphModel dx="1379" dy="919" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0ZH_xK3k36V27RGSaTyk-0" />
         <mxCell id="0ZH_xK3k36V27RGSaTyk-1" parent="0ZH_xK3k36V27RGSaTyk-0" />
@@ -899,7 +899,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="HfmVPb9YM65Jag6MSVd4" name="31-cicdci2">
-    <mxGraphModel dx="1379" dy="919" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -940,7 +940,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="ugmoYI8COetN8woDWZzJ" name="Page-9">
-    <mxGraphModel dx="1379" dy="919" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1038,7 +1038,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="Bt5t3eZNd9o6fqtBbwgu" name="Page-10">
-    <mxGraphModel dx="1379" dy="919" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1354,7 +1354,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="St_8TEeexxannSeJJXQe" name="Page-11">
-    <mxGraphModel dx="1103" dy="885" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1386,7 +1386,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="XdJmpZaUJbiYgaSO0b4a" name="Page-12">
-    <mxGraphModel dx="1103" dy="885" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1738,12 +1738,18 @@
     </mxGraphModel>
   </diagram>
   <diagram id="NZyAe-_lGcMSc-AMaoO7" name="Page-15">
-    <mxGraphModel dx="1379" dy="919" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1379" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="1SyxfFmzWVr9G_iHNW2s-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=14;" edge="1" parent="1" source="f__ZLwbAY791xSL7UNEH-12" target="f__ZLwbAY791xSL7UNEH-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1SyxfFmzWVr9G_iHNW2s-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=14;" edge="1" parent="1" source="f__ZLwbAY791xSL7UNEH-3" target="f__ZLwbAY791xSL7UNEH-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="f__ZLwbAY791xSL7UNEH-1" value="UI Nativa" style="swimlane;fillColor=#FFD966;fontSize=14;fontStyle=3" vertex="1" parent="1">
-          <mxGeometry x="220" y="230" width="380" height="110" as="geometry" />
+          <mxGeometry x="220" y="220" width="380" height="110" as="geometry" />
         </mxCell>
         <mxCell id="f__ZLwbAY791xSL7UNEH-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;strokeWidth=2;" edge="1" parent="f__ZLwbAY791xSL7UNEH-1" source="f__ZLwbAY791xSL7UNEH-14" target="f__ZLwbAY791xSL7UNEH-2">
           <mxGeometry relative="1" as="geometry" />
@@ -1807,6 +1813,12 @@
         </mxCell>
         <mxCell id="f__ZLwbAY791xSL7UNEH-29" value="&lt;b&gt;&lt;i&gt;Storage&lt;/i&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;fillColor=#FFF2CC;" vertex="1" parent="f__ZLwbAY791xSL7UNEH-3">
           <mxGeometry x="260" y="230" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="1SyxfFmzWVr9G_iHNW2s-2" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin_Icon.png/1200px-Kotlin_Icon.png;" vertex="1" parent="f__ZLwbAY791xSL7UNEH-3">
+          <mxGeometry x="350" y="-10" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1SyxfFmzWVr9G_iHNW2s-1" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://www.pngplay.com/wp-content/uploads/9/Android-Download-Free-PNG.png;" vertex="1" parent="1">
+          <mxGeometry x="530" y="180" width="110.01" height="82.5" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
