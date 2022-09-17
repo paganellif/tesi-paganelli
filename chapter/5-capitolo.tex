@@ -22,12 +22,12 @@ In questo capitolo viene descritto un caso d'uso aziendale di sviluppo di applic
     \item \textbf{R4} - Ricerca documenti
     \begin{itemize}
         \item \textbf{R4.1} - Ricerca documenti senza autenticazione. Qualsiasi utente può effettuare una ricerca dei documenti disponibili, senza ottenere il contenuto.
-        \item \textbf{R4.2} - Ricerca avanzata in base a diversi campi. %TODO: da definire quali campi
+        \item \textbf{R4.2} - Ricerca avanzata in base a diversi campi.
     \end{itemize}
     \item \textbf{R5} - Convertire documenti da modo statico a modo fluido.
     \item \textbf{R6} - Modificare documenti in modo fluido (lato azienda).
     \begin{itemize}
-        \item \textbf{R6.1} - Aggiungere elementi/contenuti al documento in modo fluido (hyperlink, quiz, video, immagini, ...). %TODO: definire quali cose sono da aggiungere al documento
+        \item \textbf{R6.1} - Aggiungere elementi/contenuti al documento in modo fluido (hyperlink, quiz, video, immagini, ...).
         \item \textbf{R6.2} - Memorizzare gli elementi/contenuti aggiunti al documento in modo fluido (hyperlink, quiz, video, immagini, ...).
     \end{itemize}
 \end{itemize}
@@ -212,7 +212,6 @@ L'architettura della libreria \textit{Readium} è cosi composta da quattro modul
 \caption{Architettura libreria Readium}
 \end{figure}
 
-
 \subsection{Shared}
 Come anticipato nel capitolo \ref{ch:ch3} la parte condivisa della applicazione racchiude tutta o una sottoparte della business logic, compresi quindi aspetti "infrastrutturali" specifici della piattaforma target come ad esempio logging, persistenza dei dati e networking. E' infatti in questo modulo che si trova l'implementazione della logica applicativa seguendo le specifiche definite in fase di progettazione (figura \ref{fig:5.4}).\\
 Lo schema del database locale è definito utilizzando appositi file, in formato \textit{.sq}, uno per ognuna delle entità che necessita di persistenza: \textit{Highlight}, \textit{Favorite}, \textit{Progression} e \textit{Bookmark}. Tramite il task \textit{generateSqlDelightInterface} fornito dal plugin gradle SqlDelight è possibile generare le relative implementazioni dell'interfaccia \textit{MaggioliEbookDB}, anch'essa autogenerata dal plugin. 
@@ -291,7 +290,7 @@ Un altro aspetto importante della architettura è il meccanismo utilizzato sia d
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{img/tesi-2-Page-11.drawio.png}
+\includegraphics[width=0.75\textwidth]{img/tesi-2-Page-11.drawio.png}
 \caption{Flusso generico dei dati dalla sorgente alla UI tramite l'utilizzo della libreria Paging}
 \label{paging}
 \end{figure}
@@ -310,6 +309,15 @@ I componenti fondamentali della libreria \textit{Paging} sono:
 \includegraphics[width=0.7\textwidth]{img/tesi-24-androidviewuml.drawio.png}
 \caption{UML - Diagramma delle classi: Paginazione dati nella schermata principale}
 \label{paging2}
+\end{figure}
+
+\subsection{Reader}
+% discutere l'architettura e l'implementazione del reader e mettere qualche screenshot
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/tesi-2-Page-16.drawio.png}
+\caption{UML - Diagramma delle classi: Reader}
+\label{reader}
 \end{figure}
 
 \subsection{iosMaggioliEbookApp}
