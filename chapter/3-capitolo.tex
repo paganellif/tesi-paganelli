@@ -20,6 +20,7 @@ KMM dipende fortemente dai compilatori Kotlin/JVM (Android) e Kotlin/Native (iOS
 \centering
 \includegraphics[width=0.7\textwidth]{img/tesi-8-kmm.drawio.png}
 \caption{Architettura Kotlin Multiplatform Mobile}
+\label{stackKMM}
 \end{figure}
 
 Con il rilascio di Kotlin 1.4 (Agosto 2020), KMM è passato dalla fase "\textit{Experimental}" alla fase "\textit{Alpha}" la quale è considerata come fase "\textit{pre-stable}"\footnote{\url{https://kotlinlang.org/docs/components-stability.html\#current-stability-of-kotlin-components}} ma è comunque già stato adottato in produzione per lo sviluppo delle proprie applicazioni mobile da tantissime aziende tra le quali è possibile trovare nomi rilevanti come Netflix, VMware e Philips\footnote{\url{https://kotlinlang.org/lp/mobile/case-studies/}}.\\
@@ -63,9 +64,6 @@ Quando si sviluppa codice condiviso è spesso necessario definire come determina
 \caption{Esempio di applicazione expect/actual per ottenere informazioni sulla piattaforma}
 \end{listing}
 
-\subsection{Struttura Progetto KMM}
-% includere schema tesi-2-Page-14
-
 \subsection{Plugin Gradle KMP}
 Il plugin Gradle KMP è uno strumento utile per realizzare progetti multiplatform. Fornisce uno specifico DSL\footnote{Domain Specific Language} per definire e configurare i task necessari a compilare il codice condiviso per le relative piattaforme target\footnote{\url{https://kotlinlang.org/docs/multiplatform-dsl-reference.html}}. Al momento la versione latest (stable) del plugin è la \textit{1.6.21}, rilasciata il 19/04/2022\footnote{\url{https://plugins.gradle.org/plugin/org.jetbrains.kotlin.multiplatform/1.6.21}} ma è presente una versione candidata per il rilascio con tag \textit{1.7.0-RC2}.
 
@@ -95,6 +93,17 @@ L'IDE\footnote{Integrated Development Environment} Android Studio è costruito s
     \item creazione della struttura e della configurazione base per una nuova libreria multiplatform,
     \item integrazione di moduli multiplatform in applicazioni già esistenti.
 \end{itemize}
+
+\subsection{Struttura Applicazione KMM}
+Una applicazione sviluppata con KMM segue lo stack definito dalla condivisione della business logic e la separazione della UX/UI (figura \ref{stackKMM}). Il modulo \textit{shared} contiene tutta la business logic condivisa, la quale può essere sviluppata tramite l'utilizzo di librerie con supporto nativo al framework KMM, cioè librerie che forniscono già al loro interno specifiche implementazioni per le diverse piattaforme target, oppure tramite l'utilizzo del meccanismo expect/actual come descritto sopra.\\
+Nel caso di utilizzo del meccanismo expect/actual è necessario definire le funzionalità nel modulo \textit{commonMain} e fornire le implementazioni per le specifiche piattaforme nei relativi moduli \textit{androidMain} e \textit{iosMain}. Gli stessi concetti vengono applicati per la struttura dei moduli di test: \textit{commonTest}, \textit{androidTest} e \textit{iosTest}.\\
+I moduli UX/UI delle relative piattaforme includono il codice condiviso come dipendenza di progetto, in particolare come dipendenza Gradle (\textit{aar}\footnote{Android Archive}) per Android e come dipendenza CocoaPods (Pod) per iOS.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{img/tesi-2-Page-14.drawio.png}
+\caption{Fasi di compilazione Kotlin/Native con piattaforma target iOS}
+\end{figure}
 
 \section{Fastlane}
 Uno fra i tool open source più diffusi a supporto della automazione dello sviluppo di applicazioni mobile, sia Android che iOS, è Fastlane\footnote{\url{https://github.com/fastlane/fastlane}}. L'impiego principale di questo tool sviluppato in Ruby consiste nella automazione della fase di rilascio della applicazione, sia in beta che in produzione, grazie alla gestione di tutti quei task necessari ma dispendiosi in termini di tempo come ad esempio la generazione degli screenshot e la firma digitale del codice (\textit{Code Signing}).\\
