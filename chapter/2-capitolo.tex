@@ -1,30 +1,27 @@
 % !TeX root = ../main.tex
 
 \parindent=0pt
-In questo capitolo viene analizzato il processo di sviluppo tipico per le applicazioni mobile al fine di porre le basi per la progettazione dello stesso processo di sviluppo applicando pratiche e tecniche DevOps di automazione. Lo scopo di questa fase iniziale di progetto è quindi la definizione di tutti i principali task e sotto-task necessari allo sviluppo di applicazioni mobile, dalla scrittura del codice sorgente al rilascio sui marketplace delle relative piattaforme target, le quali sono Android e iOS.\\
-Il processo di sviluppo delle applicazioni mobile è simile a quello di qualsiasi altra tipologia di applicazione: in questo caso l'obiettivo è distribuire l'applicazione, dando la possibilità all'utente di installarla sul proprio dispositivo, mentre tipicamente nei processi di altre tipologie di applicazioni l'obiettivo è quello di mettere in esecuzione l'applicazione in un ambiente target accessibile all'utente.
+In questo capitolo viene analizzato il processo di sviluppo tipico per le applicazioni mobile al fine di porre le basi per la progettazione dello stesso processo di sviluppo applicando pratiche e tecniche DevOps di automazione. Lo scopo di questa fase iniziale di progetto è quindi la definizione di tutti i principali task e sotto-task necessari allo sviluppo di applicazioni mobile, dalla scrittura del codice sorgente al rilascio sui marketplace delle relative piattaforme target, le quali sono Android e iOS.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{img/tesi-2-Page-9.drawio.png}
+\includegraphics[width=0.75\textwidth]{img/tesi-2-Page-9.drawio.png}
 \caption{Ciclo di vita di sviluppo tipico delle applicazioni mobile}
 \end{figure}
 
-\section{Pianificazione} % e analisi
-In questa prima fase del processo di sviluppo si formalizzano i requisiti, funzionali e non funzionali, che devono essere soddisfatti dalla applicazione per ottenere l'approvazione del committente. 
+Il processo di sviluppo delle applicazioni mobile è simile a quello di qualsiasi altra tipologia di applicazione: in questo caso l'obiettivo è distribuire l'applicazione, dando la possibilità all'utente di installarla sul proprio dispositivo, mentre tipicamente nei processi di altre tipologie di applicazioni l'obiettivo è quello di mettere in esecuzione l'applicazione in un ambiente target accessibile all'utente.
 
+\section{Pianificazione}
+In questa prima fase del processo di sviluppo si formalizzano i requisiti, funzionali e non funzionali, che devono essere soddisfatti dalla applicazione per ottenere l'approvazione del committente e si pianifica il lavoro per le successive fasi in termini di task, risorse e tempo.\\
+Tramite la definizione di casi d'uso si rappresentano le interazioni tra il sistema e dei ruoli (attori in UML\footnote{Unified Modeling Language}) necessarie al raggiungimento di un obiettivo. Questi casi d'uso sono dunque dei possibili scenari dove il sistema riceve delle richieste esterne, come l'input dell'utente, e risponde ad esso.
+Dopo aver acquisito un numero appropriato di casi d'uso e attori è molto più semplice iniziare a progettare una applicazione. Lo sviluppo può quindi concentrarsi su come creare l'applicazione anziché sulla sua definizione o la sua funzione.
 
 \section{Progettazione}
-\subsection{Prototipazione UI/UX}
-% mockup e validazione mockup da parte degli utenti/tester
+La fase di progettazione della applicazione è composta da un insieme di sottotask tra cui la modellazione del dominio applicativo, la scelta della architettura da utilizzare e la prototipazione dell'esperienza utente e dell'interfaccia grafica (UX/UI).\\
+Tipicamente la progettazione UX/UI viene svolta tramite l'ausilio di mockup per definire prima come l'utente intende utilizzare l'applicazione (esperienza) e poi aspetti grafici come colori, font e icone (interfaccia).
+
 \section{Sviluppo}
-\subsection{Ambiente di sviluppo}
-% descrivere setup ide e tools (android studio,java sdk, kotlin sdk, gradle, plugin vari, xcode, emulatori vari, ...)
-\subsection{Testing}
-\begin{itemize}
-    \item \textit{Unit Testing}
-    \item \textit{UI Testing}
-\end{itemize}
+Una volta progettata l'applicazione è possibile partire con la fase di sviluppo. Solitamente l'obiettivo è far iniziare la fase di sviluppo il prima possibile in modo da sviluppare un prototipo funzionante ed ottenere la validazione da parte del committente, la quale è l'obiettivo principale della fase successiva.
 
 \section{Stabilizzazione}
 La stabilizzazione consiste nella risoluzione di problemi sia a livello funzionale che a livello di usabilità e di prestazioni al fine di ottenere una versione di applicazione pronta da distribuire. Questa parte del ciclo di sviluppo dovrebbe iniziare il più presto possibile in modo da individuare e risolvere i problemi prima che diventino un costo. Tipicamente per qualsiasi applicazione, anche non specifica per i dispositivi mobile, sono previste le seguenti sottofasi del processo di stabilizzazione\cite{sdlf}:
@@ -54,4 +51,9 @@ Dopo che la applicazione è stata stabilizzata è possibile procedere con la dis
 
 
 \section{Monitoraggio}
-% monitoraggio sia della applicazione che dell'utente (analytics)
+La fase di monitoraggio (e manutenzione) è quella più lunga e dispendiosa in termini di tempo e risorse. Per le applicazioni mobile esistono alcune situazioni che rendono il monitoraggio più complesso rispetto ad altre tipologie di applicazioni come ad esempio le web app. Bisogna infatti considerare che\cite{mamonitoring}:
+\begin{itemize}
+    \item le applicazioni mobile eseguono su una vasta gamma di dispositivi con caratteristiche diverse e può essere quindi difficile ottenere una chiara visibilità delle prestazioni lato client;
+    \item se gli utenti riscontrano un problema, mentre una patch per applicazioni web può essere distribuita quasi all'istante, la distribuzione degli aggiornamenti delle applicazioni mobile richiede tempo e l'attivazione da parte degli utenti per scaricarli.
+\end{itemize}
+Per effettuare un monitoraggio efficace è necessario misurare e controllare continuamente le performance della applicazione mobile, il comportamento dell'utente e gli errori che essi riscontrano. Alcuni esempi di metriche fondamentali sono: tempo di avvio della applicazione, network performance, utilizzo delle risorse (CPU, disco e memoria) e metriche custom derivanti dalle azioni dell'utente.
