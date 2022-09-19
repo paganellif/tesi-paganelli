@@ -46,12 +46,9 @@ In questo capitolo viene descritto un caso d'uso aziendale di sviluppo di applic
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{img/tesi-1-Use-case.drawio.png}
+\includegraphics[width=1\textwidth]{img/tesi-1-Use-case.drawio.png}
 \caption{Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC}
 \end{figure}
-
-% indicare tramite le personas e le user story quali sono gli scenari d'utilizzo voluti dal committente (mauro e flower)
-% io, come alala, vorrei, lalala
 
 \begin{figure}[H]
 \centering
@@ -210,6 +207,7 @@ L'architettura della libreria \textit{Readium} è cosi composta da quattro modul
 \centering
 \includegraphics[width=0.7\textwidth]{img/tesi-22-readiumarch.drawio.png}
 \caption{Architettura libreria Readium}
+\label{readiumarch}
 \end{figure}
 
 \subsection{Shared}
@@ -253,7 +251,7 @@ Ogni dipendenza che deve essere iniettata viene inserita all'interno di uno o pi
 \end{listing}
 
 \subsection{androidMaggioliEbookApp}
-L'applicazione sviluppata per la piattaforma Android implementa sia lo strato della visualizzazione dei dati utilizzando la business logic fornita dal modulo \textit{Shared} che la logica del \textit{Reader}, visualizzatore dei contenuti digitali tramite il toolkit Kotlin della libreria \textit{Readium}.
+L'applicazione sviluppata per la piattaforma Android implementa sia lo strato della visualizzazione dei dati utilizzando la business logic fornita dal modulo \textit{Shared} che la logica del \textit{Reader}, lettore dei contenuti digitali realizzato tramite il toolkit Kotlin della libreria \textit{Readium}.
 \subsubsection{Single-Activity Architecture}
 L'architettura scelta per l'implementazione della applicazione Android è basata su sole due activity:
 \begin{itemize}
@@ -311,13 +309,96 @@ I componenti fondamentali della libreria \textit{Paging} sono:
 \label{paging2}
 \end{figure}
 
-\subsection{Reader}
-% discutere l'architettura e l'implementazione del reader e mettere qualche screenshot
+\subsubsection{Reader}
+Il lettore dei documenti digitali in formato EPUB rappresenta la funzionalità core della applicazione sviluppata. Nel caso della interfaccia grafica android il lettore riceve il contenuto da visualizzare del documento selezionato dall'utente e lo mostra in un fragment basato sul componente \textit{Navigator} (figura \ref{readiumarch}). Questo componente della libreria Readium fornisce tutte le funzionalità necessarie per gestire la navigazione dei documenti e gli eventi relativi al comportamento dell'utente come scorrimento pagine e selezione testo. \\
+I principali componenti del reader sono:
+\begin{itemize}
+    \item \textit{ReaderActivity} - Unica activity presente nella applicazione oltre a quella principale (Single Activity Architecture), utilizzata sia per l’interazione che la gestione del lettore di contenuti digitali.
+    \item \textit{EpubReaderFragment} - Componente che si occupa effettivamente di mostrare il contenuto del documento all'utente.
+    \item \textit{DecorationListener} - Permette la gestione grafica delle annotazioni come evidenziazioni e sottolineature, le quali sono aggiunte alla vista del fragment tramite l'utilizzo di Jetpack Compose.
+\end{itemize}
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{img/tesi-2-Page-16.drawio.png}
 \caption{UML - Diagramma delle classi: Reader}
 \label{reader}
 \end{figure}
+
+\subsubsection{Screenshots}
+
+\begin{multicols}{3}
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/login.png}
+                \caption{Schermata di login degli utenti abbonati}
+                \label{login}
+            \end{figure}
+
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/sidenav.png}
+                \caption{Menu laterale per la navigazione all'interno della applicazione}
+                \label{sidenav}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/home.png}
+                \caption{Schermata home principale per la visualizzazione e la ricerca dei documenti digitali Maggioli}
+                \label{home}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/ricerca.png}
+                \caption{Esempio di ricerca per parola chiave nella schermata principale}
+                \label{ricerca}
+            \end{figure}
+
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/preferiti.png}
+                \caption{Schermata per la visualizzazione e la ricerca dei documenti preferiti dall'utente}
+                \label{preferiti}
+            \end{figure}
+
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/about.png}
+                \caption{Schermata per la visualizzazione delle informazioni generali relative alla applicazione}
+                \label{about}
+            \end{figure}
+
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/reader_settings.png}
+                \caption{Lettura documento digitale d'esempio e impostazioni del lettore}
+                \label{readersettings}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/annotations.png}
+                \caption{Esempio di inserimento di annotazioni come evidenziazioni e sottolineature}
+                \label{annotations}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/annotation2.png}
+                \caption{Annotazioni memorizzate sul dispositivo e consultabili dal menu del lettore}
+                \label{annotation2}
+            \end{figure}
+
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/toc.png}
+                \caption{Elenco dei contenuti (TOC) del documento aperto e consultabile dal menu del lettore}
+                \label{toc}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/ricerca_testo.png}
+                \caption{Ricerca testuale nel contenuto del documento aperto con relativo risultato}
+                \label{ricerca_testo}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/ricerca_testo2.png}
+                \caption{Evidenziazioni automatiche delle occorrenze del testo cercato}
+                \label{ricerca_testo2}
+            \end{figure}
+\end{multicols}
 
 \subsection{iosMaggioliEbookApp}
