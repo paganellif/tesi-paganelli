@@ -4,33 +4,41 @@ In questo capitolo viene descritto un caso d'uso aziendale di sviluppo di applic
 \section{Analisi dei Requisiti}
 \subsection{Requisiti Funzionali}
 \begin{itemize}
-    \item \textbf{R1} - Visualizzare documenti.
+    \item \textbf{R1} - Visualizzazione documenti.
     \begin{itemize}
         \item \textbf{R1.1} - In modo fluido, mostrando il contenuto adattato al dispositivo in cui viene mostrato.
         \item \textbf{R1.2} - In modo statico, mostrando il contenuto con uno specifico layout indipendente dal dispositivo in cui viene mostrato.
     \end{itemize}
-    \item \textbf{R2} - Modificare documenti in modo fluido (lato utente).
+    \item \textbf{R2} - Modifica documenti fluidi (lato utente).
     \begin{itemize}
-        \item \textbf{R2.1} - Aggiungere commenti, sottolineature, evidenziazioni, al contenuto fluido.
-        \item \textbf{R2.2} - Memorizzare commenti, sottolineature, evidenziazioni apportate al contenuto fluido.
+        \item \textbf{R2.1} - Aggiunta commenti, sottolineature, evidenziazioni, al contenuto fluido.
+        \item \textbf{R2.2} - Memorizzazione commenti, sottolineature, evidenziazioni apportate al contenuto fluido.
     \end{itemize}
     \item \textbf{R3} - Gestione utente.
     \begin{itemize}
         \item \textbf{R3.1} - Login (autenticazione) utente.
-        \item \textbf{R3.2} - Visualizzare documenti a cui l'utente è abbonato.
+        \item \textbf{R3.2} - Visualizzazione documenti a cui l'utente è abbonato.
     \end{itemize}
-    \item \textbf{R4} - Ricerca documenti
+    \item \textbf{R4} - Ricerca documenti.
+    \item \textbf{R5} - Conversione documenti da modo statico a modo fluido.
+    \item \textbf{R6} - Modifica documenti in modo fluido (lato azienda).
     \begin{itemize}
-        \item \textbf{R4.1} - Ricerca documenti senza autenticazione. Qualsiasi utente può effettuare una ricerca dei documenti disponibili, senza ottenere il contenuto.
-        \item \textbf{R4.2} - Ricerca avanzata in base a diversi campi.
-    \end{itemize}
-    \item \textbf{R5} - Convertire documenti da modo statico a modo fluido.
-    \item \textbf{R6} - Modificare documenti in modo fluido (lato azienda).
-    \begin{itemize}
-        \item \textbf{R6.1} - Aggiungere elementi/contenuti al documento in modo fluido (hyperlink, quiz, video, immagini, ...).
-        \item \textbf{R6.2} - Memorizzare gli elementi/contenuti aggiunti al documento in modo fluido (hyperlink, quiz, video, immagini, ...).
+        \item \textbf{R6.1} - Aggiunta elementi/contenuti al documento in modo fluido (hyperlink, quiz, video, immagini, ...).
+        \item \textbf{R6.2} - Memorizzazione elementi/contenuti aggiunti al documento fluido (hyperlink, quiz, video, immagini, ...).
     \end{itemize}
 \end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-2-Use-case2.drawio.png}
+\caption{Diagramma di sequenza: scenario di modifica di un nuovo documento "fluido"}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-1-Use-case.drawio.png}
+\caption{Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC}
+\end{figure}
 
 \subsection{Requisiti Non Funzionali/Tecnologici}
 \begin{itemize}
@@ -41,20 +49,7 @@ In questo capitolo viene descritto un caso d'uso aziendale di sviluppo di applic
         \item \textbf{T2.2} - Unit testing, code coverage e E2E\footnote{End-to-End} testing.
         \item \textbf{T2.3} - Rilascio automatico nei relativi store delle piattaforme scelte (Google Play per Android e App Store per iOS).
     \end{itemize}
-    \item \textbf{T3} - Monitoraggio applicazione (Analytics).
 \end{itemize}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{img/tesi-1-Use-case.drawio.png}
-\caption{Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{img/tesi-2-Use-case2.drawio.png}
-\caption{Diagramma di sequenza: scenario di modifica di un nuovo documento "fluido"}
-\end{figure}
 
 
 \section{Analisi Formati Digitali Fluidi}
@@ -112,6 +107,13 @@ L'obiettivo principale della applicazione è quello di permettere all'utente di 
 
 Tra i contesti definiti esistono delle relazioni di tipo \textit{Shared Kernel}\cite{evans_domain-driven_2004} (SK) con l'obiettivo di evitare duplicazioni e semplificare l'integrazione. Relazioni di questo tipo consistono nella condivisione di un sottoinsieme del dominio modellato, che corrisponde tipicamente al dominio core. Un esempio di relazione SK è l'utilizzo di codice o schemi DB condivisi\footnote{\url{https://github.com/ddd-crew/context-mapping}}.\\
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{img/tesi-25-ddd.drawio.png}
+\caption{UML - Diagramma delle classi: Reader Core Domain e User Subdomain}
+\label{fig:5.4}
+\end{figure}
+
 Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domain-driven_2004}:
 \begin{itemize}
     \item \textit{Entity} - Oggetto definito dalla sua identità e non dai suoi attributi. Ogni libro è univoco, identificato da uno specifico codice, chiamato ISBN\footnote{International Standard Book Number}.
@@ -121,32 +123,24 @@ Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domai
     \item \textit{Repository} - Oggetto per il recupero di altri oggetti di dominio e per la gestione del loro ciclo di vita. Le entità \textit{User} e \textit{Libro} sono esempi di oggetti di dominio che necessitano di un repository. Permette di disaccoppiare applicazione e domain design dalle specifiche tecnologie/strategie di persistenza come multipli database e datasource (locali e/o remoti).
 \end{itemize}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{img/tesi-25-ddd.drawio.png}
-\caption{UML - Diagramma delle classi: Reader Core Domain e User Subdomain}
-\label{fig:5.4}
-\end{figure}
-
 \subsection{Progettazione UX/UI}
 
-L'interfaccia grafica della applicazione è stata progettata tramite l'utilizzo di mockup digitali realizzati con il tool grafico open source Drawio\footnote{\url{https://github.com/jgraph/drawio}}. 
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{img/tesi-14-mockup1.drawio.png}
-\caption{Alcuni dei mockup realizzati per la progettazione e la validazione della UX/UI (v1)}
-\end{figure}
-
+L'interfaccia grafica della applicazione è stata progettata tramite l'utilizzo di mockup digitali realizzati con il tool grafico open source Drawio\footnote{\url{https://github.com/jgraph/drawio}}.\\
 Considerando l'utilizzo tipico di una applicazione della stessa tipologia di quella che deve essere realizzata, sono stati utilizzati alcuni standard de-facto come ad esempio il menu laterale a scomparsa (mockup 4), icona "hamburger" per l'apertura del menu (mockup 3), elenco di elementi con scroll infinito verticale (schermata 5-6), barra di ricerca nella parte alta con icona "lente di ingrandimento" (schermata 2-5-6), ... .
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{img/tesi-23-mockupv2.drawio.png}
+\includegraphics[width=1\textwidth]{img/tesi-14-mockup1.drawio.png}
+\caption{Alcuni dei mockup realizzati per la progettazione e la validazione della UX/UI (v1)}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{img/tesi-23-mockupv2.drawio.png}
 \caption{Modifiche apportate ai mockup per ottenere la validazione della UX/UI (v2)}
 \end{figure}
 
-Sono state necessarie due iterazioni di validazione dei mockup da parte degli interessati per definire l'interfaccia utente desiderata con alcuni vincoli caratteristici del brand Maggioli, come ad esempio l' utilizzo del colore blu \#00379E come colore primario, l'utilizzo del font Karla\footnote{\url{https://github.com/googlefonts/karla}} e la presenza del logo Maggioli. Le schermate necessarie sono quindi:
+Per ottenere la validazione dei mockup da parte degli interessati sono state necessarie due iterazioni del processo di progettazione UX/UI. L'interfaccia utente desiderata deve soddisfare alcuni vincoli caratteristici del brand Maggioli, come ad esempio l' utilizzo del colore blu \#00379E come colore primario, l'utilizzo del font Karla\footnote{\url{https://github.com/googlefonts/karla}} e la presenza del logo Maggioli. Le schermate necessarie sono quindi:
 \begin{itemize}
     \item \textit{Reader} - Schermata responsabile della visualizzazione del contenuto digitale in formato EPUB.
     \item \textit{Login} - Schermata iniziale responsabile alla autenticazione dell'utente.
@@ -276,7 +270,7 @@ La navigazione all'interno della applicazione è gestita tramite la combinazione
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{img/Screenshot 2022-09-07 at 17.12.56.png}
+\includegraphics[width=0.7\textwidth]{img/Screenshot 2022-09-20 at 08.26.21.png}
 \caption{Screenshot di una sottoparte del navigation graph (renderizzato automaticamente tramite l'IDE Android Studio)}
 \label{fig:5.11}
 \end{figure}
