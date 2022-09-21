@@ -1,6 +1,6 @@
 % !TeX root = ../main.tex
 
-Dato il processo di sviluppo delle applicazioni mobile individuato nel capitolo \ref{ch:kmm} e definiti i principali strumenti che si intende utilizzare nel capitolo \ref{ch:ch3}, si descrive in questo capitolo come è stato automatizzato il processo di sviluppo adottando le moderne tecniche di integrazione continua e rilascio continuo al fine di fornire un modello riutilizzabile ai vari reparti aziendali che si occupano dello sviluppo di applicazioni mobile.\\
+Dato il processo di sviluppo delle applicazioni mobile individuato nel capitolo \ref{ch:ch2} e definiti i principali strumenti che si intende utilizzare nel capitolo \ref{ch:ch3}, si descrive in questo capitolo come è stato automatizzato il processo di sviluppo adottando le moderne tecniche di integrazione continua e rilascio continuo al fine di fornire un modello riutilizzabile ai vari reparti aziendali che si occupano dello sviluppo di applicazioni mobile.\\
 Per la progettazione della pipeline è stato utilizzato il progetto base generato tramite il plugin Gradle KMM con lo scopo di mantenere il focus solamente sul processo e non sullo sviluppo del prodotto. Tale progetto fornisce una applicazione essenziale realizzata tramite KMM, comprensiva di modulo condiviso per la logica applicativa e moduli specifici Android e iOS per l'interfaccia utente.\\
 Il workflow ideale, e quindi anche la pipeline obiettivo, è composta dai seguenti passi nello stesso ordine in cui sono indicati:
 \begin{itemize}
@@ -43,6 +43,9 @@ L'infrastruttura aziendale a supporto di tutti i processi di sviluppo è di tipo
 
 \subsection{MacOS GitLab Runner (Self-Hosted)}
 La toolchain di base per lo sviluppo di applicazioni iOS è interamente di proprietà Apple e rende necessario l'utilizzo di una macchina MacOS definendo una serie di vincoli per quanto riguarda sia lo sviluppo locale che l'automazione del processo.
+
+% indicare le varie possibilità (come scritto nelle conclusioni) e dire che è stata scelta l'opzione self-hosted gitlab perchè si voleva avere la possibilità di gestire il runner a 360 gradi (cosa non possibile con quelli managed) in modo da capirne il funzionamento e anche per i costi (molto elevati in termini di euro ad esempio in caso di vm amazon)
+
 \subsubsection{Architettura Runner}
 Ogni job di ogni stage definito in una pipeline viene eseguito da un componente software chiamato \textit{runner}. Tramite il modello client-server il runner interroga continuamente il server (ovvero GitLab) per ottenere le informazioni necessarie all'esecuzione dei job. La politica di scheduling dei job fra i vari runner è definita lato server ma può essere pilotata tramite il concetto di \textit{tag}.
 
