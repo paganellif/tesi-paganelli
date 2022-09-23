@@ -1,0 +1,21 @@
+renovate:
+  stage: analisys
+  tags:
+    - maggioli-network
+  variables:
+    RENOVATE_ENDPOINT: $CI_API_V4_URL
+    RENOVATE_PLATFORM: gitlab
+    RENOVATE_TOKEN: $GITLAB_TOKEN
+    RENOVATE_REPOSITORY_CACHE: 'enabled'
+    RENOVATE_CONFIG_FILE: $CI_PROJECT_DIR/config.js
+    RENOVATE_IGNORE_PR_AUTHOR: 'true'
+    RENOVATE_LOG_FILE: renovate-log.ndjson
+  image: renovate/renovate:32.202.1
+  script:
+    - renovate
+  artifacts:
+    expire_in: 1d
+    paths:
+      - $RENOVATE_LOG_FILE
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"

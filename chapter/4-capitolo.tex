@@ -300,7 +300,7 @@ Automatizzare la gestione delle dipendenze di un progetto significa configurare 
     \item Modifica del codice per l'aggiornamento delle dipendenze.
 \end{itemize}
 
-Tipicamente sistemi di questo tipo, per poter modificare il codice in modo automatico, vengono integrati con le piattaforme utilizzate per il versionamento del codice, come GitLab nel caso di questo progetto di tesi. L'aggiornamento delle dipendenze automatizzato deve essere gestito come una modifica al codice esterna che deve essere approvata da uno o più membri del team e testata prima di poter essere applicata al flusso principale di sviluppo. Per questo scopo vengono utilizzate le stesse tecniche e gli stessi tools di continuous integration adottati nel processo di sviluppo.
+Tipicamente sistemi di questo tipo, per poter modificare il codice in modo automatico, vengono integrati con le piattaforme utilizzate per il versionamento del codice, come GitLab nel caso di questo progetto di tesi, con l'obiettivo di sfruttare le stesse tecniche e gli stessi tools di continuous integration adottati nel processo di sviluppo.
 
 \subsection{Renovate}
 Anche in questo caso, come per quasi tutti i servizi che supportano il processo di sviluppo, è possibile utilizzare sistemi gestiti as-a-Service oppure auto-gestiti. In Maggioli il sistema di aggiornamento automatico delle dipendenze è disponibile a tutti i team di sviluppo e realizzato con la modalità auto-gestita del tool \textit{Renovate}\footnote{\url{https://github.com/renovatebot/renovate}} tramite l'esecuzione schedulata di pipeline dedicate, in modo similare ai task di analisi.
@@ -310,6 +310,18 @@ Anche in questo caso, come per quasi tutti i servizi che supportano il processo 
 \includegraphics[width=0.8\textwidth]{img/tesi-2-Page-17.drawio.png}
 \caption{UML - Diagramma di sequenza: Aggiornamento automatico delle dipendenze con Renovate e GitLab Runner}
 \end{figure}
+
+%\begin{listing}[H]
+%\inputminted{yaml}{code/4-renovajob}
+%\caption{Pipeline job schedulato per l'aggiornamento automatico delle dipendenze con Renovate}
+%\end{listing}
+L'aggiornamento delle dipendenze automatizzato deve essere gestito come una modifica al codice esterna che deve essere testata prima di poter essere applicata al flusso principale di sviluppo. Il diagramma di sequenza indica i task svolti per l'aggiornamento delle dipendenze automatico in cui sono coinvolti aggiornamenti di versione del tipo \textit{minor} o \textit{patch}. In questo caso Renovate apre una merge request su un nuovo branch in cui viene effettuato l'aggiornamento, se la pipeline associata termina con successo allora significa che non ci sono problemi e quindi la merge request viene chiusa unendo la modifica al flusso principale di sviluppo. Nel caso invece di aggiornamenti di versione di tipo \textit{major} è necessario l'intervento da parte di uno sviluppatore sin dalla apertura della merge request: tipicamente aggiornamenti di questo tipo includono breaking changes che necessitano di ulteriore lavoro per adattare l'applicazione alla nuova versione.\\
+Il comportamento di Renovate può essere configurato ad-hoc per le diverse esigenze di ogni progetto includendo un apposito file di configurazione nella root di progetto (\textit{.gitlab/renovate.json}). Il seguente file definisce una configurazione custom per ottenere lo stesso comportamento descritto sopra ma con raggruppamento delle dipendenze basato sul group-id di certe librerie che potrebbero avere dipendenze tra di loro e causare errori se non aggiornate nella stessa merge request.
+
+\begin{listing}[H]
+\inputminted{json}{code/4-renovacustom}
+\caption{Configurazione custom di un progetto Android per l'aggiornamento automatico delle dipendenze con Renovate (\textit{.gitlab/renovate.json})}
+\end{listing}
 
 \section{Templating}
 L'obiettivo di questo progetto di tesi consiste nella progettazione di una pipeline di CI/CD tale da poter essere riutilizzata dai vari team in azienda che si occupano dello sviluppo di applicazioni mobile. I principali strumenti forniti dalla piattaforma GitLab a supporto del riuso delle pipeline sono:

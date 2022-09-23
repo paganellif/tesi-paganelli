@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "labels": ["dependencies"],
+  "automerge": true,
+  "semanticCommitScope": "{{manager}}",
+  "packageRules": [
+    {
+      "description": "Trigger manual intervention for major updates",
+      "automerge": false,
+      "dependencyDashboardApproval": true,
+      "matchUpdateTypes": ["major"]
+    },
+    {
+      "description": "Automatic PR and Merge if success",
+      "automerge": true,
+      "dependencyDashboardApproval": false,
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"]
+    },
+    {"matchPackagePatterns": ["^io.insert-koin"], "groupName": "koin"},
+    {"matchPackagePatterns": ["^androidx"], "groupName": "androidx"},
+    {"matchPackagePatterns": ["^io.ktor"], "groupName": "ktor"},
+    {"matchPackagePatterns": ["^org.jetbrains.kotlinx"], "groupName": "kotlinx"}
+  ]
+}
