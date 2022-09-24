@@ -1,0 +1,6 @@
+# Default Xcode Build Script
+#"${PODS_ROOT}/Target Support Files/Pods-iosMaggioliEbookApp/Pods-iosMaggioliEbookApp-frameworks.sh"
+
+# Gradle KMM Task Build Script
+cd "$SRCROOT/.."
+gradle :shared:embedAndSignAppleFrameworkForXcode
