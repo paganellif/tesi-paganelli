@@ -34,12 +34,6 @@ In questo capitolo viene descritto un caso d'uso aziendale di sviluppo di applic
 \caption{UML - Diagramma di sequenza: scenario di modifica di un nuovo documento "fluido"}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{img/tesi-1-Use-case.drawio.png}
-\caption{UML - Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC}
-\end{figure}
-
 \subsection{Requisiti Non Funzionali/Tecnologici}
 \begin{itemize}
     \item \textbf{T1} - Applicazione nativa Android e iOS, sfruttando Kotlin Multiplatform Mobile (KMM).
@@ -51,6 +45,93 @@ In questo capitolo viene descritto un caso d'uso aziendale di sviluppo di applic
     \end{itemize}
 \end{itemize}
 
+\subsection{Ubiquitous Language}
+Per far si che la successiva fase di modellazione del dominio sia efficace è necessario che il team di sviluppo, composto da figure tecniche, e i committenti, i quali sono invece esperti di dominio, utilizzino lo stesso linguaggio. Il concetto di \textit{Ubiquitous Language} definisce un vocabolario condiviso da entrambe le parti per la discussione del software\cite{evans_domain-driven_2004}.\\
+Il seguente glossario racchiude tutti i principali termini utilizzati negli incontri tra team di sviluppo ed esperti di dominio:
+
+\begin{table}[H]
+\centering
+    \begin{tabular}{|c|c|}
+         \hline
+         \textbf{Termine} & \textbf{Descrizione}\\
+         \hline
+         \textit{Reader} & \specialcell{Lettore di documenti in grado di visualizzarlo ed \\interagire con esso.}\\
+         \hline
+         \textit{Documento} & Contenuto digitale pubblicato da Maggioli Editore.\\
+         \hline
+         \textit{Documento Statico} & Documento con una certa struttura definita nel formato (PDF).\\
+         \hline
+         \textit{Documento Fluido} & \specialcell{Documento senza struttura in grado di adattarsi al dispositivo\\ in cui viene aperto (EPUB).}\\
+         \hline
+         \textit{Libro} & \specialcell{Tipologia principale di documento fluido fruibile\\ tramite l'applicazione MaggioliEbook.}\\
+         \hline
+         \textit{Rivista} & \specialcell{Tipologia principale di documento statico fruibile\\ tramite l'applicazione MaggioliEbook.}\\
+         \hline
+         \textit{Bookmark} & Identifica una specifica pagina di un libro o di una rivista.\\
+         \hline
+         \textit{Progression} & \specialcell{Progresso di lettura di un libro o di una rivista,\\ calcolato in percentuale (totale di pagine lette sul totale di pagine\\ del documento).}\\
+         \hline
+         \textit{Highlight} & \specialcell{Annotazione per una certa porzione testuale di \\documento. Può essere una evidenziazione, sottolineatura \\o annotazione testuale.}\\
+         \hline
+         \textit{Favorite} &  Documento preferito dall'utente.\\
+         \hline
+         \textit{User} & Utente con uno o più abbonamenti attivi.\\
+         \hline
+          \textit{Token} & \specialcell{Autentica e autorizza l'utente ad accedere ai vari documenti\\ per i quali esiste un abbonamento attivo.}\\
+         \hline
+    \end{tabular}
+    \caption{Glossario dei termini (MaggioliEbook Ubiquitous Language)}
+\end{table}
+
+I seguenti glossari definiscono invece alcuni dei principali eventi del sistema, suddivisi tra \textit{Incoming Events} e \textit{Outcoming Events}:
+
+\begin{table}[H]
+\centering
+    \begin{tabular}{|c|c|}
+         \hline
+         \textbf{Incoming Events} & \textbf{Descrizione}\\
+         \hline
+         \textit{Apertura documento} & Richiesta di apertura in lettura di uno specifico documento.\\
+         \hline
+         \textit{Chiusura documento} & Richiesta di chiusura del documento aperto in lettura.\\
+         \hline
+         \textit{Ricerca documento} & Richiesta di ricerca documento tramite query testuale.\\
+         \hline
+         \textit{CRUD Highlight} & \specialcell{Richiesta di creazione, lettura, aggiornamento o \\eliminazione di annotazioni.}\\
+         \hline
+         \textit{CRUD Bookmark} & \specialcell{Richiesta di creazione, lettura, aggiornamento o \\eliminazione di segnalibri.}\\
+         \hline
+          \textit{CRUD Favorite} & \specialcell{Richiesta di creazione, lettura, aggiornamento o \\eliminazione dei preferiti.}\\
+         \hline
+    \end{tabular}
+    \caption{Glossario degli eventi in ingresso (MaggioliEbook Incoming Events)}
+\end{table}
+
+\begin{table}[H]
+\centering
+    \begin{tabular}{|c|c|}
+         \hline
+         \textbf{Outcoming Events} & \textbf{Descrizione}\\
+         \hline
+         \specialcell{\textit{Conversione}\\\textit{PDF2EPUB}} & \specialcell{Richiesta di conversione di un documento statico in\\ documento fluido (dal formato PDF al formato EPUB).}\\
+         \hline
+         \textit{Ricerca documento} & Richiesta di ricerca documento tramite query testuale.\\
+         \hline
+         \specialcell{\textit{Download contenuto}\\\textit{documenti}} & Scaricamento del contenuto dei documenti.\\
+         \hline
+         \specialcell{\textit{Download copertina}\\\textit{documenti}} & Scaricamento della immagine di copertina dei documenti.\\
+         \hline
+         \specialcell{\textit{Autenticazione}\\\textit{user}} & Richiesta di autenticazione dell'utente (ottenimento token).\\
+         \hline
+    \end{tabular}
+    \caption{Glossario degli eventi in uscita (MaggioliEbook Outcoming Events)}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-1-Use-case.drawio.png}
+\caption{UML - Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC}
+\end{figure}
 
 \section{Analisi Formati Digitali Fluidi}
 I documenti attualmente sono reperibili in formato PDF e/o HTML. Il formato PDF è quello con cui i documenti vengono effettivamente archiviati: per ottenere un documento in formato HTML è necessario utilizzare un servizio interno, chiamato \textit{pdf2html}, il quale effettua la conversione. Entrambi i formati rispettano i requisiti per i documenti definiti "statici" ma non per quelli definiti "fluidi":
@@ -126,7 +207,7 @@ Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domai
 \subsection{Progettazione UX/UI}
 
 L'interfaccia grafica della applicazione è stata progettata tramite l'utilizzo di mockup digitali realizzati con il tool grafico open source Drawio\footnote{\url{https://github.com/jgraph/drawio}}.\\
-Considerando l'utilizzo tipico di una applicazione della stessa tipologia di quella che deve essere realizzata, sono stati utilizzati alcuni standard de-facto come ad esempio il menu laterale a scomparsa (mockup 4), icona "hamburger" per l'apertura del menu (mockup 3), elenco di elementi con scroll infinito verticale (schermata 5-6), barra di ricerca nella parte alta con icona "lente di ingrandimento" (schermata 2-5-6), ... .
+Considerando l'utilizzo tipico di una applicazione della stessa tipologia di quella che deve essere realizzata, sono stati utilizzati alcuni standard de-facto come ad esempio il menu laterale a scomparsa (mockup 4), icona "hamburger" per l'apertura del menu (mockup 3), elenco di elementi con scroll infinito verticale (schermata 2-5) e barra di ricerca nella parte alta con icona "lente di ingrandimento" (schermata 2-5).
 
 \begin{figure}[H]
 \centering

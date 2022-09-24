@@ -18,6 +18,9 @@
 \renewcommand{\appendixtocname}{Appendice}
 \renewcommand{\appendixpagename}{Appendice}
 
+\newcommand{\specialcell}[2][c]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+
 \titleformat{\chapter}{\Huge\bfseries}{\chaptername\ \thechapter}{0pt}{\vskip 100pt\raggedright}%
 % Alter <after-sep> in the macro below to vary the separation after the \chapter title.
 \titlespacing{\chapter}{0pt}{50pt}{50pt}
