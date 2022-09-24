@@ -45,6 +45,12 @@ In questo capitolo viene descritto un caso d'uso aziendale di sviluppo di applic
     \end{itemize}
 \end{itemize}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-1-Use-case.drawio.png}
+\caption{UML - Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC}
+\end{figure}
+
 \subsection{Ubiquitous Language}
 Per far si che la successiva fase di modellazione del dominio sia efficace è necessario che il team di sviluppo, composto da figure tecniche, e i committenti, i quali sono invece esperti di dominio, utilizzino lo stesso linguaggio. Il concetto di \textit{Ubiquitous Language} definisce un vocabolario condiviso da entrambe le parti per la discussione del software\cite{evans_domain-driven_2004}.\\
 Il seguente glossario racchiude tutti i principali termini utilizzati negli incontri tra team di sviluppo ed esperti di dominio:
@@ -127,12 +133,6 @@ I seguenti glossari definiscono invece alcuni dei principali eventi del sistema,
     \caption{Glossario degli eventi in uscita (MaggioliEbook Outcoming Events)}
 \end{table}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{img/tesi-1-Use-case.drawio.png}
-\caption{UML - Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC}
-\end{figure}
-
 \section{Analisi Formati Digitali Fluidi}
 I documenti attualmente sono reperibili in formato PDF e/o HTML. Il formato PDF è quello con cui i documenti vengono effettivamente archiviati: per ottenere un documento in formato HTML è necessario utilizzare un servizio interno, chiamato \textit{pdf2html}, il quale effettua la conversione. Entrambi i formati rispettano i requisiti per i documenti definiti "statici" ma non per quelli definiti "fluidi":
 \begin{itemize}
@@ -186,15 +186,13 @@ L'obiettivo principale della applicazione è quello di permettere all'utente di 
 \caption{Context Map: panoramica globale dei contesti del progetto e delle relazioni che intercorrono tra di essi}
 \end{figure}
 
-Tra i contesti definiti esistono delle relazioni di tipo \textit{Shared Kernel}\cite{evans_domain-driven_2004} (SK) con l'obiettivo di evitare duplicazioni e semplificare l'integrazione. Relazioni di questo tipo consistono nella condivisione di un sottoinsieme del dominio modellato, che corrisponde tipicamente al dominio core. Un esempio di relazione SK è l'utilizzo di codice o schemi DB condivisi\footnote{\url{https://github.com/ddd-crew/context-mapping}}.\\
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{img/tesi-25-ddd.drawio.png}
 \caption{UML - Diagramma delle classi: Reader Core Domain e User Subdomain}
 \label{fig:5.4}
 \end{figure}
-
+Tra i contesti definiti esistono delle relazioni di tipo \textit{Shared Kernel}\cite{evans_domain-driven_2004} (SK) con l'obiettivo di evitare duplicazioni e semplificare l'integrazione. Relazioni di questo tipo consistono nella condivisione di un sottoinsieme del dominio modellato, che corrisponde tipicamente al dominio core. Un esempio di relazione SK è l'utilizzo di codice o schemi DB condivisi\footnote{\url{https://github.com/ddd-crew/context-mapping}}.\\
 Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domain-driven_2004}:
 \begin{itemize}
     \item \textit{Entity} - Oggetto definito dalla sua identità e non dai suoi attributi. Ogni libro è univoco, identificato da uno specifico codice, chiamato ISBN\footnote{International Standard Book Number}.
