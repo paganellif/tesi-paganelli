@@ -485,15 +485,7 @@ L'IDE Xcode deve essere configurato per poter utilizzare il codice condiviso svi
 \end{listing}
 
 \subsubsection{CocoaPods}
-Dopo aver aggiornato lo script di configurazione è necessario installare il modulo shared, il quale è impacchettato come dipendenza\textit{CocoaPods}\footnote{\url{https://cocoapods.org/}}. CocoaPods è un dependency manager per progetti Swift e Objective-C scritto in Ruby. Le dipendenze, chiamate \textit{Pods}, sono definite nel file \textit{Podfile} nella root di progetto. Il seguente file definisce i pods della applicazione iOS, compreso il modulo shared, il quale deve essere incluso localmente:
-
-% aggiornare listings con podfile finale
-\begin{listing}[H]
-\inputminted{bash}{code/5-podfile}
-\caption{Dipendenze CocoaPods della applicazione iOS.}
-\end{listing}
-
-Il pod shared viene generato durante la fase di impacchettamento del modulo shared tramite l'esecuzione del task \textit{gradle assemble} per il quale sono definiti appositi sottotask per svolgere questo compito. I task forniti dal plugin Gradle KMM per la gestione delle dipendenze CocoaPods sono:
+Dopo aver aggiornato lo script di configurazione è necessario installare il modulo shared, il quale è impacchettato come dipendenza\textit{CocoaPods}\footnote{\url{https://cocoapods.org/}}. CocoaPods è un dependency manager per progetti Swift e Objective-C scritto in Ruby. Le dipendenze, chiamate \textit{Pods}, sono definite nel file \textit{Podfile} nella root di progetto. Il pod shared viene generato durante la fase di impacchettamento del modulo shared tramite l'esecuzione del task \textit{gradle assemble} per il quale sono definiti appositi sottotask per svolgere questo compito. I task forniti dal plugin Gradle KMM per la gestione delle dipendenze CocoaPods sono:
 \begin{itemize}
     \item \textit{podDownload} - Scarica le dipendenze CocoaPods senza effettuarne l'installazione.
     \item \textit{podImport} - Task di utility utilizzato dal altri task per l'import delle dipendenze.
@@ -501,7 +493,14 @@ Il pod shared viene generato durante la fase di impacchettamento del modulo shar
     \item \textit{podPublishDebugXCFramework} - Crea il framework XCFramework in modalità debug (chiamato dal task \textit{embedAndSignPodAppleFrameworkForXcode}).
     \item \textit{podPublishReleaseXCFramework} - Crea il framework XCFramework in modalità release (chiamato dal task \textit{embedAndSignPodAppleFrameworkForXcode}).
     \item \textit{podPublishXCFramework} - Crea i framework XCFrameworc in entrambe le modalità.
-    \item \textit{podspec} - Genera il file \textit{podspec}, utile all'importazione del pod nella applicazione iOS.
+    \item \textit{podspec} - Genera il file \textit{podspec}\footnote{\url{https://guides.cocoapods.org/syntax/podspec.html}}, utile all'importazione del pod nella applicazione iOS.
 \end{itemize}
 
-A questo punto è possibile importare il modulo shared nel codice Swift e sviluppare l'applicazione utilizzando le funzionalità fornite dall'IDE a supporto dello sviluppo come per una qualsiasi libreria Swift.
+Il seguente file definisce i pods della applicazione iOS, compreso il modulo shared, il quale deve essere incluso localmente:
+
+% aggiornare listings con podfile finale
+\begin{listing}[H]
+\inputminted{bash}{code/5-podfile}
+\caption{Dipendenze CocoaPods della applicazione iOS.}
+\end{listing}
+A questo punto è possibile importare i moduli nel codice Swift e sviluppare l'applicazione utilizzando le funzionalità fornite dall'IDE a supporto dello sviluppo come per una qualsiasi libreria Swift.
