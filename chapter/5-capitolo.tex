@@ -2,54 +2,13 @@
 In questo capitolo viene descritto un caso d'uso aziendale di sviluppo di applicazione mobile adottando i metodi, gli automatismi e gli strumenti descritti nel capitolo \ref{ch:ch4}. L'obiettivo è quello di dimostrare l'efficacia del modello progettato tramite lo sviluppo di una applicazione mobile per la gestione e la visualizzazione dei contenuti digitali pubblicati da Maggioli SpA in formato ebook e rilasciata per le piattaforme Android e iOS.
 
 \section{Analisi dei Requisiti}
-\subsection{Requisiti Funzionali}
+Data la complessità del dominio sono stati svolti degli incontri con alcuni esperti di dominio al fine di prendere dimestichezza con il processo e le terminologie tipiche del dominio. Tutte le seguenti figure coinvolte negli incontri vantano anni di esperienza nella gestione di sistemi software per l'editoria digitale nel gruppo Maggioli:
 \begin{itemize}
-    \item \textbf{R1} - Visualizzazione documenti.
-    \begin{itemize}
-        \item \textbf{R1.1} - In modo fluido, mostrando il contenuto adattato al dispositivo in cui viene mostrato.
-        \item \textbf{R1.2} - In modo statico, mostrando il contenuto con uno specifico layout indipendente dal dispositivo in cui viene mostrato.
-    \end{itemize}
-    \item \textbf{R2} - Modifica documenti fluidi (lato utente).
-    \begin{itemize}
-        \item \textbf{R2.1} - Aggiunta commenti, sottolineature, evidenziazioni, al contenuto fluido.
-        \item \textbf{R2.2} - Memorizzazione commenti, sottolineature, evidenziazioni apportate al contenuto fluido.
-    \end{itemize}
-    \item \textbf{R3} - Gestione utente.
-    \begin{itemize}
-        \item \textbf{R3.1} - Login (autenticazione) utente.
-        \item \textbf{R3.2} - Visualizzazione documenti a cui l'utente è abbonato.
-    \end{itemize}
-    \item \textbf{R4} - Ricerca documenti.
-    \item \textbf{R5} - Conversione documenti da modo statico a modo fluido.
-    \item \textbf{R6} - Modifica documenti in modo fluido (lato azienda).
-    \begin{itemize}
-        \item \textbf{R6.1} - Aggiunta elementi/contenuti al documento in modo fluido (hyperlink, quiz, video, immagini, ...).
-        \item \textbf{R6.2} - Memorizzazione elementi/contenuti aggiunti al documento fluido (hyperlink, quiz, video, immagini, ...).
-    \end{itemize}
+    \item Responsabile Area R\&D (Andrea) - Principale stakeholder della applicazione realizzata.
+    \item Responsabile Tecnico Area R\&D (Alessandro)
+    \item Responsabile Area Digital Publishing (Mauro) - Principale stakeholder della applicazione realizzata.
+    \item Sviluppatore Backend R\&D (Andrea)
 \end{itemize}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{img/tesi-2-Use-case2.drawio.png}
-\caption{UML - Diagramma di sequenza: scenario di modifica di un nuovo documento "fluido"}
-\end{figure}
-
-\subsection{Requisiti Non Funzionali/Tecnologici}
-\begin{itemize}
-    \item \textbf{T1} - Applicazione nativa Android e iOS, sfruttando Kotlin Multiplatform Mobile (KMM).
-    \item \textbf{T2} - Continuous Integration e Continuous Delivery
-    \begin{itemize}
-        \item \textbf{T2.1} - Analisi statica del codice (SAST\footnote{Static Application Security Testing}).
-        \item \textbf{T2.2} - Unit testing, code coverage e E2E\footnote{End-to-End} testing.
-        \item \textbf{T2.3} - Rilascio automatico nei relativi store delle piattaforme scelte (Google Play per Android e App Store per iOS).
-    \end{itemize}
-\end{itemize}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{img/tesi-1-Use-case.drawio.png}
-\caption{UML - Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC}
-\end{figure}
 
 \subsection{Ubiquitous Language}
 Per far si che la successiva fase di modellazione del dominio sia efficace è necessario che il team di sviluppo, composto da figure tecniche, e i committenti, i quali sono invece esperti di dominio, utilizzino lo stesso linguaggio. Il concetto di \textit{Ubiquitous Language} definisce un vocabolario condiviso da entrambe le parti per la discussione del software\cite{evans_domain-driven_2004}.\\
@@ -133,7 +92,7 @@ I seguenti glossari definiscono invece alcuni dei principali eventi del sistema,
     \caption{Glossario degli eventi in uscita (MaggioliEbook Outcoming Events)}
 \end{table}
 
-\section{Analisi Formati Digitali Fluidi}
+\subsection{Analisi Formati Digitali Fluidi}
 I documenti attualmente sono reperibili in formato PDF e/o HTML. Il formato PDF è quello con cui i documenti vengono effettivamente archiviati: per ottenere un documento in formato HTML è necessario utilizzare un servizio interno, chiamato \textit{pdf2html}, il quale effettua la conversione. Entrambi i formati rispettano i requisiti per i documenti definiti "statici" ma non per quelli definiti "fluidi":
 \begin{itemize}
     \item \textbf{PDF} (Portable Document Format) - Formato di file sviluppato da Adobe per rappresentare documenti di testo e immagini in modo indipendente dall'hardware e dal software utilizzati per generarli o per visualizzarli. Viene dunque generato e visualizzato con uno specifico layout.
@@ -166,6 +125,55 @@ I formati attualmente disponibili che soddisfano i requisiti sopra indicati rapp
     \end{itemize}
 \end{itemize}
 Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB sono state (\textit{i}) lo standard aperto e (\textit{ii}) la disponibilità, sia di software che di librerie, per la manipolazione del file. 
+
+\subsection{Requisiti Funzionali}
+\begin{itemize}
+    \item \textbf{R1} - Visualizzazione documenti.
+    \begin{itemize}
+        \item \textbf{R1.1} - In modo fluido, mostrando il contenuto adattato al dispositivo in cui viene mostrato.
+        \item \textbf{R1.2} - In modo statico, mostrando il contenuto con uno specifico layout indipendente dal dispositivo in cui viene mostrato.
+    \end{itemize}
+    \item \textbf{R2} - Modifica documenti fluidi (lato utente).
+    \begin{itemize}
+        \item \textbf{R2.1} - Aggiunta commenti, sottolineature, evidenziazioni, al contenuto fluido.
+        \item \textbf{R2.2} - Memorizzazione commenti, sottolineature, evidenziazioni apportate al contenuto fluido.
+    \end{itemize}
+    \item \textbf{R3} - Gestione utente.
+    \begin{itemize}
+        \item \textbf{R3.1} - Login (autenticazione) utente.
+        \item \textbf{R3.2} - Visualizzazione documenti a cui l'utente è abbonato.
+    \end{itemize}
+    \item \textbf{R4} - Ricerca documenti.
+    \item \textbf{R5} - Conversione documenti da modo statico a modo fluido.
+    \item \textbf{R6} - Modifica documenti in modo fluido (lato azienda).
+    \begin{itemize}
+        \item \textbf{R6.1} - Aggiunta elementi/contenuti al documento in modo fluido (hyperlink, quiz, video, immagini, ...).
+        \item \textbf{R6.2} - Memorizzazione elementi/contenuti aggiunti al documento fluido (hyperlink, quiz, video, immagini, ...).
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-2-Use-case2.drawio.png}
+\caption{UML - Diagramma di sequenza: scenario di modifica di un nuovo documento "fluido"}
+\end{figure}
+
+\subsection{Requisiti Non Funzionali/Tecnologici}
+\begin{itemize}
+    \item \textbf{T1} - Applicazione nativa Android e iOS, sfruttando Kotlin Multiplatform Mobile (KMM).
+    \item \textbf{T2} - Continuous Integration e Continuous Delivery
+    \begin{itemize}
+        \item \textbf{T2.1} - Analisi statica del codice (SAST\footnote{Static Application Security Testing}).
+        \item \textbf{T2.2} - Unit testing, code coverage e E2E\footnote{End-to-End} testing.
+        \item \textbf{T2.3} - Rilascio automatico nei relativi store delle piattaforme scelte (Google Play per Android e App Store per iOS).
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/tesi-1-Use-case.drawio.png}
+\caption{UML - Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC}
+\end{figure}
 
 \section{Progettazione}
 In questa sezione viene descritta la fase di progettazione del sistema, le cui attività principali consistono nella ($i$) modellazione del dominio e ($ii$) nella progettazione dell'interfaccia grafica tramite mockup.
