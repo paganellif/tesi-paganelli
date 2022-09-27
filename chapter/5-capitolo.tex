@@ -1,8 +1,8 @@
 % !TeX root = ../main.tex
-In questo capitolo viene descritto un caso d'uso aziendale di sviluppo di applicazione mobile adottando i metodi, gli automatismi e gli strumenti descritti nel capitolo \ref{ch:ch4}. L'obiettivo è quello di dimostrare l'efficacia del modello progettato tramite lo sviluppo di una applicazione mobile per la gestione e la visualizzazione dei contenuti digitali pubblicati da Maggioli SpA in formato ebook e rilasciata per le piattaforme Android e iOS.
+In questo capitolo viene descritto un caso di studio aziendale di sviluppo di applicazione mobile adottando i metodi, gli automatismi e gli strumenti descritti nel capitolo \ref{ch:ch4}. L'obiettivo è quello di dimostrare l'efficacia del modello progettato tramite lo sviluppo di una applicazione mobile per la gestione e la visualizzazione dei contenuti digitali pubblicati da Maggioli Editore in formato ebook e rilasciata per le piattaforme Android e iOS.
 
 \section{Analisi dei Requisiti}
-Data la complessità del dominio sono stati svolti degli incontri con alcuni esperti di dominio al fine di prendere dimestichezza con il processo e le terminologie tipiche del dominio. Tutte le seguenti figure coinvolte negli incontri vantano anni di esperienza nella gestione di sistemi software per l'editoria digitale nel gruppo Maggioli:
+Data la complessità del dominio sono stati svolti degli incontri con alcune figure interne, esperte di dominio, al fine di prendere dimestichezza con il processo e le terminologie tipiche del dominio. Tutte le seguenti figure coinvolte negli incontri vantano anni di esperienza nella progettazione e nella gestione di sistemi software per l'editoria digitale nel gruppo Maggioli:
 \begin{itemize}
     \item Responsabile Area R\&D (Andrea) - Principale stakeholder della applicazione realizzata.
     \item Responsabile Tecnico Area R\&D (Alessandro)
@@ -12,7 +12,7 @@ Data la complessità del dominio sono stati svolti degli incontri con alcuni esp
 
 \subsection{Ubiquitous Language}
 Per far si che la successiva fase di modellazione del dominio sia efficace è necessario che il team di sviluppo, composto da figure tecniche, e i committenti, i quali sono invece esperti di dominio, utilizzino lo stesso linguaggio. Il concetto di \textit{Ubiquitous Language} definisce un vocabolario condiviso da entrambe le parti per la discussione del software\cite{evans_domain-driven_2004}.\\
-Il seguente glossario racchiude tutti i principali termini utilizzati negli incontri tra team di sviluppo ed esperti di dominio:
+Il seguente glossario racchiude tutti i principali termini utilizzati negli incontri tra team di sviluppo ed esperti di dominio, suddivisi in \textit{entità} e \textit{casi d'uso}:
 
 \begin{table}[H]
 \centering
@@ -44,58 +44,71 @@ Il seguente glossario racchiude tutti i principali termini utilizzati negli inco
          \hline
           \textit{Token} & \specialcell{Autentica e autorizza l'utente ad accedere ai vari documenti\\ per i quali esiste un abbonamento attivo.}\\
          \hline
-    \end{tabular}
-    \caption{Glossario dei termini (MaggioliEbook Ubiquitous Language)}
+         \end{tabular}
+    \caption{Glossario dei termini (Entità)}
 \end{table}
 
-I seguenti glossari definiscono invece alcuni dei principali eventi del sistema, suddivisi tra \textit{Incoming Events} e \textit{Outcoming Events}:
 
 \begin{table}[H]
 \centering
     \begin{tabular}{|c|c|}
          \hline
-         \textbf{Incoming Events} & \textbf{Descrizione}\\
+         \textbf{Termine} & \textbf{Descrizione}\\
          \hline
-         \textit{Apertura documento} & Richiesta di apertura in lettura di uno specifico documento.\\
+         \textit{Apertura Documento} & Richiesta di apertura in lettura di uno specifico documento.\\
          \hline
-         \textit{Chiusura documento} & Richiesta di chiusura del documento aperto in lettura.\\
+         \textit{Chiusura Documento} & Richiesta di chiusura del documento aperto in lettura.\\
          \hline
-         \textit{Ricerca documento} & Richiesta di ricerca documento tramite query testuale.\\
+         \textit{Ricerca Documento} & Richiesta di ricerca documento tramite query testuale.\\
          \hline
-         \textit{CRUD Highlight} & \specialcell{Richiesta di creazione, lettura, aggiornamento o \\eliminazione di annotazioni.}\\
+         \specialcell{\textit{Lettura Metadati}\\\textit{Documento}} & Richiesta di lettura metadati documento.\\
          \hline
-         \textit{CRUD Bookmark} & \specialcell{Richiesta di creazione, lettura, aggiornamento o \\eliminazione di segnalibri.}\\
+         \textit{Creazione Highlight} & Richiesta di creazione annotazioni.\\
          \hline
-          \textit{CRUD Favorite} & \specialcell{Richiesta di creazione, lettura, aggiornamento o \\eliminazione dei preferiti.}\\
+         \textit{Lettura Highlight} & Richiesta di lettura annotazioni.\\
          \hline
-    \end{tabular}
-    \caption{Glossario degli eventi in ingresso (MaggioliEbook Incoming Events)}
-\end{table}
-
-\begin{table}[H]
-\centering
-    \begin{tabular}{|c|c|}
+         \textit{Eliminazione Highlight} & Richiesta di eliminazione annotazioni.\\
          \hline
-         \textbf{Outcoming Events} & \textbf{Descrizione}\\
+         \textit{Creazione Bookmark} & Richiesta di creazione segnalibri.\\
+         \hline
+         \textit{Lettura Bookmark} & Richiesta di lettura segnalibri.\\
+         \hline
+         \textit{Eliminazione Bookmark} & Richiesta di eliminazione segnalibri.\\
+         \hline
+         \textit{Creazione Progression} & \specialcell{Richiesta di salvataggio dell'\\avanzamento di lettura di un documento.}\\
+         \hline
+         \textit{Lettura Progression} &  \specialcell{Richiesta di lettura dell'\\avanzamento di lettura di un documento.}\\
+         \hline
+         \textit{Eliminazione Progression} &  \specialcell{Richiesta di eliminazione dell'\\avanzamento di lettura di un documento.}\\
+         \hline
+         \textit{Creazione Favorite} &  Richiesta di creazione preferiti.\\
+         \hline
+         \textit{Lettura Favorite} & Richiesta di lettura preferiti.\\
+         \hline
+         \textit{Eliminazione Favorite} & Richiesta di eliminazione preferiti.\\
          \hline
          \specialcell{\textit{Conversione}\\\textit{PDF2EPUB}} & \specialcell{Richiesta di conversione di un documento statico in\\ documento fluido (dal formato PDF al formato EPUB).}\\
          \hline
-         \textit{Ricerca documento} & Richiesta di ricerca documento tramite query testuale.\\
+         \specialcell{\textit{Download Contenuto}\\\textit{Documenti}} & Scaricamento del contenuto dei documenti.\\
          \hline
-         \specialcell{\textit{Download contenuto}\\\textit{documenti}} & Scaricamento del contenuto dei documenti.\\
+         \specialcell{\textit{Download Copertina}\\\textit{Documenti}} & Scaricamento della immagine di copertina dei documenti.\\
          \hline
-         \specialcell{\textit{Download copertina}\\\textit{documenti}} & Scaricamento della immagine di copertina dei documenti.\\
+         \textit{Login User} & Richiesta di login dell'utente (lettura token).\\
          \hline
-         \specialcell{\textit{Autenticazione}\\\textit{user}} & Richiesta di autenticazione dell'utente (ottenimento token).\\
+         \textit{Logout User} & Richiesta di logout dell'utente (eliminazione token).\\
          \hline
+         \specialcell{\textit{Controllo Login}\\\textit{User}} & \specialcell{Controllo di autenticazione dell'utente\\ già avvenuta (esistenza token).}\\
+         \hline
+         \specialcell{\textit{Lettura Account Utente}} & Richiesta informazioni utente (dati anagrafici e mail).\\
+         \hline         
     \end{tabular}
-    \caption{Glossario degli eventi in uscita (MaggioliEbook Outcoming Events)}
+    \caption{Glossario dei termini (Casi d'uso)}
 \end{table}
 
 \subsection{Analisi Formati Digitali Fluidi}
-I documenti attualmente sono reperibili in formato PDF e/o HTML. Il formato PDF è quello con cui i documenti vengono effettivamente archiviati: per ottenere un documento in formato HTML è necessario utilizzare un servizio interno, chiamato \textit{pdf2html}, il quale effettua la conversione. Entrambi i formati rispettano i requisiti per i documenti definiti "statici" ma non per quelli definiti "fluidi":
+I documenti attualmente sono reperibili in formato PDF e/o HTML. Il formato PDF è quello con cui i documenti vengono effettivamente archiviati: per ottenere un documento in formato HTML è necessario utilizzare un servizio interno, chiamato \textit{pdf2html}, il quale effettua la conversione. Entrambi i formati, PDF e HTML, rispettano i requisiti per i documenti definiti "statici" ma non per quelli definiti "fluidi":
 \begin{itemize}
-    \item \textbf{PDF} (Portable Document Format) - Formato di file sviluppato da Adobe per rappresentare documenti di testo e immagini in modo indipendente dall'hardware e dal software utilizzati per generarli o per visualizzarli. Viene dunque generato e visualizzato con uno specifico layout.
+    \item \textbf{PDF} (Portable Document Format) - Formato sviluppato da Adobe per rappresentare documenti di testo e immagini in modo indipendente dall'hardware e dal software utilizzati per generarli o per visualizzarli. Viene dunque generato e visualizzato con uno specifico layout.
     \item \textbf{HTML} (HyperText Markup Language) - Linguaggio di formattazione che descrive le modalità di impaginazione o visualizzazione grafica (layout) del contenuto, testuale e non, di una pagina web attraverso tag di formattazione. Viene generato tramite conversione del documento PDF riportando fedelmente il layout iniziale.
 \end{itemize}
 Per soddisfare i requisiti \textit{R1.1}, \textit{R2.1}, \textit{R5} e \textit{R6.1} il formato "fluido" deve:
@@ -104,7 +117,7 @@ Per soddisfare i requisiti \textit{R1.1}, \textit{R2.1}, \textit{R5} e \textit{R
     \item essere modificabile,
     \item poter essere ricavato convertendo un documento attualmente in formato "statico" (ovvero deve esistere un algoritmo/software per poter effettuare la conversione).
 \end{itemize}
-I formati attualmente disponibili che soddisfano i requisiti sopra indicati rappresentano implementazioni dello standard Open eBook (OeB), elaborato dall'Open E-book Forum. Tra questi i formati più diffusi sono:
+I formati attualmente disponibili che soddisfano i requisiti sopra indicati rappresentano implementazioni dello standard Open eBook (OeB), elaborato dall'Open E-Book Forum. Tra questi i formati più diffusi sono:
 \begin{itemize}
     \item \textbf{MOBI} (Mobipocket) - Standard proprietario (\textit{Amazon}) per la pubblicazione di libri digitali (eBook).\\
     Principali caratteristiche:
@@ -135,8 +148,8 @@ Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB s
     \end{itemize}
     \item \textbf{R2} - Modifica documenti fluidi (lato utente).
     \begin{itemize}
-        \item \textbf{R2.1} - Aggiunta commenti, sottolineature, evidenziazioni, al contenuto fluido.
-        \item \textbf{R2.2} - Memorizzazione commenti, sottolineature, evidenziazioni apportate al contenuto fluido.
+        \item \textbf{R2.1} - Aggiunta segnalibri, commenti, sottolineature, evidenziazioni, al contenuto fluido.
+        \item \textbf{R2.2} - Memorizzazione segnalibri, commenti, sottolineature, evidenziazioni apportate al contenuto fluido.
     \end{itemize}
     \item \textbf{R3} - Gestione utente.
     \begin{itemize}
@@ -180,10 +193,10 @@ In questa sezione viene descritta la fase di progettazione del sistema, le cui a
 
 \subsection{Modellazione Dominio}
 
-L'obiettivo principale della applicazione è quello di permettere all'utente di "sfogliare" i contenuti digitali offerti da Maggioli sul proprio dispositivo. In questo caso si identificano quindi tre contesti:
+L'obiettivo principale della applicazione è quello di permettere all'utente di "sfogliare" i contenuti digitali pubblicati da Maggioli Editore sul proprio dispositivo. In questo caso si identificano quindi tre contesti:
 
 \begin{itemize}
-    \item \textit{Reader} (Core) - Contesto principale del progetto. Racchiude tutti gli aspetti con maggiore valore per l'utente riguardanti la lettura e personalizzazione dei contenuti digitali. 
+    \item \textit{Reader} (Core) - Contesto principale del progetto. Racchiude tutti gli aspetti con maggiore valore per l'utente riguardanti la lettura e la personalizzazione dei contenuti digitali. 
     \item \textit{Sisred} - Rappresenta il contesto della sorgente dei contenuti digitali Maggioli (Sistema Redazionale\cite{amslaurea23043}). In questo contesto non esistono i concetti di \textit{favorite}, \textit{highlight}, \textit{bookmark} e \textit{progression} mentre è condiviso il concetto di libro e utente.
     \item \textit{User} - Contesto che definisce tutti gli aspetti a riguardo degli utenti. In questo contesto esiste il solo concetto di utente, il quale è condiviso con gli altri contesti.
 \end{itemize}
@@ -210,10 +223,19 @@ Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domai
     \item \textit{Repository} - Oggetto per il recupero di altri oggetti di dominio e per la gestione del loro ciclo di vita. Le entità \textit{User} e \textit{Libro} sono esempi di oggetti di dominio che necessitano di un repository. Permette di disaccoppiare applicazione e domain design dalle specifiche tecnologie/strategie di persistenza come multipli database e datasource (locali e/o remoti).
 \end{itemize}
 
+L'architettura progettata per la applicazione segue la struttura \textit{Clean Architecture}\cite{Martin17} ed è composta da tre strati. Il primo strato (\textit{Data Layer}) consiste negli aggregati di dominio sopra descritti ed è responsabile per il recupero e il mantenimento dei dati su differenti sorgenti. Il secondo strato (\textit{Domain Layer}) facilità la comunicazione tra i differenti repository: qui si trovano tutti i casi d'uso del sistema che gestiscono il flusso dei dati provenienti o diretti verso il primo strato. Il terzo ed ultimo strato (\textit{View Layer}) si occupa della interfaccia grafica mostrando i dati e gestendo gli eventi provenienti dall'utente o dal sistema.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{img/tesi-2-Page-18.drawio.png}
+\caption{Clean Architecture in MaggioliEbook}
+\end{figure}
+
 \subsection{Progettazione UX/UI}
 
 L'interfaccia grafica della applicazione è stata progettata tramite l'utilizzo di mockup digitali realizzati con il tool grafico open source Drawio\footnote{\url{https://github.com/jgraph/drawio}}.\\
-Considerando l'utilizzo tipico di una applicazione della stessa tipologia di quella che deve essere realizzata, sono stati utilizzati alcuni standard de-facto come ad esempio il menu laterale a scomparsa (mockup 4), icona "hamburger" per l'apertura del menu (mockup 3), elenco di elementi con scroll infinito verticale (schermata 2-5) e barra di ricerca nella parte alta con icona "lente di ingrandimento" (schermata 2-5).
+Considerando l'utilizzo tipico di una applicazione della stessa tipologia di quella che deve essere realizzata, sono stati utilizzati alcuni standard de-facto come ad esempio il menu laterale a scomparsa (schermata 4), icona "hamburger" per l'apertura del menu (schermata 3), elenco di elementi con scroll infinito verticale (schermata 2-5) e barra di ricerca nella parte alta con icona "lente di ingrandimento" (schermata 2-5).\\
+Per ottenere la validazione dei mockup da parte del committente sono state necessarie due iterazioni del processo di progettazione UX/UI. L'interfaccia utente desiderata deve soddisfare alcuni vincoli caratteristici del brand Maggioli: ad esempio l' utilizzo del colore blu \#00379E come colore primario, l'utilizzo del font Karla\footnote{\url{https://github.com/googlefonts/karla}} e la presenza del logo Maggioli. Le schermate necessarie sono quindi: \textit{Reader}, responsabile della visualizzazione del contenuto digitale in formato EPUB; \textit{Login}, schermata iniziale responsabile alla autenticazione dell'utente; \textit{Home}, schermata principale responsabile alla visualizzazione dei contenuti digitali a cui l'utente è autorizzato ad accedere; \textit{Preferiti}, responsabile alla visualizzazione dei contenuti digitali preferiti dall'utente; \textit{Impostazioni}, responsabile alla visualizzazione e modifica delle impostazioni; \textit{About}, responsabile alla visualizzazione di informazioni generali come versione della applicazione, autore e copyright.
 
 \begin{figure}[H]
 \centering
@@ -226,16 +248,6 @@ Considerando l'utilizzo tipico di una applicazione della stessa tipologia di que
 \includegraphics[width=0.95\textwidth]{img/tesi-23-mockupv2.drawio.png}
 \caption{Modifiche apportate ai mockup per ottenere la validazione della UX/UI (v2)}
 \end{figure}
-
-Per ottenere la validazione dei mockup da parte degli interessati sono state necessarie due iterazioni del processo di progettazione UX/UI. L'interfaccia utente desiderata deve soddisfare alcuni vincoli caratteristici del brand Maggioli, come ad esempio l' utilizzo del colore blu \#00379E come colore primario, l'utilizzo del font Karla\footnote{\url{https://github.com/googlefonts/karla}} e la presenza del logo Maggioli. Le schermate necessarie sono quindi:
-\begin{itemize}
-    \item \textit{Reader} - Schermata responsabile della visualizzazione del contenuto digitale in formato EPUB.
-    \item \textit{Login} - Schermata iniziale responsabile alla autenticazione dell'utente.
-    \item \textit{Home} - Schermata principale responsabile alla visualizzazione dei contenuti digitali a cui l'utente è autorizzato ad accedere.
-    \item \textit{Preferiti} - Schermata responsabile alla visualizzazione dei contenuti digitali preferiti dall'utente.
-    \item \textit{Impostazioni} - Schermata responsabile alla visualizzazione e modifica delle impostazioni.
-    \item \textit{About} - Schermata responsabile alla visualizzazione di informazioni generali come versione della applicazione, autore, copyright, ... .
-\end{itemize}
 
 \section{Implementazione}
 La fase di implementazione consiste nello sviluppo della applicazione secondo il paradigma Kotlin Multiplatform: sono presenti infatti un unico core, chiamato \textit{shared} ($i$), che definisce la logica condivisa della applicazione e due differenti implementazioni per l'interfaccia utente, chiamate rispettivamente \textit{androidMaggioliEbookApp} ($ii$) e \textit{iosMaggioliEbookApp} ($iii$).
@@ -271,10 +283,10 @@ Entrambe le librerie forniscono le stesse identiche funzionalità ma è stata sc
 \begin{itemize}
     \item Non è stato possibile testare la libreria \textit{FolioReader} a causa di errori al suo interno in fase di compilazione della applicazione di test realizzata.
     \item Per la libreria \textit{Readium} l'ultima commit per la versione Android risale al 05/09/2022 e l'ultimo rilascio risale al 22/04/2022, mentre per la libreria \textit{FolioReader} l'ultima commit per la versione Android risale al 09/01/2020 e l'ultimo rilascio risale al 11/01/2019. Lo stesso confronto è valido per la versione iOS.\footnote{Dati al 06/09/2022 provenienti dai relativi repository GitHub}
-    \item La libreria \textit{Readium} è scritta con il linguaggio Kotlin mentre \textit{FolioReader} è scritta con Java.
+    \item La libreria \textit{Readium} è scritta con in Kotlin mentre \textit{FolioReader} è scritta in Java.
 \end{itemize}
 La necessità di un tool open-source, robusto e performante per la manipolazione e la lettura di formati editoriali digitali è alla base del progetto Readium. Essa infatti consiste in un insieme di toolkit per diversi formati (come epub, audiolibri e libri image-based) e diverse piattaforme (Android, iOS, Desktop e Web).\\
-L'architettura della libreria \textit{Readium} è cosi composta da quattro moduli principali:
+L'architettura della libreria \textit{Readium} è composta da quattro moduli principali:
 \begin{itemize}
     \item \textit{Publication Server} - Fornisce le pubblicazioni tramite un server locale HTTPS.
     \item \textit{Streamer} - Modulo composto dai seguenti due sottomoduli:
@@ -292,7 +304,7 @@ L'architettura della libreria \textit{Readium} è cosi composta da quattro modul
 \end{figure}
 
 \subsection{Shared}
-Come anticipato nel capitolo \ref{ch:ch3} la parte condivisa della applicazione racchiude tutta o una sottoparte della business logic, compresi quindi aspetti "infrastrutturali" specifici della piattaforma target come ad esempio logging, persistenza dei dati e networking. E' infatti in questo modulo che si trova l'implementazione della logica applicativa seguendo le specifiche definite in fase di progettazione (figura \ref{fig:5.4}).\\
+Come anticipato nel capitolo \ref{ch:ch3} la parte condivisa della applicazione racchiude tutta o una sottoparte della business logic, compresi quindi aspetti "infrastrutturali" specifici della piattaforma target come ad esempio logging, persistenza dei dati e networking. E' infatti in questo modulo che si trova l'implementazione della logica applicativa sviluppata nel rispetto delle specifiche definite in fase di progettazione (figura \ref{fig:5.4}).\\
 Lo schema del database locale è definito utilizzando appositi file, in formato \textit{.sq}, uno per ognuna delle entità che necessita di persistenza: \textit{Highlight}, \textit{Favorite}, \textit{Progression} e \textit{Bookmark}. Tramite il task \textit{generateSqlDelightInterface} fornito dal plugin gradle SqlDelight è possibile generare le relative implementazioni dell'interfaccia \textit{MaggioliEbookDB}, anch'essa autogenerata dal plugin. 
 
 \begin{figure}[H]
@@ -311,7 +323,7 @@ Lo schema del database locale è definito utilizzando appositi file, in formato 
 \caption{Implementazione autogenerata tramite il plugin gradle SqlDelight della precedente definizione dello schema per l'entità \textit{Bookmark}}
 \end{listing}
 
-Tipicamente le librerie per applicazioni sviluppate con Kotlin Multiplatform possono essere utilizzate direttamente dal codice condiviso, come ad esempio KVault, lasciando al compilatore Kotlin il compito di scegliere la giusta implementazione per la piattaforma target durante la fase di compilazione.In altri casi è necessario invece utilizzare il meccanismo \textit{expect/actual} (discusso nel capitolo \ref{ch:ch3}) per definire il comportamento atteso e fornire una implementazione specifica per la piattaforma target.\\
+Tipicamente le librerie per applicazioni sviluppate con Kotlin Multiplatform possono essere utilizzate direttamente dal codice condiviso, come ad esempio KVault, lasciando al compilatore Kotlin il compito di scegliere la giusta implementazione per la piattaforma target durante la fase di compilazione. In altri casi è necessario invece utilizzare il meccanismo \textit{expect/actual} (discusso nel capitolo \ref{ch:ch3}) per definire il comportamento atteso e fornire una implementazione specifica per la piattaforma target.\\
 Tale meccanismo è stato utilizzato nello sviluppo della applicazione per poter effettuare dependency injection tramite la libreria Koin dei componenti riguardanti la persistenza dei dati (Kvault e SqlDelight) e l'esecuzione asincrona (CoroutineDispatcher).
 
 \begin{figure}[H]
@@ -374,8 +386,6 @@ Un altro aspetto importante della architettura è il meccanismo utilizzato sia d
 \label{paging}
 \end{figure}
 
-% aggiungere materiale su paging ecc
-
 I componenti fondamentali della libreria \textit{Paging} sono:
 \begin{itemize}
     \item \textit{Pager} - Punto di ingresso principale della libreria con il compito di ottenere nuovi dati quando necessario, ovvero quando l'utente ha scrollato nella schermata fino ad uno specifico punto. Richiede la configurazione di alcuni parametri come la dimensione della pagina, la pagina iniziale e la direzione della paginazione. 
@@ -401,7 +411,7 @@ I principali componenti del reader sono:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{img/tesi-2-Page-16.drawio.png}
+\includegraphics[width=0.75\textwidth]{img/tesi-2-Page-16.drawio.png}
 \caption{UML - Diagramma delle classi: Reader}
 \label{reader}
 \end{figure}

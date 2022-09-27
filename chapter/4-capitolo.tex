@@ -1,8 +1,8 @@
 % !TeX root = ../main.tex
 
 Dato il processo di sviluppo delle applicazioni mobile individuato nel capitolo \ref{ch:ch2} e definiti i principali strumenti che si intende utilizzare nel capitolo \ref{ch:ch3}, si descrive in questo capitolo come è stato automatizzato il processo di sviluppo adottando le moderne tecniche di integrazione continua e rilascio continuo al fine di fornire un modello riutilizzabile ai vari reparti aziendali che si occupano dello sviluppo di applicazioni mobile.\\
-Per la progettazione della pipeline è stato utilizzato il progetto base generato tramite il plugin Gradle KMM con lo scopo di mantenere il focus solamente sul processo e non sullo sviluppo del prodotto. Tale progetto fornisce una applicazione essenziale realizzata tramite KMM, comprensiva di modulo condiviso per la logica applicativa e moduli specifici Android e iOS per l'interfaccia utente.\\
-Il workflow ideale, e quindi anche la pipeline obiettivo, è composta dai seguenti passi nello stesso ordine in cui sono indicati:
+Per la progettazione della pipeline è stato utilizzato il progetto base generato tramite il plugin Gradle Kotlin Multiplatform Mobile (KMM) con lo scopo di mantenere il focus solamente sul processo e non sullo sviluppo del prodotto. Tale progetto fornisce una applicazione essenziale realizzata tramite KMM, comprensiva di modulo condiviso per la logica applicativa e moduli specifici Android e iOS per l'interfaccia utente.\\
+Il workflow ideale, e quindi anche la pipeline obiettivo, è composta dai seguenti passi e nello stesso ordine in cui sono indicati:
 \begin{itemize}
     \item \textit{Pre} - Fase iniziale di preparazione dell'ambiente. In questa fase è necessario configurare tutti gli strumenti necessari alla esecuzione dei passi che seguono fino al termine della pipeline.
     \item \textit{Build} - Compilazione del codice. In questa fase sia il modulo condiviso che le due applicazioni vengono compilate e impacchettate: non è possibile procedere con la fase di testing se anche solo un modulo non compila correttamente.
@@ -55,7 +55,7 @@ La pratica di integrare molto frequentemente piccole modifiche al flusso di svil
 
 \subsection{Pre}
 Molti dei passi che compongono una pipeline utilizzano tipicamente gli stessi tools e le stesse configurazioni per svolgere task diversi. Un classico esempio è la compilazione del codice e l'esecuzione degli unit test per una applicazione Java: in entrambi i passi viene utilizzata la stessa JDK, lo stesso tool di build automation (Gradle per esempio) e devono essere scaricate le stesse dipendenze del progetto dal repository Maven Central.\\
-Utilizzando meccanismi di caching e passaggio di artefatti è possibile eseguire tutti quei task di configurazione una sola volta all'inizio della pipeline risparmiando tempo e risorse in tutte le successive fasi.\\
+Utilizzando meccanismi di caching e passaggio di artefatti tra i vari job è possibile eseguire tutti quei task di configurazione una sola volta all'inizio della pipeline risparmiando tempo e risorse in tutte le fasi successive.\\
 Nel caso della pipeline progettata per lo sviluppo di applicazioni multiplatform con KMM in questa fase iniziale è necessario eseguire i seguenti task:
 \begin{itemize}
     \item Configurazione dell'ambiente per lo sviluppo Kotlin tramite l'installazione del SDK/JDK utilizzando \textit{sdkman}\footnote{\url{https://sdkman.io/}}.
@@ -97,7 +97,7 @@ Analogamente agli unit test, dove si verifica l'integrità della business logic 
     \item \textit{Espresso}\footnote{\url{https://developer.android.com/training/testing/espresso}} (Android) - Framework standard per ui testing di applicazioni Android.
     \item \textit{XCTest} (iOS) - Framework standard di testing per progetti XCode, tra cui ui testing (XCUI\footnote{\url{https://developer.apple.com/documentation/xctest/user_interface_tests}}).
 \end{itemize}
-In questa specifica fase del processo tipicamente si realizzano anche degli screenshot delle applicazioni in esecuzione in modo da poterli utilizzare nelle successive fasi di rilascio delle applicazioni. Anche in questo caso sono necessari tool differenti per le due piattaforme, i quali sono compresi nella installazione di Fastlane:
+In questa specifica fase del processo tipicamente si realizzano anche degli screenshot delle applicazioni in esecuzione in modo da poterli utilizzare nelle successive fasi di rilascio delle applicazioni per mostrare delle preview sullo store dal quale viene scaricata e installata la applicazione. Anche in questo caso sono necessari tool differenti per le due piattaforme, i quali sono compresi nella installazione di Fastlane:
 \begin{itemize}
     \item \textit{Screengrab}\footnote{\url{https://docs.fastlane.tools/actions/screengrab/}} (Android) - Richiede la definizione di appositi test utilizzando \textit{Espresso} per navigare nella applicazione in esecuzione e della libreria \textit{tools.fastlane:screengrab} per la cattura delle schermate.
     \item \textit{Snapshot}\footnote{\url{https://docs.fastlane.tools/actions/snapshot/}} (iOS) - Tramite il comando di inizializzazione fornito dal tool viene generato il codice Swift (\textit{SnapshotHelper.swift}) di supporto alla cattura degli screenshot per la applicazione iOS. Anche in questo caso è necessario utilizzare l'apposito framework di test per la navigazione della applicazione in esecuzione.
@@ -116,11 +116,11 @@ Per entrambe le piattaforme sia i test che la cattura delle schermate necessitan
 \end{listing}
 
 \section{Continuous Delivery}
-La pratica Continuous Delivery applica gli stessi concetti della Continuous Integration alla fase di rilascio: prevede infatti che il rilascio di una nuova versione avvenga in modo automatico e molto frequente con piccole modifiche apportate al codice.\\
-Nel caso dello sviluppo di applicazioni multiplatform con Kotlin KMM bisogna considerare che le due applicazioni potrebbero essere rilasciate singolarmente, avere versioni differenti e che i possibili scenari in cui si effettua un rilascio sono:
+La pratica Continuous Delivery applica gli stessi concetti della Continuous Integration alla fase di rilascio: prevede infatti che il rilascio di una nuova versione debba avvenire in modo automatico e molto frequente con piccole modifiche apportate al codice.\\
+Nel caso dello sviluppo di applicazioni multiplatform con KMM bisogna considerare che le due applicazioni potrebbero essere rilasciate singolarmente, avere versioni differenti e che i possibili scenari in cui si effettua un rilascio sono:
 \begin{itemize}
     \item Modifica al codice condiviso (rilascio di una nuova versione per entrambe le piattaforme).
-    \item Modifica alla interfaccia utente (rilascio di una nuova versione per soltanto una piattaforma oppure entrambe).
+    \item Modifica alla interfaccia utente (rilascio di una nuova versione soltanto per una piattaforma oppure per entrambe).
 \end{itemize}
 
 \subsection{Google Play Console}
