@@ -495,7 +495,7 @@ I principali componenti del reader sono:
 \subsection{iosMaggioliEbookApp}
 
 Per poter sviluppare l'interfaccia grafica della applicazione per la versione iOS è possibile aprire il progetto \textit{iosMaggioliEbookApp} con Xcode. Il contenuto di questa cartella è stato generato in modo automatico durante l'inizializzazione dell'intero progetto con il plugin gradle KMM (come descritto nel capitolo \ref{ch:ch3}).\\
-L'IDE Xcode deve essere configurato per poter utilizzare il codice condiviso sviluppato nel modulo shared: a tale scopo il plugin gradle KMM fornisce un apposito task che deve essere utilizzato nella fase di compilazione. Il task \textit{embedAndSignPodAppleFrameworkForXcode} è visibile solo a Xcode e permette di esporre il framework al progetto Xcode per il quale è stata creata l'applicazione iOS. Utilizzando la configurazione del progetto iOS definisce la modalità di compilazione (debug o release) e fornisce la versione del framework appropriata nella posizione specificata.
+L'IDE Xcode deve essere configurato per poter utilizzare il codice condiviso sviluppato nel modulo shared: a tale scopo il plugin gradle KMM fornisce un apposito task che deve essere utilizzato nella fase di compilazione. Il task \textit{embedAndSignPodAppleFrameworkForXcode} è visibile solo a Xcode e permette di esporre il framework al progetto Xcode per il quale è stata creata l'applicazione iOS. Utilizzando la configurazione del progetto iOS questo task definisce la modalità di compilazione (debug o release) e fornisce la versione del framework appropriata nella posizione specificata.
 
 \begin{listing}[H]
 \inputminted{bash}{code/5-xcodeconfigkmm}
@@ -522,3 +522,71 @@ Il seguente file definisce i pods della applicazione iOS, compreso il modulo sha
 \caption{Dipendenze CocoaPods della applicazione iOS.}
 \end{listing}
 A questo punto è possibile importare i moduli nel codice Swift e sviluppare l'applicazione utilizzando le funzionalità fornite dall'IDE a supporto dello sviluppo come per una qualsiasi libreria Swift.
+
+\subsection{Continuous Integration}
+Nelle seguenti schermate ottenute dalla piattaforma GitLab viene mostrato l'effettivo utilizzo delle tecniche di Continuous Integration come descritto nel capitolo \ref{ch:ch4}. Nella schermata \ref{pipelinesapp} sono raffigurate alcune delle ultime pipeline eseguite per l'applicazione realizzata: due pipeline di aggiornamento delle dipendenze automatico fallite a causa di errori durante i test e due pipeline per il rilascio alpha e beta terminate con successo.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\textwidth]{img/Screenshot 2022-09-28 at 15.58.43.png}
+    \caption{Schermata GitLab - Ultime pipeline eseguite.}
+    \label{pipelinesapp}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\textwidth]{img/Screenshot 2022-09-28 at 15.54.26.png}
+    \caption{Schermata GitLab - Pipeline di aggiornamento delle dipendenze automatico fallita in fase di testing.}
+    \label{mergerequestrenova}
+\end{figure}
+
+\section{Stabilizzazione e Rilascio}
+% descrivere la fase di rilascio nei vari casi alpha, beta con screenshot google play console + testflight
+
+La fase di stabilizzazione e rilascio della applicazione realizzata rispetta completamente quanto descritto nel capitolo \ref{ch:ch4}. Esistono dunque due fasi di stabilizzazione \textit{alpha} e \textit{beta} che corrispondono rispettivamente ai branch \textit{dev} e \textit{test}. La pubblicazione effettiva sullo store, equivalente all'ambiente di produzione, avviene in relazione alla modifica del branch \textit{main}.\\
+Le figure coinvolte in fase di analisi dei requisiti e di modellazione del dominio, insieme ai Professori relatori di questo progetto di tesi, formano il gruppo dei tester:
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.7\textwidth]{img/Screenshot 2022-09-28 at 14.41.54.png}
+    \caption{Mailing list di configurazione per il gruppo dei tester della applicazione Android (Google Play Console).}
+    \label{mailinglisttester}
+\end{figure}
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.7\textwidth]{img/Screenshot 2022-09-28 at 15.06.56.png}
+    \caption{Pagina della applicazione Android pubblicata sullo store Google Play (disponibile solo per i tester presenti nella mailing list).}
+    \label{playstoreapp}
+\end{figure}
+
+\subsection{Continuous Delivery}
+Nelle seguenti schermate ottenute dalla piattaforma GitLab viene mostrato l'effettivo utilizzo delle tecniche di Continuous Delivery come descritto nel capitolo \ref{ch:ch4}. Le due pipeline per il rilascio alpha e beta terminate con successo (schermata \ref{pipelinesapp}) rappresentano un esempio completo del processo automatizzato, dalla compilazione al rilascio.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\textwidth]{img/Screenshot 2022-09-28 at 15.51.47.png}
+    \caption{Schermata GitLab - Pipeline completa con rilascio Alpha.}
+    \label{alpharelease}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\textwidth]{img/Screenshot 2022-09-28 at 16.11.22.png}
+    \caption{Schermata GitLab - Pipeline rilascio Beta.}
+    \label{betarelease}
+\end{figure}
+
+\subsection{Continuous Inspection}
+Le fasi di analisi del codice vengono eseguite in modo asincrono rispetto al flusso di sviluppo come descritto nel capitolo \ref{ch:ch4}. Le seguenti schermate mostrano l'utilizzo positivo delle tecniche di Continuous Inspection tramite l'esecuzione delle pipeline di analisi in GitLab e l'upload dei report sul servizio aziendale SonarQube:
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\textwidth]{img/Screenshot 2022-09-28 at 16.15.34.png}
+    \caption{Schermata GitLab - Pipeline completa di analisi.}
+    \label{fullpipeline}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\textwidth]{img/Screenshot 2022-09-28 at 16.22.16.png}
+    \caption{Schermata SonarQube - Overview analisi della applicazione Android.}
+    \label{analisipipeline}
+\end{figure}
