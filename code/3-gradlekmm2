@@ -7,9 +7,7 @@ plugins {
 kotlin {
     android()
     iosArm64()
-    iosSimulatorArm64()
-    cocoapods { } // Configurazione Cocoapods
-    
+    cocoapods { } // Configurazione Cocoapods    
     sourceSets {
         val commonMain by getting {
             dependencies { } // Dipendenze comuni a Android e iOS
@@ -20,11 +18,9 @@ kotlin {
         }
 
         val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependsOn(commonMain)
             iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
             dependencies { } // Dipendenze specifiche iOS
         }
     }

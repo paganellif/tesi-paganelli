@@ -5,7 +5,6 @@ pluginManagement {
         mavenCentral() // https://repo.maven.apache.org/maven2/"
     }
 }
-
 rootProject.name = "My_Application" // Nome della app
 include(":androidApp") // Nome del modulo android
 include(":shared") // Nome del modulo KMM condiviso

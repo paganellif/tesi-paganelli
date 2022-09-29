@@ -52,19 +52,34 @@ A prescindere dalla tipologia di executor, per l'utilizzo di un runner GitLab se
     \item \textit{Registrazione} - Come descritto nella architettura (figura \ref{fig:archrunner}) un runner GitLab interroga continuamente il server per ottenere job da eseguire. E' necessario specificare sia l'indirizzo URL del server GitLab che il gruppo o il progetto per il quale il runner deve eseguire i job. Altri parametri come \textit{locked}, \textit{tag-list} e \textit{run-untagged} sono stati utilizzati per limitare l'accesso del runner al solo repository utilizzato per questo progetto di tesi.
     \begin{listing}[H]
     \inputminted{bash}{code/4-macos-runner-setup}
-    \caption{Comandi bash utilizzati per l'installazione e la configurazione di un runner MacOS}
+    \caption{Comandi bash utilizzati per l'installazione e la configurazione di un runner MacOS.}
     \end{listing}
     \item \textit{Cache Condivisa} - Permette di condividere uno storage cloud (Google Cloud Storage Buckets in questo caso) per il caching di tutte le dipendenze comuni tra i vari job eseguiti concorrentemente dal runner. L'utilizzo di cache condivisa con un executor shell comporta un vantaggio nell'utilizzo dello spazio disco della macchina in cui è in esecuzione il runner ma non nel tempo di esecuzione delle pipeline, il quale sarebbe molto più ridotto nel caso di cache locale.
 \end{itemize}
 
 \begin{listing}[H]
 \inputminted{toml}{code/4-macos-runner-config}
-\caption{File di configurazione (\textit{config.toml}) generato al momento della registrazione del runner}
+\caption{File di configurazione (\textit{config.toml}) generato al momento della registrazione del runner.}
 \end{listing}
 
 \subsection{Pipeline As Code}
-% descrivere cos'è e i vantaggi
-% metodo per definire la pipeline (cos'è una pipeline) e sottomettere i job al runner
+Con pipeline si intende un flusso ordinato di passi, detti stage, che contengono a loro volta uno o più job.
+Il runner rappresenta, come descritto sopra, il componente del sistema in grado di eseguire i job, cioè la vera e propria elaborazione a cui il codice viene sottoposto. Gran parte delle moderne piattaforme che forniscono funzionalità di CI/CD come GitLab ma anche GitHub, CircleCI e TravisCI fanno uso del meccanismo \textit{Pipeline as Code} per la definizione delle pipeline.\\
+Questo meccanismo permette infatti di descrivere la pipeline in modo dichiarativo e testuale (tipicamente in formato YAML). E' necessario rispettare sia una certa naming convention per il nome del file contenente la descrizione della pipeline che un suo specifico posizionamento all'interno del repository in cui si trova. Cosi facendo il sistema è in grado di analizzare la descrizione della pipeline e sottomettere job al runner. Nel caso specifico di GitLab questo file è chiamato \textit{.gitlab-ci.yml} e deve trovarsi nella root di progetto.\\
+I vantaggi dell'utilizzo di questo meccanismo sono:
+\begin{itemize}
+    \item versionamento della pipeline;
+    \item descrizione della pipeline tramite l'utilizzo di metodologie simili a quelle di programmazione (ereditarietà, incapsulamento e riuso);
+    \item pipeline accessibile a tutto il team (Dev) e non solo a figure specializzate nel processo (Ops).
+\end{itemize}
+
+Il seguente codice YAML descrive una pipeline completa d'esempio per il sistema GitLab CI/CD e composta da tre stage, a loro volta composti da un job ognuno:
+\begin{listing}[H]
+\inputminted{yaml}{code/3-pipelineexample}
+\caption{Pipeline GitLab d'esempio, descritta nel file \textit{.gitlab-ci.yml} nella root di progetto.}
+\end{listing}
+
+La keyword \textit{script} definisce in linguaggio bash il cuore del job, ovvero le istruzioni che verranno eseguite dal runner. La keyword \textit{rules} permette invece di definire le regole di attivazione (triggering) della pipeline: nel caso della pipeline d'esempio vengono eseguiti i job \textit{build-job} e \textit{test-job} quando viene effettuata la push di modifiche ai file che si trovano nella root di progetto o nella cartella src e solamente sui branch \textit{dev} o \textit{test}.
 
 \section{Kotlin Multiplatform Mobile}
 Kotlin Multiplatform Mobile\footnote{\url{https://kotlinlang.org/lp/mobile/}} (KMM) è un framework per lo sviluppo di app iOS e Android basato sul concetto di condivisione della logica applicativa mantenendo lo sviluppo nativo della UX/UI\footnote{User Experience/User Interface}. Consiste in un caso d'uso specifico (e il più diffuso) del framework Kotlin MultiPlatform (KMP), il quale permette di sviluppare il codice in modo agnostico rispetto le piattaforme target e di condividerlo tra differenti piattaforme facendo uso dei tre principali compilatori inclusi nell'ecosistema Kotlin\cite{nagy2022simplifying}:
@@ -83,7 +98,7 @@ KMM dipende fortemente dai compilatori Kotlin/JVM (Android) e Kotlin/Native (iOS
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{img/tesi-8-kmm.drawio.png}
-\caption{Architettura Kotlin Multiplatform Mobile}
+\caption{Architettura Kotlin Multiplatform Mobile.}
 \label{stackKMM}
 \end{figure}
 
@@ -111,7 +126,7 @@ Il compilatore Kotlin/JVM è uno dei due compilatori su cui è basato KMM, utili
 Kotlin/Native è il secondo compilatore su cui è basato KMM e viene utilizzato per la piattaforma iOS. A differenza del compilatore Kotlin/JVM, il compilatore Kotlin/Native è progettato per quelle situazioni dove non è possibile o non si vuole avere una VM come nel caso dei dispositivi embedded e della piattaforma iOS. Per fare ciò include un backend basato su \textit{Low Level Virtual Machine} (LLVM)\footnote{\url{https://llvm.org/}}, ovvero il codice Kotlin viene compilato in binari nativi che possono essere eseguiti senza VM\cite{nagy2022simplifying}. Le piattaforme supportate da Kotlin/Native attualmente sono macOS, iOS, tvOS, watchOS, Linux, Windows (MinGW) e Android NDK\footnote{\url{https://kotlinlang.org/docs/native-overview.html\#target-platforms}} e per ognuna di esse esistono differenti architetture. Nel caso di iOS le differenti architetture supportate da KMM sono \textit{Arm64}, \textit{Arm32} e \textit{x64}.
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.45\textwidth]{img/tesi-10-kotlinnative.drawio.png}
+\includegraphics[width=0.4\textwidth]{img/tesi-10-kotlinnative.drawio.png}
 \caption{Fasi di compilazione Kotlin/Native con piattaforma target iOS}
 \end{figure}
 Anche in questo caso sono necessarie due fasi di compilazione: ($i$) il codice Kotlin viene compilato nella \textit{Rappresentazione Intermedia} (IR) LLVM e ($ii$) successivamente compilato nel binario nativo.
@@ -129,7 +144,7 @@ Quando si sviluppa codice condiviso è spesso necessario definire come determina
 \end{listing}
 
 \subsection{Plugin Gradle KMP}
-Il plugin Gradle KMP è uno strumento utile per realizzare progetti multiplatform. Fornisce uno specifico DSL\footnote{Domain Specific Language} per definire e configurare i task necessari a compilare il codice condiviso per le relative piattaforme target\footnote{\url{https://kotlinlang.org/docs/multiplatform-dsl-reference.html}}. Al momento la versione latest (stable) del plugin è la \textit{1.6.21}, rilasciata il 19/04/2022\footnote{\url{https://plugins.gradle.org/plugin/org.jetbrains.kotlin.multiplatform/1.6.21}} ma è presente una versione candidata per il rilascio con tag \textit{1.7.0-RC2}.
+Il plugin Gradle KMP è uno strumento utile per realizzare progetti multi-platform. Fornisce uno specifico Domain Specific Language per definire e configurare i task necessari a compilare il codice condiviso per le relative piattaforme target\footnote{\url{https://kotlinlang.org/docs/multiplatform-dsl-reference.html}}. Al momento la versione latest (stable) del plugin è la \textit{1.6.21}, rilasciata il 19/04/2022\footnote{\url{https://plugins.gradle.org/plugin/org.jetbrains.kotlin.multiplatform/1.6.21}} ma è presente una versione candidata per il rilascio con tag \textit{1.7.0-RC2}.
 
 \begin{listing}[H]
 \inputminted{kotlin}{code/3-gradlekmm1}
