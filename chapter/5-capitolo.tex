@@ -45,7 +45,7 @@ Il seguente glossario racchiude tutti i principali termini utilizzati negli inco
           \textit{Token} & \specialcell{Autentica e autorizza l'utente ad accedere ai vari documenti\\ per i quali esiste un abbonamento attivo.}\\
          \hline
          \end{tabular}
-    \caption{Glossario dei termini (Entità)}
+    \caption{Glossario dei termini (Entità).}
 \end{table}
 
 
@@ -102,7 +102,7 @@ Il seguente glossario racchiude tutti i principali termini utilizzati negli inco
          \specialcell{\textit{Lettura Account Utente}} & Richiesta informazioni utente (dati anagrafici e mail).\\
          \hline         
     \end{tabular}
-    \caption{Glossario dei termini (Casi d'uso)}
+    \caption{Glossario dei termini (Casi d'uso).}
 \end{table}
 
 \subsection{Analisi Formati Digitali Fluidi}
@@ -115,19 +115,17 @@ Per soddisfare i requisiti \textit{R1.1}, \textit{R2.1}, \textit{R5} e \textit{R
 \begin{itemize}
     \item rappresentare solamente il contenuto dei documenti "statici", rimuovendo tutte le formattazioni di layout,
     \item essere modificabile,
-    \item poter essere ricavato convertendo un documento attualmente in formato "statico" (ovvero deve esistere un algoritmo/software per poter effettuare la conversione).
+    \item poter essere ricavato convertendo un documento attualmente in formato "statico" (ovvero deve esistere una procedura per poter effettuare la conversione).
 \end{itemize}
 I formati attualmente disponibili che soddisfano i requisiti sopra indicati rappresentano implementazioni dello standard Open eBook (OeB), elaborato dall'Open E-Book Forum. Tra questi i formati più diffusi sono:
 \begin{itemize}
-    \item \textbf{MOBI} (Mobipocket) - Standard proprietario (\textit{Amazon}) per la pubblicazione di libri digitali (eBook).\\
-    Principali caratteristiche:
+    \item \textbf{MOBI} (Mobipocket) - Standard proprietario (\textit{Amazon}) per la pubblicazione di libri digitali (eBook). Principali caratteristiche:
     \begin{itemize}
         \item basato sulla Open eBook standard utilizzando XHTML,
         \item annotazioni (highlights, segnalibri, correzioni, note e disegni) possono essere applicati, organizzati, e richiamati,
         \item può includere anche JavaScript e cornici.
     \end{itemize}
-    \item \textbf{EPUB} (Electronic Publication) - Standard aperto specifico per la pubblicazione di libri digitali (eBook).\\
-    Principali caratteristiche:
+    \item \textbf{EPUB} (Electronic Publication) - Standard aperto specifico per la pubblicazione di libri digitali (eBook). Principali caratteristiche:
     \begin{itemize}
         \item basato sulla Open eBook standard utilizzando XML,
         \item a partire da settembre 2007 è lo standard ufficiale dell'International Digital Publishing Forum (IDPF)\footnote{\url{https://web.archive.org/web/20080827131750/http://www.idpf.org/2007/ops/OPS_2.0_final_spec.html}},
@@ -137,7 +135,7 @@ I formati attualmente disponibili che soddisfano i requisiti sopra indicati rapp
         \item disponibilità di tante librerie in diversi linguaggi per la manipolazione del file.
     \end{itemize}
 \end{itemize}
-Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB sono state (\textit{i}) lo standard aperto e (\textit{ii}) la disponibilità, sia di software che di librerie, per la manipolazione del file. 
+Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB sono state (\textit{i}) lo standard aperto e (\textit{ii}) la disponibilità, sia di software che di librerie, per la manipolazione del file e la sua conversione.
 
 \subsection{Requisiti Funzionali}
 \begin{itemize}
@@ -168,7 +166,7 @@ Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB s
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{img/tesi-2-Use-case2.drawio.png}
-\caption{UML - Diagramma di sequenza: scenario di modifica di un nuovo documento "fluido"}
+\caption{UML - Diagramma di sequenza: scenario di modifica di un nuovo documento "fluido".}
 \end{figure}
 
 \subsection{Requisiti Non Funzionali/Tecnologici}
@@ -177,7 +175,7 @@ Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB s
     \item \textbf{T2} - Continuous Integration e Continuous Delivery
     \begin{itemize}
         \item \textbf{T2.1} - Analisi statica del codice (SAST\footnote{Static Application Security Testing}).
-        \item \textbf{T2.2} - Unit testing, code coverage e E2E\footnote{End-to-End} testing.
+        \item \textbf{T2.2} - Unit testing, code coverage e UI testing.
         \item \textbf{T2.3} - Rilascio automatico nei relativi store delle piattaforme scelte (Google Play per Android e App Store per iOS).
     \end{itemize}
 \end{itemize}
@@ -185,15 +183,14 @@ Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB s
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{img/tesi-1-Use-case.drawio.png}
-\caption{UML - Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC}
+\caption{UML - Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC.}
 \end{figure}
 
 \section{Progettazione}
-In questa sezione viene descritta la fase di progettazione del sistema, le cui attività principali consistono nella ($i$) modellazione del dominio e ($ii$) nella progettazione dell'interfaccia grafica tramite mockup.
+In questa sezione viene descritta la fase di progettazione del sistema, le cui attività principali consistono nella ($i$) modellazione del dominio, nella progettazione della architettura ($ii$) e ($iii$) nella progettazione dell'interfaccia grafica tramite mockup.
 
 \subsection{Modellazione Dominio}
-
-L'obiettivo principale della applicazione è quello di permettere all'utente di "sfogliare" i contenuti digitali pubblicati da Maggioli Editore sul proprio dispositivo. In questo caso si identificano quindi tre contesti:
+In base ai casi d'uso e ai requisiti della applicazione individuati in fase di analisi è possibile identificare tre contesti all'interno del dominio:
 
 \begin{itemize}
     \item \textit{Reader} (Core) - Contesto principale del progetto. Racchiude tutti gli aspetti con maggiore valore per l'utente riguardanti la lettura e la personalizzazione dei contenuti digitali. 
@@ -204,15 +201,16 @@ L'obiettivo principale della applicazione è quello di permettere all'utente di 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{img/tesi-20-app-domain.drawio.png}
-\caption{Context Map: panoramica globale dei contesti del progetto e delle relazioni che intercorrono tra di essi}
+\caption{Context Map: panoramica globale dei contesti del progetto e delle relazioni che intercorrono tra di essi.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{img/tesi-25-ddd.drawio.png}
-\caption{UML - Diagramma delle classi: Reader Core Domain e User Subdomain}
+\caption{UML - Diagramma delle classi: Reader Core Domain e User Subdomain.}
 \label{fig:5.4}
 \end{figure}
+
 Tra i contesti definiti esistono delle relazioni di tipo \textit{Shared Kernel}\cite{evans_domain-driven_2004} (SK) con l'obiettivo di evitare duplicazioni e semplificare l'integrazione. Relazioni di questo tipo consistono nella condivisione di un sottoinsieme del dominio modellato, che corrisponde tipicamente al dominio core. Un esempio di relazione SK è l'utilizzo di codice o schemi DB condivisi\footnote{\url{https://github.com/ddd-crew/context-mapping}}.\\
 Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domain-driven_2004}:
 \begin{itemize}
@@ -228,7 +226,7 @@ L'architettura progettata per la applicazione segue la struttura \textit{Clean A
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.55\textwidth]{img/tesi-2-Page-18.drawio.png}
-\caption{Clean Architecture in MaggioliEbook}
+\caption{Clean Architecture in MaggioliEbook.}
 \end{figure}
 
 \subsection{Progettazione UX/UI}
