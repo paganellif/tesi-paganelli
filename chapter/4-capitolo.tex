@@ -1,12 +1,12 @@
 % !TeX root = ../main.tex
 
 Dato il processo di sviluppo delle applicazioni mobile individuato nel capitolo \ref{ch:ch2} e definiti i principali strumenti che si intende utilizzare nel capitolo \ref{ch:ch3}, si descrive in questo capitolo come è stato automatizzato il processo di sviluppo adottando le moderne tecniche di integrazione continua e rilascio continuo al fine di fornire un modello riutilizzabile ai vari reparti aziendali che si occupano dello sviluppo di applicazioni mobile.\\
-Per la progettazione della pipeline è stato utilizzato il progetto base generato tramite il plugin Gradle Kotlin Multiplatform Mobile (KMM) con lo scopo di mantenere il focus solamente sul processo e non sullo sviluppo del prodotto. Tale progetto fornisce una applicazione essenziale realizzata tramite KMM, comprensiva di modulo condiviso per la logica applicativa e moduli specifici Android e iOS per l'interfaccia utente.\\
+In fase di progettazione della automazione del processo è stato utilizzato il progetto base generato tramite il plugin Gradle Kotlin Multiplatform Mobile (KMM) con lo scopo di mantenere il focus solamente sul processo e non sullo sviluppo del prodotto. Tale progetto fornisce una applicazione essenziale realizzata tramite KMM, comprensiva di modulo condiviso per la logica applicativa e moduli specifici Android e iOS per l'interfaccia utente.\\
 Il workflow ideale, e quindi anche la pipeline obiettivo, è composta dai seguenti passi e nello stesso ordine in cui sono indicati:
 \begin{itemize}
     \item \textit{Pre} - Fase iniziale di preparazione dell'ambiente. In questa fase è necessario configurare tutti gli strumenti necessari alla esecuzione dei passi che seguono fino al termine della pipeline.
     \item \textit{Build} - Compilazione del codice. In questa fase sia il modulo condiviso che le due applicazioni vengono compilate e impacchettate: non è possibile procedere con la fase di testing se anche solo un modulo non compila correttamente.
-    \item \textit{Test} - Testing del codice e della interfaccia. Anche in questo caso non è possibile procedere alle fasi successive se i test non passano tutti correttamente.
+    \item \textit{Test} - Testing del codice e della interfaccia. Anche in questo caso non è possibile procedere alle fasi successive se i test non terminano correttamente.
     \begin{itemize}
         \item \textit{Unit} - Fase di testing della logica applicativa.
         \item \textit{UI} - Fase di testing dell'interfaccia grafica.
@@ -35,32 +35,32 @@ L'utilizzo di un adeguato flusso di lavoro è fondamentale per definire una effi
 \label{branching}
 \end{figure}
 
-Il modello che si intende utilizzare (figura \ref{branching}) è basato sul modello di branching GitFlow\footnote{\url{https://www.atlassian.com/it/git/tutorials/comparing-workflows/gitflow-workflow}} il quale prevede tre branch principali:
+Il modello che si intende utilizzare (figura \ref{branching}) è basato sul modello di branching GitFlow\footnote{\url{https://www.atlassian.com/it/git/tutorials/comparing-workflows/gitflow-workflow}}, il quale prevede tre branch principali:
 \begin{itemize}
-    \item \textit{dev} - Flusso principale di sviluppo. Ogni modifica apportata a questo branch corrisponde al rilascio di una nuova versione \textit{alpha}. E' da questo branch che vengono aperti e chiusi nuovi branch, sia per lo sviluppo di nuove funzionalità (\textit{feature}) che per la risoluzione di bug/patch (\textit{fix}).
-    \item \textit{test} - Branch modificato solamente tramite merge di modifiche provenienti dal branch \textit{dev} con lo scopo di rilasciare una nuova versione \textit{beta}.
+    \item \textit{dev} - Flusso principale di sviluppo. Ogni modifica apportata a questo branch corrisponde al rilascio di una nuova versione \textit{alpha} per la validazione interna. E' da questo branch che vengono aperti e chiusi nuovi branch, sia per lo sviluppo di nuove funzionalità (\textit{feature}) che per la risoluzione di bug/patch (\textit{fix}).
+    \item \textit{test} - Branch modificato solamente tramite merge di modifiche provenienti dal branch \textit{dev} con lo scopo di rilasciare una nuova versione \textit{beta} per la validazione esterna.
     \item \textit{main} - Branch modificato solamente tramite merge di modifiche provenienti dal branch \textit{test} con lo scopo di rilasciare una nuova versione in produzione (\textit{prod}).
 \end{itemize}
 
 Grazie ai meccanismi di automazione a supporto della CI/CD si definiscono specifiche regole di attivazione basate sulle modifiche apportate al codice come ad esempio la modifica di un certo file su un determinato branch.
 
 \section{Continuous Integration}
-La pratica di integrare molto frequentemente piccole modifiche al flusso di sviluppo principale è alla base della Continous Integration e permette di diminuire la presenza di problemi rispetto alla integrazione meno frequente di grandi modifiche. Ogni modifica effettuata al codice viene validata automaticamente attraverso l'esecuzione di tutti i passi della pipeline che compongono la fase di integrazione, ovvero compilazione e testing.
+La pratica di integrare molto frequentemente piccole modifiche al flusso di sviluppo principale è alla base della Continuous Integration e permette di diminuire la presenza di problemi rispetto alla integrazione meno frequente di grandi modifiche. Ogni modifica effettuata al codice viene validata automaticamente attraverso l'esecuzione di tutti i passi della pipeline che compongono la fase di integrazione, ovvero compilazione e testing.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{img/tesi-29-cicd.drawio.png}
+\includegraphics[width=0.6\textwidth]{img/tesi-29-cicd.drawio.png}
 \caption{Suddivisione delle fasi di un pipeline in base alle pratiche Continuous Integration/Delivery}
 \end{figure}
 
 \subsection{Pre}
 Molti dei passi che compongono una pipeline utilizzano tipicamente gli stessi tools e le stesse configurazioni per svolgere task diversi. Un classico esempio è la compilazione del codice e l'esecuzione degli unit test per una applicazione Java: in entrambi i passi viene utilizzata la stessa JDK, lo stesso tool di build automation (Gradle per esempio) e devono essere scaricate le stesse dipendenze del progetto dal repository Maven Central.\\
 Utilizzando meccanismi di caching e passaggio di artefatti tra i vari job è possibile eseguire tutti quei task di configurazione una sola volta all'inizio della pipeline risparmiando tempo e risorse in tutte le fasi successive.\\
-Nel caso della pipeline progettata per lo sviluppo di applicazioni multiplatform con KMM in questa fase iniziale è necessario eseguire i seguenti task:
+Nel caso della pipeline progettata per lo sviluppo di applicazioni multi-platform con KMM è necessario eseguire i seguenti task di configurazione iniziale:
 \begin{itemize}
     \item Configurazione dell'ambiente per lo sviluppo Kotlin tramite l'installazione del SDK/JDK utilizzando \textit{sdkman}\footnote{\url{https://sdkman.io/}}.
     \item Configurazione dell'ambiente per lo sviluppo Android tramite l'installazione del SDK Android target e dei vari tools necessari utilizzando \textit{sdkmanager}\footnote{\url{https://developer.android.com/studio/command-line/sdkmanager}}.
-    \item Configurazione dell'ambiente per lo sviluppo iOS.
+    \item Configurazione dell'ambiente per lo sviluppo iOS (ad esempio configurazione versione XCode).
     \item Installazione di tutte le dipendenze dei vari moduli con relative tecniche di caching. Tra queste si trova anche il compilatore \textit{Kotlin/Native}\footnote{\url{https://kotlinlang.org/docs/native-improving-compilation-time.html\#general-recommendations}}.
     \item Configurazione delle chiavi per l'autenticazione ai vari servizi cloud forniti da Google e Apple.
 \end{itemize}
@@ -70,18 +70,18 @@ Tipicamente la fase iniziale della integrazione continua consiste nella verifica
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-buildjob}
-\caption{Pipeline job dedicato compilazione e pacchettizzazione della applicazione Android}
+\caption{Pipeline job dedicato alla compilazione e pacchettizzazione della applicazione Android.}
 \end{listing}
 
-Nel caso della automazione dello sviluppo di applicazioni mobile per la fase iniziale di build la pratica più diffusa è quella di validare sia la compilazione del codice, ovvero il codice condiviso (Kotlin) e il codice specifico Android (Kotlin)/iOS (Swift), che la pacchettizzazione della applicazione nei formati richiesti dalle piattaforme target (\textit{.apk}\footnote{Android Package} per Android e \textit{.ipa}\footnote{iOS App Store Package} per iOS).
+Nel caso dello sviluppo di applicazioni mobile, per la fase iniziale di build la pratica più diffusa è quella di validare sia la compilazione del codice, ovvero il codice condiviso (Kotlin) e il codice specifico Android (Kotlin)/iOS (Swift), che la pacchettizzazione della applicazione nei formati richiesti dalle piattaforme target (\textit{.apk}\footnote{Android Package} per Android e \textit{.ipa}\footnote{iOS App Store Package} per iOS).
 
 \begin{listing}[H]
 \inputminted{ruby}{code/4-buildft}
-\caption{Lane Fastlane dedicata alla fase di build tramite l'utilizzo della action Gradle}
+\caption{Lane Fastlane dedicata alla fase di build tramite l'utilizzo della action Gradle.}
 \end{listing}
 
 \subsection{Testing}
-Dopo aver verificato la corretta compilazione e pacchettizzazione del codice segue la fase di test. Si distinguono due tipologie di testing con lo scopo di validare sia la logica applicativa (\textit{unit testing}) che l'interfaccia grafica (\textit{ui testing}).
+Dopo aver verificato la corretta compilazione e pacchettizzazione del codice segue la fase di test. Si distinguono due tipologie di testing con lo scopo di validare sia la logica applicativa (\textit{Unit Testing}) che l'interfaccia grafica (\textit{UI Testing}).
 
 \subsubsection{Unit Testing}
 Con unit testing si intende l'attività di verifica di certe porzioni (unità) del codice ed è implementato tipicamente utilizzando librerie predisposte per ciascun linguaggio di programmazione. Questa fase di test potrebbe coinvolgere tutti i moduli anche se la business logic è racchiusa solamente nel modulo condiviso perchè in alcune situazioni si fa uso di costrutti specifici della piattaforma target dove è necessario l'utilizzo dell'apposito SDK e runtime. La tipologia di test che necessita dell'esecuzione sul dispositivo, che esso sia fisico o emulato, per sfruttare il framework della piattaforma target è detta \textit{Instrumented Testing}. Una alternativa alla esecuzione dei test sul dispositivo è l'utilizzo di entità \textit{mock} per fornire le stesse funzionalità della piattaforma target.\\
@@ -105,30 +105,30 @@ In questa specifica fase del processo tipicamente si realizzano anche degli scre
 
 \begin{listing}[H]
 \inputminted{swift}{code/4-ios-screenshot}
-\caption{Codice Swift d'esempio per la cattura degli screenshot della applicazione iOS}
+\caption{Codice Swift d'esempio per la cattura degli screenshot della applicazione iOS.}
 \end{listing}
 
-Per entrambe le piattaforme sia i test che la cattura delle schermate necessitano l'emulazione headless, ovvero con l'interfaccia utente disattivata, dei dispositivi target. Ogni dispositivo emulato richiede un insieme di risorse tale da non permettere l'esecuzione dei test sull'interfaccia in modo parallelo. Per gestire queste situazioni GitLab fornisce un apposito costrutto, chiamato \textit{resource\_group}: ogni job in cui è dichiarato lo stesso resource\_group viene eseguito in modo mutualmente esclusivo.
+Sia i test che la cattura delle schermate necessitano l'emulazione dei dispositivi in modalità \textit{headless}, ovvero con interfaccia grafica disattivata, per poter essere automatizzati. Un altro aspetto importante da gestire in questo caso è l'accesso concorrente a determinate risorse della macchina su cui vengono emulati i dispostivi. Ogni dispositivo emulato richiede un insieme di risorse tale da non permettere l'esecuzione dei test sull'interfaccia in modo parallelo. Per gestire queste situazioni GitLab fornisce un apposito costrutto, chiamato \textit{resource\_group}: ogni job in cui è dichiarato lo stesso resource\_group viene eseguito in modo mutualmente esclusivo.
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-screenshot-ui-android}
-\caption{Pipeline job dedicato al testing della interfaccia grafica e alla cattura delle schermate (Android)}
+\caption{Pipeline job dedicato al testing della interfaccia grafica e alla cattura delle schermate (Android).}
 \end{listing}
 
 \section{Continuous Delivery}
 La pratica Continuous Delivery applica gli stessi concetti della Continuous Integration alla fase di rilascio: prevede infatti che il rilascio di una nuova versione debba avvenire in modo automatico e molto frequente con piccole modifiche apportate al codice.\\
-Nel caso dello sviluppo di applicazioni multiplatform con KMM bisogna considerare che le due applicazioni potrebbero essere rilasciate singolarmente, avere versioni differenti e che i possibili scenari in cui si effettua un rilascio sono:
+Nel caso dello sviluppo di applicazioni multi-platform con KMM bisogna considerare che le due applicazioni potrebbero essere rilasciate singolarmente, avere versioni differenti e che i possibili scenari in cui si effettua un rilascio sono:
 \begin{itemize}
     \item Modifica al codice condiviso (rilascio di una nuova versione per entrambe le piattaforme).
     \item Modifica alla interfaccia utente (rilascio di una nuova versione soltanto per una piattaforma oppure per entrambe).
 \end{itemize}
 
 \subsection{Google Play Console}
-A differenza delle applicazioni iOS, le quali richiedono due strumenti separati per la pubblicazione e per il testing, le applicazioni Android vengono gestite interamente da una unica piattaforma chiamata Google Play Console. Tramite il concetto di \textit{promozione} una specifica versione di applicazione viene infatti promossa da \textit{alpha} a \textit{beta} o da \textit{beta} a \textit{produzione}.
+A differenza delle applicazioni iOS, le quali richiedono due strumenti separati per la pubblicazione e per il testing, le applicazioni Android vengono gestite interamente da una unica piattaforma chiamata Google Play Console. Tramite il concetto di \textit{promozione} una specifica versione di applicazione viene promossa a versione \textit{alpha}, promossa da \textit{alpha} a \textit{beta} o da \textit{beta} a \textit{produzione}.
 
 \begin{listing}[H]
 \inputminted{ruby}{code/4-gpc-promote}
-\caption{Esempio di Lane Fastlane per la promozione di un rilascio Android da \textit{alpha} a \textit{beta}}
+\caption{Esempio di Lane Fastlane per la promozione di un rilascio Android da \textit{alpha} a \textit{beta}.}
 \end{listing}
 
 Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pubblicazione e testing da parte degli utenti è necessario svolgere le seguenti azioni:
@@ -143,7 +143,7 @@ Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pu
     \item Creazione Service Account, utile a identificare/autenticare/autorizzare la applicazione creata sui servizi Google (in questa fase è necessario intervenire anche sulla piattaforma Google Cloud Platform).
     \begin{itemize}
         \item Test Connessione Fastlane-Play Store.
-        \item Setup service\_account\_key.json nei segreti GitLab per essere utilizzata dinamicamente nella pipeline senza essere versionata nei sorgenti.
+        \item Setup \textit{service\_account\_key.json} nei segreti GitLab per essere utilizzata dinamicamente nella pipeline senza essere versionata nei sorgenti.
     \end{itemize}
     \item Creazione chiavi, in formato \textit{Java KeyStore} (jks) per firmare l'applicazione da pubblicare.
     \begin{itemize}
@@ -153,7 +153,7 @@ Per integrare correttamente nel processo di sviluppo automatizzato le fasi di pu
         \caption{Creazione, codifica e decodifica della chiave JKS}
         \end{listing}
     \end{itemize}
-    \item Upload manuale della prima release della applicazione. Da Agosto 2021\footnote{\url{https://developer.android.com/guide/app-bundle}} il formato di pubblicazione delle applicazioni Android \textit{aab} (Android Application Bundle) ha sostituito il formato \textit{apk}. Gli apk scaricabili e installabili sui dispositivi vengono creati automaticamente dal Play Store a partire dal aab caricato.
+    \item Upload manuale della prima release della applicazione. Da Agosto 2021\footnote{\url{https://developer.android.com/guide/app-bundle}} il formato di pubblicazione delle applicazioni Android \textit{aab} (Android Application Bundle) ha sostituito il formato \textit{apk}. Gli apk scaricabili e installabili sui dispositivi vengono creati automaticamente dai servizi Google a partire dal aab caricato.
 \end{itemize}
 
 \subsection{TestFlight}
@@ -170,37 +170,37 @@ La configurazione degli strumenti utili al rilascio automatizzato di applicazion
     \end{itemize}
     \item Creazione scheletro iniziale della app dalla piattaforma App Store Connect.
     \begin{itemize}
-        \item Creazione mailing-list alpha e beta tester. Per poter scaricare la applicazione tramite link condiviso i tester devono aver accettato l'invito di partecipazione e installato l'applicazione Testflight.
+        \item Creazione mailing-list alpha e beta tester. Per poter scaricare la applicazione tramite link condiviso i tester devono aver accettato l'invito di partecipazione e installato l'applicazione Testflight sul proprio dispositivo.
         \item Configurazione monetizzazione, pubblicità/annunci, ... .
     \end{itemize}
-    \item Configurazione compliance encryption nel file \textit{Info.plist}\footnote{\url{https://help.apple.com/app-store-connect/\#/dev88f5c7bf9}}, necessario per le policy Apple di pubblicazione app e quindi non doverlo configurare manualmente tramite App Store Connect ad ogni release.
+    \item Configurazione compliance encryption nel file \textit{Info.plist}\footnote{\url{https://help.apple.com/app-store-connect/\#/dev88f5c7bf9}}, necessario per le policy Apple di pubblicazione delle applicazioni. Se non impostato deve essere configurato manualmente tramite App Store Connect ad ogni release.
 \end{itemize}
 
 \subsection{Alpha/Beta Release}
-Sia per il rilascio sul Play Store che per quello su Testflight sono stati definiti, tramite gli appositi portali, dei gruppi che identificano l'insieme dei tester interni. Nel caso di Android è possibile pubblicare una release in versione alpha indicando la tipologia di rilascio, chiamata \textit{track}, con il valore "alpha". Per poter successivamente rilasciare la stessa versione in beta è necessario effettuare una promozione sulla relativa track. Nel caso iOS, invece, non è presente il concetto di track: la distinzione tra le tipologie di rilascio viene fatta direttamente tramite i gruppi di tester definiti in Testflight, nello specifico il gruppo "\textit{Internal Tester}" e il gruppo "\textit{External Tester}".
+Sia per il rilascio su Play Store che per quello su Testflight sono stati definiti, tramite gli appositi portali, dei gruppi che identificano l'insieme dei tester interni ed esterni. Nel caso di Android è possibile pubblicare una release in versione alpha indicando la tipologia di rilascio, chiamata \textit{track}, con il valore "alpha". Per poter successivamente rilasciare la stessa versione in beta è necessario effettuare una promozione sulla relativa track. Nel caso iOS, invece, non è presente il concetto di track: la distinzione tra le tipologie di rilascio viene fatta direttamente tramite i gruppi di tester definiti in Testflight, nello specifico il gruppo "\textit{Internal Tester}" e il gruppo "\textit{External Tester}".
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{img/tesi-18-release-flow.drawio.png}
-\caption{Esempio di workflow: fasi di release alpha-beta-prod}
+\caption{Esempio di workflow: fasi di release \textit{alpha-beta-prod}.}
 \end{figure}
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-ios-alpha}
-\caption{Pipeline job dedicato al rilascio in versione alpha della applicazione iOS}
+\caption{Pipeline job dedicato al rilascio in versione alpha della applicazione iOS.}
 \end{listing}
 
-Per poter informare in modo automatico i tester dell'avvenuto rilascio di una nuova versione è stata scelta, tra le varie integrazioni possibili, la action \textit{slack} fornita da Fastlane perchè Slack\footnote{\url{https://slack.com/intl/it-it/}} viene già utilizzato in Maggioli come software di collaborazione aziendale per la messaggistica istantanea tra i membri dei team. E' necessario prima di tutto creare un canale con tutti i tester e aggiungere un webhook, il cui compito è quello di esporre un endpoint per l'invio di messaggi tramite chiamate HTTP.
+Per poter informare in modo automatico i tester dell'avvenuto rilascio di una nuova versione è stata scelta, tra le varie integrazioni possibili, la action \textit{slack} fornita da Fastlane. Slack\footnote{\url{https://slack.com/intl/it-it/}} consiste in un software di collaborazione aziendale per la messaggistica istantanea tra i membri dei team già ampiamente adottato in Maggioli. E' necessario prima di tutto creare un canale con tutti i tester e aggiungere un webhook, il cui compito è quello di esporre un endpoint per l'invio di messaggi tramite chiamate HTTP.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{img/Screenshot 2022-07-08 at 17.48.40.png}
-\caption{Screenshot canale Slack: notifica di rilascio applicazione iOS alpha}
+\caption{Screenshot canale Slack: notifica di rilascio applicazione iOS alpha.}
 \end{figure}
 
 \section{Continuous Inspection}
 Tipicamente vengono definiti a livello aziendale degli standard di qualità e di sicurezza che devono essere rispettati da ogni team di sviluppo per qualsiasi prodotto software. La definizione di linee guida sullo stile di programmazione è un classico esempio di standard di qualità. La pratica di analizzare automaticamente e molto frequentemente il codice al fine di validare il rispetto degli standard di qualità e sicurezza è chiamata Continuous Inspection.
-L'obiettivo è quello di ottenere un feedback sia sullo stato del codice e del processo che sulla presenza di problemi di sicurezza al fine di pianificare interventi risolutivi. Per esempio la stima di un elevato debito tecnico accumulato segnala che gli sviluppatori non stanno producendo software di qualità.\\
+L'obiettivo è quello di ottenere un feedback sullo stato del codice, sullo stato del processo e sulla presenza di problemi di sicurezza al fine di pianificare interventi risolutivi nel minor tempo possibile. Per esempio la stima di un elevato debito tecnico accumulato segnala che gli sviluppatori non stanno producendo software di qualità.\\
 In questa sezione si descrivono le tecniche di analisi adottate e come queste sono state integrate nel processo di sviluppo sia per il codice sviluppato che per le dipendenze del sistema. Rispettivamente le due tecniche sono:
 \begin{itemize}
     \item \textit{Static Application Security Testing} (SAST) - Analisi white-box della applicazione al fine di individuare vulnerabilità, code smell e bug.
@@ -210,28 +210,28 @@ In questa sezione si descrivono le tecniche di analisi adottate e come queste so
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{img/tesi-16-cicd-scheduled.drawio.png}
-\caption{Struttura della pipeline schedulata per l'analisi statica del codice}
+\caption{Struttura della pipeline schedulata per l'analisi statica del codice.}
 \end{figure}
 
-In entrambe le tipologie di analisi è fondamentale ottenere come risultato un report della scansione, in grado di descrivere in modo dettagliato eventuali "findings" trovati, ovvero l'insieme delle entità individuate dalla analisi. I report vengono prodotti tipicamente sia in formati human-readable (es. pagina HTML) che machine-readable (es. JSON, XML, ...) per poter essere utilizzati da applicazioni terze come ad esempio sistemi per centralizzare la consultazione di report eterogenei (\textit{Vulnerability Management System}). Nel contesto aziendale Maggioli questi servizi sono messi a disposizione di tutti i team di sviluppo e mantenuti dalle figure responsabili della sicurezza informatica. Nello specifico i servizi aziendali disponibili sono:
+In entrambe le tipologie di analisi è fondamentale ottenere come risultato un report della scansione, in grado di descrivere in modo dettagliato eventuali "findings" trovati, ovvero l'insieme delle entità individuate dalla fase di analisi. I report vengono prodotti tipicamente sia in formati human-readable (es. pagina HTML) che machine-readable (es. JSON, XML) per poter essere utilizzati da applicazioni terze come ad esempio sistemi per centralizzare la consultazione di report eterogenei (\textit{Vulnerability Management System}). Nel contesto aziendale Maggioli questi servizi sono messi a disposizione di tutti i team di sviluppo e mantenuti dalle figure responsabili della sicurezza informatica. Nello specifico i servizi aziendali disponibili sono:
 \begin{itemize}
     \item \textit{SonarQube}\footnote{\url{https://github.com/SonarSource/sonarqube}} - Piattaforma open-source per effettuare analisi statica del codice.
     \item \textit{Dependency Track}\footnote{\url{https://github.com/DependencyTrack}} - Piattaforma open-source per effettuare l'analisi delle dipendenze (SBOM\footnote{Software Bill Of Material - \url{https://owasp.org/www-community/Component_Analysis\#software-bill-of-materials-sbom}}).
-    \item \textit{DefectDojo}\footnote{\url{https://github.com/DefectDojo}} - Piattaforma open-source per la gestione centralizzata delle vulnerabilità tramite l'aggregazione di report proveniente da sorgenti eterogenee.
+    \item \textit{DefectDojo}\footnote{\url{https://github.com/DefectDojo}} - Piattaforma open-source per la gestione centralizzata delle vulnerabilità tramite l'aggregazione di report provenienti da sorgenti eterogenee.
 \end{itemize}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{img/tesi-12-sastsca.drawio.png}
-\caption{Esempio tipico di integrazione della analisi statica e delle dipendenze nel processo di sviluppo automatizzato}
+\caption{Esempio tipico di integrazione della analisi statica e delle dipendenze nel processo di sviluppo automatizzato.}
 \end{figure}
 
 \subsection{Composizione Software}
-Con composizione software si intende l'insieme di codice sviluppato da terze parti che viene incluso all'interno della applicazione, tipicamente sotto forma di import di librerie, dette dipendenze. Queste dipendenze includono a loro volta altre dipendenze e potrebbero introdurre vulnerabilità nella applicazione che le utilizza. Per questo motivo è necessario analizzare le dipendenze al fine di individuare le vulnerabilità che esse introducono per essere tempestivi nel loro aggiornamento non appena vengono rilasciate delle patch di sicurezza. Il tool adottato per effettuare questa tipologia di analisi è \textit{DependencyCheck}\footnote{\url{https://github.com/jeremylong/DependencyCheck}}, un tool open-source rilasciato e mantenuto da OWASP disponbile come plugin Gradle, binario eseguibile e immagine Docker.
+Con composizione software si intende l'insieme di codice sviluppato da terze parti che viene incluso all'interno della applicazione, tipicamente sotto forma di import di librerie, dette dipendenze. Queste dipendenze includono a loro volta altre dipendenze e potrebbero introdurre vulnerabilità nella applicazione che le utilizza. Per questo motivo è necessario analizzare le dipendenze al fine di individuare le vulnerabilità che esse introducono per essere tempestivi nel loro aggiornamento non appena vengono rilasciate delle patch di sicurezza. Il tool adottato per effettuare questa tipologia di analisi è \textit{DependencyCheck}\footnote{\url{https://github.com/jeremylong/DependencyCheck}}, un tool open-source rilasciato e mantenuto da OWASP, disponbile come plugin Gradle, binario eseguibile e immagine Docker.
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-depcheckjob}
-\caption{Pipeline job dedicato alla analisi delle dipendenze della applicazione Android tramite l'utilizzo del tool OWASP DependencyCheck}
+\caption{Pipeline job dedicato alla analisi delle dipendenze della applicazione Android tramite l'utilizzo del tool OWASP DependencyCheck.}
 \end{listing}
 
 \subsection{Analisi Statica}
@@ -245,30 +245,30 @@ La fase di analisi statica viene eseguita per il codice condiviso e per il codic
 
 \begin{listing}[H]
 \inputminted{yaml}{code/4-sastjob}
-\caption{Pipeline job dedicato alla analisi statica del codice specifico Android}
+\caption{Pipeline job dedicato alla analisi statica del codice specifico Android.}
 \end{listing}
 
 \begin{listing}[H]
 \inputminted{ruby}{code/4-sastfastlane}
-\caption{Lane Fastlane dedicata alla analisi statica del codice specifico Android}
+\caption{Lane Fastlane dedicata alla analisi statica del codice specifico Android.}
 \end{listing}
 
 Data la funzionalità di gestione delle vulnerabilità fornita dallo stesso SonarQube e la possibilità di integrare tutte le tipologie di report prodotte sia nella fase di analisi delle dipendenze che nella fase di analisi statica del codice, si è deciso di non introdurre nel sistema l'utilizzo dei servizi forniti dalla installazione aziendale di DefectDojo.\\
-Per le fasi di analisi i tool utilizzati hanno bisogno soltanto dei sorgenti e dei file di configurazione comportando diversi vantaggi come il fatto di non dover compilare nessun file e di non dover scaricare nessun sdk. Per questi motivi, dove possibile, è stata utilizzata l'immagine Docker del relativo tool come immagine base per il job della pipeline.\\
+Per le fasi di analisi i tool utilizzati hanno bisogno soltanto dei sorgenti e dei file di configurazione comportando diversi vantaggi come il fatto di non dover compilare nessun file e di non dover scaricare nessun sdk. Per questi motivi, dove possibile, è stato utilizzato il runner GitLab condiviso in Maggioli con l'executor Docker in modo da poter utilizzare l'immagine Docker del relativo tool come immagine base per il job della pipeline.\\
 Il client SonarQube utilizzato è stato dunque configurato agendo sui file degli specifici moduli (\textit{sonar-project.properties}) per poter raccogliere i report prodotti nelle altre fasi di analisi :
 \begin{listing}[H]
 \inputminted{kotlin}{code/4-sonarplugin}
-\caption{Configurazione client SonarQube per il modulo condiviso (Shared)}
+\caption{Configurazione client SonarQube per il modulo condiviso (Shared).}
 \end{listing}
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{img/Screenshot 2022-06-19 at 15.33.37.png}
-\caption{Screenshot SonarQube Web UI - Esempio analisi modulo condiviso}
+\caption{Screenshot SonarQube Web UI - Esempio analisi modulo condiviso.}
 \end{figure}
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{img/Screenshot 2022-06-21 at 09.58.58.png}
-\caption{Screenshot SonarQube Web UI - Esempio analisi modulo android}
+\caption{Screenshot SonarQube Web UI - Esempio analisi modulo android.}
 \end{figure}
 
 \subsection{Schedulazione Job}
@@ -278,19 +278,19 @@ Le fasi di analisi del codice possono essere introdotte nel processo di sviluppo
     \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{img/tesi-2-30.cicdci.drawio.png}
-    \caption{Approcio sincrono per l'esecuzione della fase di analisi}
+    \caption{Approcio sincrono per l'esecuzione della fase di analisi.}
     \end{figure}
     \item \textit{Asincrona} - Tramite la schedulazione delle fasi di analisi in un momento diverso da quello in cui viene apportata la modifica al codice è possibile sia ridurre i tempi di esecuzione delle pipeline che ottenere un feedback cumulativo sull'insieme delle modifiche apportate tra due esecuzioni delle pipeline di analisi del codice. Ad esempio, schedulando alla mezzanotte di ogni giorno l'esecuzione delle fasi di analisi, è possibile accedere al portale SonarQube all'inizio della giornata lavorativa successiva e pianificare gli interventi di risoluzione degli eventuali bug introdotti nella giornata precedente.
     \begin{figure}[H]
     \centering
     \includegraphics[width=0.59\textwidth]{img/tesi-2-31-cicdci2.drawio.png}
-    \caption{Approccio asincrono per l'esecuzione della fase di analisi}
+    \caption{Approccio asincrono per l'esecuzione della fase di analisi.}
     \end{figure}
 \end{itemize}
 La modalità di esecuzione scelta per la fase di Continuous Inspection è quella asincrona per le motivazioni sopra indicate, le quali sono vantaggi preferiti dalla maggior parte dei team di sviluppo in Maggioli.
 
 \section{Dependency Management}
-In qualsiasi tipologia di applicazione vengono utilizzate librerie di terze parti chiamate dipendenze. Queste dipendenze forniscono funzionalità utilizzate all'interno della applicazione ma possono anche introdurre problemi sia a livello di semplice compilazione che a livello di sicurezza (come descritto nella sezione precedente). Maggiore è il numero di dipendenze incluse nel progetto e maggiore è la complessità nella loro gestione: per questo motivo l'automazione di questo task sta diventando una pratica sempre più comune.\\
+In qualsiasi tipologia di applicazione vengono utilizzate librerie di terze parti, chiamate dipendenze. Queste dipendenze forniscono funzionalità utilizzate all'interno della applicazione ma possono anche introdurre problemi sia a livello di semplice compilazione che a livello di sicurezza (come descritto nella sezione precedente). Maggiore è il numero di dipendenze incluse nel progetto e maggiore è la complessità nella loro gestione: per questo motivo l'automazione di questo task sta diventando una pratica sempre più comune.\\
 Automatizzare la gestione delle dipendenze di un progetto significa configurare un sistema in grado di svolgere le seguenti operazioni in modo automatico:
 \begin{itemize}
     \item Riconoscimento delle dipendenze del progetto.
@@ -300,7 +300,7 @@ Automatizzare la gestione delle dipendenze di un progetto significa configurare 
     \item Modifica del codice per l'aggiornamento delle dipendenze.
 \end{itemize}
 
-Tipicamente sistemi di questo tipo, per poter modificare il codice in modo automatico, vengono integrati con le piattaforme utilizzate per il versionamento del codice, come GitLab nel caso di questo progetto di tesi, con l'obiettivo di sfruttare le stesse tecniche e gli stessi tools di continuous integration adottati nel processo di sviluppo.
+Solitamente sistemi di questo tipo, per poter modificare il codice in modo automatico, vengono integrati con le piattaforme utilizzate per il versionamento del codice, come GitLab nel caso di questo progetto di tesi, con l'obiettivo di sfruttare le stesse tecniche e gli stessi tools di continuous integration adottati nel processo di sviluppo.
 
 \subsection{Renovate}
 Anche in questo caso, come per quasi tutti i servizi che supportano il processo di sviluppo, è possibile utilizzare sistemi gestiti as-a-Service oppure auto-gestiti. In Maggioli il sistema di aggiornamento automatico delle dipendenze è disponibile a tutti i team di sviluppo e realizzato con la modalità auto-gestita del tool \textit{Renovate}\footnote{\url{https://github.com/renovatebot/renovate}} tramite l'esecuzione schedulata di pipeline dedicate, in modo similare ai task di analisi.
@@ -308,19 +308,19 @@ Anche in questo caso, come per quasi tutti i servizi che supportano il processo 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{img/tesi-2-Page-17.drawio.png}
-\caption{UML - Diagramma di sequenza: Aggiornamento automatico delle dipendenze con Renovate e GitLab Runner}
+\caption{UML - Diagramma di sequenza: Aggiornamento automatico delle dipendenze con Renovate e GitLab Runner.}
 \end{figure}
 
 %\begin{listing}[H]
 %\inputminted{yaml}{code/4-renovajob}
 %\caption{Pipeline job schedulato per l'aggiornamento automatico delle dipendenze con Renovate}
 %\end{listing}
-L'aggiornamento delle dipendenze automatizzato deve essere gestito come una modifica al codice esterna che deve essere testata prima di poter essere applicata al flusso principale di sviluppo. Il diagramma di sequenza indica i task svolti per l'aggiornamento delle dipendenze automatico in cui sono coinvolti aggiornamenti di versione del tipo \textit{minor} o \textit{patch}. In questo caso Renovate apre una merge request su un nuovo branch in cui viene effettuato l'aggiornamento, se la pipeline associata termina con successo allora significa che non ci sono problemi e quindi la merge request viene chiusa unendo la modifica al flusso principale di sviluppo. Nel caso invece di aggiornamenti di versione di tipo \textit{major} è necessario l'intervento da parte di uno sviluppatore sin dalla apertura della merge request: tipicamente aggiornamenti di questo tipo includono breaking changes che necessitano di ulteriore lavoro per adattare l'applicazione alla nuova versione.\\
+L'aggiornamento delle dipendenze automatizzato deve essere gestito come una modifica al codice esterna che deve essere testata prima di poter essere applicata al flusso principale di sviluppo. Il diagramma di sequenza (figura \ref{renovaflow}) indica i task svolti per l'aggiornamento delle dipendenze automatico in cui sono coinvolti aggiornamenti di versione del tipo \textit{minor} o \textit{patch}. In questo caso Renovate apre una merge request su un nuovo branch in cui viene effettuato l'aggiornamento: se la pipeline associata termina con successo allora significa che non ci sono problemi e quindi la merge request viene chiusa unendo la modifica al flusso principale di sviluppo. Nel caso invece di aggiornamenti di versione di tipo \textit{major} è necessario l'intervento da parte di uno sviluppatore sin dalla apertura della merge request: tipicamente aggiornamenti di questo tipo includono breaking changes che necessitano di ulteriore lavoro per adattare l'applicazione alla nuova versione.\\
 Il comportamento di Renovate può essere configurato ad-hoc per le diverse esigenze di ogni progetto includendo un apposito file di configurazione nella root di progetto (\textit{.gitlab/renovate.json}). Il seguente file definisce una configurazione custom per ottenere lo stesso comportamento descritto sopra ma con raggruppamento delle dipendenze basato sul group-id di certe librerie che potrebbero avere dipendenze tra di loro e causare errori se non aggiornate nella stessa merge request.
 
 \begin{listing}[H]
 \inputminted{json}{code/4-renovacustom}
-\caption{Configurazione custom di un progetto Android per l'aggiornamento automatico delle dipendenze con Renovate (\textit{.gitlab/renovate.json})}
+\caption{Configurazione custom di un progetto Android per l'aggiornamento automatico delle dipendenze con Renovate (\textit{.gitlab/renovate.json}).}
 \end{listing}
 
 \section{Templating}
@@ -339,11 +339,11 @@ L'obiettivo di questo progetto di tesi consiste nella progettazione di una pipel
 
 I seguenti template realizzati sono organizzati in un repository separato, raggruppati logicamente secondo gli stage che compongono l'intera pipeline oltre ad un template base, utilizzato da tutti gli altri template:
 \begin{itemize}
-    \item \textit{kmm-base} - Definisce tutte le configurazioni di base della pipeline come ad esempio gli stage, variabili d'ambiente globali, job di pre-configurazione, ... .
+    \item \textit{kmm-base} - Definisce tutte le configurazioni di base della pipeline come ad esempio gli stage, le variabili d'ambiente globali e i job di pre-configurazione.
     \item \textit{kmm-build} - Definisce i job relativi alla fase di compilazione e packaging.
     \item \textit{kmm-test} - Definisce i job per le fasi di unit testing e ui testing.
     \item \textit{kmm-analysis} - Definisce i job per le fasi di analisi statica del codice, analisi delle dipendenze e integrazione con SonarQube.
-    \item \textit{kmm-release} - Definisce i job utili al rilascio delle applicazioni sia alpha che beta.
+    \item \textit{kmm-release} - Definisce i job utili al rilascio delle applicazioni (alpha-beta-prod).
 \end{itemize}
 
 \begin{listing}[H]
