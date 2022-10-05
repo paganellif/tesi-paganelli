@@ -1,6 +1,7 @@
 % !TeX root = ../main.tex
 
-% dire i risultati ottenuti come ad esempio tempistiche delle pipeline per i vari casi (con cache locale, con cache shared, modifica solo al codice shared, solo alla app android o tutto, ...), cosa non è stato fatto
+% dire i risultati ottenuti come ad esempio tempistiche delle pipeline per i vari casi (con cache locale, con cache shared, modifica solo al codice shared, solo alla app android o tutto, ...), cosa non è stato fatto e le grosse difficoltà di integrazione xcode-ios-kmm oltre al problema coroutine
+
 
 \begin{table}[H]
 \centering
@@ -10,9 +11,9 @@
          \hline
          Android & $\sim$ \textit{20 min} & $\sim$ \textit{1 min} & $\sim$ \textit{15 min} \\
          \hline
-         iOS & \textit{?} & \textit{?} & $\sim$ \textit{15 min} \\
+         iOS & $\sim$ \textit{23 min} & $\sim$ \textit{20 sec} & $\sim$ \textit{15 min} \\
          \hline
-         Android e iOS & \textit{?} & \textit{?} & \textit{?} \\
+         Android e iOS & $\sim$ \textit{28 min} & $\sim$ \textit{1 min} & $\sim$ \textit{?} \\
          \hline
     \end{tabular}
     \caption{Tempistiche di alcuni dei principali task del processo automatico, ottenute tramite la piattaforma GitLab}
