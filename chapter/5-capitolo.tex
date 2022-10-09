@@ -198,20 +198,14 @@ In base ai casi d'uso e ai requisiti della applicazione individuati in fase di a
     \item \textit{User} - Contesto che definisce tutti gli aspetti a riguardo degli utenti. In questo contesto esiste il solo concetto di utente, il quale è condiviso con gli altri contesti.
 \end{itemize}
 
+Tra i contesti definiti esistono delle relazioni di tipo \textit{Shared Kernel}\cite{evans_domain-driven_2004} (SK) con l'obiettivo di evitare duplicazioni e semplificare l'integrazione. Relazioni di questo tipo consistono nella condivisione di un sottoinsieme del dominio modellato, che corrisponde tipicamente al dominio core. Un esempio di relazione SK è l'utilizzo di codice o schemi DB condivisi\footnote{\url{https://github.com/ddd-crew/context-mapping}}.\\
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{img/tesi-20-app-domain.drawio.png}
+\includegraphics[width=0.65\textwidth]{img/tesi-20-app-domain.drawio.png}
 \caption{Context Map: panoramica globale dei contesti del progetto e delle relazioni che intercorrono tra di essi.}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{img/tesi-25-ddd.drawio.png}
-\caption{UML - Diagramma delle classi: Reader Core Domain e User Subdomain.}
-\label{fig:5.4}
-\end{figure}
-
-Tra i contesti definiti esistono delle relazioni di tipo \textit{Shared Kernel}\cite{evans_domain-driven_2004} (SK) con l'obiettivo di evitare duplicazioni e semplificare l'integrazione. Relazioni di questo tipo consistono nella condivisione di un sottoinsieme del dominio modellato, che corrisponde tipicamente al dominio core. Un esempio di relazione SK è l'utilizzo di codice o schemi DB condivisi\footnote{\url{https://github.com/ddd-crew/context-mapping}}.\\
 Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domain-driven_2004}:
 \begin{itemize}
     \item \textit{Entity} - Oggetto definito dalla sua identità e non dai suoi attributi. Ogni libro è univoco, identificato da uno specifico codice, chiamato ISBN\footnote{International Standard Book Number}.
@@ -221,19 +215,23 @@ Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domai
     \item \textit{Repository} - Oggetto per il recupero di altri oggetti di dominio e per la gestione del loro ciclo di vita. Le entità \textit{User} e \textit{Libro} sono esempi di oggetti di dominio che necessitano di un repository. Permette di disaccoppiare applicazione e domain design dalle specifiche tecnologie/strategie di persistenza come multipli database e datasource (locali e/o remoti).
 \end{itemize}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/tesi-25-ddd.drawio.png}
+\caption{UML - Diagramma delle classi: Reader Core Domain e User Subdomain.}
+\label{fig:5.4}
+\end{figure}
+
 L'architettura progettata per la applicazione segue la struttura \textit{Clean Architecture}\cite{Martin17} ed è composta da tre strati. Il primo strato (\textit{Data Layer}) consiste negli aggregati di dominio sopra descritti ed è responsabile per il recupero e il mantenimento dei dati su differenti sorgenti. Il secondo strato (\textit{Domain Layer}) facilità la comunicazione tra i differenti repository: qui si trovano tutti i casi d'uso del sistema che gestiscono il flusso dei dati provenienti o diretti verso il primo strato. Il terzo ed ultimo strato (\textit{View Layer}) si occupa della interfaccia grafica mostrando i dati e gestendo gli eventi provenienti dall'utente o dal sistema.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.55\textwidth]{img/tesi-2-Page-18.drawio.png}
+\includegraphics[width=0.5\textwidth]{img/tesi-2-Page-18.drawio.png}
 \caption{Clean Architecture in MaggioliEbook.}
 \end{figure}
 
 \subsection{Progettazione UX/UI}
-
-L'interfaccia grafica della applicazione è stata progettata tramite l'utilizzo di mockup digitali realizzati con il tool grafico open source Drawio\footnote{\url{https://github.com/jgraph/drawio}}.\\
-Considerando l'utilizzo tipico di una applicazione della stessa tipologia di quella che deve essere realizzata, sono stati utilizzati alcuni standard de-facto come ad esempio il menu laterale a scomparsa (schermata 4), icona "hamburger" per l'apertura del menu (schermata 3), elenco di elementi con scroll infinito verticale (schermata 2-5) e barra di ricerca nella parte alta con icona "lente di ingrandimento" (schermata 2-5).\\
-Per ottenere la validazione dei mockup da parte del committente sono state necessarie due iterazioni del processo di progettazione UX/UI. L'interfaccia utente desiderata deve soddisfare alcuni vincoli caratteristici del brand Maggioli: ad esempio l' utilizzo del colore blu \#00379E come colore primario, l'utilizzo del font Karla\footnote{\url{https://github.com/googlefonts/karla}} e la presenza del logo Maggioli. Le schermate necessarie sono quindi: \textit{Reader}, responsabile della visualizzazione del contenuto digitale in formato EPUB; \textit{Login}, schermata iniziale responsabile alla autenticazione dell'utente; \textit{Home}, schermata principale responsabile alla visualizzazione dei contenuti digitali a cui l'utente è autorizzato ad accedere; \textit{Preferiti}, responsabile alla visualizzazione dei contenuti digitali preferiti dall'utente; \textit{Impostazioni}, responsabile alla visualizzazione e modifica delle impostazioni; \textit{About}, responsabile alla visualizzazione di informazioni generali come versione della applicazione, autore e copyright.
+Considerando l'utilizzo tipico di una applicazione della stessa tipologia di quella che deve essere realizzata, sono stati utilizzati alcuni standard de-facto come ad esempio il menu laterale a scomparsa (schermata 4), icona "hamburger" per l'apertura del menu (schermata 3), elenco di elementi con scroll infinito verticale (schermata 2-5) e barra di ricerca nella parte alta con icona "lente di ingrandimento" (schermata 2-5). Per ottenere la validazione dei mockup da parte del committente sono state necessarie due iterazioni del processo di progettazione UX/UI. L'interfaccia utente desiderata deve soddisfare alcuni vincoli caratteristici del brand Maggioli: ad esempio l' utilizzo del colore blu \#00379E come colore primario, l'utilizzo del font Karla\footnote{\url{https://github.com/googlefonts/karla}} e la presenza del logo Maggioli.
 
 \begin{figure}[H]
 \centering
@@ -246,6 +244,8 @@ Per ottenere la validazione dei mockup da parte del committente sono state neces
 \includegraphics[width=0.95\textwidth]{img/tesi-23-mockupv2.drawio.png}
 \caption{Modifiche apportate ai mockup per ottenere la validazione della UX/UI (v2)}
 \end{figure}
+
+Le schermate necessarie sono quindi: \textit{Reader}, responsabile della visualizzazione del contenuto digitale in formato EPUB; \textit{Login}, schermata iniziale responsabile alla autenticazione dell'utente; \textit{Home}, schermata principale responsabile alla visualizzazione dei contenuti digitali a cui l'utente è autorizzato ad accedere; \textit{Preferiti}, responsabile alla visualizzazione dei contenuti digitali preferiti dall'utente; \textit{Impostazioni}, responsabile alla visualizzazione e modifica delle impostazioni; \textit{About}, responsabile alla visualizzazione di informazioni generali come versione della applicazione, autore e copyright.
 
 \section{Implementazione}
 La fase di implementazione consiste nello sviluppo della applicazione secondo il paradigma Kotlin Multiplatform: sono presenti infatti un unico core, chiamato \textit{shared} ($i$), che definisce la logica condivisa della applicazione e due differenti implementazioni per l'interfaccia utente, chiamate rispettivamente \textit{androidMaggioliEbookApp} ($ii$) e \textit{iosMaggioliEbookApp} ($iii$).
@@ -627,20 +627,20 @@ Nelle seguenti schermate ottenute dalla piattaforma GitLab viene mostrato l'effe
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\textwidth]{img/Screenshot 2022-09-28 at 15.58.43.png}
+    \includegraphics[width=0.95\textwidth]{img/Screenshot 2022-09-28 at 15.58.43.png}
     \caption{Schermata GitLab - Ultime pipeline eseguite.}
     \label{pipelinesapp}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\textwidth]{img/Screenshot 2022-09-28 at 15.54.26.png}
+    \includegraphics[width=0.95\textwidth]{img/Screenshot 2022-09-28 at 15.54.26.png}
     \caption{Schermata GitLab - Pipeline di aggiornamento delle dipendenze automatico fallita in fase di testing.}
     \label{mergerequestrenova}
 \end{figure}
 
+\newpage
 \section{Stabilizzazione e Rilascio}
-
 La fase di stabilizzazione e rilascio della applicazione realizzata rispetta completamente quanto descritto nel capitolo \ref{ch:ch4}. Esistono dunque due fasi di stabilizzazione \textit{alpha} e \textit{beta} che corrispondono rispettivamente ai branch \textit{dev} e \textit{test}. La pubblicazione effettiva sullo store, equivalente all'ambiente di produzione, avviene in relazione alla modifica del branch \textit{main}.\\
 Le figure coinvolte in fase di analisi dei requisiti e di modellazione del dominio, insieme ai Professori relatori di questo progetto di tesi, formano il gruppo dei tester:
 \begin{multicols}{2}
@@ -679,14 +679,14 @@ Nelle seguenti schermate ottenute dalla piattaforma GitLab viene mostrato l'effe
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\textwidth]{img/Screenshot 2022-09-28 at 15.51.47.png}
+    \includegraphics[width=0.95\textwidth]{img/Screenshot 2022-09-28 at 15.51.47.png}
     \caption{Schermata GitLab - Pipeline completa con rilascio Alpha.}
     \label{alpharelease}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\textwidth]{img/Screenshot 2022-09-28 at 16.11.22.png}
+    \includegraphics[width=0.8\textwidth]{img/Screenshot 2022-09-28 at 16.11.22.png}
     \caption{Schermata GitLab - Pipeline rilascio Beta.}
     \label{betarelease}
 \end{figure}
@@ -695,14 +695,14 @@ Nelle seguenti schermate ottenute dalla piattaforma GitLab viene mostrato l'effe
 Le fasi di analisi del codice vengono eseguite in modo asincrono rispetto al flusso di sviluppo come descritto nel capitolo \ref{ch:ch4}. Le seguenti schermate mostrano l'utilizzo, con esisto positivo, delle tecniche di Continuous Inspection tramite l'esecuzione delle pipeline di analisi in GitLab e l'upload dei report sul servizio aziendale SonarQube:
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\textwidth]{img/Screenshot 2022-09-28 at 16.15.34.png}
+    \includegraphics[width=0.9\textwidth]{img/Screenshot 2022-09-28 at 16.15.34.png}
     \caption{Schermata GitLab - Pipeline completa di analisi.}
     \label{fullpipeline}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\textwidth]{img/Screenshot 2022-09-28 at 16.22.16.png}
+    \includegraphics[width=0.9\textwidth]{img/Screenshot 2022-09-28 at 16.22.16.png}
     \caption{Schermata SonarQube - Overview analisi della applicazione Android.}
     \label{analisipipeline}
 \end{figure}
