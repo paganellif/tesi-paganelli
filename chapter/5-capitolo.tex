@@ -105,6 +105,18 @@ Il seguente glossario racchiude tutti i principali termini utilizzati negli inco
     \caption{Glossario dei termini (Casi d'uso).}
 \end{table}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{img/tesi-1-Use-case.drawio.png}
+\caption{UML - Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{img/tesi-2-Use-case2.drawio.png}
+\caption{UML - Diagramma di sequenza: scenario di modifica di un nuovo documento "fluido".}
+\end{figure}
+
 \subsection{Analisi Formati Digitali Fluidi}
 I documenti attualmente sono reperibili in formato PDF e/o HTML. Il formato PDF è quello con cui i documenti vengono effettivamente archiviati: per ottenere un documento in formato HTML è necessario utilizzare un servizio interno, chiamato \textit{pdf2html}, il quale effettua la conversione. Entrambi i formati, PDF e HTML, rispettano i requisiti per i documenti definiti "statici" ma non per quelli definiti "fluidi":
 \begin{itemize}
@@ -163,12 +175,6 @@ Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB s
     \end{itemize}
 \end{itemize}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{img/tesi-2-Use-case2.drawio.png}
-\caption{UML - Diagramma di sequenza: scenario di modifica di un nuovo documento "fluido".}
-\end{figure}
-
 \subsection{Requisiti Non Funzionali/Tecnologici}
 \begin{itemize}
     \item \textbf{T1} - Applicazione nativa Android e iOS, sfruttando Kotlin Multiplatform Mobile (KMM).
@@ -179,12 +185,6 @@ Le caratteristiche determinanti che hanno portato alla scelta del formato EPUB s
         \item \textbf{T2.3} - Rilascio automatico nei relativi store delle piattaforme scelte (Google Play per Android e App Store per iOS).
     \end{itemize}
 \end{itemize}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{img/tesi-1-Use-case.drawio.png}
-\caption{UML - Diagramma dei casi d'uso: funzioni/servizi offerti dal sistema Ebook App PoC.}
-\end{figure}
 
 \section{Progettazione}
 In questa sezione viene descritta la fase di progettazione del sistema, le cui attività principali consistono nella ($i$) modellazione del dominio, nella progettazione della architettura ($ii$) e ($iii$) nella progettazione dell'interfaccia grafica tramite mockup.
@@ -542,6 +542,8 @@ ho dovuto fare una extensions al libro per dire quale è l'id usato da identifia
 \inputminted{swift}{code/5-swift-shared}
 \caption{Esempio di utilizzo dei casi d'uso del modulo condiviso (\textit{LoginViewModel.swift}).}
 \end{listing}
+
+\newpage
 
 \subsubsection{Screenshots}
 \begin{multicols}{3}
