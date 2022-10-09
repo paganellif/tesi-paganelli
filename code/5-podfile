@@ -10,6 +10,6 @@ target 'iosMaggioliEbookApp' do
   pod 'R2Navigator'
   pod 'ReadiumOPDS'
   
-  # Required for R2Streamer.
+  pod 'MBProgressHUD', '~> 1.2'
   pod 'GCDWebServer'
 end
