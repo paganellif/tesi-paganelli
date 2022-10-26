@@ -534,6 +534,8 @@ mi sono implementato da solo il paging per lo scroll infinito
 % descrivere gestione coroutine kotlin in runtime ios
 ho dovuto fare oggetto per convertire bytearray in data (per mostrare le cover) + oggetto per caricarle in modo async una volta scaricata (simile a funzionamento della nuova api AsyncImage fornita da Swiftui nuovo)
 
+ho dovuto fare extension per la gestione delle date (millisecondsSince1970)
+
 Ho dovuto impostare \textit{kotlin.native.binary.memoryModel=experimental} nel file \textit{gradle.properties} per il modulo condiviso. Senza questa configurazione ottenevo l'errore "\textit{Uncaught Kotlin exception: kotlin.IllegalStateException: There is no event loop. Use runBlocking \{ ... \} to start one.}"\footnote{\url{https://github.com/JetBrains/kotlin/blob/master/kotlin-native/NEW_MM.md\#enable-the-new-mm}}.
 
 ho dovuto fare una extensions al libro per dire quale è l'id usato da identifiable in modo da poter ciclare su liste di libri
@@ -583,43 +585,46 @@ ho dovuto fare una extensions al libro per dire quale è l'id usato da identifia
                 \label{aboutios}
             \end{figure}
 
+
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/reader_settings_ios.png}
+                \caption{Lettura documento digitale d'esempio e impostazioni del lettore}
+                \label{readersettingsios}
+            \end{figure}
+
 \begin{comment}
             \begin{figure}[H]
-                \includegraphics[width=0.21\textwidth]{img/reader_settings.png.todo}
-                \caption{Lettura documento digitale d'esempio e impostazioni del lettore}
-                \label{readersettings}
-            \end{figure}
-            
-            \begin{figure}[H]
-                \includegraphics[width=0.21\textwidth]{img/annotations.png}
+                \includegraphics[width=0.21\textwidth]{img/annotations_ios.png}
                 \caption{Esempio di inserimento di annotazioni come evidenziazioni e sottolineature}
-                \label{annotations}
-            \end{figure}
-            
-            \begin{figure}[H]
-                \includegraphics[width=0.21\textwidth]{img/annotation2.png}
-                \caption{Annotazioni memorizzate sul dispositivo e consultabili dal menu del lettore}
-                \label{annotation2}
+                \label{annotationsios}
             \end{figure}
 
             \begin{figure}[H]
-                \includegraphics[width=0.21\textwidth]{img/toc.png}
-                \caption{Elenco dei contenuti (TOC) del documento aperto e consultabile dal menu del lettore}
-                \label{toc}
-            \end{figure}
-            
-            \begin{figure}[H]
-                \includegraphics[width=0.21\textwidth]{img/ricerca_testo.png}
-                \caption{Ricerca testuale nel contenuto del documento aperto con relativo risultato}
-                \label{ricerca_testo}
-            \end{figure}
-            
-            \begin{figure}[H]
-                \includegraphics[width=0.21\textwidth]{img/ricerca_testo2.png}
-                \caption{Evidenziazioni automatiche delle occorrenze del testo cercato}
-                \label{ricerca_testo2}
+                \includegraphics[width=0.21\textwidth]{img/annotation2_ios.png}
+                \caption{Annotazioni memorizzate sul dispositivo e consultabili dal menu del lettore}
+                \label{annotation2ios}
             \end{figure}
 \end{comment}
+
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/toc_ios.png}
+                \caption{Elenco dei contenuti (TOC) del documento aperto e consultabile dal menu del lettore}
+                \label{tocios}
+            \end{figure}
+
+
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/ricerca_testo_ios.png}
+                \caption{Ricerca testuale nel contenuto del documento aperto con relativo risultato}
+                \label{ricerca_testoios}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \includegraphics[width=0.21\textwidth]{img/ricerca_testo2_ios.png}
+                \caption{Evidenziazioni automatiche delle occorrenze del testo cercato}
+                \label{ricerca_testo2ios}
+            \end{figure}
+
 \end{multicols}
 
 \subsection{Continuous Integration}
