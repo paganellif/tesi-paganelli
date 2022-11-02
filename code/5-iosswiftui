@@ -1,0 +1,7 @@
+NavigationLink(destination: HomeView(app: app, isSidebarOpened: $isSidebarOpened), tag: "Home", selection: $selection){}
+
+NavigationLink(destination: FavoriteView(app: app, isSidebarOpened: $isSidebarOpened), tag: "Favorite", selection: $selection){}
+
+NavigationLink(destination: SettingsView(isSidebarOpened: $isSidebarOpened), tag: "Settings", selection: $selection){}
+
+NavigationLink(destination: AboutView(isSidebarOpened: $isSidebarOpened), tag: "About", selection: $selection){}
