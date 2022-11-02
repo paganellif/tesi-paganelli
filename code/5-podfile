@@ -1,15 +1,16 @@
 target 'iosMaggioliEbookApp' do
   use_frameworks!
   platform :ios, '14.1'
+  
+  # KMM Shared Business Logic Module
   pod 'shared', :path => '../shared'
-  pod 'KMPNativeCoroutinesRxSwift'
 
   # Readium swift-toolkit
   pod 'R2Shared'
   pod 'R2Streamer'
   pod 'R2Navigator'
   pod 'ReadiumOPDS'
-  
+
   pod 'MBProgressHUD', '~> 1.2'
   pod 'GCDWebServer'
 end

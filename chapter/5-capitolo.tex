@@ -375,6 +375,7 @@ La navigazione all'interno della applicazione è gestita tramite la combinazione
 Come indicato nella figura \ref{fig:5.11} la schermata principale (\textit{Home}) rappresenta la destinazione iniziale del grafo, ovvero la prima schermata che viene visualizzata dalla applicazione. L'autenticazione dell'utente è gestita tramite la navigazione condizionale\footnote{\url{https://developer.android.com/guide/navigation/navigation-conditional}}. Prima di creare la vista del fragment viene effettuato un controllo sulla autenticazione dell'utente: se l'utente non è autenticato viene effettuata una transizione al fragment \textit{Login} per permettere all'utente di autenticarsi e procedere all'utilizzo della applicazione. E' fondamentale in questo scenario ripulire lo stack di navigazione per evitare che l'utente possa tornare indietro alla schermata precedente, ovvero la schermata principale, senza effettuare l'autenticazione.\\
 
 \subsubsection{Paging}
+\label{pagingsec}
 Un altro aspetto importante della architettura è il meccanismo utilizzato sia dalla schermata principale che da quella dei preferiti per mostrare i dati all'utente. Il backend utilizzato fornisce i dati tramite paginazione: in questo modo è possibile indicare in una richiesta la dimensione delle pagine, ovvero quanti elementi devono essere restituiti al massimo in una pagina, e la pagina desiderata. Per poter caricare tali dati dinamicamente in una \textit{RecyclerView}\footnote{\url{https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/RecyclerView}} in modo che l'utente possa effettuare lo scroll illimitato nella schermata si utilizza la libreria \textit{Paging}\footnote{\url{https://developer.android.com/topic/libraries/architecture/paging/v3-overview}} fornita da Android.
 
 \begin{figure}[H]
@@ -491,6 +492,7 @@ I principali componenti del reader sono:
 \end{multicols}
 
 \subsection{iosMaggioliEbookApp}
+\label{iosappsec}
 
 Per poter sviluppare l'interfaccia grafica della applicazione per la versione iOS è possibile aprire il progetto \textit{iosMaggioliEbookApp} con Xcode. Il contenuto di questa cartella è stato generato in modo automatico durante l'inizializzazione dell'intero progetto con il plugin gradle KMM (come descritto nel capitolo \ref{ch:ch3}).\\
 L'IDE Xcode deve essere configurato per poter utilizzare il codice condiviso sviluppato nel modulo shared: a tale scopo il plugin gradle KMM fornisce un apposito task che deve essere utilizzato in fase di compilazione. Il task \textit{embedAndSignPodAppleFrameworkForXcode} è visibile solo a Xcode e permette di esporre il framework al progetto Xcode per il quale è stata creata l'applicazione iOS. Utilizzando la configurazione del progetto iOS questo task definisce la modalità di compilazione (debug o release) e fornisce la versione del framework appropriata nella posizione specificata.\\
@@ -523,22 +525,35 @@ Il seguente file definisce i pods della applicazione iOS, compreso il modulo sha
 A questo punto è possibile importare i moduli nel codice Swift e sviluppare l'applicazione utilizzando le funzionalità fornite dall'IDE a supporto dello sviluppo come per una qualsiasi libreria Swift importata.
 
 \subsubsection{Architettura iOS}
-% descrivere architettura app ios MVVM con navigation (identica a android)
-view + viewmodel e navigazione con navigationview + navigationlink (deprecato in favore di navigationstack e navigationsplitview
 
-ZStack per navcontroller e sidebar in modo da far vedere la sidebar in overlay rispetto alle views. navcontroller è navigationview e sostituisco le views tramite i navigation link che si trovano nella sidebar
+L'architettura della versione iOS della applicazione sviluppata segue lo stesso pattern utilizzato nella versione Android, chiamato in questo caso "\textit{Navigator}" rispetto a "\textit{Single Activity}" di Android. Tramite il costrutto \textit{NavigationView}\footnote{\url{https://developer.apple.com/documentation/swiftui/navigationview}} è possibile definire una schermata "contenitore" per le viste dei percorsi di navigazione all'interno della applicazione.
 
-mi sono implementato da solo il paging per lo scroll infinito
+    \begin{figure}[H]
+    \centering
+        \includegraphics[width=0.6\textwidth]{img/tesi-2-Page-20.drawio.png}
+        \caption{Architettura MaggioliEbook - versione iOS}
+        \label{iosarchapp}
+    \end{figure}
+
+Per navigare effettivamente tra le viste indicate è necessario utilizzare i \textit{NavigationLink}\footnote{\url{https://developer.apple.com/documentation/swiftui/navigationlink}} i quali identificano una specifica transizione di schermata da quella attuale a quella di destinazione. Le possibili schermate navigabili sono contenute, sotto forma di \textit{NavigationLink}, nel componente "\textit{Sidebar}".\\
+A differenza di Jetpack Compose, il toolkit utilizzato nello sviluppo della UI Android, SwiftUI non fornisce nativamente dei costrutti per la realizzazione di schermate con scroll infinito e dati paginati (come descritto nella sezione \ref{pagingsec}): per questo motivo è stata necessaria l'implementazione di un meccanismo ad-hoc per la gestione di questo scenario.
 
 \subsubsection{Integrazione iOS-Shared}
-% descrivere gestione coroutine kotlin in runtime ios
-ho dovuto fare oggetto per convertire bytearray in data (per mostrare le cover) + oggetto per caricarle in modo async una volta scaricata (simile a funzionamento della nuova api AsyncImage fornita da Swiftui nuovo)
+Oltre alle configurazioni necessarie per impostare l'IDE XCode e l'ambiente di sviluppo, discusse a inizio della sezione \ref{iosappsec}, è stato svolto dell'ulteriore lavoro per poter utilizzare correttamente il modulo condiviso in Swift, sia nel modulo condiviso che nel modulo iOS:
 
-ho dovuto fare extension per la gestione delle date (millisecondsSince1970)
-
-Ho dovuto impostare \textit{kotlin.native.binary.memoryModel=experimental} nel file \textit{gradle.properties} per il modulo condiviso. Senza questa configurazione ottenevo l'errore "\textit{Uncaught Kotlin exception: kotlin.IllegalStateException: There is no event loop. Use runBlocking \{ ... \} to start one.}"\footnote{\url{https://github.com/JetBrains/kotlin/blob/master/kotlin-native/NEW_MM.md\#enable-the-new-mm}}.
-
-ho dovuto fare una extensions al libro per dire quale è l'id usato da identifiable in modo da poter ciclare su liste di libri
+\begin{itemize}
+    \item \textit{Computazione Asincrona} (Coroutines)
+    \begin{itemize}
+        \item Realizzazione di un metodo specifico (\textit{invokeNative}) per l'invocazione dei casi d'uso. Le coroutines di Kotlin vengono mappate da KMM in funzioni con callbacks, chiamate \textit{completion handlers} e non esiste modo di definire un \textit{CoroutineScope} in Swift. In questo modo è stato possibile definire uno scope per l'esecuzione del codice asincrono anche su target iOS.
+        \item impostare \textit{kotlin.native.binary.memoryModel=experimental} nel file \textit{gradle.properties} per il modulo condiviso. Senza questa configurazione ottenevo l'errore "\textit{Uncaught Kotlin exception: kotlin.IllegalStateException: There is no event loop. Use runBlocking \{ ... \} to start one.}"\footnote{\url{https://github.com/JetBrains/kotlin/blob/master/kotlin-native/NEW_MM.md\#enable-the-new-mm}}.
+    \end{itemize}
+    \item \textit{Tipi di dato}
+    \begin{itemize}
+        \item fare oggetto per convertire bytearray in data (per mostrare le cover) + oggetto per caricarle in modo async una volta scaricata (simile a funzionamento della nuova api AsyncImage fornita da Swiftui nuovo)
+        \item fare extension per la gestione delle date (millisecondsSince1970)
+        \item fare una extensions al libro per dire quale è l'id usato da identifiable in modo da poter ciclare su liste di libri
+    \end{itemize}
+\end{itemize}
 
 \begin{listing}[H]
 \inputminted{swift}{code/5-swift-shared}
@@ -579,32 +594,12 @@ ho dovuto fare una extensions al libro per dire quale è l'id usato da identifia
                 \label{preferitiios}
             \end{figure}
 
-            \begin{figure}[H]
-                \includegraphics[width=0.21\textwidth]{img/Simulator Screen Shot - iPhone 14 Pro - 2022-10-10 at 08.48.05.png}
-                \caption{Schermata per la visualizzazione delle info generali della applicazione}
-                \label{aboutios}
-            \end{figure}
-
 
             \begin{figure}[H]
                 \includegraphics[width=0.21\textwidth]{img/reader_settings_ios.png}
                 \caption{Lettura documento digitale d'esempio e impostazioni del lettore}
                 \label{readersettingsios}
             \end{figure}
-
-\begin{comment}
-            \begin{figure}[H]
-                \includegraphics[width=0.21\textwidth]{img/annotations_ios.png}
-                \caption{Esempio di inserimento di annotazioni come evidenziazioni e sottolineature}
-                \label{annotationsios}
-            \end{figure}
-
-            \begin{figure}[H]
-                \includegraphics[width=0.21\textwidth]{img/annotation2_ios.png}
-                \caption{Annotazioni memorizzate sul dispositivo e consultabili dal menu del lettore}
-                \label{annotation2ios}
-            \end{figure}
-\end{comment}
 
             \begin{figure}[H]
                 \includegraphics[width=0.21\textwidth]{img/toc_ios.png}
