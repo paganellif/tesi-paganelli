@@ -43,7 +43,11 @@ Corso di Laurea Magistrale in Ingegneria e scienze informatiche}}}
 \end{center}
 \vspace{15mm}
 \begin{center}
-{\LARGE\textbf{TITOLO}}\\
+{\LARGE\textbf{DEVOPS PER APPLICAZIONI MOBILE}} \\
+\vspace{3mm}
+{\LARGE\textbf{MULTIPIATTAFORMA: UN CASO DI}} \\
+\vspace{3mm}
+{\LARGE\textbf{STUDIO INDUSTRIALE}} \\
 \vspace{20mm} {\large{\sc Tesi di Laurea Magistrale in\\ Laboratorio di Sistemi Software LM}}
 \end{center}
 \vfill
@@ -85,6 +89,35 @@ Anno Accademico 2021/2022}}
 
 \tableofcontents
 
+\chapter{Applicazioni Multipiattaforma}
+\label{ch:ch1}
+\input{chapter/app-multiplatform.tex}
+
+\chapter{Processo di sviluppo e automazione}
+\label{ch:ch2}
+\input{chapter/sdlc-devops.tex}
+
+\chapter{Caso di studio: applicazione MaggioliEbook}
+\label{ch:ch3}
+\input{chapter/casostudio.tex}
+
+\chapter{Automazione del processo di sviluppo}
+\label{ch:ch4}
+\input{chapter/cicd.tex}
+
+\chapter{Sviluppo applicazione MaggioliEbook}
+\label{ch:ch5}
+\input{chapter/maggioliebook.tex}
+
+\chapter{Risultati raggiunti}
+\label{ch:ch6}
+\input{chapter/risultati.tex}
+
+\chapter{Conclusioni}
+\label{ch:ch7}
+\input{chapter/conclusioni.tex}
+
+\begin{comment}
 \chapter{Mobile Application Development Lifecycle}
 \label{ch:ch2}
 \input{chapter/2-capitolo.tex}
@@ -104,17 +137,10 @@ Anno Accademico 2021/2022}}
 \chapter{Conclusioni}
 \label{ch:ch6}
 \input{chapter/6-conclusioni.tex}
+\end{comment}
 
 \addcontentsline{toc}{chapter}{Bibliografia}
 \bibliographystyle{plain}
 \bibliography{main}
-
-\setcounter{section}{0}% Reset numbering for sections
-
-\begin{appendices}
-\chapter{Pdf2Epub}
-\label{appendix:ch7}
-\input{chapter/7-backend-pdf2epub.tex}
-\end{appendices}
 
 \end{document}
