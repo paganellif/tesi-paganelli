@@ -1,16 +1,41 @@
 % !TeX root = ../main.tex
 
 \section{Introduzione}
-La continua crescita della quantità di dispositivi mobile presenti, e in particolare gli smartphone, ha reso molto importante a livello globale il mercato delle applicazioni e per questo motivo sono sempre di più le aziende che decidono di investire risorse nello sviluppo e nella vendita di applicazioni mobile. Una azienda che intende targettizzare il maggior numero di possibili utenti con le proprie applicazioni deve considerare che l'intero mercato è spartito in base alla diffusione dei sistemi operativi per smartphone. Ad oggi, i sistemi operativi più diffusi sono Android (Google) e iOS (Apple), i quali coprono quasi la totalità del mercato con quote rispettivamente del 71\% e del 28\%\footnote{\href{https://www.statista.com/statistics/272698/global-market-share-held-by-mobile-operating-systems-since-2009/}{https://www.statista.com/statistics/272698}}. Questi dati comportano la necessità di sviluppare la stessa applicazione per almeno due piattaforme completamente differenti.
+La continua crescita della quantità di dispositivi mobile presenti, e in particolare gli smartphone, ha reso molto importante a livello globale il mercato delle applicazioni e per questo motivo sono sempre di più le aziende che decidono di investire risorse nello sviluppo e nella vendita di applicazioni mobile. Una azienda che intende targettizzare il maggior numero di possibili utenti con le proprie applicazioni deve considerare che l'intero mercato è spartito in base alla diffusione dei sistemi operativi per smartphone. Ad oggi, i sistemi operativi più diffusi sono Android (Google) e iOS (Apple), i quali coprono quasi la totalità del mercato con quote rispettivamente del 71\% e del 28\%\footnote{\href{https://www.statista.com/statistics/272698/global-market-share-held-by-mobile-operating-systems-since-2009/}{\textbf{https://www.statista.com/statistics/272698}}}. Questi dati comportano per una azienda la necessità di sviluppare la stessa applicazione per almeno due piattaforme completamente differenti tra loro. A tal proposito sono nate nuove metodologie e tecniche basate sul concetto "Write Once, Run Anywhere" (WORA)\footnote{\url{https://www.computerweekly.com/feature/Write-once-run-anywhere}} con lo scopo di ottimizzare lo sviluppo delle applicazioni mobile al fine di ridurre i costi e aumentare l'efficienza del processo di sviluppo.\\
+Le principali tecniche moderne di sviluppo per applicazioni mobile sono:
+\begin{itemize}
+    \item \textbf{Cross-platform} - Rispetta completamente la filosofia WORA. Lo stesso codice può essere eseguito su diverse piattaforme grazie ad uno strato applicativo aggiuntivo che si occupa di interpretare il codice e tradurlo nel linguaggio specifico della piattaforma target.
+    \item \textbf{Multi-platform} - Tecnica più recente che permette di sviluppare applicazioni native condividendo solamente la logica applicativa. In questo caso non è necessario uno strato software aggiuntivo perchè la applicazione può essere eseguita direttamente dalla piattaforma target.
+\end{itemize}
 
-% cosa si intende con applicazione multipiattaforma, differenza rispetto alle app normali e differenze tra multiplatform e crossplatform.
-
-\section{Vantaggi}
+\section{Cross-platform vs Multi-platform}
 % vantaggi derivanti dallo sviluppo multi/cross platform (risparmio risorse, riuso, performance, sdk nativo, ...)
+Sia nel caso cross-platform che nel caso multi-platform i principali vantaggi, che sono la riduzione dei costi e l'ottimizzazione del processo di sviluppo, derivano dalla condivisione e dal riuso del codice e quindi meno risorse impiegate rispetto allo sviluppo classico delle applicazioni mobile native.\\
+Esistono però alcune differenze tra loro, fondamentali durante la scelta della metodologia da adottare da parte di una azienda per lo sviluppo di una applicazione mobile.
+\begin{itemize}
+    \item \textbf{Cross-platform}
+    \begin{itemize}
+        \item Condivisione/riuso totale del codice. Sia la logica applicativa che l'interfaccia utente sono le stesse per qualsiasi piattaforma.
+        \item Performance limitate rispetto al nativo, dovute dalla presenza di uno strato software aggiuntivo che interpreta e traduce il codice.
+        \item Accesso alle funzionalità hardware del dispositivo limitato e/o con overhead, dovuto sempre dalla presenza dello strato software aggiuntivo.
+    \end{itemize}
+    \item \textbf{Multi-platform}
+    \begin{itemize}
+        \item Condivisione/riuso della sola logica applicativa. Lo sviluppo dell'interfaccia utente rimane nativo.
+        \item Performance elevate, equivalenti a quelle native.
+        \item Accesso completo e senza overhead a tutte le funzionalità hardware del dispositivo.
+    \end{itemize}
+\end{itemize}
+
+\section{Mobile Application Development Lifecycle}
 
 \section{Strumenti}
-% tool esistenti individuati (KMM, ionic, flutter, react native)
-% requisiti comuni dei vari tools (ad esempio avere mac apple per compilazione app ios: in ogni caso prima o poi deve essere compilata una app nativa ipa per ios)
+Tipicamente quando ci si approccia allo sviluppo di una qualsiasi tipologia di software si effettua una ricerca di tutti gli strumenti in grado di facilitare il lavoro dello sviluppatore. Le principali categorie di strumenti necessari sono: (\textit{i}) linguaggio di programmazione, (\textit{ii}) ambiente di sviluppo (IDE\footnote{Integrated Development Environment}), (\textit{iii}) build automation e (\textit{iv}) framework di sviluppo.\\
+La scelta di questi strumenti è spesso vincolata dalla piattaforma target, ovvero l'ambiente dove eseguirà il codice, e lo è in particolare per le applicazioni mobile. A differenza dello sviluppo di applicazioni Android, dove gran parte degli strumenti più diffusi è open-source, lo sviluppo di applicazioni iOS richiede vincoli stringenti imposti da Apple come ad esempio l'utilizzo dell'IDE XCode, il quale è disponibile solamente per il sistema operativo macOS.\\
+Per gli strumenti di build automation esistono diverse alternative per l'ecosistema Android, anche se lo standard de-facto è dato dal tool Gradle. Lo stesso non è vero invece per le applicazioni iOS: come per l'IDE anche in questo caso è necessario utilizzare un insieme di tool specifici indicati da Apple. I più popolari frameworks open-source per lo sviluppo di applicazioni cross-platform sono: (\textit{i}) Ionic, (\textit{ii}) Flutter e (\textit{iii}) React Native. Il paradigma multi-platform è più recente rispetto al quello cross-platform e il principale framework open-source in questo caso è Kotlin Multiplatform.
 
-\section{Kotlin Multiplatform Mobile}
+\subsection{Kotlin Multiplatform Mobile}
 % descrizione dettagliata di KMM e il suo funzionamento
+
+\subsection{Fastlane}
+% descrizione di fastlane, il quale viene utilizzato in cicd nel capitolo successivo
