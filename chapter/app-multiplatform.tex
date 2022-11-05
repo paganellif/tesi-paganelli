@@ -72,7 +72,18 @@ Quando si sviluppa codice condiviso è spesso necessario definire come determina
 \caption{Esempio di applicazione expect/actual per ottenere informazioni sulla piattaforma.}
 \end{listing}
 
-\subsection{KMM Gradle Plugins}
+\subsubsection{Struttura Applicazione KMM}
+Una applicazione sviluppata con KMM segue lo stack definito dalla condivisione della business logic e la separazione della UX/UI (figura \ref{stackKMM}). Il modulo \textit{shared} contiene tutta la business logic condivisa, la quale può essere sviluppata tramite l'utilizzo di librerie con supporto nativo al framework KMM, cioè librerie che forniscono già al loro interno specifiche implementazioni per le diverse piattaforme target, oppure tramite l'utilizzo del meccanismo expect/actual.\\
+Nel caso di utilizzo del meccanismo expect/actual è necessario definire le funzionalità nel modulo \textit{commonMain} e fornire le implementazioni per le specifiche piattaforme nei relativi moduli \textit{androidMain} e \textit{iosMain}. Gli stessi concetti vengono applicati per la struttura dei moduli di test: \textit{commonTest}, \textit{androidTest} e \textit{iosTest}.\\
+I moduli UX/UI delle relative piattaforme includono il codice condiviso come dipendenza di progetto, in particolare come dipendenza Gradle (\textit{aar}\footnote{Android Archive}) per Android e come dipendenza CocoaPods (Pod) per iOS.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{img/struttura_app_kmm.png}
+\caption{Struttura dei moduli di una applicazione KMM.}
+\end{figure}
+
+\subsubsection{KMM Gradle Plugins}
 Gli strumenti di build automation permettono la gestione di tutti quei task riguardanti la compilazione del codice. Gradle rappresenta il tool di build automation ufficiale Android ed è possibile sviluppare delle estensioni, chiamate plugins, per aggiungere task custom allo strumento. E' proprio tramite questo meccanismo che KMM permette l'esecuzione dei task relativi allo sviluppo di applicazioni mobile multiplatform.\\
 Il plugin Gradle KMM fornisce uno specifico DSL\footnote{Domain Specific Language} per definire e configurare i task necessari a compilare il codice condiviso per le relative piattaforme target\footnote{\href{https://kotlinlang.org/docs/multiplatform-dsl-reference.html}{https://kotlinlang.org/docs/multiplatform-dsl-reference.html}}. Alcune delle principali tipologie di task sono:
 
