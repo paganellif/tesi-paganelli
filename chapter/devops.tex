@@ -20,7 +20,7 @@ I principali benefici nell'adozione della cultura DevOps sono~\cite{krief2019lea
     \item Risparmio di tempo e risorse dovuti dall'utilizzo di un ciclo di sviluppo iterativo e tecniche di automazione.
 \end{itemize}
 
-I team che intendono adottare le tecniche DevOps nel proprio processo di sviluppo devono seguire metodologie Agile con fasi iterative che permettono maggiore qualità delle funzionalità e feedback rapidi da parte dell'utente. Le principali pratiche che vengono adottate sono: (\textit{i}) Continuous Integration, (\textit{ii}) Continuous Delivery, (\textit{iii}) Continuous Monitoring.
+I team che intendono adottare le tecniche DevOps nel proprio processo di sviluppo devono seguire metodologie Agile con fasi iterative che permettono maggiore qualità delle funzionalità e feedback rapidi da parte dell'utente. Le principali pratiche che vengono adottate sono: (\textit{i}) Continuous Integration, (\textit{ii}) Continuous Delivery, (\textit{iii}) Continuous Deployment e (\textit{iv}) Continuous Monitoring.
 
 \begin{figure}[H]
     \centering
@@ -31,7 +31,45 @@ I team che intendono adottare le tecniche DevOps nel proprio processo di svilupp
 \subsection{Continuous Integration}
 Maggiore è la complessità di un progetto e maggiore è la necessità di integrare frequentemente e preventivamente i componenti software al fine di verificare che essi funzionino correttamente~\cite{duvall2007continuous}. Con Continuous Integration (CI) si intende una pratica di sviluppo software dove i membri di un team integrano frequentemente il loro lavoro e ogni integrazione è testata e verificata da un sistema automatico in grado di intercettare gli errori il più velocemente possibile\footnote{\href{https://martinfowler.com/articles/continuousIntegration.html}{https://martinfowler.com/articles/continuousIntegration.html}}.
 
+Con pipeline si intende una sequenza ordinata di elaborazioni che vengono applicate al codice sorgente in modo automatico. Solitamente una pipeline di CI prevede tre task:
+
+\begin{itemize}
+    \item \textbf{Build} - Il primo task consiste nella verifica della corretta compilazione del codice sorgente.
+    \item \textbf{Test} - Successivamente si eseguono i task di testing, tipicamente riguardanti la logica applicativa (unit testing).
+    \item \textbf{Package} - Lo scopo dell'ultimo task della pipeline di CI consiste nella verifica della corretta pacchettizzazione del codice. Deve essere possibile creare correttamente l'artefatto che verrà poi passato alle fasi successive di rilascio (delivery).
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/ci-pipeline.png}
+    \caption{Pipeline di Continuous Integration.}
+    \label{ci-pipeline}
+\end{figure}
+
+Ogni sviluppatore lavora effettuando piccole modifiche al codice (commit) che possono essere facilmente sistemate in caso di errori: maggiore è la modifica applicata al codice e maggiore è il rischio di problemi. Grazie ai sistemi di versionamento del codice (VCS\footnote{Version Control System}) e alle funzionalità che forniscono come branch, commit, pull request e code review gli sviluppatori possono collaborare sul codice. Unendo le funzionalità dei VCS con le funzionalità di altri sistemi appositi per l'automazione di task, come GitLab CI, GitHub Actions e Travis CI è possibile adottare efficacemente le tecniche di CI nel processo di sviluppo. Tali strumenti a supporto dei sistemi di automazione sono descritti in modo dettagliato nella sezione \ref{devops-tools-sec} di questo capitolo.
+
 \subsection{Continuous Delivery}
+Quando la fase di CI termina con successo si continua con la fase successiva di rilascio automatico del codice. Con Continuous Delivery (CD) si intende una pratica di sviluppo dove il software viene sviluppato in una maniera tale da poter essere installato nell'ambiente di produzione in qualsiasi momento\footnote{\href{https://martinfowler.com/bliki/ContinuousDelivery.html}{https://martinfowler.com/bliki/ContinuousDelivery.html}}. Questo significa che gli stessi concetti di (\textit{i}) piccole modifiche e (\textit{molto frequentemente}) applicati alla fase di integrazione vengono applicati anche alla fase di rilascio.
+
+Il compito principale della fase di CD è quello di prendere il software impacchettato nell'ultimo task della fase di CI (\textit{package}) e renderlo disponibile alla fase successiva di installazione (deployment) tramite la pubblicazione su appositi sistemi chiamati package manager.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/cd-pipeline.png}
+    \caption{Pipeline di Continuous Delivery.}
+    \label{cd-pipeline}
+\end{figure}
+
+I package manager devono fornire lo spazio necessario alla archiviazione dei pacchetti creati durante la fase di CI e pubblicati durante la fase di CD ma devono anche supportare altre funzionalità come versionamento dei pacchetti, diverse tipologie di pacchetto e autenticazione per il caricamento/scaricamento dei pacchetti. Alcuni esempi di package manager sono Nexus, Maven Central Repository e NPM.
+
+\subsection{Continuous Deployment}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/cdeploy-pipeline.png}
+    \caption{Pipeline di Continuous Delivery.}
+    \label{cdeploy-pipeline}
+\end{figure}
 
 \subsection{Continuous Monitoring}
 
@@ -39,10 +77,13 @@ Maggiore è la complessità di un progetto e maggiore è la necessità di integr
 % solitamente si chiama devsecops quando contiene anche automazione sull analisi automatica del codice
 
 \section{Strumenti}
+\label{devops-tools-sec}
+%Per mettere in pratica le tecniche di CI/CD e adottarle efficacemente nel processo di sviluppo sono disponibili tanti strumenti
 % descrizione strumenti per l'automazione in generale (gitlab runner + Pipeline as Code)
 \subsection{Pipeline as Code}
 
 \subsection{Runners}
+
 
 \subsection{Software as a Service}
 % descrizione strumenti as a service per l'automazione del processo (runner managed, sonarcloud, ...) e dello dello sviluppo mobile (xcode cloud, bitrise, google play console, testflight)
