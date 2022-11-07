@@ -5,6 +5,7 @@
 \usepackage[italian]{babel}
 \usepackage{bold-extra}
 \usepackage{tocloft}
+\usepackage{parskip}
 \usepackage{multicol} % http://ctan.org/pkg/multicols
 \usepackage{titlesec}
 \usepackage{float}
@@ -17,6 +18,11 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage[toc,page]{appendix}
 \usepackage{fancyhdr}
+
+% inline list
+\usepackage[inline]{enumitem}
+\newlist{inlinelist}{enumerate*}{1}
+\setlist[inlinelist]{label=(\emph{\roman*)}}
 
 \usepackage[
   top=2.5cm,
@@ -31,62 +37,11 @@
 \input{config.tex}
 
 \begin{document}
+
+\setlist[itemize]{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+\setlist[enumerate]{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
   
-\begin{titlepage}
-\begin{center}
-{{\Large{\textsc{Alma Mater Studiorum $\cdot$ Universit\`a di
-Bologna\\\vspace{2mm}Campus di Cesena}}}} 
-\rule[0.1cm]{15.8cm}{0.1mm}
-\rule[0.5cm]{15.8cm}{0.6mm}
-
-{\small{\textsc { DIPARTIMENTO DI INFORMATICA – SCIENZA E INGEGNERIA \\
-\vspace{3mm}
-Corso di Laurea Magistrale in Ingegneria e scienze informatiche}}}
-\end{center}
-\vspace{15mm}
-\begin{center}
-{\LARGE\textbf{DEVOPS PER APPLICAZIONI MOBILE}} \\
-\vspace{3mm}
-{\LARGE\textbf{MULTIPIATTAFORMA: UN CASO DI}} \\
-\vspace{3mm}
-{\LARGE\textbf{STUDIO INDUSTRIALE}} \\
-\vspace{20mm} {\large{\sc Tesi di Laurea Magistrale in\\ Laboratorio di Sistemi Software LM}}
-\end{center}
-\vfill
-\par
-\noindent
-
-\begin{minipage}[t]{0.47\textwidth}
-{\large{\sc Relatore:}\\
-{\bf \textsc{Prof. Danilo Pianini}}}\\ \\
-{\large{\sc Correlatore:}\\
-{\bf \textsc{Prof.ssa Catia Prandi}}}\\
-\vskip 8pt
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.47\textwidth}\raggedleft
-{\large{\sc Presentata da:}\\
-%\vspace{2mm}
-{\bf Filippo Paganelli}}
-\end{minipage}
-\vspace{20mm}
-\begin{center}
-\rule[0.1cm]{15.8cm}{0.2mm}
-{\large{\sc III Sessione\\
-Anno Accademico 2021/2022}}
-\end{center}
-\end{titlepage}
-
-\newpage
-
-\begin{center}
-{\LARGE{\bf Sommario}}
-\end{center}
-{
-\noindent
-\input{chapter/sommario.tex}
-\addcontentsline{toc}{chapter}{Sommario}
-}
+\input{chapter/titolo.tex}
 
 \newpage
 
