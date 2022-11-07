@@ -26,8 +26,6 @@ Esistono però alcune differenze tra loro, fondamentali durante la scelta della 
     \end{itemize}
 \end{itemize}
 
-\section{Mobile Application Development Lifecycle}
-
 \section{Strumenti}
 Tipicamente quando ci si approccia allo sviluppo di una qualsiasi tipologia di software si effettua una ricerca di tutti gli strumenti in grado di facilitare il lavoro dello sviluppatore. Le principali categorie di strumenti necessari sono: (\textit{i}) linguaggio di programmazione, (\textit{ii}) ambiente di sviluppo (IDE\footnote{Integrated Development Environment}), (\textit{iii}) build automation e (\textit{iv}) framework di sviluppo.\\
 La scelta di questi strumenti è spesso vincolata dalla piattaforma target, ovvero l'ambiente dove eseguirà il codice, e lo è in particolare per le applicazioni mobile. A differenza dello sviluppo di applicazioni Android, dove gran parte degli strumenti più diffusi è open-source, lo sviluppo di applicazioni iOS richiede vincoli stringenti imposti da Apple come ad esempio l'utilizzo dell'IDE XCode, il quale è disponibile solamente per il sistema operativo macOS.\\
@@ -45,7 +43,7 @@ Kotlin Multiplatform Mobile\footnote{\href{https://kotlinlang.org/lp/mobile/}{ht
 \end{figure}
 
 Con il rilascio di Kotlin 1.7.20 (Settembre 2022), KMM è passato dalla fase \textit{Alpha} alla fase \textit{Beta} la quale è considerata come fase "\textit{pre-stable}"\footnote{\href{https://kotlinlang.org/docs/components-stability.html\#current-stability-of-kotlin-components}{https://kotlinlang.org/docs/components-stability.html\#current-stability-of-kotlin-components}} ma è comunque già stato adottato in produzione per lo sviluppo delle proprie applicazioni mobile da tante aziende tra le quali è possibile trovare nomi rilevanti come Netflix, VMware e Philips\footnote{\href{https://kotlinlang.org/lp/mobile/case-studies/}{https://kotlinlang.org/lp/mobile/case-studies/}}. In base al risultato dell'indagine di mercato svolta nei primi due quadrimestri del 2021\footnote{\href{https://blog.jetbrains.com/kotlin/2021/10/multiplatform-survey-q1-q2-2021/}{https://blog.jetbrains.com/kotlin/2021/10/multiplatform-survey-q1-q2-2021/}}, le porzioni di codice condiviso nelle applicazioni sviluppate con KMM sono: 85\% networking, 75\% data storage, 70\% utilities, $\sim$60\% algoritmi/computazione, $\sim$55\% state management e $\sim$50\% presenters/controllers/view models.
-KMM consiste in un caso d'uso specifico (e il più diffuso) del framework Kotlin MultiPlatform (KMP), il quale permette di sviluppare il codice in modo agnostico rispetto le piattaforme target e di condividerlo tra differenti piattaforme. Il framework KMM è fortemente basato sui seguenti compilatori inclusi nell'ecosistema Kotlin\cite{nagy2022simplifying}:
+KMM consiste in un caso d'uso specifico (e il più diffuso) del framework Kotlin MultiPlatform (KMP), il quale permette di sviluppare il codice in modo agnostico rispetto le piattaforme target e di condividerlo tra differenti piattaforme. Il framework KMM è fortemente basato sui seguenti compilatori inclusi nell'ecosistema Kotlin~\cite{nagy2022simplifying}:
 
 \begin{itemize}
     \item \textbf{Kotlin/JVM} - Utilizzato per la piattaforma Android, permette di compilare codice Kotlin in bytecode Java (\textit{.class}), il quale può essere eseguito direttamente sulla JVM. Nel caso di Android è necessario un ulteriore passaggio per tradurre il bytecode Java in bytecode Dalvik (\textit{.dex}).
@@ -106,3 +104,10 @@ Lo strumento di build automation Gradle e i relativi plugins utilizzati vengono 
 \inputminted{kotlin}{code/3-gradlekmm2}
 \caption{Definizione utilizzo Plugin Gradle KMM nel file \textit{build.gradle.kts} del modulo condiviso (Kotlin).}
 \end{listing}
+
+\subsection{Fastlane}
+% descrizione di fastlane, il quale viene utilizzato in cicd nel capitolo successivo
+
+%Data la necessità di sviluppare applicazioni per le due differenti piattaforme Android e iOS è anche necessario utilizzare differenti strumenti di build automation per l'esecuzione dei task del processo di sviluppo.
+
+%Come abbiamo visto in questo capitolo il processo di sviluppo delle applicazioni mobile comprende anche altre fasi oltre a quelle di progettazione e scrittura del codice. Lo sviluppatore deve essere infatti in grado di poter 
