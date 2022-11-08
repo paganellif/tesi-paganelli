@@ -99,15 +99,39 @@ Anche la fase di monitoring deve essere continua e automatica ma a differenza de
     \item creazione di dashboard per la visualizzazione grafica.
 \end{itemize}
 
+Lo scopo principale della pratica di continuous monitoring è ridurre il più possibile il tempo che intercorre tra il momento in cui un difetto è introdotto nel codice o nel processo, intercettato e risolto.
+
 Le stesse pratiche si possono adottare per il monitoraggio dell'utente con l'obiettivo di raccogliere dati sul suo comportamento per migliorare l'esperienza utente, fare analisi di mercato o creare raccomandazioni. Tipicamente ci si riferisce a questa pratica con il termine analytics.
 
 \subsection{Continuous Inspection}
-% solitamente si chiama devsecops quando contiene anche automazione sull analisi automatica del codice
+Tipicamente vengono definiti a livello aziendale degli standard di qualità e di sicurezza
+che devono essere rispettati da ogni team di sviluppo per qualsiasi prodotto software. La
+definizione di linee guida sullo stile di programmazione o sul livello di severity accettato sono esempi di standard di qualità. La pratica di analizzare automaticamente e molto frequentemente il codice al fine di validare il rispetto degli standard di qualità e sicurezza è chiamata Continuous
+Inspection.
+
+L’obiettivo è quello di ottenere un feedback sullo stato del codice, sullo stato
+del processo e sulla presenza di problemi di sicurezza al fine di pianificare interventi
+risolutivi nel minor tempo possibile. Come nel caso del monitoraggio esiste un sistema terzo a supporto dei task necessari e in grado di fornire feedback allo sviluppatore. I principali task di analisi che compongono la fase di ispezione continua sono:
+
+\begin{itemize}
+    \item \textbf{Static Application Security Testing} (SAST) - Analisi white-box della applicazione al fine di individuare vulnerabilità, code smell e bug ma anche di verificare il rispetto di un certo livello di qualità.
+    \item \textbf{Software Composition Analysis} (SCA) - Analisi delle dipendenze di progetto con lo scopo di individuare vulnerabilità pubbliche (CVE\footnote{Common Vulnerability and Exposure}) associate ad esse.
+\end{itemize}
+
+In entrambe le tipologie di analisi è fondamentale ottenere come risultato un report della scansione, in grado di descrivere in modo dettagliato eventuali entità individuate dalla fase di analisi. I report vengono prodotti tipicamente sia in formati human-readable (es. pagina HTML) che machine-readable (es. JSON, XML) per poter essere utilizzati da applicazioni terze come ad esempio sistemi centralizzati per la consultazione di report eterogenei chiamati Vulnerability Management System.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/cinspection-pipeline.png}
+    \caption{Funzionamento tipico di un sistema di Continuous Inspection.}
+    \label{ci-inspection-pipeline}
+\end{figure}
 
 \section{Strumenti}
 \label{devops-tools-sec}
 %Per mettere in pratica le tecniche di CI/CD e adottarle efficacemente nel processo di sviluppo sono disponibili tanti strumenti
 % descrizione strumenti per l'automazione in generale (gitlab runner + Pipeline as Code)
+
 \subsection{Pipeline as Code}
 
 \subsection{Runners}
