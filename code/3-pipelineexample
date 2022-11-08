@@ -1,20 +1,11 @@
 stages:
   - build
-  - test
   - deploy
 
 build-job:
   stage: build
   script:
     echo “Build Job”
-  rules:
-    - if: $CI_COMMIT_BRANCH =~ /^(dev|test)$/
-      changes: ["*", "src/**/*"]
-
-test-job:
-  stage: test
-  script:
-    echo “Test Job”
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^(dev|test)$/
       changes: ["*", "src/**/*"]

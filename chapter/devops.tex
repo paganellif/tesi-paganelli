@@ -29,6 +29,7 @@ I team che intendono adottare le tecniche DevOps nel proprio processo di svilupp
 \end{figure}
 
 \subsection{Continuous Integration}
+\label{ci-sec}
 Maggiore è la complessità di un progetto e maggiore è la necessità di integrare frequentemente e preventivamente i componenti software al fine di verificare che essi funzionino correttamente~\cite{duvall2007continuous}. Con Continuous Integration (CI) si intende una pratica di sviluppo software dove i membri di un team integrano frequentemente il loro lavoro e ogni integrazione è testata e verificata da un sistema automatico in grado di intercettare gli errori il più velocemente possibile\footnote{\href{https://martinfowler.com/articles/continuousIntegration.html}{https://martinfowler.com/articles/continuousIntegration.html}}.
 
 Con pipeline si intende una sequenza ordinata di elaborazioni che vengono applicate al codice sorgente in modo automatico. Solitamente una pipeline di CI prevede tre task:
@@ -49,6 +50,7 @@ Con pipeline si intende una sequenza ordinata di elaborazioni che vengono applic
 Ogni sviluppatore lavora effettuando piccole modifiche al codice (commit) che possono essere facilmente sistemate in caso di errori: maggiore è la modifica applicata al codice e maggiore è il rischio di problemi. Grazie ai sistemi di versionamento del codice (VCS\footnote{Version Control System}) e alle funzionalità che forniscono come branch, commit, pull request e code review gli sviluppatori possono collaborare sul codice. Unendo le funzionalità dei VCS con le funzionalità di altri sistemi appositi per l'automazione di task, come GitLab CI, GitHub Actions e Travis CI è possibile adottare efficacemente le tecniche di CI nel processo di sviluppo. Tali strumenti a supporto dei sistemi di automazione sono descritti in modo dettagliato nella sezione \ref{devops-tools-sec} di questo capitolo.
 
 \subsection{Continuous Delivery}
+\label{cd-sec}
 Quando la fase di CI termina con successo si continua con la fase successiva di rilascio automatico del codice. Con Continuous Delivery (CD) si intende una pratica di sviluppo dove il software viene sviluppato in una maniera tale da poter essere installato nell'ambiente di produzione in qualsiasi momento\footnote{\href{https://martinfowler.com/bliki/ContinuousDelivery.html}{https://martinfowler.com/bliki/ContinuousDelivery.html}}. Questo significa che gli stessi concetti di (\textit{i}) piccole modifiche e (\textit{molto frequentemente}) applicati alla fase di integrazione vengono applicati anche alla fase di rilascio.
 
 Il compito principale della fase di CD è quello di prendere il software impacchettato nell'ultimo task della fase di CI (package) e renderlo disponibile alla fase successiva di installazione (deployment) tramite la pubblicazione su appositi sistemi chiamati package manager.
@@ -129,13 +131,47 @@ In entrambe le tipologie di analisi è fondamentale ottenere come risultato un r
 
 \section{Strumenti}
 \label{devops-tools-sec}
-%Per mettere in pratica le tecniche di CI/CD e adottarle efficacemente nel processo di sviluppo sono disponibili tanti strumenti
-% descrizione strumenti per l'automazione in generale (gitlab runner + Pipeline as Code)
+Per poter mettere in pratica le tecniche di CI/CD in modo da adottarle efficacemente nel processo di sviluppo è necessaria una infrastruttura complessa composta da tanti servizi e strumenti. Data la grande complessità soprattutto nella gestione, manutenzione e integrazione di tutti questi componenti spesso si fa uso di una o piu piattaforme cloud in modo da avere a disposizione un sistema in grado di fornire i seguenti strumenti fondamentali:
+\begin{itemize}
+    \item \textbf{Source control version} - Strumento per il versionamento del codice e tracciamento delle modifiche che permette la collaborazione tra i componenti di un team. Con l'avvento delle metodologie agile e della cultura DevOps, l'uso di un VCS nei processi è diventato obbligatorio.
+    \item \textbf{Package Manager} - Strumento per l'archiviazione e la condivisione del software sviluppato sotto forma di pacchetti, come descritto nella sezione \ref{cd-sec}.
+    \item \textbf{CI Server} - Strumento in grado di eseguire elaborazioni in modo automatico su un server remoto e restituire il risultato. Rappresenta il motore di tutta la automazione a supporto delle tecniche CI/CD.
+\end{itemize}
 
 \subsection{Pipeline as Code}
+Nella sezione \ref{ci-sec} il concetto di pipeline è stato definito come una sequenza ordinata di elaborazioni che vengono applicate al codice sorgente in modo automatico. In realtà una pipeline di CI/CD è suddivisa in più passi, detti stage, i quali contengono una o più elaborazioni, dette job.
+
+Lo strumento adottato da quasi tutte le principali piattaforme per la definizione degli stage e dei job che compongono una pipeline e quindi per istruire un CI Server all'esecuzione effettiva dei task è chiamato Pipeline as Code. Questo metodo permette di descrivere il processo di una pipeline in un file testuale, tipicamente in formato YAML, che si trova nello stesso repository in cui risiede il codice sorgente.
+
+Il seguente listato contiene la definizione di una pipeline descritta utilizzando la sintassi per la piattaforma specifica GitLab. In questo caso la pipeline è composta da due stage (\textit{build} e \textit{deploy}), ognuno dei quali contiene a sua volta un job. Il cuore del job, ovvero le istruzioni bash che il CI Server deve eseguire sono definite tramite la keyword \textit{script}.
+
+\begin{listing}[H]
+    \inputminted{yaml}{code/3-pipelineexample}
+    \caption{Pipeline d'esempio per la piattaforma GitLab.}
+\end{listing}
+
+I vantaggi derivanti dall'utilizzo del meccanismo Pipeline as Code sono:
+\begin{itemize}
+    \item versionamento dei file che descrivono le pipeline di CI/CD in modo da tracciare anche le modifiche che vengono apportate al processo automatizzato,
+    \item utilizzo di metodologie simili a quelle utilizzate nello sviluppo software (ereditarietà, incapsulamento, riuso, ...),
+    \item i file che descrivono il processo sono accessibile a tutto il team ed è possibile collaborare alla sua modifica in modo identico allo sviluppo software.
+\end{itemize}
 
 \subsection{Runners}
+L'architettura di un CI Server deve essere costruita in modo robusto e scalabile per poter supportare efficacemente le tecniche CI/CD. Basta un team con un numero minimo di sviluppatori e un numero minimo di progetti ai quali sono applicate le tecniche CI/CD e la metodologia di sviluppo agile per comprendere l'enorme quantità di lavoro a cui un CI Server può essere sottoposto.
 
+Ogni evento che si verifica sulla piattaforma in cui è mantenuto il codice sorgente viene intercettato dal CI Server: se nel file che descrive la pipeline è definito un job in associazione a quello specifico evento, il CI Server invia tutte le informazioni utili per l'esecuzione del job ad un altro componente software chiamato runner e rimane in attesa del risultato. 
 
-\subsection{Software as a Service}
-% descrizione strumenti as a service per l'automazione del processo (runner managed, sonarcloud, ...) e dello dello sviluppo mobile (xcode cloud, bitrise, google play console, testflight)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/ciserver-runner.png}
+    \caption{Diagramma di sequenza interazione CI Server-Runner}
+    \label{ci-server-runner}
+\end{figure}
+
+Il runner consiste in un componente architetturale della infrastruttura che necessita di un ambiente di esecuzione e per svolgere il suo compito consuma delle risorse. In base a chi lo gestisce il runner può essere:
+
+\begin{itemize}
+    \item \textbf{Managed} - Funzionalità fornita as-a-Service dalla piattaforma che si utilizza. In base al piano di licenza sottoscritto con la piattaforma l'utilizzo dei runner è soggetto a limiti che riguardano tipicamente i minuti di utilizzo e lo spazio di archiviazione. Il vantaggio di questa modalità è che non è richiesto alcuno sforzo nella configurazione e manutenzione del runner e nessuna spesa per l'ambiente di esecuzione.
+    \item \textbf{Self-Hosted} - Il componente è gestito dall'utilizzatore in tutti i suoi aspetti ma non è soggetto ad alcun tipo di vincolo in termini di risorse utilizzate.
+\end{itemize}
