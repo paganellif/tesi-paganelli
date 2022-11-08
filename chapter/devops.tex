@@ -51,7 +51,7 @@ Ogni sviluppatore lavora effettuando piccole modifiche al codice (commit) che po
 \subsection{Continuous Delivery}
 Quando la fase di CI termina con successo si continua con la fase successiva di rilascio automatico del codice. Con Continuous Delivery (CD) si intende una pratica di sviluppo dove il software viene sviluppato in una maniera tale da poter essere installato nell'ambiente di produzione in qualsiasi momento\footnote{\href{https://martinfowler.com/bliki/ContinuousDelivery.html}{https://martinfowler.com/bliki/ContinuousDelivery.html}}. Questo significa che gli stessi concetti di (\textit{i}) piccole modifiche e (\textit{molto frequentemente}) applicati alla fase di integrazione vengono applicati anche alla fase di rilascio.
 
-Il compito principale della fase di CD è quello di prendere il software impacchettato nell'ultimo task della fase di CI (\textit{package}) e renderlo disponibile alla fase successiva di installazione (deployment) tramite la pubblicazione su appositi sistemi chiamati package manager.
+Il compito principale della fase di CD è quello di prendere il software impacchettato nell'ultimo task della fase di CI (package) e renderlo disponibile alla fase successiva di installazione (deployment) tramite la pubblicazione su appositi sistemi chiamati package manager.
 
 \begin{figure}[H]
     \centering
@@ -60,9 +60,16 @@ Il compito principale della fase di CD è quello di prendere il software impacch
     \label{cd-pipeline}
 \end{figure}
 
-I package manager devono fornire lo spazio necessario alla archiviazione dei pacchetti creati durante la fase di CI e pubblicati durante la fase di CD ma devono anche supportare altre funzionalità come versionamento dei pacchetti, diverse tipologie di pacchetto e autenticazione per il caricamento/scaricamento dei pacchetti. Alcuni esempi di package manager sono Nexus, Maven Central Repository e NPM.
+I package manager devono fornire lo spazio necessario alla archiviazione dei pacchetti creati durante la fase di CI e pubblicati durante la fase di CD ma devono anche supportare altre funzionalità come versionamento dei pacchetti, diverse tipologie di pacchetto e autenticazione per il caricamento/scaricamento dei pacchetti in caso di package manager privati. Alcuni esempi di package manager sono Nexus, Maven Central Repository e NPM.
+
+E' fondamentale che il pacchetto pubblicato sul package manager sia dato come output dalla fase di CI in modo da garantire che il codice sorgente ha passato con successo tutti i task di controllo e verifica. Lo stesso pacchetto sarà poi utilizzato nella fase successiva per l'installazione in un ambiente d'esecuzione. 
 
 \subsection{Continuous Deployment}
+In base alla natura del software che si sviluppa il processo potrebbe terminare con la fase di delivery, come ad esempio nel caso di librerie e applicazioni mobile oppure continuare con l'installazione del prodotto in un ambiente di esecuzione, come nel caso di applicazioni web e microservizi. 
+
+Nel caso in cui sia necessaria l'installazione del prodotto in un ambiente, la fase di deployment recupera il pacchetto pubblicato in fase di delivery e lo installa. Infatti, non può esistere continuous deployment senza continuous delivery, ma non è vero il contrario.
+
+Con Continuous Deployment si intende quindi una estensione della continuous delivery con un processo che automatizza l'intera pipeline dal momento in cui lo sviluppatore modifica il codice alla installazione di quella modifica nell'ambiente di staging o produzione~\cite{krief2019learning}.
 
 \begin{figure}[H]
     \centering
@@ -72,6 +79,27 @@ I package manager devono fornire lo spazio necessario alla archiviazione dei pac
 \end{figure}
 
 \subsection{Continuous Monitoring}
+Poter raccogliere dati dal sistema per poterlo analizzare è uno dei punti chiave del DevOps poiché permette di migliorare sia il prodotto che il processo: garantisce integrità, prestazioni e affidabilità in ogni fase del ciclo di vita del software.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/ci-monitoring.png}
+    \caption{Funzionamento tipico di un sistema di Continuous Monitoring.}
+    \label{ci-monitoring}
+\end{figure}
+
+Anche la fase di monitoring deve essere continua e automatica ma a differenza della CI/CD, le pratiche di monitoraggio eseguono task che riguardano tutto il processo indipendentemente dal lavoro svolto dallo sviluppatore. Ad esempio:
+
+\begin{itemize}
+    \item raccolta di metriche riguardanti il processo di sviluppo (commit effettuate, merge request chiuse e approvate, issues, pipeline fallite, ...),
+    \item raccolta di metriche riguardanti il software rilasciato (numero di download effettuati, recensioni, ...),
+    \item raccolta di metriche riguardanti l'ambiente d'esecuzione del software installato (log, metriche, traces),
+    \item centralizzazione di tutti i dati raccolti,
+    \item invio di notifiche (alerting) al raggiungimento di una certa soglia da parte di una specifica metrica,
+    \item creazione di dashboard per la visualizzazione grafica.
+\end{itemize}
+
+Le stesse pratiche si possono adottare per il monitoraggio dell'utente con l'obiettivo di raccogliere dati sul suo comportamento per migliorare l'esperienza utente, fare analisi di mercato o creare raccomandazioni. Tipicamente ci si riferisce a questa pratica con il termine analytics.
 
 \subsection{Continuous Inspection}
 % solitamente si chiama devsecops quando contiene anche automazione sull analisi automatica del codice
