@@ -61,6 +61,19 @@ KMM consiste in un caso d'uso specifico (e il più diffuso) del framework Kotlin
     \item \textbf{Kotlin/Native} - Utilizzato per la piattaforma iOS. A differenza del compilatore Kotlin/JVM, il compilatore Kotlin/Native è progettato per quelle situazioni dove non è possibile o non si vuole avere una VM come nel caso dei dispositivi embedded e della piattaforma iOS. Per fare ciò include un backend basato su \textit{Low Level Virtual Machine} (LLVM)\footnote{\href{https://llvm.org/}{https://llvm.org/}} in grado di compilare il codice Kotlin in binari nativi che possono essere eseguiti senza VM\cite{nagy2022simplifying}. Le piattaforme supportate da Kotlin/Native attualmente sono macOS, iOS, tvOS, watchOS, Linux, Windows (MinGW) e Android NDK\footnote{\href{https://kotlinlang.org/docs/native-overview.html\#target-platforms}{https://kotlinlang.org/docs/native-overview.html\#target-platforms}} e per ognuna di esse esistono differenti architetture. Nel caso di iOS le differenti architetture supportate da KMM sono \textit{Arm64}, \textit{Arm32} e \textit{x64}. Anche in questo caso sono necessarie due fasi di compilazione: (\textit{i}) il codice Kotlin viene compilato nella \textit{Rappresentazione Intermedia} (IR) LLVM e (\textit{ii}) successivamente compilato nel binario nativo.
 \end{itemize}
 
+\subsubsection{Struttura Applicazione KMM}
+Una applicazione sviluppata con KMM segue lo stack definito dalla condivisione della business logic e la separazione della UX/UI (figura \ref{stackKMM}). Il modulo \textit{shared} contiene tutta la business logic condivisa, la quale può essere sviluppata tramite l'utilizzo di librerie con supporto nativo al framework KMM, cioè librerie che forniscono già al loro interno specifiche implementazioni per le diverse piattaforme target, oppure tramite l'utilizzo del meccanismo expect/actual.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/struttura_app_kmm.png}
+    \caption{Struttura dei moduli di una applicazione KMM.}
+\end{figure}
+
+Nel caso di utilizzo del meccanismo expect/actual è necessario definire le funzionalità nel modulo \textit{commonMain} e fornire le implementazioni per le specifiche piattaforme nei relativi moduli \textit{androidMain} e \textit{iosMain}. Gli stessi concetti vengono applicati per la struttura dei moduli di test: \textit{commonTest}, \textit{androidTest} e \textit{iosTest}.
+
+I moduli UX/UI delle relative piattaforme includono il codice condiviso come dipendenza di progetto, in particolare come dipendenza Gradle (\textit{aar}\footnote{Android Archive}) per Android e come dipendenza CocoaPods (Pod) per iOS.
+
 \subsubsection{Expect/Actual}
 Quando si sviluppa codice condiviso è spesso necessario definire come determinate funzionalità debbano essere implementate sulla specifica piattaforma target per utilizzare i relativi SDK. Il framework KMM fornisce il meccanismo \textit{expect/actual} per assolvere a questo compito in modo del tutto analogo al design pattern \textit{Template Method}:
 \begin{itemize}
@@ -68,24 +81,28 @@ Quando si sviluppa codice condiviso è spesso necessario definire come determina
     \item \textbf{Actual} - Implementazione specifica per una determinata piattaforma. Tramite la keywork \textit{actual} si definisce l'implementazione, reificando l'astrazione definita tramite il concetto di \textit{expect}.
 \end{itemize}
 
-% inserire codice nel repo github
+Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/3-applicazioni-multipiattaforma/kmm-example/shared}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/3-applicazioni-multipiattaforma/kmm-example/shared}} mostra un esempio elementare di utilizzo del meccanismo:
+
 \begin{listing}[H]
-\inputminted{kotlin}{code/3-expectactual}
-\caption{Esempio di applicazione expect/actual per ottenere informazioni sulla piattaforma.}
+    \inputminted{kotlin}{code/3-expectactual}
+    \caption{Esempio di applicazione expect/actual per ottenere informazioni sulla piattaforma.}
 \end{listing}
 
-\subsubsection{Struttura Applicazione KMM}
-Una applicazione sviluppata con KMM segue lo stack definito dalla condivisione della business logic e la separazione della UX/UI (figura \ref{stackKMM}). Il modulo \textit{shared} contiene tutta la business logic condivisa, la quale può essere sviluppata tramite l'utilizzo di librerie con supporto nativo al framework KMM, cioè librerie che forniscono già al loro interno specifiche implementazioni per le diverse piattaforme target, oppure tramite l'utilizzo del meccanismo expect/actual.
+I seguenti screenshot, catturati tramite l'esecuzione degli appositi emulatori delle piattaforme target, mostrano l'efficacia del meccanismo expect/actual: l'applicazione è stata compilata utilizzando le differenti implementazioni in modo corretto.
 
-Nel caso di utilizzo del meccanismo expect/actual è necessario definire le funzionalità nel modulo \textit{commonMain} e fornire le implementazioni per le specifiche piattaforme nei relativi moduli \textit{androidMain} e \textit{iosMain}. Gli stessi concetti vengono applicati per la struttura dei moduli di test: \textit{commonTest}, \textit{androidTest} e \textit{iosTest}.
+\begin{multicols}{2}
+    \begin{figure}[H]
+        \includegraphics[width=0.37\textwidth]{img/kmm_example_android.png}
+        \caption{Esempio expect/actual in esecuzione sulla piattaforma Android}
+        \label{expect-actual-android}
+    \end{figure}
 
-I moduli UX/UI delle relative piattaforme includono il codice condiviso come dipendenza di progetto, in particolare come dipendenza Gradle (\textit{aar}\footnote{Android Archive}) per Android e come dipendenza CocoaPods (Pod) per iOS.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.4\textwidth]{img/struttura_app_kmm.png}
-    \caption{Struttura dei moduli di una applicazione KMM.}
-\end{figure}
+    \begin{figure}[H]
+        \includegraphics[width=0.35\textwidth]{img/kmm_example_ios_dark.png}
+        \caption{Esempio expect/actual in esecuzione sulla piattaforma iOS}
+        \label{expect-actual-ios}
+    \end{figure}
+\end{multicols}
 
 \subsubsection{KMM Gradle Plugins}
 Gli strumenti di build automation permettono la gestione di tutti quei task riguardanti la compilazione del codice. Gradle rappresenta il tool di build automation ufficiale Android ed è possibile sviluppare delle estensioni, chiamate plugins, per aggiungere task custom allo strumento. E' proprio tramite questo meccanismo che KMM permette l'esecuzione dei task relativi allo sviluppo di applicazioni mobile multiplatform.
@@ -99,17 +116,16 @@ Il plugin Gradle KMM fornisce uno specifico DSL\footnote{Domain Specific Languag
     \item \textbf{Verification tasks} - tasks per l'esecuzione dei test
 \end{itemize}
 
-Lo strumento di build automation Gradle e i relativi plugins utilizzati vengono configurati tramite specifici file locati tra i sorgenti del progetto:
-
-% aggiungere codice al repo github
-\begin{listing}[H]
-\inputminted{kotlin}{code/3-gradlekmm1}
-\caption{Struttura iniziale del file \textit{settings.gradle.kts} nella root di progetto (Kotlin).}
-\end{listing}
+Lo strumento di build automation Gradle e i relativi plugins utilizzati vengono configurati tramite specifici file locati insieme ai sorgenti del progetto. Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/3-applicazioni-multipiattaforma/kmm-example/shared/build.gradle.kts}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/3-applicazioni-multipiattaforma/kmm-example/shared/build.gradle.kts}} mostra come è possibile configurare il modulo condiviso tramite l'apposito DSL. E' in questo file di configurazione che si definiscono le specifiche dipendenze e task per le piattaforme target:
 
 \begin{listing}[H]
 \inputminted{kotlin}{code/3-gradlekmm2}
 \caption{Definizione utilizzo Plugin Gradle KMM nel file \textit{build.gradle.kts} del modulo condiviso (Kotlin).}
+\end{listing}
+
+\begin{listing}[H]
+\inputminted{kotlin}{code/3-gradlekmm1}
+\caption{Struttura iniziale del file \textit{settings.gradle.kts} nella root di progetto (Kotlin).}
 \end{listing}
 
 \subsection{Fastlane}
