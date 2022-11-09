@@ -7,7 +7,13 @@ plugins {
 kotlin {
     android()
     iosArm64()
-    cocoapods { } // Configurazione Cocoapods    
+    cocoapods {  // Configurazione Cocoapods
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
+            baseName = "shared"
+        }
+    }
     sourceSets {
         val commonMain by getting {
             dependencies { } // Dipendenze comuni a Android e iOS
