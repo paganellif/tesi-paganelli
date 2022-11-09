@@ -123,14 +123,21 @@ Lo strumento di build automation Gradle e i relativi plugins utilizzati vengono 
 \caption{Definizione utilizzo Plugin Gradle KMM nel file \textit{build.gradle.kts} del modulo condiviso (Kotlin).}
 \end{listing}
 
-\begin{listing}[H]
-\inputminted{kotlin}{code/3-gradlekmm1}
-\caption{Struttura iniziale del file \textit{settings.gradle.kts} nella root di progetto (Kotlin).}
-\end{listing}
-
 \subsection{Fastlane}
-% descrizione di fastlane, il quale viene utilizzato in cicd nel capitolo successivo
+Nonostante vi sia la necessità di utilizzare diversi strumenti di build automation per l'esecuzione dei task di sviluppo per le due differenti piattaforme Android e iOS, il processo di sviluppo e le fasi che lo compongono sono comuni, indipendentemente dalla piattaforma target. Come descritto nei capitoli precedenti, lo sviluppatore deve essere in grado non solo di eseguire task strettamente correlati alla fase di sviluppo ma anche di eseguire tutti quei task che riguardano il testing, la stabilizzazione e il rilascio di una applicazione.
 
-%Data la necessità di sviluppare applicazioni per le due differenti piattaforme Android e iOS è anche necessario utilizzare differenti strumenti di build automation per l'esecuzione dei task del processo di sviluppo.
+Tra gli strumenti open-source dedicati allo sviluppo di applicazioni multipiattaforma uno dei più popolari è sicuramente Fastlane\footnote{\href{7https://github.com/fastlane/fastlane}{7https://github.com/fastlane/fastlane}}. Il punto di forza di questo tool è il supporto a tutte le fasi del processo di sviluppo di applicazioni mobile per entrambe le piattaforme Android e iOS mettendo lo sviluppatore nella condizione di poter operare su tutto il processo tramite un unico tool.
 
-%Come abbiamo visto in questo capitolo il processo di sviluppo delle applicazioni mobile comprende anche altre fasi oltre a quelle di progettazione e scrittura del codice. Lo sviluppatore deve essere infatti in grado di poter 
+I task del delle varie fasi del processo definiscono il comportamento di Fastlane e devono essere descritti negli appositi file di configurazione Fastfile e Appfile utilizzando due concetti principali:
+
+\begin{itemize}
+    \item \textbf{Action} - Elaborazione pre-definita e configurabile tramite passaggio di parametri, rappresenta il task che deve essere eseguito.
+    \item \textbf{Lane} - Insieme di action definito dall'utente per descrivere elaborazioni complesse, ovvero task composti da più sotto-task.
+\end{itemize}
+
+Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/3-applicazioni-multipiattaforma/fastlane/fastlane/Fastfile}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/3-applicazioni-multipiattaforma/fastlane/fastlane/Fastfile}} rappresenta un esempio di lane Fastlane per il rilascio in versione beta di applicazioni iOS. Tale lane, chiamata \textit{beta}, è composta da quattro action rispettivamente per: (\textit{i}) inizializzare l'ambiente per connettersi ai servizi cloud Apple e scaricare tutto il necessario per la fase di firma del codice, (\textit{ii}) compilazione del codice Swift e creazione del pacchetto \textit{ipa} contenente l'applicazione iOS, (\textit{iii}) pubblicazione in versione beta su Testflight e (\textit{iv}) invio della notifica dell'avvenuta pubblicazione su un canale Slack dedicato.
+
+\begin{listing}[H]
+    \inputminted{ruby}{code/4-fastlane}
+    \caption{Esempio di definizione di una lane Fastlane per il rilascio in versione beta di applicazioni iOS}
+\end{listing}
