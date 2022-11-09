@@ -143,7 +143,7 @@ Nella sezione \ref{ci-sec} il concetto di pipeline è stato definito come una se
 
 Lo strumento adottato da quasi tutte le principali piattaforme per la definizione degli stage e dei job che compongono una pipeline e quindi per istruire un CI Server all'esecuzione effettiva dei task è chiamato Pipeline as Code. Questo metodo permette di descrivere il processo di una pipeline in un file testuale, tipicamente in formato YAML, che si trova nello stesso repository in cui risiede il codice sorgente.
 
-Il seguente listato contiene la definizione di una pipeline descritta utilizzando la sintassi per la piattaforma specifica GitLab. In questo caso la pipeline è composta da due stage (\textit{build} e \textit{deploy}), ognuno dei quali contiene a sua volta un job. Il cuore del job, ovvero le istruzioni bash che il CI Server deve eseguire sono definite tramite la keyword \textit{script}.
+Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/1-metodologia-devops/.gitlab-cy.yml}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/1-metodologia-devops/.gitlab-cy.yml}} contiene la definizione di una pipeline descritta utilizzando la sintassi per la piattaforma specifica GitLab. In questo caso la pipeline è composta da due stage (\textit{build} e \textit{deploy}), ognuno dei quali contiene a sua volta un job. Il cuore del job, ovvero le istruzioni bash che il CI Server deve eseguire sono definite tramite la keyword \textit{script}.
 
 \begin{listing}[H]
     \inputminted{yaml}{code/3-pipelineexample}
