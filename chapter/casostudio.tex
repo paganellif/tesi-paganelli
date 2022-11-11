@@ -18,54 +18,28 @@ I servizi digitali erogati per la consultazione delle pubblicazioni hanno supera
 La necessità principale è dunque quella di fare innovazione tramite lo sviluppo di una applicazione mobile in modo da fornire ai clienti Maggioli un nuovo metodo di accesso alle pubblicazioni che sia più accessibile e comodo. Le motivazioni che stanno alla base della scelta della cultura DevOps e delle applicazioni multipiattaforma per lo sviluppo di questo caso di studio sono comuni a qualsiasi tipologia di azienda: come descritto nei capitoli \ref{ch:devops} e \ref{ch:app-multiplatform} è possibile ottimizzare il processo di sviluppo diminuendo le risorse impiegante e quindi i costi ma allo stesso tempo si aumenta la qualità del software e la frequenza di rilascio i quali comportano una maggiore soddisfazione da parte dell'utente.
 
 \section{Requisiti processo di sviluppo}
-% requisiti processo di sviluppo: automazione build, test (unit+ui), delivery sui vari store, analisi sonarqube, ...
+Considerando l'intero contesto aziendale esistono degli standard, consolidati con l'esperienza maturata nello sviluppo software, che devono essere adottati sia per quanto riguarda il processo di sviluppo che la scelta degli strumenti necessari.
 
-Considerando l'intero contesto aziendale esistono degli standard, consolidati con l'esperienza maturata nello sviluppo software, che devono essere adottati sia per quanto riguarda la progettazione del processo di sviluppo che per la scelta degli strumenti necessari. 
+L'obiettivo è riuscire a definire un modello di processo fortemente basato sugli standard aziendali ma adattato alle esigenze dello sviluppo di applicazioni mobile multipiattaforma e che possa essere introdotto nei team che si occupano di applicazioni mobile. I principali standard aziendali riguardanti gli strumenti e le tecnologie che devono essere adottati sono:
 
-L'obiettivo è riuscire a definire un modello di processo fortemente basato sugli standard aziendali ma adattato alle esigenze dello sviluppo di applicazioni mobile multipiattaforma e che possa essere introdotto nei team che si occupano di applicazioni mobile. I principali standard riguardanti gli strumenti e le tecnologie che devono essere integrati sono:
 \begin{itemize}
-    \item \textbf{GitLab} - Le funzionalità necessarie al versionamento del codice, alla collaborazione/pianificazione e alla automazione (Sezione \ref{devops-tools-sec}) sono tutte soddisfatte dalla piattaforma cloud GitLab con la quale è presente una sottoscrizione di piano di licenza aziendale.
-    \item \textbf{SonarQube} - Questo servizio self-hosted è reso disponibile a tutti i team aziendali e permette di soddisfare gran parte dei task di Continuous Inspection. Grazie a SonarQube è possibile effettuare l'analisi statica del codice, validare il rispetto di determinate policy aziendali e visualizzare dashboard sullo stato delle scansioni.
-    \item \textbf{Renovate} - Strumento utilizzato per automatizzare la gestione delle dipendenze dei progetti. 
+    \item \textbf{GitLab} (\textit{DVCS/CI Server})- Le funzionalità necessarie al versionamento del codice, alla collaborazione/pianificazione e alla automazione (Sezione \ref{devops-tools-sec}) sono tutte soddisfatte dalla piattaforma cloud GitLab con la quale è presente una sottoscrizione di piano di licenza aziendale.
+    \item \textbf{SonarQube} (\textit{Vulnerability Management System}) - Questo servizio self-hosted è reso disponibile a tutti i team aziendali e permette di soddisfare gran parte dei task di Continuous Inspection. Grazie a SonarQube è possibile effettuare l'analisi statica del codice, validare il rispetto di determinate policy aziendali e visualizzare dashboard sullo stato delle scansioni.
+    \item \textbf{Renovate} (\textit{Dependency Management}) - Strumento utilizzato per automatizzare la gestione delle dipendenze dei progetti. 
 \end{itemize}
 
-I requisiti derivanti invece dalle piattaforme target dei dispositivi, come anticipato nella sezione \ref{app-multiplatform-tools}, condividono il processo di sviluppo ma nessuno degli strumenti necessari. L'utilizzo del tool Fastlane semplifica l'esecuzione e la definizione dei task ma non rimuove la necessità di dover installare tuti gli strumenti necessari:
+La pipeline standard a livello aziendale, base di partenza per la definizione della pipeline per applicazioni mobile multipiattaforma, rispetta a pieno le descrizioni fatte nel capitolo \ref{ch:devops} per quanto riguarda le fasi di integrazione, ispezione e distribuzione (fig. \ref{ci-inspection-pipeline}).
 
-\begin{table}[H]
-\centering
-    \begin{tabular}{|c|c|c|}
-         \hline
-           & \textbf{Android} & \textbf{iOS} \\
-         \hline
-         \textbf{Macchina/OS} & Qualsiasi & macOS \\
-         \hline
-         \textbf{IDE} & Android Studio & XCode \\
-         \hline
-         \textbf{Linguaggio} & Java/Kotlin & Swift \\
-         \hline
-         \textbf{Build Automation} & Gradle & XCode \\
-         \hline
-         \textbf{Alpha/Beta Testing} & Google Play Console & Testflight \\
-         \hline
-         \textbf{Marketplace (Prod)} & Google Play Store & App Store \\
-         \hline
-    \end{tabular}
-    \caption{Confronto degli strumenti necessari tra le piattaforme Android e iOS.}
-\end{table}
-
+%\subsection{Pipeline obiettivo}
 \begin{figure}[H]
     \includegraphics[width=1\textwidth]{img/full-cicd.png}
     \caption{Schema globale del processo di sviluppo automatizzato che si intende realizzare.}
     \label{full-cicd}
 \end{figure}
 
-%\section{Configurazione Infrastruttura}
 %\subsection{Self-Hosted MacOS GitLab Runner}
 % runner macos: in azienda non esistono runner macos.. riprendere il problema del fatto che apple obbliga a usare macOS, indicare le possibili soluzioni (runner managed/self-hosted, ecc) e come ho configurato il runner self-hosted
 % approfondire tipologie di runner executor in gitlab e perche ho usato l'executor shell
-
-%\subsection{SonarQube}
-% sonarqube aziendale per l'analisi del codice
 
 \section{Requisiti applicazione multipiattaforma}
 % requisiti della applicazione da sviluppare, come sono stati identificati, ... (reader, epub, segnalibri, ecc)

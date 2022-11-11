@@ -41,9 +41,7 @@ Adottare la cultura DevOps e la metodologia agile significa applicare il concett
 \subsection{Alpha}
 La prima versione funzionante di una applicazione è detta \textit{alpha} ed è utilizzata per il testing interno di specifiche funzionalità. Questo significa che può presentare anche bug o funzionalità mancanti ma deve contenere almeno le funzionalità che devono essere testate per quella specifica versione.
 
-Solitamente prima della release di una applicazione, anche se in fase di testing, è necessario attendere la sua approvazione da parte del gestore del servizio. Il processo di approvazione pre-release è detto \textit{App Review}. Nel caso del testing interno è possibile distribuire la applicazione ad un insieme ristretto di tester.
-
-Continuando con i rilasci di versioni alpha vengono aggiunte nuove funzionalità e/o risolti eventuali bug: quando la versione è considerata pronta viene eseguita la sua promozione, ovvero il rilascio di una versione alpha in versione beta.
+Solitamente prima della release di una applicazione, anche se in fase di testing, è necessario attendere la sua approvazione da parte del gestore del servizio. Il processo di approvazione pre-release è detto \textit{App Review}. Nel caso del testing interno è possibile distribuire la applicazione ad un insieme ristretto di tester. Continuando con i rilasci di versioni alpha vengono aggiunte nuove funzionalità e/o risolti eventuali bug: quando la versione è considerata pronta viene eseguita la sua promozione, ovvero il rilascio di una versione alpha in versione beta.
 
 \subsection{Beta}
 A questo punto del processo di sviluppo la applicazione è considerata completa a tutti gli effetti a meno di bug e/o problemi di stabilità. La versione beta rappresenta dunque la prima versione della applicazione resa disponibile ai tester esterni, ovvero quegli utenti che non hanno partecipato alle fasi di sviluppo e che svolgono il ruolo di validazione delle funzionalità. Si distinguono due tipologie di beta testing:
@@ -56,7 +54,7 @@ A questo punto del processo di sviluppo la applicazione è considerata completa 
 Dopo aver ottenuto la validazione da parte dei tester, la quale potrebbe richiedere più iterazioni di sviluppo e rilascio di versioni alpha-beta, anche per la versione beta si effettua la promozione, rilasciando la applicazione in produzione.
 
 \section{Release}
-Dopo che la applicazione è stata stabilizzata è possibile procedere con la distribuzione. In questa fase l'applicazione viene prima firmata digitalmente utilizzando un certificato protetto da chiave privata e poi pubblicata sullo specifico marketplace della piattaforma target.
+Dopo che la applicazione è stata stabilizzata è possibile procedere con la distribuzione. In questa fase l'applicazione viene prima firmata digitalmente utilizzando un certificato protetto da chiave privata e poi pubblicata sullo specifico marketplace della piattaforma target. La firma della applicazione permette ai dispositivi, ai mezzi di distribuzione e ai marketplace di sapere quali applicazioni hanno origine dal proprietario di uno specifico certificato e di verificare che il codice non sia stato modificato da quando è stato firmato~\cite{mednieks20011programming}.
 
 \section{Monitoraggio}
 La fase di monitoraggio (e manutenzione) è quella più lunga e dispendiosa in termini di tempo e risorse. Per le applicazioni mobile esistono alcune situazioni che rendono il monitoraggio più complesso rispetto ad altre tipologie di applicazioni come ad esempio le web app. Bisogna infatti considerare che\footnote{\href{https://www.datadoghq.com/blog/mobile-monitoring-best-practices/}{https://www.datadoghq.com/blog/mobile-monitoring-best-practices/}}:
