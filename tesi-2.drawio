@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-11-12T16:20:21.745Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" etag="9wLQS2KDpihT60kuk6HM" version="20.5.3" type="github" pages="19">
+<mxfile host="app.diagrams.net" modified="2022-11-12T16:20:45.111Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" etag="76iyd9hoMFbiAqrIKD-f" version="20.5.3" type="github" pages="19">
   <diagram id="N_QB2z3_9BETL4bLQdhx" name="2-Use-case2">
     <mxGraphModel dx="1708" dy="1136" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -129,7 +129,7 @@
             <mxPoint x="140" y="120" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ACXytnuJwCJ4ha0Kskrm-1" value="User&lt;br style=&quot;font-size: 14px;&quot;&gt;(Client Mobile App - MaggioliEbook)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;fillColor=#FFF2CC;" parent="1" vertex="1">
+        <mxCell id="ACXytnuJwCJ4ha0Kskrm-1" value="User&lt;br style=&quot;font-size: 14px;&quot;&gt;(MaggioliEbook Mobile App)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;fillColor=#FFF2CC;" parent="1" vertex="1">
           <mxGeometry x="80" y="60" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="ACXytnuJwCJ4ha0Kskrm-2" value="Authentication&lt;br style=&quot;font-size: 14px;&quot;&gt;(Identity Provider)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;fillColor=#fff2cc;" parent="1" vertex="1">
