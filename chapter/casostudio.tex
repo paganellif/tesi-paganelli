@@ -13,9 +13,16 @@ In questo capitolo vengono inizialmente descritte le motivazioni che hanno spint
 % descrizione del contesto maggioli editore, editoria digitale e lo scopo della app
 Tra i core business dell'azienda Maggioli S.p.A. è rimasto centrale il ruolo dell'editoria ma col trascorrere degli anni e il mutare delle esigenze dei clienti, i quali sono principalmente pubblica amministrazione (PA) e professionisti privati, come avvocati, architetti, commercialisti ed ingegneri edili, si è verificata una transizione verso il mondo digitale.
 
-I servizi digitali erogati per la consultazione delle pubblicazioni hanno superato considerevolmente il formato cartaceo il quale rimane comunque un metodo secondario di consultazione disponibile seppur in forma molto ridotta. Per l'editoria digitale esiste in Maggioli una business unit dedicata, chiamata \textit{Digital Media}, il cui ruolo principale consiste nella realizzazione e manutenzione dei siti Web Maggioli dedicati alla ricerca e alla visualizzazione delle pubblicazioni digitali. I seguenti sono soltanto alcuni dei siti gestiti dal team \textit{Digital Media}: Biblioteca Digitale\footnote{\href{https://bibliotecadigitale.maggioli.it/}{https://bibliotecadigitale.maggioli.it/}}, Appalti \& Contratti\footnote{\href{https://www.appaltiecontratti.it/}{https://www.appaltiecontratti.it/}} e Periodici\footnote{\href{https://www.periodicimaggioli.it/}{https://www.periodicimaggioli.it/}}. 
+I servizi digitali erogati per la consultazione delle pubblicazioni hanno superato considerevolmente il formato cartaceo il quale rimane comunque un metodo secondario di consultazione disponibile seppur in forma molto ridotta. Per l'editoria digitale esiste in Maggioli una business unit dedicata, chiamata \textit{Digital Media}, il cui ruolo principale consiste nella realizzazione e manutenzione dei siti Web Maggioli dedicati alla ricerca e alla visualizzazione delle pubblicazioni digitali. I seguenti sono soltanto alcuni dei siti gestiti dal team \textit{Digital Media}: Biblioteca Digitale\footnote{\href{https://bibliotecadigitale.maggioli.it/}{https://bibliotecadigitale.maggioli.it/}}, Appalti \& Contratti\footnote{\href{https://www.appaltiecontratti.it/}{https://www.appaltiecontratti.it/}} e Periodici\footnote{\href{https://www.periodicimaggioli.it/}{https://www.periodicimaggioli.it/}}. La necessità principale è dunque quella di fare innovazione tramite lo sviluppo di una applicazione mobile in modo da fornire ai clienti Maggioli un nuovo metodo di accesso alle pubblicazioni che sia più accessibile e comodo. 
 
-La necessità principale è dunque quella di fare innovazione tramite lo sviluppo di una applicazione mobile in modo da fornire ai clienti Maggioli un nuovo metodo di accesso alle pubblicazioni che sia più accessibile e comodo. Le motivazioni che stanno alla base della scelta della cultura DevOps e delle applicazioni multipiattaforma per lo sviluppo di questo caso di studio sono comuni a qualsiasi tipologia di azienda: come descritto nei capitoli \ref{ch:devops} e \ref{ch:app-multiplatform} è possibile ottimizzare il processo di sviluppo diminuendo le risorse impiegante e quindi i costi ma allo stesso tempo si aumenta la qualità del software e la frequenza di rilascio i quali comportano una maggiore soddisfazione da parte dell'utente.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/contesto-aziendale.png}
+    \caption{Schema del contesto aziendale in cui è collocato il caso di studio}
+    \label{contesto-aziendale-fig}
+\end{figure}
+
+Le motivazioni che stanno alla base della scelta della cultura DevOps e delle applicazioni multipiattaforma per lo sviluppo di questo caso di studio sono comuni a qualsiasi tipologia di azienda: come descritto nei capitoli \ref{ch:devops} e \ref{ch:app-multiplatform} è possibile ottimizzare il processo di sviluppo diminuendo le risorse impiegante e quindi i costi ma allo stesso tempo si aumenta la qualità del software e la frequenza di rilascio i quali comportano una maggiore soddisfazione da parte dell'utente.
 
 \section{Requisiti processo di sviluppo}
 Considerando l'intero contesto aziendale esistono degli standard, consolidati con l'esperienza maturata nello sviluppo software, che devono essere adottati sia per quanto riguarda il processo di sviluppo che la scelta degli strumenti necessari.
@@ -29,12 +36,6 @@ L'obiettivo è riuscire a definire un modello di processo fortemente basato sugl
 \end{itemize}
 
 La pipeline standard a livello aziendale, base di partenza per la definizione della pipeline per applicazioni mobile multipiattaforma, rispetta a pieno tutte le considerazioni fatte nel capitolo \ref{ch:devops} per tutte le tecniche di automazione indicate (fig. \ref{ci-inspection-pipeline}). Tramite l'adattamento delle fasi di integration, delivery e inspection di questa pipeline con le necessità dello sviluppo mobile indicate nei capitoli \ref{ch:sdlc} e \ref{ch:app-multiplatform} si ottengono i seguenti requisiti e dunque la pipeline obiettivo da realizzare:
-
-\begin{figure}[H]
-    \includegraphics[width=1\textwidth]{img/full-cicd.png}
-    \caption{Schema globale del processo di sviluppo automatizzato che si intende realizzare}
-    \label{full-cicd}
-\end{figure}
 
 \begin{itemize}
     \item \textbf{R1} - Continuous Integration
@@ -55,6 +56,12 @@ La pipeline standard a livello aziendale, base di partenza per la definizione de
         \item \textbf{R3.2} - Utilizzo del sistema aziendale di gestione delle vulnerabilità centralizzato SonarQube.
     \end{itemize}
 \end{itemize}
+
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{img/full-cicd.png}
+    \caption{Schema globale del processo di sviluppo automatizzato che si intende realizzare}
+    \label{full-cicd}
+\end{figure}
 
 \section{Requisiti applicazione multipiattaforma}
 % requisiti della applicazione da sviluppare, come sono stati identificati, ... (reader, epub, segnalibri, ecc)
