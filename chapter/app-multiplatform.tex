@@ -68,7 +68,7 @@ Con il rilascio di Kotlin 1.7.20 (Settembre 2022), KMM è passato dalla fase \te
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{img/stack_kmm.png}
-    \caption{Stack architetturale Kotlin Multiplatform Mobile.}
+    \caption{Stack architetturale Kotlin Multiplatform Mobile}
     \label{stackKMM}
 \end{figure}
 
@@ -83,7 +83,7 @@ KMM consiste in un caso d'uso specifico (e il più diffuso) del framework Kotlin
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.85\textwidth]{img/compilatore_kotlin.png}
-    \caption{Fasi di compilazione Kotlin/JVM e Kotlin/Native.}
+    \caption{Fasi di compilazione Kotlin/JVM e Kotlin/Native}
 \end{figure}
 
 \subsection{Struttura Applicazione KMM}
@@ -92,7 +92,7 @@ Una applicazione sviluppata con KMM segue lo stack definito dalla condivisione d
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{img/struttura_app_kmm.png}
-    \caption{Struttura dei moduli di una applicazione KMM.}
+    \caption{Struttura dei moduli di una applicazione KMM}
 \end{figure}
 
 Nel caso di utilizzo del meccanismo expect/actual è necessario definire le funzionalità nel modulo \textit{commonMain} e fornire le implementazioni per le specifiche piattaforme nei relativi moduli \textit{androidMain} e \textit{iosMain}. Gli stessi concetti vengono applicati per la struttura dei moduli di test: \textit{commonTest}, \textit{androidTest} e \textit{iosTest}.
@@ -110,7 +110,7 @@ Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-appli
 
 \begin{listing}[H]
     \inputminted{kotlin}{code/3-expectactual}
-    \caption{Esempio di applicazione expect/actual per ottenere informazioni sulla piattaforma.}
+    \caption{Esempio di applicazione expect/actual per ottenere informazioni sulla piattaforma}
 \end{listing}
 
 I seguenti screenshot, catturati tramite l'esecuzione degli appositi emulatori delle piattaforme target, mostrano l'efficacia del meccanismo expect/actual: l'applicazione è stata compilata utilizzando le differenti implementazioni in modo corretto.
@@ -146,7 +146,7 @@ Lo strumento di build automation Gradle e i relativi plugins utilizzati vengono 
 
 \begin{listing}[H]
 \inputminted{kotlin}{code/3-gradlekmm2}
-\caption{Definizione utilizzo Plugin Gradle KMM nel file \textit{build.gradle.kts} del modulo condiviso (Kotlin).}
+\caption{Definizione utilizzo Plugin Gradle KMM nel file \textit{build.gradle.kts} del modulo condiviso (Kotlin)}
 \end{listing}
 
 \section{Fastlane}
