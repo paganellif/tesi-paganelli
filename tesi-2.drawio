@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-11-12T14:55:28.524Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" etag="jbPJVoY77FDrmmFmVSE5" version="20.5.3" type="github" pages="19">
+<mxfile host="app.diagrams.net" modified="2022-11-12T14:56:01.901Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" etag="D_018_T6EXoSj4_Ss0zj" version="20.5.3" type="github" pages="19">
   <diagram id="N_QB2z3_9BETL4bLQdhx" name="2-Use-case2">
     <mxGraphModel dx="1708" dy="1199" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -2341,7 +2341,7 @@
         <mxCell id="AuOWQLt6zv8Xqx3zNDXn-8" value="" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn3.iconfinder.com/data/icons/essential-pack-2/48/26-Smartphone-128.png;fontSize=19;" vertex="1" parent="AuOWQLt6zv8Xqx3zNDXn-4">
           <mxGeometry x="41" y="190" width="60" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="AuOWQLt6zv8Xqx3zNDXn-9" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;&lt;i&gt;MaggioliEbook&lt;br&gt;&lt;/i&gt;&lt;/b&gt;&lt;/span&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;i&gt;&lt;b&gt;Mobiles app&lt;/b&gt;&lt;/i&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="AuOWQLt6zv8Xqx3zNDXn-4">
+        <mxCell id="AuOWQLt6zv8Xqx3zNDXn-9" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;&lt;i&gt;MaggioliEbook&lt;br&gt;&lt;/i&gt;&lt;/b&gt;&lt;/span&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;i&gt;&lt;b&gt;Mobile Apps&lt;/b&gt;&lt;/i&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="AuOWQLt6zv8Xqx3zNDXn-4">
           <mxGeometry x="11" y="250" width="120" height="50" as="geometry" />
         </mxCell>
       </root>
