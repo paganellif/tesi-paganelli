@@ -54,6 +54,7 @@ La pipeline standard a livello aziendale, base di partenza per la definizione de
         \item \textbf{R3.1} - Stage di analisi statica e analisi delle dipendenze per entrambe le piattaforme.
         \item \textbf{R3.2} - Utilizzo del sistema aziendale di gestione delle vulnerabilità centralizzato SonarQube.
     \end{itemize}
+    \item \textbf{R4} - Tutto il sistema di automazione deve poter essere utilizzato da altri team di sviluppo all'interno dell'azienda.
 \end{itemize}
 
 \begin{figure}[H]
@@ -62,26 +63,29 @@ La pipeline standard a livello aziendale, base di partenza per la definizione de
     \label{full-cicd}
 \end{figure}
 
-\section{Requisiti applicazione}
+\section{Definizione applicazione}
 Dato il contesto aziendale dell'editoria digitale in cui si colloca il caso di studio è possibile catalogare l'applicazione mobile da sviluppare come \textit{E-Reader}. Un e-book reader, chiamato anche e-book device o e-reader, è un dispositivo elettronico mobile progettato principalmente per la lettura di e-book e periodici digitali. Ogni dispositivo in grado di mostrare del testo su uno schermo potrebbe essere considerato un e-reader, ma i dispositivi progettati appositamente per questo compito hanno caratteristiche e funzionalità specifiche come l'ottimizzazione della portabilità, la leggibilità e la durata della batteria~\cite{shoba2014vocabulary}.
 
-Per poter avere un valore aggiunto rispetto alle funzionalità già fornite dai siti Web sviluppati dal team \textit{Digital Media}, l'applicazione MaggioliEbook deve comportarsi come un vero e proprio e-reader integrandosi ai servizi backend Maggioli per l'editoria digitale già esistenti. Data la complessità del dominio da modellare sono stati svolti degli incontri con figure interne esperte di dominio, in particolare con alcuni dei componenti dei team \textit{Ricerca e Sviluppo} e \textit{Digital Media}, al fine di definire: (\textit{i}) terminologia, (\textit{ii}) casi d'uso e (\textit{iii}) requisiti.
+Per poter avere un valore aggiunto rispetto alle funzionalità già fornite dai siti Web sviluppati dal team \textit{Digital Media}, l'applicazione MaggioliEbook deve comportarsi come un vero e proprio e-reader integrandosi ai servizi backend Maggioli per l'editoria digitale già esistenti. Data la complessità del dominio da modellare sono stati svolti degli incontri con figure interne esperte di dominio appartenenti ai team \textit{Ricerca e Sviluppo} e \textit{Digital Media}, al fine di definire: (\textit{i}) terminologia, (\textit{ii}) casi d'uso e (\textit{iii}) requisiti.
 
-\subsection{Ubiquitous Language}
-Per far si che le successive fasi del processo siano efficaci ed efficienti è necessario che il team di sviluppo, composto da figure tecniche, e i committenti, i quali sono invece esperti interni di dominio, utilizzino lo stesso linguaggio. Il concetto di \textit{Ubiquitous Language} definisce un vocabolario condiviso da entrambe le parti per la discussione del software\cite{evans_domain-driven_2004}.\\
-Il seguente glossario racchiude tutti i principali termini utilizzati negli incontri tra team di sviluppo ed esperti di dominio, suddivisi in \textit{entità} e \textit{casi d'uso}:
+\subsection{Terminologia e casi d'uso}
+E' necessario che il team di sviluppo, composto da figure tecniche, e i committenti, i quali sono invece esperti interni di dominio, utilizzino lo stesso linguaggio per far si che le successive fasi del processo siano efficaci ed efficienti. 
 
-\begin{table}[H]
-\centering
-    \begin{tabular}{|c|c|}
+Il concetto di \textit{Ubiquitous Language} definisce un vocabolario condiviso da entrambe le parti per la discussione del software\cite{evans_domain-driven_2004} ed è stato adottato per la realizzazione del seguente glossario, il quale racchiude tutti i principali termini utilizzati negli incontri tra team di sviluppo ed esperti di dominio, suddivisi in \textit{entità} e \textit{casi d'uso}:
+
+%\subsubsection*{Entità}
+\begin{longtable}{|c|c|}
+%\begin{table}[H]
+%\centering
+%    \begin{tabular}{|c|c|}
          \hline
          \textbf{Termine} & \textbf{Descrizione}\\
          \hline
-         \textit{Reader} & \specialcell{Lettore di documenti in grado di visualizzarlo ed \\interagire con esso.}\\
+         \textit{Reader} & \specialcell{Lettore di documenti in grado di visualizzarli ed \\interagire con essi.}\\
          \hline
          \textit{Documento} & Contenuto digitale pubblicato da Maggioli Editore.\\
          \hline
-         \textit{Documento Statico} & Documento con una certa struttura definita nel formato (PDF).\\
+         \textit{Documento Statico} & Documento con una certa struttura definita (PDF).\\
          \hline
          \textit{Documento Fluido} & \specialcell{Documento senza struttura in grado di adattarsi al dispositivo\\ in cui viene aperto (EPUB).}\\
          \hline
@@ -91,7 +95,7 @@ Il seguente glossario racchiude tutti i principali termini utilizzati negli inco
          \hline
          \textit{Bookmark} & Identifica una specifica pagina di un libro o di una rivista.\\
          \hline
-         \textit{Progression} & \specialcell{Progresso di lettura di un libro o di una rivista,\\ calcolato in percentuale (totale di pagine lette sul totale di pagine\\ del documento).}\\
+         \textit{Progression} & \specialcell{Progresso di lettura di un libro o di una rivista,\\ calcolato in percentuale \\(numero di pagine lette sul totale del documento).}\\
          \hline
          \textit{Highlight} & \specialcell{Annotazione per una certa porzione testuale di \\documento. Può essere una evidenziazione, sottolineatura \\o annotazione testuale.}\\
          \hline
@@ -101,17 +105,20 @@ Il seguente glossario racchiude tutti i principali termini utilizzati negli inco
          \hline
           \textit{Token} & \specialcell{Autentica e autorizza l'utente ad accedere ai vari documenti\\ per i quali esiste un abbonamento attivo.}\\
          \hline
-         \end{tabular}
+%         \end{tabular}
     \caption{Glossario dei termini (Entità)}
-\end{table}
+%\end{table}
+\end{longtable}
 
-\begin{table}[H]
-\centering
-    \begin{tabular}{|c|c|}
+%\subsubsection*{Casi d'uso}
+\begin{longtable}{|c|c|}
+%\begin{table}[H]
+%\centering
+%    \begin{tabular}{|c|c|}
          \hline
          \textbf{Termine} & \textbf{Descrizione}\\
          \hline
-         \textit{Apertura Documento} & Richiesta di apertura in lettura di uno specifico documento.\\
+         \textit{Apertura Documento} & \specialcell{Richiesta di apertura in lettura di uno specifico\\ documento.}\\
          \hline
          \textit{Chiusura Documento} & Richiesta di chiusura del documento aperto in lettura.\\
          \hline
@@ -147,7 +154,7 @@ Il seguente glossario racchiude tutti i principali termini utilizzati negli inco
          \hline
          \specialcell{\textit{Download Contenuto}\\\textit{Documenti}} & Scaricamento del contenuto dei documenti.\\
          \hline
-         \specialcell{\textit{Download Copertina}\\\textit{Documenti}} & Scaricamento della immagine di copertina dei documenti.\\
+         \specialcell{\textit{Download Copertina}\\\textit{Documenti}} & \specialcell{Scaricamento della immagine di copertina dei \\documenti.}\\
          \hline
          \textit{Login User} & Richiesta di login dell'utente (lettura token).\\
          \hline
@@ -157,9 +164,10 @@ Il seguente glossario racchiude tutti i principali termini utilizzati negli inco
          \hline
          \specialcell{\textit{Lettura Account Utente}} & Richiesta informazioni utente (dati anagrafici e mail).\\
          \hline         
-    \end{tabular}
+    %\end{tabular}
     \caption{Glossario dei termini (Casi d'uso)}
-\end{table}
+%\end{table}
+\end{longtable}
 
 \begin{figure}[H]
 \centering
