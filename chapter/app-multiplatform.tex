@@ -109,7 +109,7 @@ Quando si sviluppa codice condiviso è spesso necessario definire come determina
 Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/3-applicazioni-multipiattaforma/kmm-example/shared}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/3-applicazioni-multipiattaforma/kmm-example/shared}} mostra un esempio elementare di utilizzo del meccanismo:
 
 \begin{listing}[H]
-    \inputminted{kotlin}{code/3-expectactual}
+    \inputminted{kotlin}{code/expect-actual.kt}
     \caption{Esempio di applicazione expect/actual per ottenere informazioni sulla piattaforma}
 \end{listing}
 
@@ -145,7 +145,7 @@ Il plugin Gradle KMM fornisce uno specifico DSL\footnote{Domain Specific Languag
 Lo strumento di build automation Gradle e i relativi plugins utilizzati vengono configurati tramite specifici file locati insieme ai sorgenti del progetto. Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/3-applicazioni-multipiattaforma/kmm-example/shared/build.gradle.kts}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/3-applicazioni-multipiattaforma/kmm-example/shared/build.gradle.kts}} mostra come è possibile configurare il modulo condiviso tramite l'apposito DSL. E' in questo file di configurazione che si definiscono le specifiche dipendenze e task per le piattaforme target:
 
 \begin{listing}[H]
-\inputminted{kotlin}{code/3-gradlekmm2}
+\inputminted{kotlin}{code/build.gradle.kts}
 \caption{Definizione utilizzo Plugin Gradle KMM nel file \textit{build.gradle.kts} del modulo condiviso (Kotlin)}
 \end{listing}
 

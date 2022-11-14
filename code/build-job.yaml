@@ -1,0 +1,13 @@
+.android:build:
+  stage: build
+  extends: .base-android
+  script:
+    - cd $PROJECT_DIR
+    - bundle install
+    - export FL_GRADLE_TASK="assembleDebug"
+    - bundle exec fastlane run gradle
+  artifacts:
+    name: shared-build
+    expire_in: 1 day
+    paths:
+      - ${PROJECT_DIR}/build/outputs

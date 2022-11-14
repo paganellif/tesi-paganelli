@@ -1,0 +1,16 @@
+pre:android:
+  extends: .base-android
+  stage: .pre
+  variables:
+    JDK_VERSION: 8.0.332-zulu
+  script:
+    - fastlane run validate_play_store_json_key json_key:$JK_PATH
+    - sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" >/dev/null
+    - sdkmanager "platform-tools" >/dev/null
+    - sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" >/dev/null
+    - set +o pipefail
+    - yes | sdkmanager --licenses
+    - set -o pipefail
+    - echo "Installed Android SDK ${ANDROID_COMPILE_SDK}-${ANDROID_BUILD_TOOLS}-${ANDROID_SDK_TOOLS}"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "dev"

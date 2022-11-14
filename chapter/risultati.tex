@@ -17,3 +17,19 @@
 
 \section{Lavori futuri}
 % cosa ho intenzione di fare dopo, continuazione del lavoro in azienda
+\begin{itemize}
+    \item \textit{SDLC e CI/CD}
+    \begin{itemize}
+        \item Studio, ricerca e sperimentazione per la fase di monitoring, sia della applicazione che dell'utente.
+        \item Utilizzo del meccanismo \textit{Remote Configuration}\footnote{\url{https://firebase.google.com/docs/remote-config}} per modificare aspetti della applicazione in modo dinamico senza dover rilasciare nuove versioni. Un esempio tipico è la migrazione dei database: grazie al meccanismo di remote configuration è possibile settare da remoto il \textit{jdbc}\footnote{Java DataBase Connectivity} url che permette di connettersi al database senza dover rilasciare una nuova versione della applicazione con il valore cablato nel codice.
+        \item Valutazione di alternative all'hardware Apple fisico. Come indicato nel capitolo \ref{ch:cicd} alcune possibilità individuate sono: (\textit{i}) runner gestiti con sistema operativo MacOS (disponibili su diverse piattaforme come GitLab\footnote{\url{https://docs.gitlab.com/ee/ci/runners/saas/macos_saas_runner.html}}, GitHub\footnote{\url{https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners}} e CircleCI\footnote{\url{https://circleci.com/docs/using-macos}}), (\textit{ii}) virtual machine as-a-Service con sistema operativo MacOS (disponibili tra i servizi cloud Amazon\footnote{\url{https://aws.amazon.com/ec2/instance-types/mac/}}) e (\textit{iii}) immagine Docker MacOS\footnote{\url{https://github.com/sickcodes/Docker-OSX}}.
+        \item Valutazione soluzioni complete as-a-Service. Ad esempio \textit{Bitrise}\footnote{\url{https://www.bitrise.io/}} o XCode Cloud\footnote{\url{https://developer.apple.com/documentation/xcode/xcode-cloud}} (solamente per la parte Apple).
+        \item Sperimentazione tecniche CI/CD con tecnologie cross-platform come \textit{Ionic}\footnote{\url{https://ionicframework.com/}}, \textit{Flutter}\footnote{\url{https://flutter.dev/}} o \textit{React Native}\footnote{\url{https://reactnative.dev/}} e stesso caso d'uso (applicazione PoC MaggioliEbook) in modo da avere dei parametri di riferimento e confronto.
+    \end{itemize}
+    \item \textit{Applicazione MaggioliEbook}
+    \begin{itemize}
+        \item Implementazione della visualizzazione dei documenti "statici" (PDF) con la relativa gestione di annotazioni e segnalibri.
+        \item Gestione dei contenuti aggiuntivi dei documenti digitali in formato EPUB oltre alle annotazioni e ai segnalibri come ad esempio pagine interattive (quiz) e visualizzazione norme legislative provenienti da fonti esterne.
+        \item Gestione annotazioni e segnalibri remota invece che locale sul dispositivo dell'utente.
+    \end{itemize}
+\end{itemize}
