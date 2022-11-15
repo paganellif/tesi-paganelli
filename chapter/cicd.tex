@@ -169,6 +169,32 @@ Il seguente job\footnote{\href{https://github.com/paganellif/DevOps-per-applicaz
 \end{listing}
 
 \subsection{Dependency Management}
+Al giorno d'oggi è difficile immaginare una applicazione software che non faccia uso di librerie di terze parti. Queste librerie, dette dipendenze, vengono incluse nel software tipicamente per il vantaggio di poter riutilizzare soluzioni a problemi che sono già stati risolti ma comportano anche il bisogno di essere gestite. Maggiore è il numero di dipendenze incluse in un progetto e maggiore è la complessità nella loro gestione: per questo motivo l’automazione di questo task sta diventando una pratica sempre più comune.
+
+Automatizzare la gestione delle dipendenze di un progetto significa configurare un sistema in grado di interagire con:
+
+\begin{itemize}
+    \item \textbf{Package Manager} - Fondamentale per ottenere le versioni \textit{latest} delle dipendenze e confrontarle con quelle utilizzate dal progetto, discriminando il tipo di aggiornamento necessario (\textit{major}, \textit{minor} o \textit{patch}).
+    \item \textbf{Version Control System} - La presenza di un aggiornamento di versione per una o più dipendenze deve essere applicata al codice in modo automatico e devono essere adottate le stesse tecniche di continuous integration per la validazione delle modifiche.
+\end{itemize}
+
+Anche in questo caso è possibile utilizzare sistemi managed forniti as-a-Service oppure self-managed. Uno dei vincoli sul processo di sviluppo definiti nel capitolo \ref{ch:casodistudio} consiste nella integrazione del servizio self-hosted aziendale \textit{Renovate} per la gestione automatizzata delle dipendenze. Tramite la schedulazione di un task dedicato, asincrono rispetto il normale flusso di sviluppo, questa fase del processo viene eseguita come indicato nel seguente diagramma di sequenza:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.72\textwidth]{img/renovate-uml-sequenza.png}
+    \caption{Sequenza di aggiornamento automatico delle dipendenze con Renovate e GitLab Runner}
+    \label{renovaflow}
+\end{figure}
+
+Il comportamento di Renovate può essere configurato ad-hoc per le diverse esigenze di ogni progetto tramite un apposito file, come quello seguente\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/renovate.json}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/renovate.json}}, versionato insieme al codice. 
+
+\begin{listing}[H]
+    \inputminted{json}{code/renovate.json}
+    \caption{Configurazione custom di un progetto Android per l'aggiornamento automatico delle dipendenze con Renovate}
+\end{listing}
+
+Tipicamente l'aggiornamento automatico avviene per versioni \textit{patch} e \textit{minor}, ovvero per quegli aggiornamenti che spesso non presentano breaking changes: in tutti gli altri casi (\textit{major}) è necessaria l'approvazione manuale da parte di uno sviluppatore.
 
 \section{Continuous Delivery}
 
