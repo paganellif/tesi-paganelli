@@ -1,0 +1,27 @@
+.base-android-ui-test:
+  stage: test:ui
+  extends: .base-android
+  resource_group: ui-test
+  variables:
+    SCREENGRAB_APP_APK_PATH: to_be_extended
+    SCREENGRAB_TESTS_APK_PATH: to_be_extended
+    AVD: to_be_extended
+    SCREENGRAB_DEVICE_TYPE: to_be_extended
+    SCREENGRAB_SKIP_OPEN_SUMMARY: "true"
+    SCREENGRAB_REINSTALL_APP: "true"
+  script:
+    - cd $PROJECT_DIR
+    - bundle install
+    - nohup emulator -avd $AVD -no-window > nohup-$AVD.out 2>&1 &
+    - echo $! > pid-$AVD.txt
+    - sleep 10
+    - export FL_GRADLE_TASK="assembleAndroidTest"
+    - bundle exec fastlane run gradle
+    - bundle exec fastlane screengrab
+    - kill -9 `cat pid-$AVD.txt` || adb devices | grep emulator | cut -f1 | while read line; do adb -s $line emu kill; done || true
+  artifacts:
+    name: android-ui-test-phone
+    expire_in: 1 day
+    paths:
+      - ${PROJECT_DIR}/nohup*.out
+      - ${PROJECT_DIR}/fastlane/metadata/android

@@ -146,14 +146,27 @@ Nonostante la struttura di una applicazione KMM contenga tutta la logica applica
 \end{itemize}
 
 \subsubsection*{UI Testing}
-Analogamente agli unit test, dove si verifica l'integrità della logica applicativa a fronte di una modifica del codice sorgente, negli UI test si verifica l'integrità della interfaccia grafica e dell'esperienza utente. In questa sotto-fase di testing sono coinvolti solamente i moduli che implementano la UI, testati tramite le seguenti librerie:
+Analogamente agli unit test, dove si verifica l'integrità della logica applicativa a fronte di una modifica del codice sorgente, negli UI test si verifica l'integrità della interfaccia grafica e dell'esperienza utente. In questa sotto-fase di testing sono coinvolti solamente i moduli che implementano la U e vengono testati tramite le seguenti librerie:
 
 \begin{itemize}
     \item \textbf{Espresso} - Framework standard per lo UI testing di applicazioni Android.
     \item \textbf{XCTest} - Framework standard di testing per progetti XCode, tra cui ui testing di applicazioni iOS (XCUI\footnote{\href{https://developer.apple.com/documentation/xctest/user\_interface\_tests}{https://developer.apple.com/documentation/xctest/user\_interface\_tests}}).
 \end{itemize}
 
+Questa specifica fase della pipeline è l'unica che richiede la simulazione degli ambienti tramite l'emulazione dei dispositivi. Per poter eseguire un emulatore di qualsiasi tipo attraverso un sistema di automazione è necessario considerare alcuni aspetti fondamentali come: (\textit{i}) modalità \textit{headless} per l'esecuzione senza interfaccia grafica e (\textit{ii}) accesso concorrente alle risorse del sistema host sul quale eseguono.
 
+Dato il consumo di risorse elevato degli emulatori solitamente si tende ad eseguire in questa fase anche altre operazioni che possono essere automatizzate e che necessitano di un emulatore. Combinando l'esecuzione dei test sulla interfaccia grafica con la cattura delle schermate è possibile ottimizzare il flusso di lavoro e ottenere direttamente dal sistema di automazione gli screenshot desiderati. Con la diffusione di questa pratica sono stati creati tool appositi, come quelli forniti dallo strumento Fastlane adottato:
+
+\begin{itemize}
+    \item \textbf{Screengrab}\footnote{\href{https://docs.fastlane.tools/actions/screengrab/}{https://docs.fastlane.tools/actions/screengrab/}} - Tool specifico per Android che richiede la definizione di appositi test utilizzando (\textit{i}) Espresso per navigare nella applicazione in esecuzione e (\textit{ii}) Screengrab\footnote{\href{https://mvnrepository.com/artifact/tools.fastlane/screengrab}{https://mvnrepository.com/artifact/tools.fastlane/screengrab}} per la cattura delle schermate.
+    \item \textbf{Snapshot}\footnote{\href{https://docs.fastlane.tools/actions/snapshot/}{https://docs.fastlane.tools/actions/snapshot/}} - Tool specifico per iOS che genera codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/SnapshotHelper.swift}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/SnapshotHelper.swift}} Swift in grado di sfruttare XCTest per la navigazione della applicazione e la cattura delle schermate.
+\end{itemize}
+
+Il seguente job\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/kmm-templates/kmm-test.yml}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/kmm-templates/kmm-test.yml}} base mostra la strategia utilizzata nel caso di studio per avviare un emulatore Android, eseguire i test sulla interfaccia grafica e restituire, come artefatto, le immagini delle schermate catturate:
+\begin{listing}[H]
+    \inputminted{yaml}{code/base-ui-test-android.yaml}
+    \caption{Job base Android dedicato al testing della interfaccia grafica e alla cattura delle schermate}
+\end{listing}
 
 \subsection{Dependency Management}
 
