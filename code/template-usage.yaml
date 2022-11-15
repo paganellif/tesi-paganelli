@@ -1,5 +1,5 @@
 include:
-  - project: maggiolispa/ricerca-sviluppo/ebook-app-poc/kmm-cicd-template
+  - project: path/to/my/template/repo
     file:
       - '/kmm-templates/kmm-base.yml'
       - '/kmm-templates/kmm-build.yml'

@@ -2,10 +2,10 @@
 sudo curl --output /usr/local/bin/gitlab-runner \
     "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/
     gitlab-runner-darwin-arm64"
-# Cambio permessi per l'esecuzione del binario scaricato
-sudo chmod +x /usr/local/bin/gitlab-runner
+
 # Installazione runner
 gitlab-runner install
+
 # Registrazione runner
 sudo gitlab-runner register --non-interactive \
   --url "https://gitlab.com/" --registration-token "MY-TOKEN" \
@@ -15,5 +15,6 @@ sudo gitlab-runner register --non-interactive \
   --cache-gcs-access-id="${CACHE_GCS_ACCESS_ID}" \
   --cache-gcs-private-key="${CACHE_GCS_PRIVATE_KEY}" \
   --cache-gcs-bucket-name="${CACHE_GCS_PRIVATE_NAME}"
+
 # Start Runner
 gitlab-runner start

@@ -18,7 +18,9 @@ Come anticipato nel capitolo \ref{ch:app-multiplatform} tutta la toolchain per l
 
 Data la disponibilità di tutta la toolchain Android per macOS e il costo nullo in caso di runner self-hosted, è stata scelta quest'ultima tipologia per l'esecuzione dell'intera pipeline.
 
-L'installazione e la configurazione di un runner di questa tipologia può essere più o meno complicata in base alle funzionalità necessarie per il sistema di automazione. Nel caso specifico del caso di studio di questo progetto l'unica funzionalità richiesta da configurare è la cache condivisa al fine di abilitare la concorrenza tra più processi e ottimizzare l'esecuzione della pipeline.
+L'installazione e la configurazione di un runner di questa tipologia può essere più o meno complicata in base alle funzionalità necessarie per il sistema di automazione ed è una procedura chiamata registrazione. Nel caso specifico del caso di studio di questo progetto i principali parametri per la registrazione del runner sono: (\textit{i}) shell executor, (\textit{ii}) token di registrazione al Server CI, (\textit{iii}) cache condivisa e (\textit{iv}) livello di concorrenza.
+
+Definire un executor di tipo \textit{shell} per il runner permette di aprire una nuova shell sulla macchina host per l'esecuzione di ogni job della pipeline e quindi di utilizzare tutti gli strumenti installati sulla stessa macchina.
 
 I seguenti comandi bash\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/setup-gitlab-macos-runner.sh}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/setup-gitlab-macos-runner.sh}} mostrano la procedura di installazione di un runner GitLab macOS self-hosted su una macchina fisica Apple:
 \begin{listing}[H]
@@ -26,7 +28,7 @@ I seguenti comandi bash\footnote{\href{https://github.com/paganellif/DevOps-per-
     \caption{Comandi bash per l'installazione, la configurazione e l'avvio di un runner macOS self-hosted}
 \end{listing}
 
-Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/config.toml}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/config.toml}} mostra il file di configurazione del runner, generato in seguito alla procedura sopra indicata:
+Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/config.toml}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/config.toml}} mostra il contenuto del file di configurazione del runner, generato in seguito alla procedura sopra indicata:
 
 \begin{listing}[H]
     \inputminted{toml}{code/macos-runner-config.toml}
@@ -58,10 +60,42 @@ Grazie ai meccanismi di automazione a supporto della CI/CD fornite dal CI Server
     \centering
     \includegraphics[width=0.85\textwidth]{img/cicd-branch-jobs.png}
     \caption{Stage, job e artefatti associati agli eventi sui branch che compongono l'intera pipeline}
+    \label{pipeline-branches}
 \end{figure}
 
 \section{Templating}
-% strumenti utilizzati per favorire il riuso della cicd realizzata
+Uno dei principali vantaggi del meccanismo Pipeline as Code, anticipato nel capitolo \ref{ch:devops}, è la possibilità di utilizzare metodologie per la descrizione delle pipeline simili a quelle utilizzate nella programmazione. Tramite i seguenti strumenti forniti dalla piattaforma GitLab è possibile utilizzare metodologie come ereditarietà e incapsulamento per definire pipeline riutilizzabili:
+
+\begin{itemize}
+    \item \textbf{Template} - I file YAML che definiscono una pipeline o sottoparte di essa, possono risiedere in un repository diverso da quello in cui si trova il progetto che la utilizza. In questo modo si definisce una sola volta il flusso base per poterlo successivamente includere e/o estendere negli specifici progetti che necessitano il suo utilizzo.
+    \item \textbf{Include} - Definiti i template è necessario includerli all'interno dello specifico progetto per poterli utilizzare effettivamente.
+    \item \textbf{Extend} - Definendo lo script del job padre in modo parametrico è possibile pilotarne il comportamento tramite la definizione di variabili d'ambiente nel job figlio. Questa funzionalità è una alternativa alle \textit{anchors} fornite nativamente da YAML ma più flessibile e leggibile.
+    \item \textbf{Hidden Jobs} - I job definiti con un punto all'inizio del nome non vengono considerati dal linter GitLab e quindi esclusi dalla esecuzione tramite il runner. Definendo job "nascosti" è possibile definire tutti quegli aspetti comuni e parametrizzabili da estendere con altri job.
+\end{itemize}
+
+Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/kmm-templates/kmm-base.yml}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/kmm-templates/kmm-base.yml}} mostra il job padre di ogni job dedicato alla applicazione iOS, definito come hidden job parametrico: ogni job figlio dovrà estendere questo job e definirne dei valori per le variabili d'ambiente.
+
+\begin{listing}[H]
+    \inputminted{yaml}{code/base-ios-job.yaml}
+    \caption{Hidden Job parametrico per i job iOS}
+\end{listing}
+
+Considerando la composizione della pipeline obiettivo (fig. \ref{pipeline-branches}) una possibile organizzazione ottimale è la definizione di più template\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/5-automazione-del-processo-di-sviluppo/kmm-templates}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/5-automazione-del-processo-di-sviluppo/kmm-templates}}, uno per ogni fase del processo, in modo da poter importare anche solamente una sottoparte della pipeline:
+
+\begin{itemize}
+    \item \textbf{kmm-base} - Definisce tutte le configurazioni di base della pipeline come ad esempio gli stage, le variabili d'ambiente globali e i job di pre-configurazione.
+    \item \textbf{kmm-build} - Definisce i job relativi alla fase di compilazione e packaging.
+    \item \textbf{kmm-test} - Definisce i job per le fasi di unit testing e ui testing.
+    \item \textbf{kmm-analysis} - Definisce i job per le fasi di analisi statica del codice, analisi delle dipendenze e integrazione con SonarQube.
+    \item \textbf{kmm-release} - Definisce i job utili alla stabilizzazione e rilascio delle applicazioni (alpha-beta-prod).
+\end{itemize}
+
+Realizzati i template è possibile utilizzarli tramite inclusione remota come nel seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/.gitlab-ci.yml}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/.gitlab-ci.yml}} d'esempio:
+
+\begin{listing}[H]
+    \inputminted{yaml}{code/template-usage.yaml}
+    \caption{Esempio d'utilizzo dei template GitLab da repository remoto}
+\end{listing}
 
 \section{Continuous Integration}
 \subsection{Pre}
@@ -97,6 +131,29 @@ Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-appli
 \end{listing}
 
 \subsection{Testing}
+Terminato con successo lo stage di verifica della compilazione e pacchettizzazione del codice segue la fase di test, per la quale si distinguono due tipologie principali di testing: la prima con lo scopo di validare la logica applicativa, chiamata \textit{Unit Testing} e la seconda per la validazione dell'interfaccia grafica, chiamata \textit{UI Testing}.
+
+Quando si parla di testing in ambito mobile ci si riferisce tipicamente alla specifica tipologia di test chiamata \textit{Instrumented Testing}, dove è necessario realizzare un progetto di test apposito in modo da installare e testare la applicazione in un ambiente simulato come per esempio quello fornito dagli emulatori~\cite{darwin2011android}. In realtà l'instrumentazione di una applicazione è necessaria solamente per quei test dove vengono richiamate le API dello specifico SDK della piattaforma target, come nel caso della UI testing.
+
+\subsubsection*{Unit Testing}
+Con unit testing si intende l’attività di verifica di certe porzioni (unità) del codice ed è implementato tipicamente utilizzando librerie predisposte per ciascun linguaggio di programmazione. I movimenti Agile e TDD\footnote{Test Driven Development} incoraggiano la scrittura di unit test automatizzati, i quali dovrebbero essere scritti prima dello sviluppo effettivo del codice~\cite{martin2017clean}.
+
+Nonostante la struttura di una applicazione KMM contenga tutta la logica applicativa nel modulo condiviso è necessario eseguire test anche su porzioni di codice specifico delle piattaforme. Le librerie utilizzate per questo scopo sono:
+
+\begin{itemize}
+    \item \textbf{JUnit}\footnote{\href{https://junit.org/junit5/}{https://junit.org/junit5/}} - Framework di unit testing per il linguaggio di programmazione Java, utilizzato nel caso di studio per il testing unitario del modulo condiviso e della applicazione Android.
+    \item \textbf{XCTest}\footnote{\href{https://developer.apple.com/documentation/xctest}{https://developer.apple.com/documentation/xctest}} - Framework standard di testing per progetti XCode, tra cui unit testing di codice Swift/Objective-C.
+\end{itemize}
+
+\subsubsection*{UI Testing}
+Analogamente agli unit test, dove si verifica l'integrità della logica applicativa a fronte di una modifica del codice sorgente, negli UI test si verifica l'integrità della interfaccia grafica e dell'esperienza utente. In questa sotto-fase di testing sono coinvolti solamente i moduli che implementano la UI, testati tramite le seguenti librerie:
+
+\begin{itemize}
+    \item \textbf{Espresso} - Framework standard per lo UI testing di applicazioni Android.
+    \item \textbf{XCTest} - Framework standard di testing per progetti XCode, tra cui ui testing di applicazioni iOS (XCUI\footnote{\href{https://developer.apple.com/documentation/xctest/user\_interface\_tests}{https://developer.apple.com/documentation/xctest/user\_interface\_tests}}).
+\end{itemize}
+
+
 
 \subsection{Dependency Management}
 
