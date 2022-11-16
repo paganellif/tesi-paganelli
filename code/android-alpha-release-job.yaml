@@ -1,0 +1,14 @@
+.android:release:alpha:
+  extends: .base-android:release
+  variables:
+    FL_SLACK_MESSAGE: "_*NEW ANDROID ALPHA RELEASE*_\n"
+    SUPPLY_AAB: to_be_extended
+    FL_GRADLE_TASK: "bundleRelease"
+    SUPPLY_TRACK: "alpha"
+  script:
+    - cd $PROJECT_DIR && bundle install
+    - bundle exec fastlane run gradle upload_to_play_store slack
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev" && $CI_PIPELINE_SOURCE != "schedule"
+      changes: [ "$PROJECT_DIR/**/build.gradle.kts" ]
+      when: manual

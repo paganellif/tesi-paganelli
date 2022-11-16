@@ -1,0 +1,19 @@
+.static-analysis:ios:
+  stage: analysis
+  image: ghcr.io/realm/swiftlint:5.5-latest
+  dependencies: []
+  allow_failure: true
+  variables:
+    PODS_DIR: ${CI_PROJECT_DIR}/${PROJECT_DIR}/Pods
+    LINT_PATH: ${CI_PROJECT_DIR}/${PROJECT_DIR}
+    REPORT_PATH: ${CI_PROJECT_DIR}/reports/swiftlint.json
+  script:
+    - swiftlint $LINT_PATH --reporter="sonarqube" > $REPORT_PATH
+  artifacts:
+    name: static-analysis-report-ios
+    when: always
+    expire_in: 1 day
+    paths:
+      - reports/swiftlint.json
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
