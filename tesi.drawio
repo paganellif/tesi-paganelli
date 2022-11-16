@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-11-16T14:25:51.231Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" etag="ZTHoZl_7njkJMl92Kege" version="20.5.3" type="github" pages="15">
+<mxfile host="app.diagrams.net" modified="2022-11-16T14:37:36.169Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" etag="oeEnKfGz2Jcpo-DELh83" version="20.5.3" type="github" pages="15">
   <diagram id="HEar5sA1GaKiPcR0g2SL" name="1-Use-case">
     <mxGraphModel dx="1833" dy="1232" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -1046,7 +1046,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="mzyPxPZCydnWi6c984Vo" name="18-release-flow">
-    <mxGraphModel dx="1264" dy="806" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1264" dy="850" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1241,17 +1241,17 @@
         <mxCell id="KRAPH38L7fgp9bebgqc6-7" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;&lt;i style=&quot;font-size: 14px;&quot;&gt;Internal Tester&lt;br&gt;(developers)&lt;br&gt;&lt;/i&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" vertex="1" parent="1">
           <mxGeometry x="533.6" y="586" width="120" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="KRAPH38L7fgp9bebgqc6-8" value="" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;" vertex="1" parent="1">
-          <mxGeometry x="572.9" y="556" width="40" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="KRAPH38L7fgp9bebgqc6-9" value="" style="points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image;image=img/lib/allied_telesis/computer_and_terminals/Smartphone.svg;strokeColor=#000000;fontSize=15;" vertex="1" parent="1">
-          <mxGeometry x="568.6" y="566" width="15.22" height="33.2" as="geometry" />
-        </mxCell>
         <mxCell id="xZN__hdgK1NDoqrQeKLF-1" value="Stabilizzazione" style="swimlane;strokeColor=#000000;fontSize=14;fillColor=#FFD966;fontStyle=3" vertex="1" parent="1">
           <mxGeometry x="35" y="445" width="625" height="195" as="geometry" />
         </mxCell>
+        <mxCell id="KRAPH38L7fgp9bebgqc6-8" value="" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;" vertex="1" parent="xZN__hdgK1NDoqrQeKLF-1">
+          <mxGeometry x="542.8499999999999" y="106.8" width="38.6" height="38.6" as="geometry" />
+        </mxCell>
         <mxCell id="xZN__hdgK1NDoqrQeKLF-4" value="Pubblicazione" style="swimlane;strokeColor=#000000;fontSize=14;fillColor=#FFD966;fontStyle=3" vertex="1" parent="1">
           <mxGeometry x="35" y="330" width="625" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="KRAPH38L7fgp9bebgqc6-9" value="" style="points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image;image=img/lib/allied_telesis/computer_and_terminals/Smartphone.svg;strokeColor=#000000;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="572.15" y="562.8" width="15.22" height="33.2" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
