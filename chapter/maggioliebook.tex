@@ -4,15 +4,89 @@
 % le configurazioni dei tool necessarie per lo sviluppo kmm e la ci: come gradle, plugin, detekt, sonar, sqldelight ecc
 
 \section{Introduzione}
+Dato il processo di sviluppo e configurato il sistema di automazione è possibile partire con lo sviluppo effettivo della applicazione mobile multipiattaforma MaggioliEbook. In questo capitolo vengono descritte le fasi di progettazione e implementazione di una applicazione mobile tramite l'utilizzo del framework Kotlin Multiplatform Mobile, rispettando i requisiti definiti nel capitolo \ref{ch:casodistudio}.
 
 \section{Progettazione}
-% progettazione app con mentalità multiplatform
+La fase di progettazione, come anticipato nel capitolo \ref{ch:sdlc}, comprende diverse attività tra cui le principali sono (\textit{i}) la modellazione del dominio, (\textit{ii})la progettazione dell'interfaccia grafica/esperienza utente tramite l'ausilio di mockup e (\textit{iii}) la progettazione della architettura.
 
-\section{Implementazione modulo condiviso}
+\subsection{Modellazione del dominio}
+Seguendo la cultura Domain-Driven Design adottata per la raccolta dei requisiti e per la definizione dei casi d'uso e della terminologia è necessario individuare i differenti contesti al fine di realizzare una mappa, detta \textit{Context Map}, utile a dare una visione globale del progetto e delle relazioni tra i vari contesti~\cite{evans_domain-driven_2004}.
+
+La context map è composta dai seguenti tre contesti:
+
+\begin{itemize}
+    \item \textbf{Reader} (Core) - Contesto principale del progetto. Racchiude tutti gli aspetti con maggiore valore per l'utente riguardanti la lettura e la personalizzazione dei contenuti digitali. 
+    \item \textbf{Sisred} - Rappresenta il contesto della sorgente dei contenuti digitali Maggioli. In questo contesto non esistono i concetti di \textit{favorite}, \textit{highlight}, \textit{bookmark} e \textit{progression} mentre è condiviso il concetto di libro e utente.
+    \item \textbf{User} - Contesto che definisce tutti gli aspetti a riguardo degli utenti. In questo contesto esiste il solo concetto di utente, il quale è condiviso con gli altri contesti.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/ddd-context-map.png}
+    \caption{Panoramica globale dei contesti del progetto e delle relazioni che intercorrono tra di essi}
+\end{figure}
+
+Tra i contesti definiti esistono delle relazioni di tipo \textit{Shared Kernel}~\cite{evans_domain-driven_2004} (SK) con l'obiettivo di evitare duplicazioni e semplificare l'integrazione. Relazioni di questo tipo consistono nella condivisione di un sottoinsieme del dominio modellato, che corrisponde tipicamente al dominio core. Un esempio di relazione SK è l'utilizzo di codice o schemi DB condivisi\footnote{\href{https://github.com/ddd-crew/context-mapping}{https://github.com/ddd-crew/context-mapping}}.
+
+Per la modellazione del dominio si fa uso dei seguenti concetti\cite{evans_domain-driven_2004}:
+\begin{itemize}
+    \item \textbf{Entity} - Oggetto definito dalla sua identità e non dai suoi attributi. Ogni libro è univoco, identificato da uno specifico codice, chiamato ISBN\footnote{International Standard Book Number}.
+    \item \textbf{Value Object} - Al contrario delle entità, questi oggetti sono definiti dai loro attributi e non hanno una identità concettuale ma servono a descrivere alcune caratteristiche di un oggetto. Un esempio è il segnalibro: ciò che è rilevante è la pagina del libro che esso referenzia e non la sua identità.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{img/class-uml-app.png}
+        \caption{UML - Diagramma delle classi: Reader Core Domain e User Subdomain}
+        \label{class-uml-app}
+    \end{figure}
+    
+    \item \textbf{Aggregate} - Insieme di oggetti legati da una entità padre chiamata \textit{Root} (radice di aggregazione). L'aggregato composto da \textit{Bookmark}, \textit{Highlight}, \textit{Progression}, \textit{Favorite} ha come radice l'entità \textit{Libro}.
+    \item \textbf{Service} - Operazione che non appartiene logicamente a nessun oggetto. In questo caso la conversione di formato non appartiene alla sola entità libro ma appartiene invece a qualsiasi documento che è possibile convertire.
+    \item \textbf{Repository} - Oggetto per il recupero di altri oggetti di dominio e per la gestione del loro ciclo di vita. Le entità \textit{User} e \textit{Libro} sono esempi di oggetti di dominio che necessitano di un repository. Permette di disaccoppiare applicazione e domain design dalle specifiche tecnologie/strategie di persistenza come multipli database e datasource (locali e/o remoti).
+\end{itemize}
+
+\subsection{Progettazione UI/UX}
+Successivamente alla modellazione del dominio e alla progettazione della architettura, le quali coinvolgono principalmente il modulo condiviso alle due applicazioni che si intende sviluppare grazie al framework KMM, è necessario progettare l'interfaccia grafica e l'esperienza utente che dovrà essere implementata invece per le rispettive piattaforme Android e iOS. Considerando l'utilizzo tipico di una applicazione con funzionalità simili a quella deve essere realizzata possono essere adottati pattern di navigazione e visualizzazione dei contenuti diventati oramai standard de-facto nella progettazione della UI/UX non solo per applicazioni mobile\footnote{\href{https://xd.adobe.com/ideas/principles/app-design/}{https://xd.adobe.com/ideas/principles/app-design/}}.
+
+Alcuni esempi di questi elementi utilizzati sono il menu laterale a scomparsa (schermata 4), l'icona "hamburger" per l'apertura del menu (schermata 3),l' elenco di documenti con scroll infinito verticale (schermata 2-5) e la barra di ricerca nella parte alta della schermata con icona "lente di ingrandimento" (schermata 2-5). 
+
+Per ottenere la validazione dei mockup da parte del committente sono state necessarie due iterazioni del processo di progettazione UX/UI. L'interfaccia utente desiderata deve infatti soddisfare alcuni vincoli caratteristici del brand Maggioli, come ad esempio l' utilizzo del colore blu \#00379E come colore primario, l'utilizzo del font Karla\footnote{\href{https://github.com/googlefonts/karla}{https://github.com/googlefonts/karla}} e la presenza del logo Maggioli.
+
+Le schermate necessarie sono quindi: \textit{Reader}, responsabile della visualizzazione del contenuto digitale in formato EPUB; \textit{Login}, schermata iniziale responsabile alla autenticazione dell'utente; \textit{Home}, schermata principale responsabile alla visualizzazione dei contenuti digitali a cui l'utente è autorizzato ad accedere; \textit{Preferiti}, responsabile alla visualizzazione dei contenuti digitali preferiti dall'utente; \textit{Impostazioni}, responsabile alla visualizzazione e modifica delle impostazioni; \textit{About}, responsabile alla visualizzazione di informazioni generali come versione della applicazione, autore e copyright.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/mockup-uiux-1.png}
+    \caption{Alcuni dei mockup realizzati per la progettazione e la validazione della UX/UI (prima iterazione)}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/mockup-uiux-2.png}
+    \caption{Modifiche apportate ai mockup per ottenere la validazione della UX/UI (seconda iterazione)}
+\end{figure}
+
+\subsection{Architettura}
+L'architettura progettata per la applicazione segue la struttura \textit{Clean Architecture}~\cite{martin2017architecture} ed è composta da tre strati. Il primo strato (\textit{Data Layer}) consiste negli aggregati di dominio sopra descritti ed è responsabile per il recupero e il mantenimento dei dati su differenti sorgenti. Il secondo strato (\textit{Domain Layer}) facilità la comunicazione tra i differenti repository: qui si trovano tutti i casi d'uso del sistema che gestiscono il flusso dei dati provenienti o diretti verso il primo strato. Il terzo ed ultimo strato (\textit{View Layer}) si occupa della interfaccia grafica mostrando i dati e gestendo gli eventi provenienti dall'utente o dal sistema.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/clean-architecture.png}
+    \caption{Clean Architecture in MaggioliEbook}
+\end{figure}
+
+% completare discussione su architettura kmm che fitta molto bene con la clean architecture
+
+\section{Sviluppo}
+
+\subsection{Readium}
+% ricerca librerie e discussione readium
+
+\subsection{Modulo Shared}
 % implementazione modulo shared
 
-\section{Implementazione Android}
+\subsection{Applicazione Android}
 % implementazione app android
 
-\section{Implementazione iOS}
+\subsection{Applicazione iOS}
 % implementazione app iOS
