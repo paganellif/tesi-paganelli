@@ -234,7 +234,7 @@ I componenti fondamentali della libreria \textit{Paging} sono:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{img/android-viewmodel.png}
+    \includegraphics[width=0.75\textwidth]{img/android-viewmodel.png}
     \caption{UML - Diagramma delle classi: Paginazione dati nella schermata principale}
     \label{android-viewmodel-png}
 \end{figure}
@@ -244,15 +244,15 @@ Il lettore dei documenti digitali in formato EPUB rappresenta la funzionalità c
 
 \begin{itemize}
     \item \textbf{ReaderActivity} - Unica activity presente nella applicazione oltre a quella principale (Single Activity Architecture), utilizzata sia per l’interazione che la gestione del lettore di contenuti digitali.
+    \item \textbf{EpubReaderFragment} - Componente che si occupa effettivamente di mostrare il contenuto del documento all'utente.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.82\textwidth]{img/reader-uml.png}
+        \includegraphics[width=0.8\textwidth]{img/reader-uml.png}
         \caption{UML - Diagramma delle classi: Reader}
         \label{reader-uml}
     \end{figure}
     
-    \item \textbf{EpubReaderFragment} - Componente che si occupa effettivamente di mostrare il contenuto del documento all'utente.
     \item \textbf{DecorationListener} - Permette la gestione grafica delle annotazioni come evidenziazioni e sottolineature, le quali sono aggiunte alla vista del fragment tramite l'utilizzo di Jetpack Compose.
 \end{itemize}
 
@@ -260,88 +260,205 @@ Il lettore dei documenti digitali in formato EPUB rappresenta la funzionalità c
 \begin{multicols}{3}
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.21\textwidth]{img/login.png}
+                \includegraphics[width=0.25\textwidth]{img/login.png}
                 \caption{Login}
                 \label{login-android}
             \end{figure}
 
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.21\textwidth]{img/sidenav.png}
+                \includegraphics[width=0.25\textwidth]{img/sidenav.png}
                 \caption{Menu laterale - Sidenav}
                 \label{sidenav-android}
             \end{figure}
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.21\textwidth]{img/home.png}
+                \includegraphics[width=0.25\textwidth]{img/home.png}
                 \caption{Schermata home principale}
                 \label{home-android}
             \end{figure}
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.21\textwidth]{img/ricerca.png}
+                \includegraphics[width=0.25\textwidth]{img/ricerca.png}
                 \caption{Esempio di ricerca}
                 \label{ricerca-android}
             \end{figure}
 
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.21\textwidth]{img/preferiti.png}
+                \includegraphics[width=0.25\textwidth]{img/preferiti.png}
                 \caption{Preferiti}
                 \label{preferiti-android}
             \end{figure}
 
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.21\textwidth]{img/about.png}
+                \includegraphics[width=0.25\textwidth]{img/about.png}
                 \caption{Info generali (About)}
                 \label{about-android}
             \end{figure}
 
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.21\textwidth]{img/reader_settings.png}
+                \includegraphics[width=0.25\textwidth]{img/reader_settings.png}
                 \caption{Reader}
                 \label{readersettings-android}
             \end{figure}
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.21\textwidth]{img/annotations.png}
+                \includegraphics[width=0.25\textwidth]{img/annotations.png}
                 \caption{Esempio di annotazioni, evidenziazioni, sottolineature, ...}
                 \label{annotations-android}
             \end{figure}
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.21\textwidth]{img/annotation2.png}
+                \includegraphics[width=0.25\textwidth]{img/annotation2.png}
                 \caption{Annotazioni memorizzate}
                 \label{annotation2-android}
             \end{figure}
 
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.21\textwidth]{img/toc.png}
+                \includegraphics[width=0.25\textwidth]{img/toc.png}
                 \caption{Elenco dei contenuti (TOC) del documento}
                 \label{toc-android}
             \end{figure}
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.21\textwidth]{img/ricerca_testo.png}
+                \includegraphics[width=0.25\textwidth]{img/ricerca_testo.png}
                 \caption{Ricerca testuale nel contenuto del documento}
                 \label{ricerca_testo-android}
             \end{figure}
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.21\textwidth]{img/ricerca_testo2.png}
+                \includegraphics[width=0.25\textwidth]{img/ricerca_testo2.png}
                 \caption{Evidenziazioni automatiche delle occorrenze del testo cercato}
                 \label{ricerca_testo2-android}
             \end{figure}
 \end{multicols}
 
 \subsection{Applicazione iOS}
-% implementazione app iOS
+Terminato lo sviluppo della applicazione Android è possibile dedicarsi alla applicazione iOS per la quale rimangono valide le stesse considerazioni fatte sul processo e sulla architettura ma con qualche intervento tecnico necessario. Il progetto XCode\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp}} di partenza per l'applicazione iOS è stato generato all'inizio della fase di sviluppo con l'inizializzazione tramite il plugin Gradle KMM per l'IDE Android Studio.
+
+Per poter utilizzare il codice Kotlin del modulo condiviso nel codice Swift della applicazione iOS è necessario generare due tipi di pacchetto: (\textit{i}) framework di sviluppo per l'IDE XCode e (\textit{ii}) libreria CocoaPods da includere come dipendenza di progetto. Il framework di sviluppo può essere creato tramite l'apposito task \textit{embedAndSignPodAppleFrameworkForXCode} disponibile tramite il plugin Gradle KMM. Questo task permette definisce la modalità di compilazione, la versione e la posizione del framework.
+
+\subsubsection*{CocoaPods}
+Come anticipato nel capitolo \ref{ch:app-multiplatform}, CocoaPods è un dependency manager per progetti Swift e Objective-C scritto in Ruby. Le dipendenze, chiamate \textit{Pods}, sono definite nel file \textit{Podfile} nella root di progetto. Il pod shared viene generato durante la fase di impacchettamento del modulo shared tramite l’esecuzione del task gradle assemble per il quale sono definiti appositi sotto-task per svolgere questo compito.
+
+Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/Podfile}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/Podfile}} definisce le dipendenze incluse nella applicazione iOS sviluppata sono:
+
+\begin{listing}[H]
+    \inputminted{ruby}{code/Podfile}
+    \caption{Dipendenze CocoaPods della applicazione iOS sviluppata}
+\end{listing}
+
+A questo punto è possibile importare i moduli nel codice Swift e sviluppare l'applicazione utilizzando le funzionalità fornite dall'IDE XCode come per una qualsiasi libreria Swift importata. I task forniti dal plugin Gradle KMM a supporto dello sviluppo iOS tramite il dependency manager CocoaPods sono:
+
+\begin{itemize}
+    \item \textbf{podDownload} - Scarica le dipendenze CocoaPods senza effettuarne l'installazione.
+    \item \textbf{podImport} - Task di utility utilizzato dal altri task per l'import delle dipendenze.
+    \item \textbf{podInstall} - Esegue l'installazione dei pod (equivalente all'esecuzione del comando \textit{pod install}
+    \item \textbf{podPublishDebugXCFramework} - Crea il framework XCFramework in modalità debug (chiamato dal task \textit{embedAndSignPodAppleFrameworkForXcode}).
+    \item \textbf{podPublishReleaseXCFramework} - Crea il framework XCFramework in modalità release (chiamato dal task \textit{embedAndSignPodAppleFrameworkForXcode}).
+    \item \textbf{podPublishXCFramework} - Crea i framework XCFrameworc in entrambe le modalità.
+    \item \textbf{podspec} - Genera il file \textit{podspec}\footnote{\href{https://guides.cocoapods.org/syntax/podspec.html}{https://guides.cocoapods.org/syntax/podspec.html}}, utile all'importazione del pod nella applicazione iOS.
+\end{itemize}
+
+\subsubsection*{Navigator Architecture}
+L'architettura della applicazione iOS sviluppata segue lo stesso pattern utilizzato nella versione Android ed è conosciuto col nome \textit{Navigator}. Tramite il costrutto \textit{NavigationView}\footnote{\href{https://developer.apple.com/documentation/swiftui/navigationview}{https://developer.apple.com/documentation/swiftui/navigationview}} è possibile definire una schermata "contenitore" per le viste dei percorsi di navigazione all'interno della applicazione.
+
+Le schermate da realizzare sono le stesse individuate nella progettazione della UX/UI ed è necessario utilizzare i \textit{NavigationLink}\footnote{\href{https://developer.apple.com/documentation/swiftui/navigationlink}{https://developer.apple.com/documentation/swiftui/navigationlink}} per poterle navigare nella architettura scelta. I NavigationLink identificano una specifica transizione di schermata da quella attuale a quella di destinazione, sono definiti nel componente \textit{NavController}\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/iosMaggioliEbookApp/Common/NavController.swift}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/\\iosMaggioliEbookApp/Common/NavController.swift}} ma vengono attivati dal componente \textit{Sidebar}\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/iosMaggioliEbookApp/Common/Sidebar.swift}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/\\iosMaggioliEbookApp/Common/Sidebar.swift}}.
+
+A differenza di Jetpack Compose, il toolkit utilizzato nello sviluppo della UI Android, SwiftUI non fornisce nativamente dei costrutti per la realizzazione di schermate con scroll infinito e dati paginati (come descritto nella sezione \ref{pagingsec}): per questo motivo è stata necessaria l'implementazione di un meccanismo ad-hoc per la gestione di questo scenario.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.65\textwidth]{img/navigator-arch-ios.png}
+    \caption{Architettura Navigator adottata per l'applicazione iOS}
+    \label{iosarchapp}
+\end{figure}
+
+\subsubsection*{Integrazione iOS-Shared}
+Grazie al framework Kotlin Multiplatform Mobile e ai realtivi plugin Gradle di supporto è stato possibile completare con successo una serie di compilazioni (fig. \ref{kotlin-native-compile}) in grado di "trasformare" codice Kotlin in codice Swift.
+
+Nonostante il codice Kotlin venga compilato correttamente in codice Swift, per ottenere codice funzionante in grado di svolgere le stesse funzionalità sviluppate nella applicazione Android è stato necessario svolgere dell'ulteriore lavoro di integrazione, riguardante principalmente la computazione asincrona e i tipi di dato:
+
+\begin{itemize}
+    \item Realizzazione di un metodo specifico (\textit{invokeNative}) lato modulo condiviso per l'invocazione dei casi d'uso. Le coroutines di Kotlin vengono infatti mappate da KMM in funzioni con callbacks, chiamate \textit{completion handlers} e non esiste modo di definire un \textit{CoroutineScope} in Swift. In questo modo è stato possibile definire uno scope per l'esecuzione del codice asincrono anche su target iOS.
+    \item Impostazione del nuovo modello sperimentale di gestione della memoria nel file \textit{gradle.properties}\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/gradle.properties}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/gradle.properties}} per il modulo condiviso tramite la configurazione del parametro \textit{kotlin.native.binary.memoryModel=experimental}\footnote{\href{https://kotlinlang.org/docs/native-memory-manager.html}{https://kotlinlang.org/docs/native-memory-manager.html}}.
+    \item Realizzazione di un metodo\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/shared/src/iosMain/kotlin/it/filo/maggioliebook/util/extensions/ByteArrayConverter.kt}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/shared/src/iosMain/kotlin/\\it/filo/maggioliebook/util/extensions/ByteArrayConverter.kt}} di conversione da \textit{ByteArray} Kotlin a \textit{NSData} Swift in modo da permettere la corretta gestione di dati binari, come ad esempio le immagini delle copertine e il contenuto EPUB delle pubblicazioni digitali nello specifico del caso di studio.
+    \item Realizzazione di un metodo\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/iosMaggioliEbookApp/Common/Extensions/Date.swift}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/\\iosMaggioliEbookApp/Common/Extensions/Date.swift}} di gestione delle date e del tempo equivalente a quello utilizzato nel dominio modellato, in particolare per i tipi di dato utilizzati durante la persistenza dei dati tramite SqlDelight.
+    \item Estensione\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/iosMaggioliEbookApp/Common/Extensions/Libro.swift}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/\\iosMaggioliEbookApp/Common/Extensions/Libro.swift}} delle entità di dominio per indicare l'identificativo utilizzato da Swift per ciclare su liste di elementi di quel tipo.
+\end{itemize}
+
+\subsubsection*{Screenshot}
+\begin{multicols}{3}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.26\textwidth]{img/Simulator Screen Shot - iPhone 14 Pro - 2022-10-05 at 11.22.08.png}
+        \caption{Login}
+        \label{login-ios}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.26\textwidth]{img/Simulator Screen Shot - iPhone 14 Pro - 2022-10-05 at 10.40.04.png}
+        \caption{Menu laterale - Sidenav}
+        \label{sidenav-ios}
+    \end{figure}
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.26\textwidth]{img/Simulator Screen Shot - iPhone 14 Pro - 2022-10-05 at 10.39.58.png}
+        \caption{Schermata home principale}
+        \label{home-ios}
+    \end{figure}
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.26\textwidth]{img/Simulator Screen Shot - iPhone 14 Pro - 2022-10-05 at 11.25.21.png}
+        \caption{Esempio di ricerca}
+        \label{ricerca-ios}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.26\textwidth]{img/ricerca_testo_ios.png}
+        \caption{Ricerca testuale nel contenuto del documento}
+        \label{ricerca_testo-ios}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.26\textwidth]{img/Simulator Screen Shot - iPhone 14 Pro - 2022-10-05 at 11.20.04.png}
+        \caption{Preferiti}
+        \label{preferiti-ios}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.26\textwidth]{img/toc_ios.png}
+        \caption{Elenco dei contenuti (TOC) del documento}
+        \label{toc-ios}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.26\textwidth]{img/reader_settings_ios.png}
+        \caption{Reader}
+        \label{readersettings-ios}
+    \end{figure}
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.26\textwidth]{img/ricerca_testo2_ios.png}
+        \caption{Evidenziazioni automatiche delle occorrenze del testo cercato}
+        \label{ricerca_testo2-ios}
+    \end{figure}
+\end{multicols}
