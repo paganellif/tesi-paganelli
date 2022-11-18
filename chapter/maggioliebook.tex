@@ -184,12 +184,12 @@ L'architettura scelta per l'implementazione della applicazione Android\footnote{
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{img/android-arch.png}
+    \includegraphics[width=0.95\textwidth]{img/android-arch.png}
     \caption{Architettura Single-Activity adottata per l'applicazione Android}
     \label{android-arch-png}
 \end{figure}
 
-Questa tipologia di architettura permette di avere una singola activity che svolge la funzione di contenitore per tutti i fragment che rappresentano le varie schermate della applicazione, definite in fase di progettazione della UI/UX.
+Questa tipologia di architettura permette di avere una singola activity che svolge la funzione di contenitore per tutti i fragment che rappresentano le varie schermate, definite in fase di progettazione della UI/UX, in cui l'utente può navigare.
 
 La navigazione all'interno della applicazione è gestita tramite la combinazione dei seguenti componenti:
 \begin{itemize}
@@ -197,7 +197,7 @@ La navigazione all'interno della applicazione è gestita tramite la combinazione
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.9\textwidth]{img/android-nav-graph.png}
+        \includegraphics[width=0.95\textwidth]{img/android-nav-graph.png}
         \caption{Sottoparte del navigation graph della applicazione, renderizzato automaticamente tramite l'IDE Android Studio}
         \label{android-nav-graph-png}
     \end{figure}
@@ -212,16 +212,18 @@ Prima di creare la vista del fragment viene effettuato un controllo sulla autent
 
 \subsubsection*{Paging}
 \label{pagingsec}
-Un altro aspetto importante della architettura è il meccanismo utilizzato sia dalla schermata principale che da quella dei preferiti per mostrare i dati all'utente. 
+Un altro aspetto importante della architettura è il meccanismo utilizzato sia dalla schermata principale che da quella dei preferiti per mostrare i dati all'utente. Il backend utilizzato fornisce i dati tramite paginazione: in questo modo è possibile indicare in una richiesta la dimensione delle pagine, ovvero quanti elementi devono essere restituiti al massimo in una pagina, e la pagina desiderata. 
 
-Il backend utilizzato fornisce i dati tramite paginazione: in questo modo è possibile indicare in una richiesta la dimensione delle pagine, ovvero quanti elementi devono essere restituiti al massimo in una pagina, e la pagina desiderata. Per poter caricare tali dati dinamicamente in una \textit{RecyclerView}\footnote{\href{https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/RecyclerView}{https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/RecyclerView}} in modo che l'utente possa effettuare lo scroll illimitato si utilizza la libreria \textit{Paging}\footnote{\href{https://developer.android.com/topic/libraries/architecture/paging/v3-overview}{https://developer.android.com/topic/libraries/architecture/paging/v3-overview}} fornita nativamente dall'SDK Android.
+Per poter caricare tali dati dinamicamente in una \textit{RecyclerView}\footnote{\href{https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/RecyclerView}{https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/RecyclerView}} in modo da permettere all'utente di effettuare lo scroll "infinito" è stata utilizzata\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/androidMaggioliEbookApp/src/main/java/it/filo/maggioliebook/android/home/LibroPagingSource.kt}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/androidMaggioliEbookApp/\\src/main/java/it/filo/maggioliebook/android/home/LibroPagingSource.kt}} la libreria \textit{Paging}\footnote{\href{https://developer.android.com/topic/libraries/architecture/paging/v3-overview}{https://developer.android.com/topic/libraries/architecture/paging/v3-overview}} fornita nativamente dall'SDK Android.
 
+\begin{comment}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.85\textwidth]{img/android-paging.png}
     \caption{Flusso generico dei dati dalla sorgente alla UI tramite l'utilizzo della libreria Paging}
     \label{android-paging}
 \end{figure}
+\end{comment}
 
 I componenti fondamentali della libreria \textit{Paging} sono:
 \begin{itemize}
@@ -232,10 +234,114 @@ I componenti fondamentali della libreria \textit{Paging} sono:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{img/android-viewmodel.png}
+    \includegraphics[width=0.85\textwidth]{img/android-viewmodel.png}
     \caption{UML - Diagramma delle classi: Paginazione dati nella schermata principale}
     \label{android-viewmodel-png}
 \end{figure}
+
+\subsubsection*{Reader}
+Il lettore dei documenti digitali in formato EPUB rappresenta la funzionalità core della applicazione sviluppata. Nel caso della interfaccia grafica android il lettore riceve il contenuto da visualizzare del documento selezionato dall'utente e lo mostra in un fragment basato sul componente \textit{Navigator} (fig. \ref{readiumarch}). Questo componente della libreria Readium fornisce tutte le funzionalità necessarie per gestire la navigazione dei documenti e gli eventi relativi al comportamento dell'utente come scorrimento pagine e selezione testo. I principali componenti sviluppati\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/androidMaggioliEbookApp/src/main/java/it/filo/maggioliebook/android/reader}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/androidMaggioliEbookApp/\\src/main/java/it/filo/maggioliebook/android/reader}} per le funzionalità del reader sono:
+
+\begin{itemize}
+    \item \textbf{ReaderActivity} - Unica activity presente nella applicazione oltre a quella principale (Single Activity Architecture), utilizzata sia per l’interazione che la gestione del lettore di contenuti digitali.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.82\textwidth]{img/reader-uml.png}
+        \caption{UML - Diagramma delle classi: Reader}
+        \label{reader-uml}
+    \end{figure}
+    
+    \item \textbf{EpubReaderFragment} - Componente che si occupa effettivamente di mostrare il contenuto del documento all'utente.
+    \item \textbf{DecorationListener} - Permette la gestione grafica delle annotazioni come evidenziazioni e sottolineature, le quali sono aggiunte alla vista del fragment tramite l'utilizzo di Jetpack Compose.
+\end{itemize}
+
+\subsubsection*{Screenshot}
+\begin{multicols}{3}
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.21\textwidth]{img/login.png}
+                \caption{Login}
+                \label{login-android}
+            \end{figure}
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.21\textwidth]{img/sidenav.png}
+                \caption{Menu laterale - Sidenav}
+                \label{sidenav-android}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.21\textwidth]{img/home.png}
+                \caption{Schermata home principale}
+                \label{home-android}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.21\textwidth]{img/ricerca.png}
+                \caption{Esempio di ricerca}
+                \label{ricerca-android}
+            \end{figure}
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.21\textwidth]{img/preferiti.png}
+                \caption{Preferiti}
+                \label{preferiti-android}
+            \end{figure}
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.21\textwidth]{img/about.png}
+                \caption{Info generali (About)}
+                \label{about-android}
+            \end{figure}
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.21\textwidth]{img/reader_settings.png}
+                \caption{Reader}
+                \label{readersettings-android}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.21\textwidth]{img/annotations.png}
+                \caption{Esempio di annotazioni, evidenziazioni, sottolineature, ...}
+                \label{annotations-android}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.21\textwidth]{img/annotation2.png}
+                \caption{Annotazioni memorizzate}
+                \label{annotation2-android}
+            \end{figure}
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.21\textwidth]{img/toc.png}
+                \caption{Elenco dei contenuti (TOC) del documento}
+                \label{toc-android}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.21\textwidth]{img/ricerca_testo.png}
+                \caption{Ricerca testuale nel contenuto del documento}
+                \label{ricerca_testo-android}
+            \end{figure}
+            
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.21\textwidth]{img/ricerca_testo2.png}
+                \caption{Evidenziazioni automatiche delle occorrenze del testo cercato}
+                \label{ricerca_testo2-android}
+            \end{figure}
+\end{multicols}
 
 \subsection{Applicazione iOS}
 % implementazione app iOS
