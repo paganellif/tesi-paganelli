@@ -24,6 +24,7 @@ La context map è composta dai seguenti tre contesti:
     \centering
     \includegraphics[width=0.8\textwidth]{img/ddd-context-map.png}
     \caption{Panoramica globale dei contesti del progetto e delle relazioni che intercorrono tra di essi}
+    \label{context-map-png}
 \end{figure}
 
 Tra i contesti definiti esistono delle relazioni di tipo \textit{Shared Kernel}~\cite{evans_domain-driven_2004} (SK) con l'obiettivo di evitare duplicazioni e semplificare l'integrazione. Relazioni di questo tipo consistono nella condivisione di un sottoinsieme del dominio modellato, che corrisponde tipicamente al dominio core. Un esempio di relazione SK è l'utilizzo di codice o schemi DB condivisi\footnote{\href{https://github.com/ddd-crew/context-mapping}{https://github.com/ddd-crew/context-mapping}}.
@@ -73,12 +74,13 @@ Lo scopo di una applicazione multipiattaforma è la condivisione della sola logi
     \centering
     \includegraphics[width=0.6\textwidth]{img/clean-architecture.png}
     \caption{Clean Architecture in MaggioliEbook}
+    \label{clean-arch-kmm-fig}
 \end{figure}
 
 \section{Sviluppo}
 Tipicamente lo sviluppo effettivo di una applicazione multiplatform con il framework KMM ha inizio con la creazione dello scheletro della applicazione tramite l'IDE Android Studio e il relativo plugin Gradle KMM, come indicato nel capitolo \ref{ch:app-multiplatform}.
 
-La prima attività successiva svolta in questa fase di sviluppo consiste nella ricerca delle librerie, definite dipendenze nel capitolo precedente. Considerando le funzionalità che devono essere implementate è necessario individuare tutte le librerie utili partendo da quelle core, come la visualizzazione e la modifica dei documenti, a quelle di utilità a supporto del modulo condiviso come networking e storage. Raggruppate per modulo di utilizzo, le librerie individuate e adottate sono:
+La prima attività successiva alla creazione dello scheletro del progetto consiste nella ricerca delle librerie, ovvero le stesse dipendenze che sono gestite in modo automatico dal sistema come descritto nel capitolo precedente. Considerando le funzionalità che devono essere implementate è necessario individuare tutte le librerie utili partendo da quelle core, come la visualizzazione e la modifica dei documenti, a quelle di utilità a supporto del modulo condiviso come networking e storage. Raggruppate per modulo di utilizzo, le librerie individuate e adottate sono:
 
 \subsubsection*{Shared}
 \begin{itemize} 
@@ -113,7 +115,7 @@ L'architettura della libreria Readium è composta da quattro moduli principali:
         \item \textbf{Parser} - Responsabile del parsing delle pubblicazioni e della loro esposizione utilizzando un modello in-memory.
         \item \textbf{Fetcher} - Si occupa di ottenere i contenuti delle pubblicazioni e della loro manipolazione (in particolare injection di CSS e Javascript nelle risorse HTML).
     \end{itemize}
-    \item \textbf{Navigator} - Utile alla navigazione delle risorse di una pubblicazione secondo diverse strategie basate sulla natura della pubblicazione (ebook, audiolibri, ...). Interagisce con il modulo \textit{Streamer} per utilizzare il modello in-memory o per ottenere manifesto JSON attraverso il modello condiviso (\textit{Shared}).
+    \item \textbf{Navigator} - Utile alla navigazione delle risorse di una pubblicazione secondo diverse strategie basate sulla natura della pubblicazione (ebook, audiolibri, ...). Interagisce con il modulo \textit{Streamer} per utilizzare il modello in-memory o per ottenere il manifesto JSON attraverso il modello condiviso (\textit{Shared}).
 \end{itemize}
 
 \begin{figure}[H]
@@ -124,11 +126,116 @@ L'architettura della libreria Readium è composta da quattro moduli principali:
 \end{figure}
 
 \subsection{Modulo Shared}
-% implementazione modulo shared
+Come anticipato nel capitolo \ref{ch:app-multiplatform} la parte condivisa di una applicazione multipiattaforma racchiude tutta o una sottoparte della logica applicativa, compresi quindi anche aspetti "infrastrutturali" specifici della piattaforma target come ad esempio logging, persistenza dei dati e networking.
 
+Gli elementi del dominio che sono stati aggiunti dal contesto core (fig. context-map-png) devono essere persistiti sul dispositivo locale ed è necessario svolgere operazioni CRUD\footnote{Create-Read-Update-Delete} come su qualsiasi database, che sia locale o remoto. I relativi schemi per il database locale sono stati definiti utilizzando appositi file\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/shared/src/commonMain/sqldelight/it/filo/maggioliebook/db}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/shared/src/\\commonMain/sqldelight/it/filo/maggioliebook/db}}, uno per ognuna delle entità che necessita di persistenza: \textit{Highlight}, \textit{Favorite}, \textit{Progression} e \textit{Bookmark}.
+
+Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/shared/src/commonMain/sqldelight/it/filo/maggioliebook/db/Bookmark.sq}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/shared/src/\\commonMain/sqldelight/it/filo/maggioliebook/db/Bookmark.sq}} definisce tramite la sintassi SqlDelight lo schema \textit{Bookmark} e l'operazione associata di selezione tramite ISBN:
+
+\begin{listing}[H]
+    \inputminted{sql}{code/bookmark-sqldelight.sq}
+    \caption{Esempio di definizione schema \textit{Bookmark} tramite sintassi SqlDelight}
+\end{listing}
+
+Tramite il task \textit{generateSqlDelightInterface} fornito dal plugin gradle SqlDelight è possibile generare automaticamente l'interfaccia padre \textit{MaggioliEbookDB} e le relative implementazioni. Nel caso dello schema sopra indicato si ottiene il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/shared/build/generated/sqldelight/code/MaggioliEbookDB/commonMain/it/filo/maggioliebook/db/BookmarkQueries.kt}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/shared/build/generated/\\sqldelight/code/MaggioliEbookDB/commonMain/it/filo/maggioliebook/db/BookmarkQueries.kt}} Kotlin:
+
+\begin{listing}[H]
+    \inputminted{kotlin}{code/bookmark-sqldelight.kt}
+    \caption{Codice Kotlin autogenerato per lo schema \textit{Bookmark} tramite SqlDelight}
+\end{listing}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/uml-network-db.png}
+    \caption{UML - Diagramma delle classi: Implementazioni data source (persistenza dati e networking)}
+\end{figure}
+
+Tipicamente le librerie per applicazioni sviluppate con Kotlin Multiplatform possono essere utilizzate direttamente dal codice condiviso, come ad esempio KVault, lasciando al compilatore Kotlin il compito di scegliere la giusta implementazione per la piattaforma target durante la fase di compilazione. In altri casi è necessario invece utilizzare il meccanismo \textit{expect/actual} (discusso nel capitolo \ref{ch:app-multiplatform}) per definire il comportamento atteso e fornire una implementazione specifica per la piattaforma target.
+
+Tale meccanismo è stato utilizzato nello sviluppo della applicazione per poter effettuare dependency injection tramite la libreria Koin dei componenti riguardanti la persistenza dei dati (Kvault e SqlDelight) e l'esecuzione asincrona (CoroutineDispatcher).
+
+Ogni dipendenza che deve essere iniettata viene inserita all'interno di uno o più moduli, i quali vengono utilizzati da Koin per inizializzare tutto il contesto applicativo. Le dipendenze possono essere principalmente di due tipi:
+\begin{itemize}
+    \item \textbf{Factory} - Ogni volta che la dipendenza viene iniettata ne viene creata una nuova istanza (paragonabile al design pattern Factory Method~\cite{gamma1994design}).
+    \item \textbf{Single} - In tutto il contesto applicativo esiste una sola istanza della dipendenza iniettata (paragonabile al design pattern Singleton~\cite{gamma1994design}).
+\end{itemize}
+
+\begin{listing}[H]
+    \inputminted{kotlin}{code/shared-di-koin.kt}
+    \caption{Configurazione Dependency Injection: definizione dei moduli Koin e inizializzazione del contesto applicativo}
+\end{listing}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/expect-actual-shared.png}
+    \caption{Strategia \textit{Expect/Actual} adottata per l'implementazione dei servizi infrastrutturali specifici delle piattaforme, persistenza e concorrenza, sfruttando la tecnica \textit{dependency injection}}
+\end{figure}
 
 \subsection{Applicazione Android}
-% implementazione app android
+Completato lo sviluppo della logica applicativa condivisa e quindi gli strati \textit{Domain} e \textit{Data} (fig. \ref{clean-arch-kmm-fig}) della architettura, è possibile iniziare lo sviluppo dello strato \textit{View}. In questa fase si realizza la vera e propria applicazione Android, sfruttando il toolkit Kotlin della libreria Readium per la funzionalità core di lettura dei contenuti digitali.
+
+\subsubsection*{Single-Activity Architecture}
+L'architettura scelta per l'implementazione della applicazione Android\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/androidMaggioliEbookApp/src/main/java/it/filo/maggioliebook/android}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/androidMaggioliEbookApp/\\src/main/java/it/filo/maggioliebook/android}} è basata su sole due activity:
+
+\begin{itemize}
+    \item \textbf{MainActivity} - Unica activity principale della applicazione.
+    \item \textbf{ReaderActivity} - Activity secondaria, utilizzata sia per l'interazione che la gestione del lettore delle pubblicazioni digitali.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/android-arch.png}
+    \caption{Architettura Single-Activity adottata per l'applicazione Android}
+    \label{android-arch-png}
+\end{figure}
+
+Questa tipologia di architettura permette di avere una singola activity che svolge la funzione di contenitore per tutti i fragment che rappresentano le varie schermate della applicazione, definite in fase di progettazione della UI/UX.
+
+La navigazione all'interno della applicazione è gestita tramite la combinazione dei seguenti componenti:
+\begin{itemize}
+    \item \textbf{NavController} - Componente necessario per la gestione delle transizioni da un un fragment all'altro. Quando inizializzato richiede la presenza di un grafo di navigazione tra le risorse XML: tale grafo contiene tutti i fragment che possono essere visualizzati e le possibili transizioni tra di essi.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{img/android-nav-graph.png}
+        \caption{Sottoparte del navigation graph della applicazione, renderizzato automaticamente tramite l'IDE Android Studio}
+        \label{android-nav-graph-png}
+    \end{figure}
+    
+    \item \textbf{NavHostFragment} - Rappresenta il contenitore del fragment in cui ci si trova. Ogni transizione nel grafo corrisponde alla sostituzione del fragment visualizzato con quello di destinazione (sempre che la transizione sia ammessa dal grafo).
+    \item \textbf{NavigationView} - Permette la visualizzazione del menu dove si trovano i possibili fragment raggiungibili da quello in cui l'utente si trova attualmente. Nel caso della applicazione sviluppata in questo componente si trova il menu laterale con tutte le schermate indicate in fase di progettazione (\textit{Home}, \textit{Settings}, \textit{About} e \textit{Preferiti}).
+\end{itemize}
+
+Come indicato nella figura \ref{android-nav-graph-png} la schermata principale (\textit{Home}) rappresenta la destinazione iniziale del grafo, ovvero la prima schermata che viene visualizzata dalla applicazione. L'autenticazione dell'utente è gestita tramite la navigazione condizionale\footnote{\href{https://developer.android.com/guide/navigation/navigation-conditional}{https://developer.android.com/guide/navigation/navigation-conditional}}. 
+
+Prima di creare la vista del fragment viene effettuato un controllo sulla autenticazione dell'utente: se l'utente non è autenticato viene effettuata una transizione al fragment \textit{Login} per permettere all'utente di autenticarsi e procedere all'utilizzo della applicazione. E' fondamentale in questo scenario ripulire lo stack di navigazione per evitare che l'utente possa tornare indietro alla schermata precedente, ovvero la schermata principale, senza effettuare l'autenticazione.
+
+\subsubsection*{Paging}
+\label{pagingsec}
+Un altro aspetto importante della architettura è il meccanismo utilizzato sia dalla schermata principale che da quella dei preferiti per mostrare i dati all'utente. 
+
+Il backend utilizzato fornisce i dati tramite paginazione: in questo modo è possibile indicare in una richiesta la dimensione delle pagine, ovvero quanti elementi devono essere restituiti al massimo in una pagina, e la pagina desiderata. Per poter caricare tali dati dinamicamente in una \textit{RecyclerView}\footnote{\href{https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/RecyclerView}{https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/RecyclerView}} in modo che l'utente possa effettuare lo scroll illimitato si utilizza la libreria \textit{Paging}\footnote{\href{https://developer.android.com/topic/libraries/architecture/paging/v3-overview}{https://developer.android.com/topic/libraries/architecture/paging/v3-overview}} fornita nativamente dall'SDK Android.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{img/android-paging.png}
+    \caption{Flusso generico dei dati dalla sorgente alla UI tramite l'utilizzo della libreria Paging}
+    \label{android-paging}
+\end{figure}
+
+I componenti fondamentali della libreria \textit{Paging} sono:
+\begin{itemize}
+    \item \textbf{Pager} - Punto di ingresso principale della libreria con il compito di ottenere nuovi dati quando necessario, ovvero quando l'utente ha scrollato nella schermata fino ad uno specifico punto. Richiede la configurazione di alcuni parametri come la dimensione della pagina, la pagina iniziale e la direzione della paginazione. 
+    \item \textbf{PagingSource} - Sorgente dei dati paginati. Componente interrogato dal \textit{Pager} ogni volta che sono necessari nuovi dati.
+    \item \textbf{PagingDataAdapter} - Componente fondamentale per la rappresentazione di dati paginati in una \textit{RecyclerView}.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/android-viewmodel.png}
+    \caption{UML - Diagramma delle classi: Paginazione dati nella schermata principale}
+    \label{android-viewmodel-png}
+\end{figure}
 
 \subsection{Applicazione iOS}
 % implementazione app iOS
