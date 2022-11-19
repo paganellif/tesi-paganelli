@@ -379,15 +379,13 @@ A differenza di Jetpack Compose, il toolkit utilizzato nello sviluppo della UI A
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=0.65\textwidth]{img/navigator-arch-ios.png}
+    \includegraphics[width=0.6\textwidth]{img/navigator-arch-ios.png}
     \caption{Architettura Navigator adottata per l'applicazione iOS}
     \label{iosarchapp}
 \end{figure}
 
 \subsubsection*{Integrazione iOS-Shared}
-Grazie al framework Kotlin Multiplatform Mobile e ai realtivi plugin Gradle di supporto è stato possibile completare con successo una serie di compilazioni (fig. \ref{kotlin-native-compile}) in grado di "trasformare" codice Kotlin in codice Swift.
-
-Nonostante il codice Kotlin venga compilato correttamente in codice Swift, per ottenere codice funzionante in grado di svolgere le stesse funzionalità sviluppate nella applicazione Android è stato necessario svolgere dell'ulteriore lavoro di integrazione, riguardante principalmente la computazione asincrona e i tipi di dato:
+Grazie al framework Kotlin Multiplatform Mobile e ai realtivi plugin Gradle di supporto è stato possibile completare con successo una serie di compilazioni (fig. \ref{kotlin-native-compile}) in grado di "trasformare" codice Kotlin in codice Swift. Nonostante il codice Kotlin venga compilato correttamente in codice Swift, per ottenere codice funzionante in grado di svolgere le stesse funzionalità sviluppate nella applicazione Android è stato necessario svolgere dell'ulteriore lavoro di integrazione, riguardante principalmente la computazione asincrona e i tipi di dato:
 
 \begin{itemize}
     \item Realizzazione di un metodo specifico (\textit{invokeNative}) lato modulo condiviso per l'invocazione dei casi d'uso. Le coroutines di Kotlin vengono infatti mappate da KMM in funzioni con callbacks, chiamate \textit{completion handlers} e non esiste modo di definire un \textit{CoroutineScope} in Swift. In questo modo è stato possibile definire uno scope per l'esecuzione del codice asincrono anche su target iOS.
@@ -396,6 +394,13 @@ Nonostante il codice Kotlin venga compilato correttamente in codice Swift, per o
     \item Realizzazione di un metodo\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/iosMaggioliEbookApp/Common/Extensions/Date.swift}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/\\iosMaggioliEbookApp/Common/Extensions/Date.swift}} di gestione delle date e del tempo equivalente a quello utilizzato nel dominio modellato, in particolare per i tipi di dato utilizzati durante la persistenza dei dati tramite SqlDelight.
     \item Estensione\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/iosMaggioliEbookApp/Common/Extensions/Libro.swift}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/\\iosMaggioliEbookApp/Common/Extensions/Libro.swift}} delle entità di dominio per indicare l'identificativo utilizzato da Swift per ciclare su liste di elementi di quel tipo.
 \end{itemize}
+
+Grazie al lavoro aggiuntivo svolto è stato possibile utilizzare efficacemente il modulo condiviso all'interno della applicazione iOS, come ad esempio nel seguente caso\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/iosMaggioliEbookApp/Common/CoverLoader.swift}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/\\iosMaggioliEbookApp/Common/CoverLoader.swift}} asincrono di ottenimento e conversione della copertina di una pubblicazione digitale:
+
+\begin{listing}[H]
+    \inputminted{swift}{code/CoverLoader.swift}
+    \caption{Esempio di utilizzo dei casi d'uso del modulo condiviso con computazione asincrona e gestione di dati binari}
+\end{listing}
 
 \subsubsection*{Screenshot}
 \begin{multicols}{3}
@@ -429,16 +434,16 @@ Nonostante il codice Kotlin venga compilato correttamente in codice Swift, per o
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.26\textwidth]{img/ricerca_testo_ios.png}
-        \caption{Ricerca testuale nel contenuto del documento}
-        \label{ricerca_testo-ios}
+        \includegraphics[width=0.26\textwidth]{img/Simulator Screen Shot - iPhone 14 Pro - 2022-10-05 at 11.20.04.png}
+        \caption{Preferiti}
+        \label{preferiti-ios}
     \end{figure}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.26\textwidth]{img/Simulator Screen Shot - iPhone 14 Pro - 2022-10-05 at 11.20.04.png}
-        \caption{Preferiti}
-        \label{preferiti-ios}
+        \includegraphics[width=0.26\textwidth]{img/ricerca_testo_ios.png}
+        \caption{Ricerca testuale nel contenuto del documento}
+        \label{ricerca_testo-ios}
     \end{figure}
 
     \begin{figure}[H]
