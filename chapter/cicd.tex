@@ -45,7 +45,7 @@ Il modello che si intende utilizzare (fig. \ref{branching}) è basato sul modell
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.66\textwidth]{img/branching-model.png}
+        \includegraphics[width=0.7\textwidth]{img/branching-model.png}
         \caption{Esempio di flusso di sviluppo adottando il modello di branching indicato}
         \label{branching}
     \end{figure}
@@ -58,7 +58,7 @@ Grazie ai meccanismi di automazione a supporto della CI/CD fornite dal CI Server
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{img/cicd-branch-jobs.png}
+    \includegraphics[width=0.9\textwidth]{img/cicd-branch-jobs.png}
     \caption{Stage, job e artefatti associati agli eventi sui branch che compongono l'intera pipeline}
     \label{pipeline-branches}
 \end{figure}
@@ -183,19 +183,19 @@ Anche in questo caso è possibile utilizzare sistemi managed forniti as-a-Servic
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.72\textwidth]{img/renovate-uml-sequenza.png}
+    \includegraphics[width=0.85\textwidth]{img/renovate-uml-sequenza.png}
     \caption{Sequenza di aggiornamento automatico delle dipendenze con Renovate e GitLab Runner}
     \label{renovaflow}
 \end{figure}
 
-Il comportamento di Renovate può essere configurato ad-hoc per le diverse esigenze di ogni progetto tramite un apposito file, come quello seguente\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/renovate.json}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/renovate.json}}, versionato insieme al codice. 
+Tipicamente l'aggiornamento automatico avviene per versioni \textit{patch} e \textit{minor}, ovvero per quegli aggiornamenti che spesso non presentano breaking changes: in tutti gli altri casi (\textit{major}) è necessaria l'approvazione manuale da parte di uno sviluppatore.
+
+Il comportamento di Renovate può essere configurato ad-hoc per le diverse esigenze di ogni progetto tramite un apposito file, come quello seguente\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/renovate.json}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/5-automazione-del-processo-di-sviluppo/renovate.json}}, versionato insieme al codice.
 
 \begin{listing}[H]
     \inputminted{json}{code/renovate.json}
     \caption{Configurazione custom di un progetto Android per l'aggiornamento automatico delle dipendenze con Renovate}
 \end{listing}
-
-Tipicamente l'aggiornamento automatico avviene per versioni \textit{patch} e \textit{minor}, ovvero per quegli aggiornamenti che spesso non presentano breaking changes: in tutti gli altri casi (\textit{major}) è necessaria l'approvazione manuale da parte di uno sviluppatore.
 
 \section{Continuous Delivery}
 Le precedenti fasi di integrazione continua, se completate con successo, restituiscono come output il pacchetto contenente tutte le informazioni utili alla stabilizzazione e alla distribuzione della applicazione. Nel caso dello sviluppo di applicazioni multipiattaforma con KMM bisogna considerare che le due applicazioni potrebbero essere rilasciate singolarmente, ad esempio a fronte di una modifica all'interfaccia grafica della sola versione Android, oppure essere rilasciate entrambe, tipicamente a causa di una modifica della logica applicativa che è condivisa dalle due applicazioni.
@@ -243,7 +243,7 @@ Considerando il modello di branching definito (fig. \ref{branching}), ognuno dei
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{img/release-flow.png}
+    \includegraphics[width=0.9\textwidth]{img/release-flow.png}
     \caption{Stage, job e artefatti associati agli eventi sui branch che compongono l'intera pipeline}
     \label{release-alpha-beta-flow}
 \end{figure}
