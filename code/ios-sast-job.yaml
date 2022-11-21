@@ -4,16 +4,17 @@
   dependencies: []
   allow_failure: true
   variables:
+    PROJECT_DIR: to_be_extended
     PODS_DIR: ${CI_PROJECT_DIR}/${PROJECT_DIR}/Pods
-    LINT_PATH: ${CI_PROJECT_DIR}/${PROJECT_DIR}
-    REPORT_PATH: ${CI_PROJECT_DIR}/reports/swiftlint.json
+    REPORT_PATH: swiftlint.json
   script:
-    - swiftlint $LINT_PATH --reporter="sonarqube" > $REPORT_PATH
+    - cd $PROJECT_DIR
+    - swiftlint . --reporter="sonarqube" --output $REPORT_PATH
   artifacts:
     name: static-analysis-report-ios
     when: always
     expire_in: 1 day
     paths:
-      - reports/swiftlint.json
+      - ${PROJECT_DIR}/${REPORT_PATH}
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"

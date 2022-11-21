@@ -60,16 +60,115 @@ Un ciclo di stabilizzazione \textit{alpha}-\textit{beta} risulta nell'esecuzione
 \end{figure}
 
 \section{Analisi del codice}
-% efficacia della pipeline di analisi
+La fase di analisi del codice è stata realizzata con successo seguendo i vincoli aziendali e le pratiche di Continuous Inspection come descritto rispettivamente nei capitoli \ref{ch:casodistudio} e \ref{ch:cicd}. La seguente schermata catturata dalla piattaforma GitLab rappresenta l'esecuzione di una pipeline schedulata per l'analisi del codice terminata con successo:
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\textwidth]{img/gitlab-pipeline-analysis.png}
+    \caption{Schermata GitLab di esecuzione della pipeline completa per l'analisi del codice dei tre moduli sviluppati}
+    \label{gitlab-pipeline-analysis}
+\end{figure}
+
+Nonostante il sistema di automazione implementato per questa fase di analisi funzioni correttamente come atteso, non è possibile dire lo stesso per i risultati ottenuti dalle scansioni dei vari tools utilizzati, come Dependency-Check, Detekt e SwiftLint, e soprattutto per la loro integrazione con il servizio aziendale SonarQube:
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.9\textwidth]{img/sonarqube-kmm.png}
+    \caption{Schermata SonarQube aziendale contenente i tre moduli del caso di studio analizzati}
+    \label{sonarqube-kmm}
+\end{figure}
+
+Per esempio, nella seguente schermata rappresentante la panoramica del progetto iOS è indicata la presenza di 837 risultati classificati come \textit{code smells} dei quali 815 con severity \textit{minor} e 22 con severity \textit{major} ma nella schermata precedente, ovvero la Homepage del servizio SonarQube aziendale, non è indicato alcun risultato.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\textwidth]{img/sonarqube-ios.png}
+    \caption{Schermata SonarQube aziendale in cui è mostrata la panoramica del progetto iOS e i risultati ottenuti dalle scansioni tramite il tool SwiftLint}
+    \label{sonarqube-ios}
+\end{figure}
 
 \section{Statistiche}
-% qualche misurazione delle tempistiche di esecuzione delle pipeline nei vari casi (android, ios, ios+android e rilascio, analisi, ...)
-% non ho parametri per fare il confronto rispetto a prima, la app sviluppata è nuova e altri team non hanno cicd app mobile
+Considerando il contesto in cui è stato realizzato il caso di studio industriale è molto complesso estrarre metriche e valori confrontabili: gli esistenti team di sviluppo in azienda che si occupano di applicazioni mobile al momento non adottano nessuna tecnologia moderna per lo sviluppo multi-platform o cross-platform e nessun sistema di automazione per il processo.
+
+L'adozione della cultura DevOps e l'applicazione delle pratiche abilitanti, come descritto nel capitolo \ref{ch:devops}, in ambito mobile utilizzando moderne tecniche di sviluppo multipiattaforma, come indicato nel capitolo \ref{ch:app-multiplatform}, consiste in un progetto di forte innovazione realizzato nel contesto aziendale di Ricerca e Sviluppo. Tipicamente sia le risorse assegnate a questi progetti che la complessità dei domini modellati non sono paragonabili ai prodotti commercializzati dalle altre business unit aziendali ma sono tarati per lo sviluppo di progetti dimostrativi, conosciuti anche come \textit{Proof of Concept}.
+
+Le seguenti metriche e statistiche indicate, raccolte tramite l'ausilio della piattaforma GitLab utilizzata, forniscono dunque un analisi del caso di studio definendo un punto di partenza per il confronto dei lavori futuri svolti nelle stesse aree tematiche e indicate nella sezione successiva.
+
+\subsection*{Percentuale linguaggi utilizzati}
+La seguente metrica, fornita dal servizio GitLab \textit{Repository Analytics}\footnote{\href{https://docs.gitlab.com/ee/user/analytics/repository\_analytics.html}{https://docs.gitlab.com/ee/user/analytics/repository\_analytics.html}}, definisce la composizione del repository contenente il sorgente della applicazione KMM MaggioliEbook (capitolo \ref{ch:maggioliebook}) in termini di percentuale di linguaggi di programmazione utilizzati: 57,38\% Kotlin, 42,09\% Swift e 0,54\% Ruby.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\textwidth]{img/repo-code-lang-percent.png}
+    \caption{Composizione del repository della applicazione KMM MaggioliEbook in termini di percentuale di linguaggi di programmazione utilizzati}
+    \label{repo-code-lang-percent}
+\end{figure}
+
+\subsection*{Commit effettuate e distribuzione temporale}
+Anche le seguenti metriche sono fornite dallo stesso servizio GitLab \textit{Repository Analytics} e definiscono la distribuzione temporale delle commit effettuate sul repository della applicazione KMM MaggioliEbook.
+
+E' importante considerare che i valori indicati nei seguenti grafici si riferiscono ad un totale di 185 commit realizzate da un solo autore nel periodo compreso tra il 17 Luglio 2022 (data di creazione del repository) e il 20 Novembre 2022.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.7\textwidth]{img/commit-per-day-of-month.png}
+    \caption{Distribuzione delle commit effettuate per giorno del mese}
+    \label{commit-per-day-of-month}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.7\textwidth]{img/commit-per-day-hour.png}
+    \caption{Distribuzione delle commit effettuate per ora del giorno}
+    \label{commit-per-day-hour}
+\end{figure}
+
+\subsection*{Tasso di successo delle pipeline}
+La seguente metrica e quelle successive sono estratte da GitLab tramite un altro servizio, chiamato \textit{CI/CD Analytics}\footnote{\href{https://docs.gitlab.com/ee/user/analytics/ci\_cd\_analytics.html}{https://docs.gitlab.com/ee/user/analytics/ci\_cd\_analytics.html}}. Il tasso di successo delle pipeline eseguite per l'applicazione KMM MaggiolieBook è del 45,71\% ed è dato dal numero di pipeline terminate con successo (16) sul totale delle pipeline eseguite (35). Dal grafico è possibile notare che dopo un primo periodo di integrazione e adattamento della pipeline progettata tramite template, come descritto nel capitolo \ref{ch:cicd}, il tasso di successo è aumentato da circa il 16,67\% a Settembre 2022 a circa 45,71\% a Novembre 2022.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.9\textwidth]{img/gitlab-pipeline-chart.png}
+    \caption{Tasso di successo delle pipeline (Luglio 2022 - Novembre 2022)}
+    \label{gitlab-pipeline-chart}
+\end{figure}
+
+\subsection*{Durata delle pipeline per le ultime 30 commit effettuate}
+Un altro grafico interessante fornito dal servizio GitLab \textit{CI/CD Analytics} è la durata delle pipeline eseguite per le ultime 30 commit per le quali era associata una regola di attivazione.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.75\textwidth]{img/gitlab-cicd-stats.png}
+    \caption{Durata delle pipeline per le ultime 30 commit effettuate sul repository della applicazione KMM MaggioliEbook}
+    \label{gitlab-cicd-stats}
+\end{figure}
+
+\subsection*{Durata media delle pipeline per fase di sviluppo e piattaforma coinvolta}
+Considerando che le pipeline possono coinvolgere una o entrambe le versioni della applicazione sviluppata in base alla modifica effettuata al codice, una metrica utile a future valutazioni e confronti è data dal tempo medio di esecuzione delle pipeline in base alla piattaforma coinvolta, ovvero Android e/o iOS, e alla fase del processo: (\textit{i}) rilascio versione \textit{alpha}, (\textit{ii}) rilascio versione beta e (\textit{iii}) analisi statica del codice.
+
+I seguenti valori sono stati calcolati utilizzando le tempistiche di esecuzione delle pipeline rilevate dalla piattaforma GitLab utilizzata.
+
+\begin{table}[H]
+\centering
+    \begin{tabular}{|c|c|c|c|}
+         \hline
+         \textbf{Piattaforma} & \textbf{Rilascio Alpha} & \textbf{Rilascio Beta} & \textbf{Analisi}\\
+         \hline
+         Android & $\sim$ \textit{20 min} & $\sim$ \textit{1 min} & $\sim$ \textit{15 min} \\
+         \hline
+         iOS & $\sim$ \textit{23 min} & $\sim$ \textit{30 sec} & $\sim$ \textit{15 min} \\
+         \hline
+         Android e iOS & $\sim$ \textit{28 min} & $\sim$ \textit{1 min} & $\sim$ \textit{20 min} \\
+         \hline
+    \end{tabular}
+    \caption{Durata media delle pipeline per fase di sviluppo e piattaforma coinvolta}
+\end{table}
 
 \section{Lavori futuri}
 % cosa ho intenzione di fare dopo, continuazione del lavoro in azienda
 \begin{itemize}
         \item Studio, ricerca e sperimentazione per la fase di monitoring, sia della applicazione che dell'utente.
+        \item Ricerca di altre soluzioni per effettuare correttamente analisi statica di applicazioni Android e iOS.
         \item Utilizzo del meccanismo \textit{Remote Configuration}\footnote{\url{https://firebase.google.com/docs/remote-config}} per modificare aspetti della applicazione in modo dinamico senza dover rilasciare nuove versioni. Un esempio tipico è la migrazione dei database: grazie al meccanismo di remote configuration è possibile settare da remoto il \textit{jdbc}\footnote{Java DataBase Connectivity} url che permette di connettersi al database senza dover rilasciare una nuova versione della applicazione con il valore cablato nel codice.
         \item Valutazione di alternative all'hardware Apple fisico. Come indicato nel capitolo \ref{ch:cicd} alcune possibilità individuate sono: (\textit{i}) runner gestiti con sistema operativo MacOS (disponibili su diverse piattaforme come GitLab\footnote{\url{https://docs.gitlab.com/ee/ci/runners/saas/macos_saas_runner.html}}, GitHub\footnote{\url{https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners}} e CircleCI\footnote{\url{https://circleci.com/docs/using-macos}}), (\textit{ii}) virtual machine as-a-Service con sistema operativo MacOS (disponibili tra i servizi cloud Amazon\footnote{\url{https://aws.amazon.com/ec2/instance-types/mac/}}) e (\textit{iii}) immagine Docker MacOS\footnote{\url{https://github.com/sickcodes/Docker-OSX}}.
         \item Separazione dei moduli sviluppati in questo caso di studio in modo da avere più repository separati invece che la soluzione monorepo adottata. Distribuzione della logica applicativa sotto forma di libreria kmm e valutazione dei pro e contro di questa soluzione.
