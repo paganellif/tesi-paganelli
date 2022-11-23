@@ -252,84 +252,84 @@ I principali componenti sviluppati\footnote{\href{https://github.com/paganellif/
 \begin{multicols}{3}
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.27\textwidth]{img/login.png}
+                \includegraphics[width=0.30\textwidth]{img/login.png}
                 \caption{Login}
                 \label{login-android}
             \end{figure}
 
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.27\textwidth]{img/sidenav.png}
+                \includegraphics[width=0.30\textwidth]{img/sidenav.png}
                 \caption{Menu laterale - Sidenav}
                 \label{sidenav-android}
             \end{figure}
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.27\textwidth]{img/home.png}
+                \includegraphics[width=0.30\textwidth]{img/home.png}
                 \caption{Schermata home principale}
                 \label{home-android}
             \end{figure}
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.27\textwidth]{img/ricerca.png}
+                \includegraphics[width=0.30\textwidth]{img/ricerca.png}
                 \caption{Esempio di ricerca}
                 \label{ricerca-android}
             \end{figure}
 
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.27\textwidth]{img/preferiti.png}
+                \includegraphics[width=0.30\textwidth]{img/preferiti.png}
                 \caption{Preferiti}
                 \label{preferiti-android}
             \end{figure}
 
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.27\textwidth]{img/about.png}
+                \includegraphics[width=0.30\textwidth]{img/about.png}
                 \caption{Info generali (About)}
                 \label{about-android}
             \end{figure}
 
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.27\textwidth]{img/reader_settings.png}
+                \includegraphics[width=0.30\textwidth]{img/reader_settings.png}
                 \caption{Reader}
                 \label{readersettings-android}
             \end{figure}
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.27\textwidth]{img/annotations.png}
+                \includegraphics[width=0.30\textwidth]{img/annotations.png}
                 \caption{Esempio di annotazioni, evidenziazioni, sottolineature, ...}
                 \label{annotations-android}
             \end{figure}
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.27\textwidth]{img/annotation2.png}
-                \caption{Annotazioni memorizzate}
+                \includegraphics[width=0.30\textwidth]{img/annotation2.png}
+                \caption{Annotazioni}
                 \label{annotation2-android}
             \end{figure}
 
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.27\textwidth]{img/toc.png}
+                \includegraphics[width=0.30\textwidth]{img/toc.png}
                 \caption{Elenco dei contenuti (TOC) del documento}
                 \label{toc-android}
             \end{figure}
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.27\textwidth]{img/ricerca_testo.png}
+                \includegraphics[width=0.30\textwidth]{img/ricerca_testo.png}
                 \caption{Ricerca testuale nel contenuto del documento}
                 \label{ricerca_testo-android}
             \end{figure}
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.27\textwidth]{img/ricerca_testo2.png}
+                \includegraphics[width=0.30\textwidth]{img/ricerca_testo2.png}
                 \caption{Evidenziazioni automatiche delle occorrenze del testo cercato}
                 \label{ricerca_testo2-android}
             \end{figure}
@@ -367,14 +367,14 @@ L'architettura della applicazione iOS sviluppata segue lo stesso pattern utilizz
 
 Le schermate da realizzare sono le stesse individuate nella progettazione della UX/UI ed è necessario utilizzare i \textit{NavigationLink}\footnote{\href{https://developer.apple.com/documentation/swiftui/navigationlink}{https://developer.apple.com/documentation/swiftui/navigationlink}} per poterle navigare nella architettura scelta. I NavigationLink identificano una specifica transizione di schermata da quella attuale a quella di destinazione, sono definiti nel componente \textit{NavController}\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/iosMaggioliEbookApp/Common/NavController.swift}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/\\iosMaggioliEbookApp/Common/NavController.swift}} ma vengono attivati dal componente \textit{Sidebar}\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/iosMaggioliEbookApp/Common/Sidebar.swift}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/blob/6-sviluppo-applicazione-maggioliebook/maggioliEbookApp/iosMaggioliEbookApp/\\iosMaggioliEbookApp/Common/Sidebar.swift}}.
 
-A differenza di Jetpack Compose, il toolkit utilizzato nello sviluppo della UI Android, SwiftUI non fornisce nativamente dei costrutti per la realizzazione di schermate con scroll infinito e dati paginati (come descritto nella sezione \ref{pagingsec}): per questo motivo è stata necessaria l'implementazione di un meccanismo ad-hoc per la gestione di questo scenario.
-
 \begin{figure}[H]
 \centering
-    \includegraphics[width=0.7\textwidth]{img/navigator-arch-ios.png}
+    \includegraphics[width=0.65\textwidth]{img/navigator-arch-ios.png}
     \caption{Architettura Navigator adottata per l'applicazione iOS}
     \label{iosarchapp}
 \end{figure}
+
+A differenza di Jetpack Compose, il toolkit utilizzato nello sviluppo della UI Android, SwiftUI non fornisce nativamente dei costrutti per la realizzazione di schermate con scroll infinito e dati paginati (come descritto nella sezione \ref{pagingsec}): per questo motivo è stata necessaria l'implementazione di un meccanismo ad-hoc per la gestione di questo scenario.
 
 \subsubsection*{Integrazione iOS-Shared}
 \label{integrazione-ios-shared}
