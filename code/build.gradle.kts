@@ -23,10 +23,7 @@ kotlin {
             dependencies { } // Dipendenze specifiche Android
         }
 
-        val iosArm64Main by getting
         val iosMain by creating {
-            dependsOn(commonMain)
-            iosArm64Main.dependsOn(this)
             dependencies { } // Dipendenze specifiche iOS
         }
     }
