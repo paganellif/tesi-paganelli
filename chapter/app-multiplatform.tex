@@ -32,7 +32,7 @@ Esistono però alcune differenze tra loro, fondamentali durante la scelta della 
 
 \section{Strumenti}
 \label{app-multiplatform-tools}
-La scelta degli strumenti da utilizzare nel processo di sviluppo è influenzata da tantissimi fattori come ad esempio la necessità di una licenza commerciale, i gusti dello sviluppatore e certamente le tecnologie coinvolte. A prescindere da questi fattori è possibile definire delle categorie di strumenti, utilizzati per qualsiasi tipologia di software: (\textit{i}) linguaggio di programmazione, (\textit{ii}) ambiente di sviluppo (IDE\footnote{\textit{Integrated Development Environment}}), (\textit{iii}) build automation, (\textit{iv}) distribuzione software e (\textit{v}) framework di sviluppo.
+La scelta degli strumenti da utilizzare nel processo di sviluppo è influenzata da tantissimi fattori come ad esempio la necessità di una licenza commerciale, i gusti dello sviluppatore e certamente le tecnologie coinvolte. A prescindere da questi fattori è possibile definire delle categorie di strumenti, utilizzati per qualsiasi tipologia di software: (\textit{i}) linguaggio di programmazione, (\textit{ii}) ambiente di sviluppo (IDE\footnote{Integrated Development Environment}), (\textit{iii}) build automation, (\textit{iv}) distribuzione software e (\textit{v}) framework di sviluppo.
 
 Un altro fattore che vincola la scelta degli strumenti è la piattaforma target, ovvero l'ambiente dove eseguirà il codice, e lo è in particolare per le applicazioni mobile. A differenza dello sviluppo di applicazioni Android, dove gran parte degli strumenti più diffusi è open-source, lo sviluppo di applicazioni iOS è soggetto a vincoli stringenti imposti da Apple: tutta la toolchain necessaria è disponibile solamente per il sistema operativo macOS.
 
@@ -49,7 +49,7 @@ Per poter sviluppare ed eseguire un applicazione iOS l'unico IDE stabile è \tex
 \subsection*{Build automation}
 Con \textit{Build Automation} si intende l'automazione di alcuni task del processo di sviluppo come la compilazione del codice, l'esecuzione dei test, la firma del codice e la pacchettizzazione. Gli strumenti di build automation sono nati dunque per supportare lo sviluppatore permettendogli di automatizzare operazioni semplici e ripetibili. Tipicamente un task viene descritto per il raggiungimento di un \textit{goal} tramite un elenco ordinato di sotto-task dipendenti tra loro.
 
-La build automation per lo sviluppo di applicazioni Android è supportata dal tool \textit{Gradle}\footnote{\href{https://gradle.org/}{https://gradle.org/}}, uno strumento open-source per build automation e dependency management. Gradle fornisce il proprio DSL\footnote{\textit{Domain Specific Language}}, disponibile sia in Groovy che Kotlin, per la definizione degli script di build~\cite{nagy2022simplifying}.
+La build automation per lo sviluppo di applicazioni Android è supportata dal tool \textit{Gradle}\footnote{\href{https://gradle.org/}{https://gradle.org/}}, uno strumento open-source per build automation e dependency management. Gradle fornisce il proprio DSL\footnote{Domain Specific Language}, disponibile sia in Groovy che Kotlin, per la definizione degli script di build~\cite{nagy2022simplifying}.
 
 In ambiente Apple è necessario installare il pacchetto \textit{Command Line Tools for XCode}, il quale contiene un insieme di strumenti di sviluppo tra cui \textit{Swift Package Manager}, dedicato alla build automation e alla dependency management. Anche se disponibile tra le funzionalità del tool ufficiale Apple, la gestione delle dipendenze tipicamente viene svolta tramite un altro strumento molto diffuso chiamato \textit{CocoaPods}\footnote{\href{https://cocoapods.org/}{https://cocoapods.org/}}.
 
@@ -90,7 +90,7 @@ KMM consiste in un caso d'uso specifico (e il più diffuso) del framework Kotlin
 \subsection{Struttura Applicazione KMM}
 Una applicazione sviluppata con KMM segue lo stack definito dalla condivisione della business logic e la separazione della UX/UI (fig. \ref{stackKMM}). Il modulo \textit{shared} contiene tutta la business logic condivisa, la quale può essere sviluppata tramite l'utilizzo di librerie con supporto nativo al framework KMM, cioè librerie che forniscono già al loro interno specifiche implementazioni per le diverse piattaforme target, oppure tramite l'utilizzo del meccanismo \textit{expect/actual}.
 
-Nel caso di utilizzo del meccanismo expect/actual è necessario definire le funzionalità nel modulo \textit{commonMain} e fornire le implementazioni per le specifiche piattaforme nei relativi moduli \textit{androidMain} e \textit{iosMain}. Gli stessi concetti vengono applicati per la struttura dei moduli di test: \textit{commonTest}, \textit{androidTest} e \textit{iosTest}. I moduli UX/UI delle relative piattaforme includono il codice condiviso come dipendenza di progetto, in particolare come dipendenza Gradle (\textit{aar}\footnote{\textit{Android Archive}}) per Android e come dipendenza CocoaPods (Pod) per iOS.
+Nel caso di utilizzo del meccanismo expect/actual è necessario definire le funzionalità nel modulo \textit{commonMain} e fornire le implementazioni per le specifiche piattaforme nei relativi moduli \textit{androidMain} e \textit{iosMain}. Gli stessi concetti vengono applicati per la struttura dei moduli di test: \textit{commonTest}, \textit{androidTest} e \textit{iosTest}. I moduli UX/UI delle relative piattaforme includono il codice condiviso come dipendenza di progetto, in particolare come dipendenza Gradle (\textit{aar}\footnote{Android Archive}) per Android e come dipendenza CocoaPods (Pod) per iOS.
 
 \begin{figure}[H]
     \centering
@@ -99,7 +99,7 @@ Nel caso di utilizzo del meccanismo expect/actual è necessario definire le funz
 \end{figure}
 
 \subsection{Expect/Actual}
-Quando si sviluppa codice condiviso è spesso necessario definire come determinate funzionalità debbano essere implementate sulla specifica piattaforma target per utilizzare i relativi SDK\footnote{\textit{Software Development Kit}}. Il framework KMM fornisce il meccanismo \textit{expect/actual} per assolvere a questo compito in modo del tutto analogo al design pattern \textit{Template Method}~\cite{gamma1994design}:
+Quando si sviluppa codice condiviso è spesso necessario definire come determinate funzionalità debbano essere implementate sulla specifica piattaforma target per utilizzare i relativi SDK\footnote{Software Development Kit}. Il framework KMM fornisce il meccanismo \textit{expect/actual} per assolvere a questo compito in modo del tutto analogo al design pattern \textit{Template Method}~\cite{gamma1994design}:
 \begin{itemize}
     \item \textbf{Expect} - Astrazione della funzionalità necessaria. Tramite la keywork \textit{expect} si definisce lo scheletro astraendo dalla specifica implementazione.
     \item \textbf{Actual} - Implementazione specifica per una determinata piattaforma. Tramite la keywork \textit{actual} si definisce l'implementazione, reificando l'astrazione definita tramite il concetto di \textit{expect}.
