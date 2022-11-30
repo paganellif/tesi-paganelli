@@ -2,7 +2,7 @@
 
 \section{Introduzione}
 La continua crescita della quantità di dispositivi mobile in circolazione ha reso molto importante a livello globale il mercato delle applicazioni mobile e per questo motivo sono sempre di più le aziende che decidono di investire risorse nello sviluppo e nella vendita di applicazioni mobile. 
-Una azienda che intende puntare al maggior numero di utenti possibile con le proprie applicazioni deve considerare che l'intero mercato è spartito in base alla diffusione dei sistemi operativi per dispositivi mobile. 
+Un'azienda che intende puntare al maggior numero di utenti possibile con le proprie applicazioni deve considerare che l'intero mercato è spartito in base alla diffusione dei sistemi operativi per dispositivi mobile. 
 
 Ad oggi, 
 i sistemi operativi più diffusi sono Android (Google) e iOS (Apple), 
@@ -66,12 +66,12 @@ lo sviluppo di applicazioni iOS è soggetto a vincoli stringenti imposti da Appl
 tutta la toolchain necessaria è disponibile solamente per il sistema operativo macOS.
 
 \subsection*{Linguaggio di programmazione}
-Una moderna applicazione nativa per iOS è sviluppata in codice \textit{Swift}\footnote{\href{https://www.swift.org/}{https://www.swift.org/}}, 
+Una moderna applicazione nativa per iOS è sviluppata in codice Swift\footnote{\href{https://www.swift.org/}{https://www.swift.org/}}, 
 un linguaggio di programmazione open-source progettato da Apple e realizzato per sostituire il linguaggio Objective-C~\cite{kerr2018beginning}.
 
 Come nel caso delle applicazioni iOS,
 anche per quelle Android è stato adottato un nuovo linguaggio per sostituire quello precedentemente utilizzato. 
-Il linguaggio di programmazione ufficiale per lo sviluppo di applicazioni Android è il linguaggio open-source creato da JetBrains chiamato \textit{Kotlin}\footnote{\href{https://kotlinlang.org/}{https://kotlinlang.org/}}. 
+Il linguaggio di programmazione ufficiale per lo sviluppo di applicazioni Android è il linguaggio open-source creato da JetBrains chiamato Kotlin\footnote{\href{https://kotlinlang.org/}{https://kotlinlang.org/}}. 
 Questo linguaggio ha sostituito Java grazie alla sua interoperabilità con quest'ultimo: 
 il codice Kotlin può infatti essere compilato in bytecode Java e quindi essere eseguito ovunque può eseguire una JVM\footnote{Java Virtual Machine}~\cite{laurence2021programming}.
 
@@ -83,26 +83,26 @@ debugger,
 compilatore/interprete e emulatori.
 
 Per poter sviluppare ed eseguire un'applicazione iOS,
-l'unico IDE stabile è \textit{XCode}, 
+l'unico IDE stabile è XCode, 
 disponibile solamente per macOS. 
-Per lo sviluppo di applicazioni Android invece esistono diversi IDE ma sicuramente quello più diffuso è \textit{Android Studio}:
+Per lo sviluppo di applicazioni Android invece esistono diversi IDE ma sicuramente quello più diffuso è Android Studio:
 un'ambiente di sviluppo open-source costruito sul robusto e popolare IntelliJ di JetBrains,
 distribuito con tutte le funzionalità necessarie per lo sviluppo Android già preinstallate.
 
 \subsection*{Build automation}
-Con \textit{Build Automation} si intende l'automazione di alcuni task del processo di sviluppo come la compilazione del codice, 
+Con build automation si intende l'automazione di alcuni task del processo di sviluppo come la compilazione del codice, 
 l'esecuzione dei test, 
 la firma del codice e la pacchettizzazione. 
 Gli strumenti di build automation sono nati dunque per supportare lo sviluppatore permettendogli di automatizzare operazioni semplici e ripetibili. 
 Tipicamente un task viene descritto per il raggiungimento di un \textit{goal} tramite un elenco ordinato di sotto-task dipendenti tra loro.
 
-La build automation per lo sviluppo di applicazioni Android è supportata dal tool \textit{Gradle}\footnote{\href{https://gradle.org/}{https://gradle.org/}}, 
+La build automation per lo sviluppo di applicazioni Android è supportata dal tool Gradle\footnote{\href{https://gradle.org/}{https://gradle.org/}}, 
 uno strumento open-source per build automation e dependency management. 
 Gradle fornisce il proprio DSL\footnote{Domain Specific Language}, 
 disponibile sia in Groovy che Kotlin, 
 per la definizione degli script di build~\cite{nagy2022simplifying}.
 
-In ambiente Apple è necessario installare il pacchetto \textit{Command Line Tools for XCode}, il quale contiene un insieme di strumenti di sviluppo tra cui \textit{Swift Package Manager}, dedicato alla build automation e alla dependency management. Anche se disponibile tra le funzionalità del tool ufficiale Apple, la gestione delle dipendenze tipicamente viene svolta tramite un altro strumento molto diffuso chiamato \textit{CocoaPods}\footnote{\href{https://cocoapods.org/}{https://cocoapods.org/}}.
+In ambiente Apple è necessario installare il pacchetto ``\textit{Command Line Tools for XCode}'', il quale contiene un insieme di strumenti di sviluppo tra cui Swift Package Manager, dedicato alla build automation e alla dependency management. Anche se disponibile tra le funzionalità del tool ufficiale Apple, la gestione delle dipendenze tipicamente viene svolta tramite un altro strumento molto diffuso chiamato CocoaPods\footnote{\href{https://cocoapods.org/}{https://cocoapods.org/}}.
 
 \subsection*{Distribuzione software}
 In questo caso è più corretto parlare di servizi di distribuzione software invece che di strumenti. 
@@ -111,23 +111,23 @@ I servizi forniti da queste piattaforme vengono utilizzati sia durante la fase d
 per svolgere testing interno ed esterno (alpha/beta), 
 che durante la fase di pubblicazione effettiva delle applicazioni sui marketplace delle piattaforme target.
 
-La piattaforma \textit{Google Play Console} permette di gestire tutti i task correlati alla stabilizzazione e alla pubblicazione sul marketplace \textit{Google Play Store} di applicazioni Android. 
+La piattaforma Google Play Console permette di gestire tutti i task correlati alla stabilizzazione e alla pubblicazione sul marketplace Google Play Store di applicazioni Android. 
 Per le applicazioni iOS è necessario invece utilizzare più strumenti per le specifiche attività: 
-\textit{App Store Connect} per la pubblicazione sul marketplace \textit{App Store} e \textit{Testflight} per la stabilizzazione.
+App Store Connect per la pubblicazione sul marketplace App Store e Testflight per la stabilizzazione.
 
 \subsection*{Framework di sviluppo}
 E' in questa tipologia di strumenti che si collocano tutti i framework a supporto dello sviluppo di applicazioni multipiattaforma.
 I più popolari framework open-source per lo sviluppo di applicazioni cross-platform sono: 
-(\textit{i}) \textit{Ionic}\footnote{\href{https://ionicframework.com/}{https://ionicframework.com/}}, 
-(\textit{ii}) \textit{Flutter}\footnote{\href{https://flutter.dev/}{https://flutter.dev/}} e (\textit{iii}) \textit{React Native}\footnote{\href{https://reactnative.dev/}{https://reactnative.dev/}}. 
+(\textit{i}) Ionic\footnote{\href{https://ionicframework.com/}{https://ionicframework.com/}}, 
+(\textit{ii}) Flutter\footnote{\href{https://flutter.dev/}{https://flutter.dev/}} e (\textit{iii}) React Native\footnote{\href{https://reactnative.dev/}{https://reactnative.dev/}}. 
 Il paradigma multi-platform è più recente rispetto a quello cross-platform e il principale framework open-source in questo caso è Kotlin Multiplatform.
 
 \section{Kotlin Multiplatform Mobile}
 Kotlin Multiplatform Mobile\footnote{\href{https://kotlinlang.org/lp/mobile/}{https://kotlinlang.org/lp/mobile/}} (KMM) è un framework per lo sviluppo di applicazioni Android e iOS,
 basato sul concetto di condivisione della logica applicativa mantenendo lo sviluppo nativo della UX/UI.
 Con il rilascio di Kotlin 1.7.20 (Settembre 2022), 
-KMM è passato dalla fase \textit{Alpha} alla fase \textit{Beta},
-la quale è considerata come fase "\textit{pre-stable}"\footnote{\href{https://kotlinlang.org/docs/components-stability.html\#current-stability-of-kotlin-components}{https://kotlinlang.org/docs/components-stability.html\#current-stability-of-kotlin-components}} nonostante sia già stato adottato in produzione per lo sviluppo delle proprie applicazioni mobile da tante aziende tra le quali è possibile trovare nomi rilevanti come Netflix, 
+KMM è passato dalla fase Alpha alla fase Beta,
+la quale è considerata come fase ``\textit{pre-stable}''\footnote{\href{https://kotlinlang.org/docs/components-stability.html\#current-stability-of-kotlin-components}{https://kotlinlang.org/docs/components-stability.html\#current-stability-of-kotlin-components}} nonostante sia già stato adottato in produzione per lo sviluppo delle proprie applicazioni mobile da tante aziende tra le quali è possibile trovare nomi rilevanti come Netflix, 
 VMware e Philips\footnote{\href{https://kotlinlang.org/lp/mobile/case-studies/}{https://kotlinlang.org/lp/mobile/case-studies/}}. 
 In base al risultato dell'indagine di mercato svolta nei primi due quadrimestri del 2021\footnote{\href{https://blog.jetbrains.com/kotlin/2021/10/multiplatform-survey-q1-q2-2021/}{https://blog.jetbrains.com/kotlin/2021/10/multiplatform-survey-q1-q2-2021/}}, 
 le porzioni di codice condiviso nelle applicazioni sviluppate con KMM sono: 
@@ -152,7 +152,7 @@ Il framework KMM per poter svolgere la sua principale funzionalità di condivisi
 \begin{itemize}
     \item \textbf{Kotlin/JVM} - Utilizzato per la piattaforma Android, permette di compilare codice Kotlin in bytecode Java (\textit{.class}), il quale può essere eseguito direttamente sulla JVM. Nel caso di Android è necessario un ulteriore passaggio per tradurre il bytecode Java in bytecode Dalvik (\textit{.dex}).
 
-    \item \textbf{Kotlin/Native} - Utilizzato per la piattaforma iOS. A differenza del compilatore Kotlin/JVM, il compilatore Kotlin/Native è progettato per quelle situazioni dove non è possibile/non si vuole avere una VM, come nel caso dei dispositivi embedded e della piattaforma iOS. Per fare ciò include un backend basato su \textit{Low Level Virtual Machine} (LLVM)\footnote{\href{https://llvm.org/}{https://llvm.org/}} in grado di compilare il codice Kotlin in binari nativi che possono essere eseguiti senza VM\cite{nagy2022simplifying}. Le piattaforme supportate da Kotlin/Native attualmente sono macOS, iOS, tvOS, watchOS, Linux, Windows (MinGW) e Android NDK\footnote{\href{https://kotlinlang.org/docs/native-overview.html\#target-platforms}{https://kotlinlang.org/docs/native-overview.html\#target-platforms}} e per ognuna di esse esistono differenti architetture. Nel caso di iOS le differenti architetture supportate da KMM sono \textit{Arm64}, \textit{Arm32} e \textit{x64}. Anche in questo caso sono necessarie due fasi di compilazione: (\textit{i}) il codice Kotlin viene compilato nella \textit{Rappresentazione Intermedia} (IR) LLVM e (\textit{ii}) successivamente compilato nel binario nativo.
+    \item \textbf{Kotlin/Native} - Utilizzato per la piattaforma iOS. A differenza del compilatore Kotlin/JVM, il compilatore Kotlin/Native è progettato per quelle situazioni dove non è possibile/non si vuole avere una VM, come nel caso dei dispositivi embedded e della piattaforma iOS. Per fare ciò include un backend basato su Low Level Virtual Machine (LLVM)\footnote{\href{https://llvm.org/}{https://llvm.org/}} in grado di compilare il codice Kotlin in binari nativi che possono essere eseguiti senza VM\cite{nagy2022simplifying}. Le piattaforme supportate da Kotlin/Native attualmente sono macOS, iOS, tvOS, watchOS, Linux, Windows (MinGW) e Android NDK\footnote{\href{https://kotlinlang.org/docs/native-overview.html\#target-platforms}{https://kotlinlang.org/docs/native-overview.html\#target-platforms}} e per ognuna di esse esistono differenti architetture. Nel caso di iOS le differenti architetture supportate da KMM sono \textit{Arm64}, \textit{Arm32} e \textit{x64}. Anche in questo caso sono necessarie due fasi di compilazione: (\textit{i}) il codice Kotlin viene compilato nella Rappresentazione Intermedia (IR) LLVM e (\textit{ii}) successivamente compilato nel binario nativo.
 \end{itemize}
 
 \begin{figure}[H]
@@ -167,12 +167,12 @@ Un'applicazione sviluppata con KMM segue lo stack definito dalla condivisione de
 Il modulo \textit{shared} contiene tutta la business logic condivisa, 
 la quale può essere sviluppata tramite l'utilizzo di librerie con supporto nativo al framework KMM, 
 cioè librerie che forniscono già al loro interno specifiche implementazioni per le diverse piattaforme target, 
-oppure tramite l'utilizzo del meccanismo \textit{expect/actual}.
+oppure tramite l'utilizzo del meccanismo ``expect/actual''.
 
 Nel caso di utilizzo del meccanismo expect/actual è necessario definire le funzionalità nel modulo \textit{commonMain} e fornire le implementazioni per le specifiche piattaforme nei relativi moduli \textit{androidMain} e \textit{iosMain}. 
 Gli stessi concetti vengono applicati per la struttura dei moduli di test: \textit{commonTest}, \textit{androidTest} e \textit{iosTest}. 
 I moduli UX/UI delle relative piattaforme includono il codice condiviso come dipendenza di progetto, 
-in particolare come dipendenza Gradle (\textit{aar}\footnote{Android Archive}) per Android e come dipendenza CocoaPods (Pod) per iOS.
+in particolare come dipendenza Gradle (aar\footnote{Android Archive}) per Android e come dipendenza CocoaPods (Pod) per iOS.
 
 \begin{figure}[H]
     \centering
@@ -182,7 +182,7 @@ in particolare come dipendenza Gradle (\textit{aar}\footnote{Android Archive}) p
 
 \subsection{Expect/Actual}
 Quando si sviluppa codice condiviso è spesso necessario definire come determinate funzionalità debbano essere implementate sulla specifica piattaforma target per utilizzare i relativi SDK\footnote{Software Development Kit}. 
-Il framework KMM fornisce il meccanismo \textit{expect/actual} per assolvere a questo compito in modo del tutto analogo al design pattern \textit{Template Method}~\cite{gamma1994design}:
+Il framework KMM fornisce il meccanismo expect/actual per assolvere a questo compito in modo del tutto analogo al design pattern Template Method~\cite{gamma1994design}:
 
 \begin{itemize}
     \item \textbf{Expect} - Astrazione della funzionalità necessaria. Tramite la keywork \textit{expect} si definisce lo scheletro astraendo dalla specifica implementazione.
