@@ -21,7 +21,7 @@ Ognuna di queste macro-fasi comprende a sua volta una serie di sotto-fasi tra le
     \label{sdlc-app-mobile-fig}
 \end{figure}
 
-Il processo di sviluppo delle applicazioni mobile è simile a quello di qualsiasi altra applicazione software ma in questo caso l'obiettivo è distribuire l'applicazione al fine di dare la possibilità all'utente finale di installarla sul proprio dispositivo. 
+Il processo di sviluppo delle applicazioni mobile è simile a quello di qualsiasi altra applicazione software ma in questo caso l'obiettivo è distribuire l'applicazione al fine di dare la possibilità all'utente finale d'installarla sul proprio dispositivo. 
 Nei processi di sviluppo di altre tipologie di applicazioni, 
 come per esempio le Web Application, 
 l'obiettivo è invece quello di mettere in esecuzione l'applicazione in un ambiente target accessibile dall'utente finale.
@@ -38,7 +38,7 @@ e come esso risponde a quell'input.
 Dopo aver acquisito un numero appropriato di casi d'uso e attori è molto più semplice iniziare a progettare un'applicazione poiché è possibile concentrarsi su come creare l'applicazione anziché sulla definizione delle sue funzionalità.
 
 \section{Progettazione}
-La fase di progettazione della applicazione è composta da un insieme di sotto-task tra cui i principali sono (\textit{i}) la modellazione del dominio applicativo,
+La fase di progettazione dell'applicazione è composta da un insieme di sotto-task tra cui i principali sono (\textit{i}) la modellazione del dominio applicativo,
 (\textit{ii}) la scelta dell'architettura da utilizzare e (\textit{iii}) la prototipazione dell'esperienza utente e dell'interfaccia grafica (UX/UI\footnote{User Experience/User Interface}).
 
 Tipicamente la progettazione UX/UI viene svolta tramite l'ausilio di mockup per definire prima come l'utente intende utilizzare l'applicazione (esperienza) e poi aspetti grafici come colori,
@@ -52,10 +52,9 @@ e ottenere la validazione da parte del committente,
 la quale è l'obiettivo principale della fase successiva di stabilizzazione.
 
 \section{Stabilizzazione}
-La stabilizzazione consiste nella risoluzione di problemi sia a livello funzionale che a livello di usabilità e di prestazioni al fine di ottenere una versione di applicazione pronta da distribuire. 
+La stabilizzazione consiste nella risoluzione di problemi sia a livello funzionale che a livello d'usabilità e di prestazioni al fine d'ottenere una versione di applicazione pronta da distribuire. 
 
-Adottare la cultura DevOps e la metodologia Agile significa applicare il concetto "\textit{Release Early, Release Often}". 
-Le funzionalità preziose devono essere raggruppate insieme e rilasciate prima per ottenere miglioramenti in termini di valore~\cite{shore2008art}. 
+Adottare la cultura DevOps e la metodologia Agile significa applicare il concetto ``\textit{Release Early, Release Often}'': le funzionalità preziose devono essere raggruppate insieme e rilasciate prima per ottenere miglioramenti in termini di valore~\cite{shore2008art}. 
 Questa parte del ciclo di sviluppo dovrebbe iniziare il più presto possibile in modo da individuare e risolvere i problemi prima che diventino un costo. 
 Tipicamente per qualsiasi applicazione, 
 anche non specifica per i dispositivi mobile, 
@@ -77,8 +76,7 @@ Questo significa che può presentare anche bug o funzionalità mancanti ma deve 
 
 Solitamente prima della release di un'applicazione, 
 anche se in fase di testing, 
-è necessario attendere la sua approvazione da parte del gestore del servizio. 
-Il processo d'approvazione pre-release è detto \textit{App Review}. 
+è necessario attendere la sua approvazione da parte del gestore del servizio: tale processo d'approvazione pre-release è detto \textit{App Review}. 
 Nel caso del testing interno è possibile distribuire l'applicazione ad un insieme ristretto di tester. 
 Continuando con i rilasci di versioni alpha vengono aggiunte nuove funzionalità e/o risolti eventuali bug: 
 quando la versione è considerata pronta viene eseguita la sua promozione, 
@@ -92,9 +90,9 @@ ovvero quegli utenti che non hanno partecipato alle fasi di sviluppo e che svolg
 Si distinguono due tipologie di beta testing:
 
 \begin{itemize}
-    \item \textit{Aperto} - La applicazione è rilasciata per la fase di testing esterno permettendo l'accesso a qualsiasi utente con account da beta tester.
+    \item \textbf{Aperto} - L'applicazione è rilasciata per la fase di testing esterno permettendo l'accesso a qualsiasi utente con account da beta tester.
     
-    \item \textit{Chiuso} - L'accesso all'applicazione di test è limitato ad un insieme ristretto di tester, tipicamente gestiti tramite mailing list o link di condivisione.
+    \item \textbf{Chiuso} - L'accesso all'applicazione di test è limitato ad un insieme ristretto di tester, tipicamente gestiti tramite mailing list o link di condivisione.
 \end{itemize}
 
 Dopo aver ottenuto la validazione da parte dei tester, 
@@ -117,12 +115,12 @@ Bisogna infatti considerare che\footnote{\href{https://www.datadoghq.com/blog/mo
 \begin{itemize}
     \item le applicazioni mobile eseguono su una vasta gamma di dispositivi con caratteristiche diverse e può essere quindi difficile ottenere una chiara visibilità delle prestazioni lato client,
     
-    \item se gli utenti riscontrano un problema, mentre una patch per applicazioni web può essere distribuita quasi all'istante, la distribuzione degli aggiornamenti delle applicazioni mobile richiede tempo e l'attivazione da parte degli utenti per scaricarli.
+    \item se gli utenti riscontrano un problema, mentre una patch per applicazioni web può essere distribuita quasi all'istante, la distribuzione degli aggiornamenti delle applicazioni mobile richiede tempo e soprattutto l'attivazione da parte degli utenti per scaricarli.
 \end{itemize}
 
 Per effettuare un monitoraggio efficace è necessario misurare e controllare continuamente le performance dell'applicazione mobile, 
 il comportamento dell'utente e gli errori che essi riscontrano. 
 Alcuni esempi di metriche fondamentali sono: 
-tempo di avvio dell'applicazione, 
+tempo d'avvio dell'applicazione, 
 network performance, 
 utilizzo delle risorse (CPU, disco e memoria) e metriche custom derivanti dalle azioni dell'utente.
