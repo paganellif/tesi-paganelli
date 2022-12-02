@@ -6,7 +6,7 @@ del ciclo di vita del processo di sviluppo di applicazioni mobile e delle applic
 arrivando a definire un caso di studio industriale. 
 In questo capitolo viene descritto come è stato effettivamente realizzato il sistema per l'automazione del processo di sviluppo nel rispetto dei requisiti e delle specifiche indicate nel capitolo precedente.
 
-In questa fase di realizzazione del sistema d'automazione e di implementazione della pipeline,
+In questa fase di realizzazione del sistema d'automazione e d'implementazione della pipeline,
 viene considerato il progetto base\footnote{\href{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/3-applicazioni-multipiattaforma/kmm-example}{https://github.com/paganellif/DevOps-per-applicazioni-mobile-un-caso-di-studio-industriale/tree/3-applicazioni-multipiattaforma/kmm-example}} fornito dal plugin KMM\footnote{\href{https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile}{https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile}} per Android Studio al fine di mantenere il focus sul processo in modo più agnostico possibile rispetto ad una specifica applicazione utilizzatrice come può essere MaggioliEbook, 
 argomento trattato nel capitolo successivo.
 
@@ -75,8 +75,8 @@ Il modello che si intende utilizzare (fig. \ref{branching}) è basato sul modell
 Grazie ai meccanismi d'automazione a supporto della CI/CD fornite dal CI Server si definiscono specifiche regole di attivazione, 
 chiamate \textit{trigger rules}, 
 che permettono di indicare quando uno specifico job deve essere eseguito.
-Queste regole si basano su eventi che si verificano sul sistema di versionamento come ad esempio commit, 
-tag e merge request. 
+Queste regole si basano su eventi che si verificano sul sistema di versionamento come ad esempio \textit{commit}, 
+\textit{tag} e \textit{merge request}. 
 Tramite questa funzionalità è possibile dunque discriminare quali file sono stati modificati su quale branch per eseguire le operazioni associate come descritto sopra.
 
 \begin{figure}[H]
@@ -89,7 +89,7 @@ Tramite questa funzionalità è possibile dunque discriminare quali file sono st
 \section{Templating}
 Uno dei principali vantaggi del meccanismo Pipeline as Code, 
 anticipato nel capitolo \ref{ch:devops}, 
-è la possibilità di utilizzare metodologie simili a quelle utilizzate nella programmazione per la definizione delle pipeline. 
+è la possibilità di adottare metodologie simili a quelle utilizzate nella programmazione per la definizione delle pipeline. 
 Tramite i seguenti costrutti forniti dalla piattaforma GitLab è possibile utilizzare tecniche come ereditarietà e incapsulamento per definire pipeline riutilizzabili, 
 il quale è un importante requisito del processo, 
 definito nel capitolo precedente:
@@ -186,7 +186,7 @@ Il seguente codice\footnote{\href{https://github.com/paganellif/DevOps-per-appli
 \end{listing}
 
 \subsection{Testing}
-Terminato con successo lo stage di verifica della compilazione e pacchettizzazione del codice segue la fase di test,
+Terminato con successo lo stage di verifica della compilazione e della pacchettizzazione del codice segue la fase di test,
 per la quale si distinguono due tipologie principali di testing: 
 la prima con lo scopo di validare la logica applicativa, 
 chiamata \textit{Unit Testing} e la seconda per la validazione dell'interfaccia grafica, 
@@ -201,7 +201,7 @@ l'instrumentazione di un'applicazione è necessaria solamente per quei test dove
 come solitamente accade nel caso della UI testing.
 
 \subsubsection*{Unit Testing}
-Con \textit{Unit Testing} si intende l’attività di verifica di certe porzioni del codice, 
+Con Unit Testing si intende l’attività di verifica di certe porzioni del codice, 
 dette unità, 
 implementata tipicamente utilizzando librerie predisposte per ciascun specifico linguaggio di programmazione. 
 I movimenti Agile e TDD\footnote{Test Driven Development} incoraggiano la scrittura di unit test automatizzati, 
@@ -220,7 +220,7 @@ Le librerie utilizzate in questa fase di unit testing sono:
 \subsubsection*{UI Testing}
 Analogamente agli unit test, 
 dove si verifica l'integrità della logica applicativa a fronte di una modifica del codice sorgente, 
-nella \textit{UI Testing} si verifica l'integrità dell'interfaccia grafica e dell'esperienza utente. 
+nella UI Testing si verifica l'integrità dell'interfaccia grafica e dell'esperienza utente. 
 In questa sotto-fase di testing sono coinvolti solamente i moduli che implementano la UI e vengono testati tramite le seguenti librerie:
 
 \begin{itemize}
@@ -270,7 +270,7 @@ Automatizzare la gestione delle dipendenze di un progetto significa configurare 
     \item \textbf{Version Control System} - La presenza di un aggiornamento di versione per una o più dipendenze deve essere applicata al codice in modo automatico e devono essere adottate le stesse tecniche di continuous integration per la validazione delle modifiche apportate dallo sviluppatore.
 \end{itemize}
 
-Anche in questo caso è possibile utilizzare sistemi ``managed'' forniti \textit{as-a-Service} oppure \textit{self-hosted}. 
+Anche in questo caso è possibile utilizzare sistemi ``\textit{managed}'' forniti \textit{as-a-Service} oppure \textit{self-hosted}. 
 Uno dei vincoli sul processo di sviluppo,
 definiti nel capitolo \ref{ch:casodistudio},
 consiste nell'integrazione del servizio \textit{self-hosted} aziendale \textit{Renovate} per la gestione automatizzata delle dipendenze.

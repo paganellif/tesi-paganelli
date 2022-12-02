@@ -14,14 +14,14 @@ Oltre alla collaborazione tra i diversi team esistono altri principi alla base d
 \begin{itemize}
     \item \textbf{Automazione} - L'intervento umano deve essere ridotto il più possibile al fine di ridurre gli errori e le tempistiche. In questo modo vengono rimossi tutti i compiti ripetitivi che sarebbero stati a carico dello sviluppatore facendogli risparmiare tempo.
     
-    \item \textbf{Monitoraggio} - Deve essere possibile analizzare in ogni momento lo stato dei processi che compongono il sistema con lo scopo di reagire, prevenire e prevedere le situazioni critiche ma anche fornire feedback allo sviluppatore per aumentare la qualità del prodotto.
+    \item \textbf{Monitoraggio} - Dev'essere possibile analizzare in ogni momento lo stato dei processi che compongono il sistema con lo scopo di reagire, prevenire e prevedere le situazioni critiche ma anche fornire feedback allo sviluppatore per aumentare la qualità del prodotto.
 \end{itemize}
 
 \section{Tecniche di automazione e vantaggi}
 Non è possibile definire un unico metodo di adozione della cultura DevOps: 
 ogni azienda ha i propri vincoli, 
 requisiti e metodi che la rendono unica permettendole di distinguersi dalle altre.
-Esistono invece diverse tecniche che rispettano i principi DevOps e che possono essere applicate e adattate ad ogni azienda al fine di aumentare la qualità del software prodotto e diminuire il ''time-to-market'' (TTM)~\cite{devis2016effective}.
+Esistono invece diverse tecniche che rispettano i principi DevOps e che possono essere applicate e adattate ad ogni azienda al fine di aumentare la qualità del software prodotto e diminuire il ''\textit{time-to-market}'' (TTM)~\cite{devis2016effective}.
 
 I principali benefici derivanti dall'adozione della cultura DevOps sono~\cite{krief2019learning}:
 
@@ -34,7 +34,7 @@ I principali benefici derivanti dall'adozione della cultura DevOps sono~\cite{kr
 \end{itemize}
 
 I team che intendono adottare le tecniche e pratiche DevOps nel proprio processo di sviluppo devono seguire metodologie Agile con fasi iterative che permettono maggiore qualità delle funzionalità e feedback rapidi da parte dell'utente. 
-Le principali pratiche che vengono adottate sono conosciute come (\textit{i}) Continuous Integration, (\textit{ii}) Continuous Delivery, (\textit{iii}) Continuous Deployment e (\textit{iv}) Continuous Monitoring.
+Le principali pratiche che vengono adottate sono conosciute come (\textit{i}) Continuous Integration, (\textit{ii}) Continuous Delivery, (\textit{iii}) Continuous Deployment, (\textit{iv}) Continuous Monitoring e (\textit{v}) Continuous Inspection.
 
 \begin{figure}[H]
     \centering
@@ -45,7 +45,7 @@ Le principali pratiche che vengono adottate sono conosciute come (\textit{i}) Co
 \subsection{Continuous Integration}
 \label{ci-sec}
 Maggiore è la complessità di un progetto e maggiore è la necessità di integrare frequentemente e preventivamente i componenti software al fine di verificare che essi funzionino correttamente~\cite{duvall2007continuous}.
-Con \textit{Continuous Integration} (CI) si intende una pratica di sviluppo software dove i membri di un team integrano frequentemente il loro lavoro e ogni integrazione è testata e verificata da un sistema automatico in grado di intercettare gli errori il più velocemente possibile\footnote{\href{https://martinfowler.com/articles/continuousIntegration.html}{https://martinfowler.com/articles/continuousIntegration.html}}.
+Con Continuous Integration (CI) si intende una pratica di sviluppo software dove i membri di un team integrano frequentemente il loro lavoro e ogni integrazione è testata e verificata da un sistema automatico in grado di intercettare gli errori il più velocemente possibile\footnote{\href{https://martinfowler.com/articles/continuousIntegration.html}{https://martinfowler.com/articles/continuousIntegration.html}}.
 
 Con pipeline si intende una sequenza ordinata di elaborazioni che vengono applicate al codice sorgente in modo automatico. Solitamente una pipeline di CI prevede tre task:
 
@@ -84,7 +84,7 @@ Tali strumenti a supporto dei sistemi di automazione sono descritti in modo dett
 \subsection{Continuous Delivery}
 \label{cd-sec}
 Quando la fase di CI termina con successo è possibile procedere con la fase successiva di rilascio automatico del codice. 
-Con \textit{Continuous Delivery} (CD) si intende una pratica di sviluppo dove il software viene sviluppato in una maniera tale da poter essere installato nell'ambiente di produzione in qualsiasi momento\footnote{\href{https://martinfowler.com/bliki/ContinuousDelivery.html}{https://martinfowler.com/bliki/ContinuousDelivery.html}}. 
+Con Continuous Delivery (CD) si intende una pratica di sviluppo dove il software viene sviluppato in una maniera tale da poter essere installato nell'ambiente di produzione in qualsiasi momento\footnote{\href{https://martinfowler.com/bliki/ContinuousDelivery.html}{https://martinfowler.com/bliki/ContinuousDelivery.html}}. 
 Questo significa che lo stesso concetto di piccole modifiche molto frequenti definito in fase di integrazione è valido anche nella fase di rilascio.
 
 Il compito principale della fase di CD è quello di prendere il software impacchettato nell'ultimo task della fase di CI, 
@@ -117,7 +117,7 @@ Infatti,
 non può esistere continuous deployment senza continuous delivery, 
 ma non è vero il contrario.
 
-Con \textit{Continuous Deployment} si intende quindi l'estensione della continuous delivery con un processo che automatizza l'intera pipeline dal momento in cui lo sviluppatore modifica il codice all'installazione di quella modifica nell'ambiente di staging e/o di produzione~\cite{krief2019learning}.
+Con Continuous Deployment si intende quindi l'estensione della continuous delivery con un processo che automatizza l'intera pipeline dal momento in cui lo sviluppatore modifica il codice all'installazione di quella modifica nell'ambiente di staging e/o di produzione~\cite{krief2019learning}.
 
 \begin{figure}[H]
     \centering
@@ -156,7 +156,7 @@ Alcuni task che vengono tipicamente svolti in questa fase del processo sono:
     \item creazione di dashboard per la visualizzazione grafica.
 \end{itemize}
 
-Lo scopo principale della pratica di \textit{Continuous Monitoring} è ridurre il più possibile il tempo che intercorre tra il momento in cui un difetto è introdotto nel codice e/o nel processo e il momento in cui quel difetto viene intercettato e risolto.
+Lo scopo principale della pratica di Continuous Monitoring è ridurre il più possibile il tempo che intercorre tra il momento in cui un difetto è introdotto nel codice e/o nel processo e il momento in cui quel difetto viene intercettato e risolto.
 
 Le stesse pratiche adottate in questa fase possono essere applicate anche al monitoraggio dell'utente,
 con l'obiettivo di raccogliere dati sul suo comportamento per migliorare l'esperienza utente, 
@@ -166,13 +166,13 @@ Solitamente ci si riferisce a questa pratica con il termine ''\textit{Analytics}
 \subsection{Continuous Inspection}
 Tipicamente vengono definiti a livello aziendale degli standard di qualità e di sicurezza che devono essere rispettati da ogni team di sviluppo per qualsiasi tipologia di prodotto software. 
 La definizione di linee guida sullo stile di programmazione o sul livello di \textit{severity} accettato sono esempi di standard di qualità. 
-La pratica di analizzare automaticamente e molto frequentemente il codice al fine di validare il rispetto degli standard di qualità e sicurezza è chiamata \textit{Continuous Inspection}.
+La pratica di analizzare automaticamente e molto frequentemente il codice al fine di validare il rispetto degli standard di qualità e sicurezza è chiamata Continuous Inspection.
 
 L’obiettivo è quello di ottenere un feedback sullo stato del codice, 
 sullo stato del processo e sulla presenza di problemi di sicurezza al fine di pianificare interventi risolutivi nel minor tempo possibile.
 Come nel caso del monitoraggio, 
 esiste un sistema terzo a supporto dei task necessari e in grado di fornire feedback allo sviluppatore. 
-I principali task di analisi che compongono la fase di ispezione continua sono:
+I principali task di analisi che compongono la fase d'ispezione continua sono:
 
 \begin{itemize}
     \item \textbf{Static Application Security Testing} (SAST) - Analisi \textit{white-box} dell'applicazione al fine di individuare vulnerabilità, code smell e bug ma anche di verificare il rispetto di un certo livello di qualità.
@@ -193,7 +193,7 @@ I report vengono prodotti tipicamente sia in formati \textit{human-readable} (es
 
 \section{Strumenti}
 \label{devops-tools-sec}
-Per poter mettere in pratica le tecniche di CI/CD in modo da adottarle efficacemente nel processo di sviluppo è necessaria una infrastruttura complessa composta da tanti servizi e strumenti. 
+Per poter mettere in pratica le tecniche di CI/CD in modo da adottarle efficacemente nel processo di sviluppo è necessaria un'infrastruttura complessa, composta da tanti servizi e strumenti. 
 Data la grande complessità derivante soprattutto dalla gestione, 
 dalla manutenzione e dall'integrazione di tutti questi componenti, 
 spesso si fa uso di una o più piattaforme cloud in modo da creare un sistema eterogeneo composto da servizi in grado di fornire i seguenti strumenti fondamentali:
@@ -241,7 +241,7 @@ I vantaggi derivanti dall'utilizzo del meccanismo Pipeline as Code sono:
 \end{itemize}
 
 \subsection{Runners}
-L'architettura di un CI Server deve essere costruita in modo robusto e scalabile per poter supportare efficacemente le tecniche CI/CD.
+L'architettura di un CI Server dev'essere costruita in modo robusto e scalabile per poter supportare efficacemente le tecniche CI/CD.
 Basta un team con un numero minimo di sviluppatori e un numero minimo di progetti ai quali sono applicate le tecniche CI/CD e la metodologia di sviluppo agile per comprendere l'enorme quantità di lavoro a cui un CI Server può essere sottoposto.
 
 Ogni evento che si verifica sulla piattaforma in cui è mantenuto il codice sorgente viene intercettato dal CI Server: 
@@ -257,11 +257,11 @@ e rimane in attesa del risultato.
     \label{ci-server-runner}
 \end{figure}
 
-Il runner consiste in un componente architetturale della infrastruttura che necessita di un ambiente d'esecuzione e per svolgere il suo compito consuma delle risorse. 
-In base a chi lo gestisce il runner può essere:
+Il runner consiste in un componente architetturale dell'infrastruttura che necessita di un ambiente d'esecuzione e per svolgere il suo compito consuma delle risorse. 
+In base a chi lo gestisce, il runner può essere:
 
 \begin{itemize}
-    \item \textbf{Managed} - Funzionalità fornita \textit{as-a-Service} dalla piattaforma che si utilizza. In base al piano di licenza sottoscritto con la piattaforma, l'utilizzo dei runner è soggetto a limiti che riguardano tipicamente (\textit{i}) i minuti di utilizzo e (\textit{ii}) lo spazio di archiviazione. Il vantaggio di questa modalità è che non è richiesto alcuno sforzo nella configurazione e nella manutenzione del runner e nessuna spesa per l'ambiente d'esecuzione.
+    \item \textbf{Managed} - Funzionalità fornita \textit{as-a-Service} dalla piattaforma che si utilizza. In base al piano di licenza sottoscritto con la piattaforma, l'utilizzo dei runner è soggetto a limiti che riguardano tipicamente (\textit{i}) i minuti d'utilizzo e (\textit{ii}) lo spazio di archiviazione. Il vantaggio di questa modalità è che non è richiesto alcuno sforzo nella configurazione e nella manutenzione del runner e nessuna spesa per l'ambiente d'esecuzione.
     
     \item \textbf{Self-Hosted} - Il componente è gestito dall'utilizzatore in tutti i suoi aspetti ma non è soggetto ad alcun tipo di vincolo in termini di risorse utilizzate.
 \end{itemize}

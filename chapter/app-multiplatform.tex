@@ -12,7 +12,7 @@ A tal proposito sono nate nuove metodologie e tecniche basate sul concetto ``\te
 
 Le principali tecniche moderne di sviluppo per applicazioni mobile che seguono questi concetti sono:
 \begin{itemize}
-    \item \textbf{Cross-platform} - Rispetta completamente la filosofia WORA. Lo stesso codice può essere eseguito su diverse piattaforme grazie ad uno strato applicativo aggiuntivo che si occupa di interpretare il codice e tradurlo nel linguaggio specifico della piattaforma target.
+    \item \textbf{Cross-platform} - Rispetta completamente la filosofia WORA. Lo stesso codice può essere eseguito su diverse piattaforme grazie ad uno strato applicativo aggiuntivo che si occupa d'interpretare il codice e tradurlo nel linguaggio specifico della piattaforma target.
     
     \item \textbf{Multi-platform} - Tecnica più recente che permette di sviluppare applicazioni native condividendo solamente la logica applicativa. In questo caso non è necessario uno strato software aggiuntivo perché l'applicazione può essere eseguita direttamente dalla piattaforma target.
 \end{itemize}
@@ -23,7 +23,7 @@ che sono la riduzione dei costi e l'ottimizzazione del processo di sviluppo,
 derivano dalla condivisione e dal riuso del codice e quindi meno risorse impiegate rispetto allo sviluppo classico delle applicazioni mobile native.
 
 Esistono però alcune differenze tra loro,
-fondamentali durante la scelta della metodologia da adottare da parte di un'azienda per lo sviluppo di una applicazione mobile.
+fondamentali durante la scelta della metodologia da adottare da parte di un'azienda per lo sviluppo di un'applicazione mobile.
 
 \begin{itemize}
     \item \textbf{Cross-platform}
@@ -152,12 +152,12 @@ Il framework KMM per poter svolgere la sua principale funzionalità di condivisi
 \begin{itemize}
     \item \textbf{Kotlin/JVM} - Utilizzato per la piattaforma Android, permette di compilare codice Kotlin in bytecode Java (\textit{.class}), il quale può essere eseguito direttamente sulla JVM. Nel caso di Android è necessario un ulteriore passaggio per tradurre il bytecode Java in bytecode Dalvik (\textit{.dex}).
 
-    \item \textbf{Kotlin/Native} - Utilizzato per la piattaforma iOS. A differenza del compilatore Kotlin/JVM, il compilatore Kotlin/Native è progettato per quelle situazioni dove non è possibile/non si vuole avere una VM, come nel caso dei dispositivi embedded e della piattaforma iOS. Per fare ciò include un backend basato su Low Level Virtual Machine (LLVM)\footnote{\href{https://llvm.org/}{https://llvm.org/}} in grado di compilare il codice Kotlin in binari nativi che possono essere eseguiti senza VM\cite{nagy2022simplifying}. Le piattaforme supportate da Kotlin/Native attualmente sono macOS, iOS, tvOS, watchOS, Linux, Windows (MinGW) e Android NDK\footnote{\href{https://kotlinlang.org/docs/native-overview.html\#target-platforms}{https://kotlinlang.org/docs/native-overview.html\#target-platforms}} e per ognuna di esse esistono differenti architetture. Nel caso di iOS le differenti architetture supportate da KMM sono \textit{Arm64}, \textit{Arm32} e \textit{x64}. Anche in questo caso sono necessarie due fasi di compilazione: (\textit{i}) il codice Kotlin viene compilato nella Rappresentazione Intermedia (IR) LLVM e (\textit{ii}) successivamente compilato nel binario nativo.
+    \item \textbf{Kotlin/Native} - Utilizzato per la piattaforma iOS. A differenza del compilatore Kotlin/JVM, il compilatore Kotlin/Native è progettato per quelle situazioni dove non è possibile o non si vuole avere una Virtual Machine (VM), come nel caso dei dispositivi embedded e della piattaforma iOS. Per fare ciò include un backend basato su Low Level Virtual Machine (LLVM)\footnote{\href{https://llvm.org/}{https://llvm.org/}} in grado di compilare il codice Kotlin in binari nativi che possono essere eseguiti senza VM~\cite{nagy2022simplifying}. Le piattaforme supportate da Kotlin/Native attualmente sono macOS, iOS, tvOS, watchOS, Linux, Windows (MinGW) e Android NDK\footnote{\href{https://kotlinlang.org/docs/native-overview.html\#target-platforms}{https://kotlinlang.org/docs/native-overview.html\#target-platforms}} e per ognuna di esse esistono differenti architetture. Nel caso di iOS le differenti architetture supportate da KMM sono \textit{Arm64}, \textit{Arm32} e \textit{x64}. Anche in questo caso sono necessarie due fasi di compilazione: (\textit{i}) il codice Kotlin viene compilato nella Rappresentazione Intermedia (IR) LLVM e (\textit{ii}) successivamente compilato nel binario nativo.
 \end{itemize}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.82\textwidth]{img/compilatore_kotlin.png}
+    \includegraphics[width=0.84\textwidth]{img/compilatore_kotlin.png}
     \caption{Fasi di compilazione Kotlin/JVM e Kotlin/Native}
     \label{kotlin-native-compile}
 \end{figure}
@@ -167,7 +167,7 @@ Un'applicazione sviluppata con KMM segue lo stack definito dalla condivisione de
 Il modulo \textit{shared} contiene tutta la business logic condivisa, 
 la quale può essere sviluppata tramite l'utilizzo di librerie con supporto nativo al framework KMM, 
 cioè librerie che forniscono già al loro interno specifiche implementazioni per le diverse piattaforme target, 
-oppure tramite l'utilizzo del meccanismo ``expect/actual''.
+oppure tramite l'utilizzo del meccanismo ``\textit{expect/actual}''.
 
 Nel caso di utilizzo del meccanismo expect/actual è necessario definire le funzionalità nel modulo \textit{commonMain} e fornire le implementazioni per le specifiche piattaforme nei relativi moduli \textit{androidMain} e \textit{iosMain}. 
 Gli stessi concetti vengono applicati per la struttura dei moduli di test: \textit{commonTest}, \textit{androidTest} e \textit{iosTest}. 
@@ -253,7 +253,7 @@ Nonostante vi sia la necessità di utilizzare diversi strumenti di build automat
 il processo di sviluppo e le fasi che lo compongono sono comuni,
 indipendentemente dalla piattaforma target. 
 Come descritto nei capitoli precedenti, 
-lo sviluppatore deve essere in grado non solo di eseguire task strettamente correlati alla fase di sviluppo ma anche di eseguire tutti quei task che riguardano il testing, 
+lo sviluppatore deve essere in grado non solo d'eseguire task strettamente correlati alla fase di sviluppo ma anche di eseguire tutti quei task che riguardano il testing, 
 la stabilizzazione e il rilascio di un'applicazione.
 
 Tra gli strumenti open-source dedicati allo sviluppo di applicazioni multipiattaforma uno dei più popolari è sicuramente Fastlane\footnote{\href{7https://github.com/fastlane/fastlane}{7https://github.com/fastlane/fastlane}}. 
